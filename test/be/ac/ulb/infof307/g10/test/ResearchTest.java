@@ -1,5 +1,6 @@
-package be.ac.ulb.infof307.g10;
+package be.ac.ulb.infof307.g10.test;
 
+import be.ac.ulb.infof307.g10.Research;
 import junit.framework.TestCase;
 
 import java.util.*;
