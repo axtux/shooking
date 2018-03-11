@@ -8,6 +8,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,7 +18,7 @@ public class Connector {
 
 	private Connection connect() {
 		Connection conn = null;
-		String url = "jdbc:sqlite:SessionUser.db";
+		String url = "jdbc:sqlite:db/genlog10.db";
 		try {
 			conn = DriverManager.getConnection(url);
 		} catch (SQLException e) {
@@ -41,32 +42,62 @@ public class Connector {
 	public Session OpenSession(String userName, String Password) throws IncorrectPasswordException {
 		//Hash the Password
 		
-		/*
-		String HashMDP = Password;
-		String sql = "SELECT UserName FROM User WHERE hashMDP = "+HashMDP+" AND UserName = "+ userName;
+		String HashMDP = Password; // TODO Hash
+		String sql = "SELECT USER_ID FROM T_USERS WHERE USER_PAWD = ? AND USER_ID = ?";
+		
 		try (Connection conn = this.connect();
-			 Statement stmt  = conn.createStatement();
-			 ResultSet rs    = stmt.executeQuery(sql)) {
+			 PreparedStatement pstmt  = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, HashMDP);
+			pstmt.setString(2, userName);
+			
+			ResultSet rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
-				return new Session(rs.getString("UserName"));
+				return new Session(rs.getString("USER_ID"));
 			}else{
 				throw new IncorrectPasswordException();
 			}
 		} catch (SQLException e) {
 			return null;
-		}*/
-		return null;
+		}
 	}
 	
 	public Session CreateSession(String userName, String Password) throws UserAlreadyExistException {
 		//Hash the Password
-		//Create the user in DB
-		return new Session(userName);
+
+		String HashPW = Password; // TODO Hash
+		String sql = "INSERT INTO T_USERS(USER_ID,USER_PAWD) VALUES(?,?)";
+		
+		try (Connection conn = this.connect();
+			 PreparedStatement pstmt  = conn.prepareStatement(sql)) {
+			
+			pstmt.setString(1, userName);
+			pstmt.setString(2, HashPW);
+			pstmt.executeUpdate();
+			
+			return new Session(userName);
+		} catch (SQLException e) {
+			throw new UserAlreadyExistException();
+		}
 	}
 
 	public Boolean destroyUser(String userName, String Password) throws IncorrectPasswordException {
 		// Delete the user in the DB if the password is correct
-		return true;
+		
+		String HashPW = Password; // TODO Hash
+		String sql = "DELETE FROM T_USERS WHERE USER_ID = ? AND USER_PAWD = ?";
+		
+		try (Connection conn = this.connect();
+			 PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setString(1, userName);
+			pstmt.setString(2, HashPW);
+			pstmt.executeUpdate();
+			
+			return true;
+			
+		} catch (SQLException e) {
+			throw new IncorrectPasswordException();
+		}
 	}
 }

@@ -25,7 +25,7 @@ public class TestSession {
 	public void testCreateSession() throws UserAlreadyExistException {
 		Connector conn = new Connector();
 		Session user = conn.CreateSession("Best Test", "SuperPassWord");
-		assertEquals(user.getUserName(), "Mr. Test");
+		assertEquals(user.getUserName(), "Best Test");
 	}
 	
 	@Test
@@ -70,6 +70,7 @@ public class TestSession {
 		conn.destroyUser("Mr. Test", "SuperPassWord");
 		conn.destroyUser("Best Test", "SuperPassWord");
 		conn.destroyUser("Dupont", "Tintin");
+		conn.destroyUser("GoodUser", "GoodPassword");
 	}
 
 }
