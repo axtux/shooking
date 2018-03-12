@@ -61,6 +61,7 @@ public class Connector {
 			if (rs.next()) {
 				return new Session(rs.getString("USER_ID"));
 			}else{
+				System.out.println("ici");
 				throw new IncorrectPasswordException();
 			}
 		} catch (SQLException e) {
