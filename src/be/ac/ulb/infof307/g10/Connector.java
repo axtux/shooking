@@ -17,6 +17,11 @@ import java.sql.Statement;
 
 public class Connector {
 
+	/**
+	 * The Connection object used to connect with the DB and interact with her
+	 * 
+	 * @return	Connection	The Connection object used to interact with the DB
+	 */
 	private Connection connect() {
 		Connection conn = null;
 		String url = "jdbc:sqlite:db/genlog10.db";
@@ -28,6 +33,12 @@ public class Connector {
 		return conn;
 	}
 	
+	/**
+	 * Sha 256 hash function
+	 * 
+	 * @param password	The password of the user in String format
+	 * @return			A hash of this password in String format
+	 */
 	public static String sha256(String password) {
 		MessageDigest digest;
 		byte[] encodedhash = null;
@@ -44,6 +55,14 @@ public class Connector {
 		}
 	}
 	
+	/**
+	 * Check in the DB if the information (userName and Password) are correct and, if it's ok, return a Session object to connect the user
+	 * 
+	 * @param userName	The id of the user in String format
+	 * @param Password	The password of the user in String format
+	 * @return			A Session object that represent the user
+	 * @throws IncorrectPasswordException	Append if the password of the user is incorrect
+	 */
 	public Session openSession(String userName, String Password) throws IncorrectPasswordException {
 		//Hash the Password
 		
@@ -69,6 +88,14 @@ public class Connector {
 		}
 	}
 	
+	/**
+	 * Create a new user in the DB and connect it with a Session object
+	 * 
+	 * @param userName	The id of the user in Sting format
+	 * @param Password	The password of the user in String format
+	 * @return			A Session object that represent the user
+	 * @throws UserAlreadyExistException	Append if the id is not already taken by an other user
+	 */
 	public Session createSession(String userName, String Password) throws UserAlreadyExistException {
 		//Hash the Password
 
@@ -89,6 +116,14 @@ public class Connector {
 		}
 	}
 
+	/**
+	 * Destroy the user in the DB
+	 * 
+	 * @param userName	The id of the user in String format
+	 * @param Password	The password of the user in String format
+	 * @return			true if the user is correctly deleted
+	 * @throws IncorrectPasswordException	Append if the password of the user is incorrect
+	 */
 	public Boolean destroyUser(String userName, String Password) throws IncorrectPasswordException {
 		// Delete the user in the DB if the password is correct
 		

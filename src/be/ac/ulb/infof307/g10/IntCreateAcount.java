@@ -1,5 +1,7 @@
 package be.ac.ulb.infof307.g10;
 
+import be.ac.ulb.infof307.g10.Exception.IncorrectPasswordException;
+import be.ac.ulb.infof307.g10.Exception.UserAlreadyExistException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -57,6 +59,11 @@ public class IntCreateAcount {
         Label titleLabel = new Label("Create your Account");
         titleLabel.setFont(new Font("Arial", 30));
         
+        //Create label to show if user enter an user name that is already in DB
+        // or the user enter two different password
+        Label errorLabel = new Label("");
+        errorLabel.setFont(new Font("Arial", 15));
+        
       //Création du bouton "OK"
         Button btnOk = new Button();
         btnOk.setText("Submit");
@@ -70,6 +77,20 @@ public class IntCreateAcount {
                 System.out.println(pwd);
                 String pwd2 = pwdField2.getText();
                 System.out.println(pwd2);
+                if (pwd.equals(pwd2)) {
+	                try{
+	                	Connector conn = new Connector();
+	                	Session user = conn.createSession(log, pwd);
+	                	errorLabel.setText("");
+	                	// Run the app
+	                }
+	                catch(UserAlreadyExistException e){
+	                	System.out.println("User Already exist");
+	                	errorLabel.setText("This user name is already chosen");
+	                }
+                } else {
+                	errorLabel.setText("The two Password are not the same");
+                }
             }
         });
         
@@ -77,7 +98,7 @@ public class IntCreateAcount {
         //Centrage des deux boutons
         HBox hbox2 = new HBox(50,btnOk);
         //Centrage vertical des champs de texte et boutons
-        VBox vbox = new VBox(titleLabel, textFieldLog,pwdField,pwdField2,hbox2);
+        VBox vbox = new VBox(titleLabel, textFieldLog,pwdField,pwdField2,errorLabel, hbox2);
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
         hbox.getChildren().addAll(vbox);
