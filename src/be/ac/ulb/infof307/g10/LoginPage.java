@@ -69,7 +69,8 @@ public class LoginPage extends Application {
         btnCreate.setText("Create User");
         btnCreate.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                System.out.println("User creation");
+                ConditionUtil condiUtil = new ConditionUtil();
+                primaryStage.close();
             }
         });
 
