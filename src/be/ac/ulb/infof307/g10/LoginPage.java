@@ -4,23 +4,20 @@
 package be.ac.ulb.infof307.g10;
 
 
-import com.sun.prism.paint.Color;
-
 import be.ac.ulb.infof307.g10.Exception.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.Exception.UserAlreadyExistException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;
-import javafx.geometry.Pos;
+import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 
 
