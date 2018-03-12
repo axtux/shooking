@@ -3,6 +3,7 @@ package be.ac.ulb.infof307.g10;
 import be.ac.ulb.infof307.g10.Exception.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.Exception.UserAlreadyExistException;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -27,7 +28,7 @@ public class Connector {
 		return conn;
 	}
 	
-	public byte[] sha256(String password) {
+	public static String sha256(String password) {
 		MessageDigest digest;
 		byte[] encodedhash = null;
 		try {
@@ -36,13 +37,17 @@ public class Connector {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-		return encodedhash;
+		try {
+			return new String(encodedhash, "UTF-8");
+		} catch (UnsupportedEncodingException e) { // this exception never append because "UTF-8" is a correct encoding
+			return "";
+		}
 	}
 	
-	public Session OpenSession(String userName, String Password) throws IncorrectPasswordException {
+	public Session openSession(String userName, String Password) throws IncorrectPasswordException {
 		//Hash the Password
 		
-		String HashMDP = Password; // TODO Hash
+		String HashMDP = sha256(Password); // TODO Hash
 		String sql = "SELECT USER_ID FROM T_USERS WHERE USER_PAWD = ? AND USER_ID = ?";
 		
 		try (Connection conn = this.connect();
@@ -63,10 +68,10 @@ public class Connector {
 		}
 	}
 	
-	public Session CreateSession(String userName, String Password) throws UserAlreadyExistException {
+	public Session createSession(String userName, String Password) throws UserAlreadyExistException {
 		//Hash the Password
 
-		String HashPW = Password; // TODO Hash
+		String HashPW = sha256(Password); // TODO Hash
 		String sql = "INSERT INTO T_USERS(USER_ID,USER_PAWD) VALUES(?,?)";
 		
 		try (Connection conn = this.connect();
@@ -77,6 +82,7 @@ public class Connector {
 			pstmt.executeUpdate();
 			
 			return new Session(userName);
+			
 		} catch (SQLException e) {
 			throw new UserAlreadyExistException();
 		}
@@ -85,16 +91,28 @@ public class Connector {
 	public Boolean destroyUser(String userName, String Password) throws IncorrectPasswordException {
 		// Delete the user in the DB if the password is correct
 		
-		String HashPW = Password; // TODO Hash
-		String sql = "DELETE FROM T_USERS WHERE USER_ID = ? AND USER_PAWD = ?";
+		String HashPW = sha256(Password); // TODO Hash
+		String sql_userExist = "SELECT USER_ID FROM T_USERS WHERE USER_PAWD = ? AND USER_ID = ?";
+		String sql_deleteUser = "DELETE FROM T_USERS WHERE USER_PAWD = ? AND USER_ID = ?";
 		
 		try (Connection conn = this.connect();
-			 PreparedStatement pstmt = conn.prepareStatement(sql)) {
-			pstmt.setString(1, userName);
-			pstmt.setString(2, HashPW);
-			pstmt.executeUpdate();
+			 PreparedStatement pstmt_exist = conn.prepareStatement(sql_userExist);
+			 PreparedStatement pstmt_del   = conn.prepareStatement(sql_deleteUser)) {
 			
-			return true;
+			pstmt_exist.setString(1, HashPW);
+			pstmt_exist.setString(2, userName);
+			pstmt_exist.executeQuery();
+			ResultSet rs = pstmt_exist.executeQuery();
+			
+			if (rs.next()) { // The user exist
+				pstmt_del.setString(1, HashPW);
+				pstmt_del.setString(2, userName);
+				pstmt_del.executeUpdate();
+				return true;
+				
+			} else { // The user dont exist OR the password is incorrect
+				throw new IncorrectPasswordException();
+			}
 			
 		} catch (SQLException e) {
 			throw new IncorrectPasswordException();
