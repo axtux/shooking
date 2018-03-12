@@ -1,5 +1,5 @@
 /**
- * Page de login
+ * Login Page
  */
 package be.ac.ulb.infof307.g10;
 
@@ -22,15 +22,14 @@ import javafx.stage.Stage;
 
 
 /**
- * Page de login
+ * Login Page
  * @author Pierre
  *
  */
 public class LoginPage extends Application {
 
 	/**
-	 * Lancement de l'interface graphique
-	 * @param args
+	 * Launch of the user interface for the login page
 	 */
 	public static void main(String[] args) {
 		Application.launch(LoginPage.class,args);
@@ -39,15 +38,15 @@ public class LoginPage extends Application {
 	@Override
 	public void start(Stage primaryStage){
 		primaryStage.setTitle("Login Page");
-		//Centrage horizontal des champs de texte et boutons
+		//Horizontal centering
         HBox hbox = new HBox(50);
         hbox.setAlignment(Pos.CENTER);
 
-        //Création du champ "Login"
+        //"Login" text field
         TextField textFieldLog = new TextField();
         textFieldLog.setPromptText("Login");
         
-        //Création du champ "Password"
+        //"Password" protected text field
         PasswordField pwdField = new PasswordField();
         pwdField.setPromptText("Password");
 
@@ -55,15 +54,15 @@ public class LoginPage extends Application {
         Label badPassLabel = new Label("");
         badPassLabel.setFont(new Font("Arial", 15));
         
-        //Création du bouton "OK"
+        //"Ok" button
         Button btnOk = new Button();
         btnOk.setText("OK");
         btnOk.setDefaultButton(true);
         btnOk.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-            	//Récupération du champ "Login"
+            	//Capture of the "login" field
                 String log = textFieldLog.getText();
-              //Récupération du champ "Password"
+                //Capture of the "password" field
                 String pwd = pwdField.getText();
                 System.out.println(pwd);
                 try{
@@ -79,7 +78,7 @@ public class LoginPage extends Application {
             }
         });
         
-      //Création du bouton "Create User"
+      // "Create User" button
         Button btnCreate = new Button();
         btnCreate.setText("Create User");
         btnCreate.setOnAction(new EventHandler<ActionEvent>() {
@@ -93,15 +92,15 @@ public class LoginPage extends Application {
         Label titleLabel = new Label("Welcome !");
         titleLabel.setFont(new Font("Arial", 30));
         
-        //Centrage des deux boutons
+        //Buttons centering
         HBox hbox2 = new HBox(50,btnOk,btnCreate);
-        //Centrage vertical des champs de texte et boutons
+        //vetical centering
         VBox vbox = new VBox(titleLabel, textFieldLog,pwdField, badPassLabel, hbox2);
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
         hbox.getChildren().addAll(vbox);
         
-        //Création de la page principale
+        //Page creation
         Scene scene = new Scene(hbox, 400, 400);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
