@@ -1,60 +1,51 @@
 package be.ac.ulb.infof307.g10;
 
-import java.awt.Checkbox;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ConditionUtil {
 	
-	private String condiUtil="En naviguant sur notre site, l’internaute reconnaît avoir pris connaissance et accepté nos conditions générales d’utilisation\r\n" + 
-			"\r\n" + 
-			"Données personnelles :\r\n" + 
-			"\r\n" + 
-			"Les données personnelles qui peuvent vous être demandées (exclusivement en vue de recevoir notre newsletter) sont vos nom prénom et adresse mails.\r\n" + 
-			"Le traitement de ces données dont le responsable est Mr J. Rolle  bénéficie d’une dispense de la CNIL (dispense n° 7)\r\n" + 
-			"Vous pouvez faire valoir vos droits de consultation et de rectification en le contactant à l’adresse suivante [e-mail]\r\n" + 
-			"Nous nous engageons à ne pas revendre ni donner ces informations qui ne sont pas conservées dès lors que vous demandez à ne plus recevoir notre newsletter.\r\n" + 
-			"\r\n" + 
-			"Cookies :\r\n" + 
-			"\r\n" + 
-			"En vue d’améliorer notre site, nous utilisons Google Analytics qui est un outil « d'analyse d'audience Internet permettant aux propriétaires de sites Web et\r\n" + "d'applications de mieux comprendre le comportement de leurs utilisateurs. Cet outil peut utiliser des cookies pour collecter des informations et générer des rapports sur les statistiques d'utilisation d'un site Web\r\n"+" sans que les utilisateurs individuels soient identifiés personnellement par Google. \r\n" + 
-			"Outre la génération de rapports sur les statistiques d'utilisation d'un site Web, Google Analytics permet également, en association \r\n"+" avec certains des cookies publicitaires décrits ci-dessus, d'afficher des annonces plus pertinentes sur les sites Google (tels que la recherche Google) et sur le Web. »\r\n" + 
-			"https://www.google.fr/intl/fr/policies/technologies/types/ \r\n" + 
-			"Nous utilisons également les cookies nécessaires à l’amélioration de votre navigation sur notre site tenant compte exclusivement de votre navigateur.\r\n" + 
-			"\r\n" + 
-			"Propriété intellectuelle :\r\n" + 
-			"\r\n" + 
-			"Le site web a été réalisé par notre webmaster, Mme Rose Fougère. \r\n" + 
-			"Il est la propriété de l’association et ne peut faire l’objet de reproduction.\r\n" + 
-			"\r\n" + 
-			"Photographies et contenu :\r\n" + 
-			"\r\n" + 
-			"Les photographies, vidéos,  textes et  illustrations  publiés sur le site sont propriété de l’association ou ont fait l’objet de cession de droits.\r\n" + 
-			"Ils  ne peuvent faire l’objet d’aucune réutilisation.\r\n" + 
-			"\r\n" + 
-			"Liens hypertextes :\r\n" + 
-			"\r\n" + 
-			"Le site www[site internet] peut contenir des liens hypertextes renvoyant à des pages ou des sites dont le contenu ne peut engager en rien l’association.\r\n" + 
-			"Les liens hypertextes renvoyant vers notre site sont les bienvenus lorsqu’ils émanent de sites respectant la législation en vigueur.";
+	private String condiUtil="En naviguant sur notre site, lâ€™internaute reconnaÃ®t avoir pris connaissance et acceptÃ© nos conditions gÃ©nÃ©rales dâ€™utilisation\r\n" +
+            "\r\n" +
+            "DonnÃ©es personnelles :\r\n" +
+            "\r\n" +
+            "Les donnÃ©es personnelles qui peuvent vous Ãªtre demandÃ©es (exclusivement en vue de recevoir notre newsletter) sont vos nom prÃ©nom et adresse mails.\r\n" +
+            "Le traitement de ces donnÃ©es dont le responsable est Mr J. Rolle  bÃ©nÃ©ficie dâ€™une dispense de la CNIL (dispense nÂ° 7)\r\n" +
+            "Vous pouvez faire valoir vos droits de consultation et de rectification en le contactant Ã  lâ€™adresse suivante [e-mail]\r\n" +
+            "Nous nous engageons Ã  ne pas revendre ni donner ces informations qui ne sont pas conservÃ©es dÃ¨s lors que vous demandez Ã  ne plus recevoir notre newsletter.\r\n" +
+            "\r\n" +
+            "Cookies :\r\n" +
+            "\r\n" +
+            "En vue dâ€™amÃ©liorer notre site, nous utilisons Google Analytics qui est un outil Â« d'analyse d'audience Internet permettant aux propriÃ©taires de sites Web et\r\n" + "d'applications de mieux comprendre le comportement de leurs utilisateurs. Cet outil peut utiliser des cookies pour collecter des informations et gÃ©nÃ©rer des rapports sur les statistiques d'utilisation d'un site Web\r\n"+" sans que les utilisateurs individuels soient identifiÃ©s personnellement par Google. \r\n" +
+            "Outre la gÃ©nÃ©ration de rapports sur les statistiques d'utilisation d'un site Web, Google Analytics permet Ã©galement, en association \r\n"+" avec certains des cookies publicitaires dÃ©crits ci-dessus, d'afficher des annonces plus pertinentes sur les sites Google (tels que la recherche Google) et sur le Web. Â»\r\n" +
+            "https://www.google.fr/intl/fr/policies/technologies/types/ \r\n" +
+            "Nous utilisons Ã©galement les cookies nÃ©cessaires Ã  lâ€™amÃ©lioration de votre navigation sur notre site tenant compte exclusivement de votre navigateur.\r\n" +
+            "\r\n" +
+            "PropriÃ©tÃ© intellectuelle :\r\n" +
+            "\r\n" +
+            "Le site web a Ã©tÃ© rÃ©alisÃ© par notre webmaster, Mme Rose FougÃ¨re. \r\n" +
+            "Il est la propriÃ©tÃ© de lâ€™association et ne peut faire lâ€™objet de reproduction.\r\n" +
+            "\r\n" +
+            "Photographies et contenu :\r\n" +
+            "\r\n" +
+            "Les photographies, vidÃ©os,  textes et  illustrations  publiÃ©s sur le site sont propriÃ©tÃ© de lâ€™association ou ont fait lâ€™objet de cession de droits.\r\n" +
+            "Ils  ne peuvent faire lâ€™objet dâ€™aucune rÃ©utilisation.\r\n" +
+            "\r\n" +
+            "Liens hypertextes :\r\n" +
+            "\r\n" +
+            "Le site www[site internet] peut contenir des liens hypertextes renvoyant Ã  des pages ou des sites dont le contenu ne peut engager en rien lâ€™association.\r\n" +
+            "Les liens hypertextes renvoyant vers notre site sont les bienvenus lorsquâ€™ils Ã©manent de sites respectant la lÃ©gislation en vigueur.";
 	
 	
 public ConditionUtil() {
 	Stage thirdStage = new Stage();
 	Group root = new Group();
-	thirdStage.setTitle("condition d'utilisation");
+	thirdStage.setTitle("Conditions d'utilisation");
 	
 	
 	Text t = new Text();
