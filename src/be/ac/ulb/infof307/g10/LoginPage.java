@@ -70,6 +70,21 @@ public class LoginPage extends Application {
                 	Session user = conn.openSession(log, pwd);
                 	badPassLabel.setText("");
                 	// Run the app
+
+                    Button logout = new Button("Log out");
+                    logout.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            primaryStage.hide();
+                        }
+                    });
+
+
+                    VBox v = new VBox(logout);
+                    Scene sceneApp = new Scene(v, 400, 400);
+                    primaryStage.setScene(sceneApp);
+                    primaryStage.setResizable(false);
+                    primaryStage.show();
                 }
                 catch(IncorrectPasswordException e){
                 	System.out.println("Bad Password");
