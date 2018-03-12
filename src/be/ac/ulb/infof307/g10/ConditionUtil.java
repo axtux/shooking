@@ -8,9 +8,11 @@ import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.nio.charset.Charset;
+
 public class ConditionUtil {
 	
-	private String condiUtil="En naviguant sur notre site, l’internaute reconnaît avoir pris connaissance et accepté nos conditions générales d’utilisation\r\n" +
+	private String condiUtil= "En naviguant sur notre site, l’internaute reconnaît avoir pris connaissance et accepté nos conditions générales d’utilisation\r\n" +
             "\r\n" +
             "Données personnelles :\r\n" +
             "\r\n" +
@@ -39,7 +41,8 @@ public class ConditionUtil {
             "Liens hypertextes :\r\n" +
             "\r\n" +
             "Le site www[site internet] peut contenir des liens hypertextes renvoyant à des pages ou des sites dont le contenu ne peut engager en rien l’association.\r\n" +
-            "Les liens hypertextes renvoyant vers notre site sont les bienvenus lorsqu’ils émanent de sites respectant la législation en vigueur.";
+            "Les liens hypertextes renvoyant vers notre site sont les bienvenus lorsqu’ils émanent de sites respectant la législation en vigueur.".getBytes(Charset.defaultCharset());
+
 	
 	
 public ConditionUtil() {
