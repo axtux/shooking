@@ -61,6 +61,12 @@ public class LoginPage extends Application {
               //Récupération du champ "Password"
                 String pwd = pwdField.getText();
                 System.out.println(pwd);
+                try{
+                	//Connexion
+                }
+                catch(Exception e){
+                	//gestion de l'erreur
+                }
             }
         });
         
