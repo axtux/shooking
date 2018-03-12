@@ -4,6 +4,10 @@
 package be.ac.ulb.infof307.g10;
 
 
+import com.sun.prism.paint.Color;
+
+import be.ac.ulb.infof307.g10.Exception.IncorrectPasswordException;
+import be.ac.ulb.infof307.g10.Exception.UserAlreadyExistException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -49,6 +53,10 @@ public class LoginPage extends Application {
         //Création du champ "Password"
         PasswordField pwdField = new PasswordField();
         pwdField.setPromptText("Password");
+
+        //Create label to show if user enter a incorrect Password
+        Label badPassLabel = new Label("");
+        badPassLabel.setFont(new Font("Arial", 15));
         
         //Création du bouton "OK"
         Button btnOk = new Button();
@@ -61,6 +69,16 @@ public class LoginPage extends Application {
               //Récupération du champ "Password"
                 String pwd = pwdField.getText();
                 System.out.println(pwd);
+                try{
+                	Connector conn = new Connector();
+                	Session user = conn.openSession(log, pwd);
+                	badPassLabel.setText("");
+                	// Run the app
+                }
+                catch(IncorrectPasswordException e){
+                	System.out.println("Bad Password");
+                	badPassLabel.setText("Incorrect Password !");
+                }
             }
         });
         
@@ -80,7 +98,7 @@ public class LoginPage extends Application {
         //Centrage des deux boutons
         HBox hbox2 = new HBox(50,btnOk,btnCreate);
         //Centrage vertical des champs de texte et boutons
-        VBox vbox = new VBox(titleLabel, textFieldLog,pwdField,hbox2);
+        VBox vbox = new VBox(titleLabel, textFieldLog,pwdField, badPassLabel, hbox2);
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
         hbox.getChildren().addAll(vbox);
