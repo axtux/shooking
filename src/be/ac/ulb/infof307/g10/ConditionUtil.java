@@ -2,9 +2,11 @@ package be.ac.ulb.infof307.g10;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -54,7 +56,7 @@ public ConditionUtil() {
 	Text t = new Text();
 	t.setText(condiUtil);
 	
-	
+
 
 	root.getChildren().add(t);
 	
@@ -73,8 +75,10 @@ public ConditionUtil() {
          }
      });
      
-     
-     root.getChildren().add(btnOk);
+ 	VBox vbox = new VBox(t,btnOk);
+     root.getChildren().add(vbox);
+     vbox.setAlignment(Pos.CENTER);
+     vbox.setSpacing(10);
      	
 	thirdStage.show();
 	
