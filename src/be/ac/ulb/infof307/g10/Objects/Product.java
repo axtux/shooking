@@ -1,14 +1,47 @@
 package be.ac.ulb.infof307.g10.Objects;
 
 
-public class Product {
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name="T_PRODUCTS")
+@NamedQueries({
+		@NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
+})
+public class Product implements Serializable {
+
+    private static final long serialVersionUID = -0L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@Basic(optional = false)
+	@Column(name = "PRODUCT_ID")
 	private Integer productId;
+
+//	@Basic(optional = true)
+	@Column(name = "PRODUC_DESC")
 	private String productDesc;
+
+//	@Basic(optional = true)
+	@Column(name = "CALORIES")
 	private Integer calories;
+
+//	@Basic(optional = true)
+	@Column(name = "SUGAR")
 	private Integer sugar;
+
+//	@Basic(optional = true)
+	@Column(name = "PROTEINS")
 	private Integer proteins;
+
+//	@Basic(optional = true)
+	@Column(name = "FAT")
 	private Integer fat;
-	
+
+	// DO NOT DELETE ; NEEDED BY JPA !!!!!!!!!!!!
+	public Product(){
+	}
+
 	public Product(Integer Id){
 		productId = Id;
 	}
