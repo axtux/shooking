@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="T_PRODUCTS")
+//@Table(name="T_PRODUCTS")
 @NamedQueries({
 		@NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
 })
@@ -14,28 +14,28 @@ public class Product implements Serializable {
     private static final long serialVersionUID = -0L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@Basic(optional = false)
-	@Column(name = "PRODUCT_ID")
+	@Basic(optional = false)
+//	@Column(name = "PRODUCT_ID")
 	private Integer productId;
 
 //	@Basic(optional = true)
-	@Column(name = "PRODUC_DESC")
+//	@Column(name = "PRODUC_DESC")
 	private String productDesc;
 
 //	@Basic(optional = true)
-	@Column(name = "CALORIES")
+//	@Column(name = "CALORIES")
 	private Integer calories;
 
 //	@Basic(optional = true)
-	@Column(name = "SUGAR")
+//	@Column(name = "SUGAR")
 	private Integer sugar;
 
 //	@Basic(optional = true)
-	@Column(name = "PROTEINS")
+//	@Column(name = "PROTEINS")
 	private Integer proteins;
 
 //	@Basic(optional = true)
-	@Column(name = "FAT")
+//	@Column(name = "FAT")
 	private Integer fat;
 
 	// DO NOT DELETE ; NEEDED BY JPA !!!!!!!!!!!!

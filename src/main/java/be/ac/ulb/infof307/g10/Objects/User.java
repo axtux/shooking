@@ -4,29 +4,29 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="T_USERS")
+//@Table(name="T_USERS")
 public class User implements Serializable {
 
     private static final long serialVersionUID = -0L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-//	@Basic(optional = false)
-	@Column(name = "USER_ID")
+	@Basic(optional = false)
+//	@Column(name = "USER_ID")
 	private Integer userId;
 
 	@Basic(optional = true)
-	@Column(name = "USER_NAME")
-	private Integer userName;
+//	@Column(name = "USER_NAME")
+	private String userName;
 
 	@Basic(optional = true)
-	@Column(name = "USER_PASSWD")
+//	@Column(name = "USER_PASSWD")
 	private Integer userPwd;
 
 	// DO NOT DELETE ; NEEDED BY JPA !!!!!!!!!!!!
 	public User(){
 	}
 
-    public User(Integer userName, Integer userPwd) {
+    public User(String userName, Integer userPwd) {
         this.userName = userName;
         this.userPwd = userPwd;
     }
@@ -40,11 +40,11 @@ public class User implements Serializable {
         this.userId = userId;
     }
 
-    public Integer getUserName() {
+    public String getUserName() {
         return userName;
     }
 
-    public void setUserName(Integer userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 

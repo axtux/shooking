@@ -5,17 +5,18 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="T_SHOPS")
+//@Table(name="T_SHOPS")
 public class Shop implements Serializable {
 
 	private static final long serialVersionUID = -0L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "SHOP_ID")
+	@Basic(optional = false)
+//	@Column(name = "SHOP_ID")
 	private Integer shopId;
 
 	@Basic(optional = true)
-	@Column(name = "SHOP_DESC")
+//	@Column(name = "SHOP_DESC")
 	public String shopDesc;
 
 	// DO NOT DELETE ; NEEDED BY JPA !!!!!!!!!!!!
