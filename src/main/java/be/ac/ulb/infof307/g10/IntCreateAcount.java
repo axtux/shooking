@@ -1,19 +1,15 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.Exception.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.Exception.UserAlreadyExistException;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;

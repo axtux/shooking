@@ -1,10 +1,7 @@
 package be.ac.ulb.infof307.g10.db;
 
-import be.ac.ulb.infof307.*;
 import be.ac.ulb.infof307.g10.Objects.Product;
 
-import javax.persistence.NoResultException;
-import java.util.Arrays;
 import java.util.List;
 
 public class DatabaseFacade {

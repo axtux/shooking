@@ -20,7 +20,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 
-
 /**
  * Login Page
  * @author Pierre
