@@ -49,6 +49,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.diirt.javafx</groupId>
+            <artifactId>javafx</artifactId>
+            <version>3.1.7</version>
+        </dependency>
+
     </dependencies>
 
 </project>

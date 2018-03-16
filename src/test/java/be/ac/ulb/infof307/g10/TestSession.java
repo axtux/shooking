@@ -15,7 +15,7 @@ public class TestSession {
 //	public static void createDBTest() {
 //		Connector conn = new Connector();
 //		try {
-//			conn.createSession("Mr. Test", "SuperPassWord");
+//			conn.createUser("Mr. Test", "SuperPassWord");
 //		} catch (UserAlreadyExistException e) {
 //			e.printStackTrace();
 //		}
@@ -24,7 +24,7 @@ public class TestSession {
 //	@Test
 //	public void testCreateSession() throws UserAlreadyExistException {
 //		Connector conn = new Connector();
-//		Session user = conn.createSession("Best Test", "SuperPassWord");
+//		Session user = conn.createUser("Best Test", "SuperPassWord");
 //		assertEquals(user.getUserName(), "Best Test");
 //	}
 //
@@ -44,21 +44,21 @@ public class TestSession {
 //	@Test(expected = UserAlreadyExistException.class)
 //	public void testUserAlreadyExist() throws UserAlreadyExistException {
 //		Connector conn = new Connector();
-//		Session user1 = conn.createSession("Dupont", "Tintin");
-//		Session user2 = conn.createSession("Dupont", "Hadock");
+//		Session user1 = conn.createUser("Dupont", "Tintin");
+//		Session user2 = conn.createUser("Dupont", "Hadock");
 //	}
 //
 //	@Test
 //	public void testDestroyUser() throws UserAlreadyExistException, IncorrectPasswordException {
 //		Connector conn = new Connector();
-//		Session user = conn.createSession("badUser", "badPassWord");
+//		Session user = conn.createUser("badUser", "badPassWord");
 //		assertTrue(conn.destroyUser("badUser", "badPassWord"));
 //	}
 //
 //	@Test(expected = IncorrectPasswordException.class)
 //	public void testCannotDestroyUser() throws UserAlreadyExistException, IncorrectPasswordException {
 //		Connector conn = new Connector();
-//		Session user = conn.createSession("GoodUser", "GoodPassword");
+//		Session user = conn.createUser("GoodUser", "GoodPassword");
 //		conn.destroyUser("GoodUser", "BadPassword");
 //	}
 //

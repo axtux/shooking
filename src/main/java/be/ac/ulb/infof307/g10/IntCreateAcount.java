@@ -76,7 +76,7 @@ public class IntCreateAcount {
                 if (pwd.equals(pwd2)) {
 	                try{
 	                	Connector conn = new Connector();
-	                	Session user = conn.createSession(log, pwd);
+	                	Session user = conn.createUser(log, pwd);
 	                	errorLabel.setText("");
 	                	// Run the app
 	                }

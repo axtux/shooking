@@ -91,7 +91,7 @@ public class Connector {
 	 * @return			A Session object that represent the user
 	 * @throws UserAlreadyExistException	Append if the id is not already taken by an other user
 	 */
-	public Session createSession(String userName, String Password) throws UserAlreadyExistException {
+	public Session createUser(String userName, String Password) throws UserAlreadyExistException {
 		//Hash the Password
 
 		String HashPW = sha256(Password); // TODO Hash
