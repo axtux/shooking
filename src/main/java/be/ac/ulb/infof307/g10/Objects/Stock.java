@@ -24,7 +24,7 @@ public class Stock implements Serializable {
 	@OneToMany
     private java.util.List<Product> product;
 
-	//FIXME - hashmap product x quantity
+	//TODO - test me
 	@ElementCollection
 	Map<Product,Integer> quantity = new HashMap<>();
 

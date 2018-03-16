@@ -27,7 +27,7 @@ public class List implements Serializable {
 	@Basic(optional = true)
 	private Integer amount;
 
-    //FIXME - hashmap product x quantity
+	//TODO - test me
     @ElementCollection
     Map<Product,Integer> quantity = new HashMap<>();
 
