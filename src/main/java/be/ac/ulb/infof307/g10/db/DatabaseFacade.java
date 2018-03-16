@@ -1,18 +1,54 @@
 package be.ac.ulb.infof307.g10.db;
 
 import be.ac.ulb.infof307.g10.Objects.Product;
+import be.ac.ulb.infof307.g10.Objects.User;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 
 public class DatabaseFacade {
 
-    private DatabaseFacade(){}
+    public DatabaseFacade(){}
 
     public static List<Product> getProduct(){
         Connection.getTransaction().begin();
         List<Product> l = Connection.getManager().createNamedQuery("Product.findAll").getResultList();
         Connection.getTransaction().commit();
         return  l;
+    }
+
+    public static User getUser(String username){
+        Connection.getTransaction().begin();
+        User u;
+        try {
+            u = (User) Connection.getManager().createQuery("SELECT b from User b where b.username LIKE :username").setParameter("username", username).getSingleResult();
+        }catch(NoResultException e){
+            u = null;
+        }
+        Connection.getTransaction().commit();
+        return u;
+    }
+
+    public static Boolean insertUser(User u){
+        Connection.getTransaction().begin();
+        try {
+            Connection.getManager().persist(u);
+            Connection.getTransaction().commit();
+        }catch(NoResultException e){
+            return false;
+        }
+        return true;
+    }
+
+    public static Boolean deleteUser(User u){
+        Connection.getTransaction().begin();
+        try {
+            Connection.getManager().remove(u);
+            Connection.getTransaction().commit();
+        }catch(NoResultException e){
+            return false;
+        }
+        return true;
     }
 
 //

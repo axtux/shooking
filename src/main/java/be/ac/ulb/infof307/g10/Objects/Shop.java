@@ -12,30 +12,32 @@ public class Shop implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Basic(optional = false)
-//	@Column(name = "SHOP_ID")
 	private Integer shopId;
 
 	@Basic(optional = true)
-//	@Column(name = "SHOP_DESC")
 	public String shopDesc;
 
 	// DO NOT DELETE ; NEEDED BY JPA !!!!!!!!!!!!
 	public Shop(){
 	}
 
-	public Shop(Integer Id){
-		shopId = Id;
+	public Shop(String shopDesc) {
+		this.shopDesc = shopDesc;
 	}
 
-	public String getShopDesc(){
+	public Integer getShopId() {
+		return shopId;
+	}
+
+	public void setShopId(Integer shopId) {
+		this.shopId = shopId;
+	}
+
+	public String getShopDesc() {
 		return shopDesc;
 	}
 
-	public void setShopId(Integer Id){
-		shopId = Id;
-	}
-	
-	public void setShopDesc(String Desc){
-		shopDesc = Desc;
+	public void setShopDesc(String shopDesc) {
+		this.shopDesc = shopDesc;
 	}
 }

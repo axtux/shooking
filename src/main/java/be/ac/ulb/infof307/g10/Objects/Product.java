@@ -15,80 +15,76 @@ public class Product implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Basic(optional = false)
-//	@Column(name = "PRODUCT_ID")
 	private Integer productId;
 
-//	@Basic(optional = true)
-//	@Column(name = "PRODUC_DESC")
 	private String productDesc;
 
-//	@Basic(optional = true)
-//	@Column(name = "CALORIES")
 	private Integer calories;
 
-//	@Basic(optional = true)
-//	@Column(name = "SUGAR")
 	private Integer sugar;
 
-//	@Basic(optional = true)
-//	@Column(name = "PROTEINS")
 	private Integer proteins;
 
-//	@Basic(optional = true)
-//	@Column(name = "FAT")
 	private Integer fat;
+
 
 	// DO NOT DELETE ; NEEDED BY JPA !!!!!!!!!!!!
 	public Product(){
 	}
 
-	public Product(Integer Id){
-		productId = Id;
+	public Product(String productDesc, Integer calories, Integer sugar, Integer proteins, Integer fat) {
+		this.productDesc = productDesc;
+		this.calories = calories;
+		this.sugar = sugar;
+		this.proteins = proteins;
+		this.fat = fat;
 	}
-	
-	// get	
-	public String getProductDesc(){
+
+	public Integer getProductId() {
+		return productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
+	}
+
+	public String getProductDesc() {
 		return productDesc;
 	}
-	
-	public Integer getProductCalories(){
+
+	public void setProductDesc(String productDesc) {
+		this.productDesc = productDesc;
+	}
+
+	public Integer getCalories() {
 		return calories;
 	}
-	
-	public Integer getProductSugar(){
+
+	public void setCalories(Integer calories) {
+		this.calories = calories;
+	}
+
+	public Integer getSugar() {
 		return sugar;
 	}
-	
-	public Integer getProductProteins(){
+
+	public void setSugar(Integer sugar) {
+		this.sugar = sugar;
+	}
+
+	public Integer getProteins() {
 		return proteins;
-	}	
-	
-	public Integer getProductFat(){
+	}
+
+	public void setProteins(Integer proteins) {
+		this.proteins = proteins;
+	}
+
+	public Integer getFat() {
 		return fat;
 	}
 
-	// set
-	public void setProductId(Integer Id){
-		productId = Id;
-	}
-	
-	public void setProductDesc(String Desc){
-		productDesc = Desc;
-	}
-	
-	public void setProductCalories(Integer Calories){
-		calories = Calories;
-	}
-	
-	public void setProductProteins(Integer Proteins){
-		proteins = Proteins;
-	}
-	
-	public void setProductSugar(Integer Sugar){
-		sugar = Sugar;
-	}
-
-	public void setProductFat(Integer Fat){
-		fat = Fat;
+	public void setFat(Integer fat) {
+		this.fat = fat;
 	}
 }

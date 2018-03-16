@@ -2,7 +2,9 @@ package be.ac.ulb.infof307.g10.Objects;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 //@Table(name="T_STOCKS")
@@ -15,7 +17,6 @@ public class Stock implements Serializable {
 	private Long id;
 
 	@Basic(optional = false)
-//    @Column(name="SHOP_ID")
 	@OneToMany
 	private java.util.List<Shop> shop;
 
@@ -23,20 +24,28 @@ public class Stock implements Serializable {
 	@OneToMany
     private java.util.List<Product> product;
 
-//    @Column(name="QUANTITY")
-    private Integer quantity;
+	//FIXME - hashmap product x quantity
+	@ElementCollection
+	Map<Product,Integer> quantity = new HashMap<>();
 
 	// DO NOT DELETE ; NEEDED BY JPA !!!!!!!!!!!!
 	public Stock(){
 	}
 
 
-	public Stock(List<Shop> shop, List<Product> product, Integer quantity) {
+	public Stock(List<Shop> shop, List<Product> product, Map<Product, Integer> quantity) {
 		this.shop = shop;
 		this.product = product;
 		this.quantity = quantity;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public List<Shop> getShop() {
 		return shop;
@@ -54,11 +63,11 @@ public class Stock implements Serializable {
 		this.product = product;
 	}
 
-	public Integer getQuantity() {
+	public Map<Product, Integer> getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(Map<Product, Integer> quantity) {
 		this.quantity = quantity;
 	}
 }
