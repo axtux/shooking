@@ -14,7 +14,7 @@ public class Connection {
 
     /**
      * Return the manager of Entity
-     * @return an the manager of Entity
+     * @return the manager of Entity
      */
     public static EntityManager getManager() {
         if (manager == null || !manager.isOpen()) {

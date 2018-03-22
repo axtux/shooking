@@ -33,7 +33,7 @@ public class List implements Serializable {
 
 
 
-    // DO NOT DELETE ; NEEDED BY JPA !!!!!!!!!!!!
+    // NEEDED BY JPA
     public List(){
     }
 

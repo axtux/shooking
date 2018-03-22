@@ -17,7 +17,7 @@ public class Shop implements Serializable {
 	@Basic(optional = true)
 	public String shopDesc;
 
-	// DO NOT DELETE ; NEEDED BY JPA !!!!!!!!!!!!
+	// NEEDED BY JPA
 	public Shop(){
 	}
 

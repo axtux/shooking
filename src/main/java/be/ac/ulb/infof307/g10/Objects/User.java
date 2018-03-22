@@ -15,10 +15,10 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Basic(optional = false)
-	private Integer Id;
+	private Integer id;
 
 	@Basic(optional = false)
-	private String username;
+	private String userName;
 
     @Basic(optional = false)
 	private String password;
@@ -30,36 +30,36 @@ public class User implements Serializable {
 	public User(){
 	}
 
-    public User(String username, String password, List userList) {
-        this.username = username;
+    public User(String userName, String password, List userList) {
+        this.userName = userName;
         this.password = sha256(password);
         this.userList = userList;
     }
 
-    public User(String username, String password) {
-        this.username = username;
+    public User(String userName, String password) {
+        this.userName = userName;
         this.password = sha256(password);
     }
 
 
     public User(User user) {
-        this.Id = user.Id;
-        this.username = user.username;
+        this.id = user.id;
+        this.userName = user.userName;
         this.password = user.password;
         this.userList = user.userList;
     }
 
     public static String sha256(String password) {
         MessageDigest digest;
-        byte[] encodedhash = null;
+        byte[] encodedHash = null;
         try {
             digest = MessageDigest.getInstance("SHA-256");
-            encodedhash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
+            encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         try {
-            return new String(encodedhash, "UTF-8");
+            return new String(encodedHash, "UTF-8");
         } catch (UnsupportedEncodingException e) { // this exception never append because "UTF-8" is a correct encoding
             return "";
         }
@@ -68,27 +68,27 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User{" +
-                "Id=" + Id +
-                ", username='" + username + '\'' +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 ", userList=" + userList +
                 '}';
     }
 
     public Integer getId() {
-        return Id;
+        return id;
     }
 
     public void setId(Integer id) {
-        Id = id;
+        this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {

@@ -28,7 +28,7 @@ public class Stock implements Serializable {
 	@ElementCollection
 	Map<Product,Integer> quantity = new HashMap<>();
 
-	// DO NOT DELETE ; NEEDED BY JPA !!!!!!!!!!!!
+	// NEEDED BY JPA
 	public Stock(){
 	}
 
