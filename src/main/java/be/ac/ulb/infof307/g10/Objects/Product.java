@@ -28,7 +28,7 @@ public class Product implements Serializable {
 	private Integer fat;
 
 
-	// DO NOT DELETE ; NEEDED BY JPA !!!!!!!!!!!!
+	// NEEDED BY JPA
 	public Product(){
 	}
 

@@ -32,26 +32,26 @@ public class IntCreateAcount {
 		Group root = new Group();
 		
 		
-		//champs pour rentrer info
+		//fields to enter the information
 		
 		secondStage.setTitle("Create account page");
-		//Centrage horizontal des champs de texte et boutons
+		//put the text and buttons on the horizontal center
         HBox hbox = new HBox(50);
         hbox.setAlignment(Pos.CENTER);
 
-        //Création du champ "Login"
+        //login field created
         TextField textFieldLog = new TextField();
         textFieldLog.setPromptText("Login");
         
-        //Création du champ "Password"
+        //password field created
         PasswordField pwdField = new PasswordField();
         pwdField.setPromptText("Password");
-        
-        //Création du champ "Password"
+
+        //password field created
         PasswordField pwdField2 = new PasswordField();
         pwdField2.setPromptText("Re enter the password");
-        
-      //Welcome label
+
+        //Welcome label
         Label titleLabel = new Label("Create your Account");
         titleLabel.setFont(new Font("Arial", 30));
         
@@ -59,16 +59,16 @@ public class IntCreateAcount {
         // or the user enter two different password
         Label errorLabel = new Label("");
         errorLabel.setFont(new Font("Arial", 15));
-        
-      //Création du bouton "OK"
+
+        //ok button created
         Button btnOk = new Button();
         btnOk.setText("Submit");
         btnOk.setDefaultButton(true);
         btnOk.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-            	//Récupération du champ "Login"
+            	//field login recovered
                 String log = textFieldLog.getText();
-              //Récupération du champ "Password"
+                //password field recovered
                 String pwd = pwdField.getText();
                 System.out.println(pwd);
                 String pwd2 = pwdField2.getText();
@@ -91,9 +91,9 @@ public class IntCreateAcount {
         });
         
         
-        //Centrage des deux boutons
+        //the two buttons are in the center
         HBox hbox2 = new HBox(50,btnOk);
-        //Centrage vertical des champs de texte et boutons
+        //text and buttons in the vertical center
         VBox vbox = new VBox(titleLabel, textFieldLog,pwdField,pwdField2,errorLabel, hbox2);
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);

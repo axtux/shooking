@@ -26,7 +26,7 @@ public class User implements Serializable {
 	@OneToOne
     private List userList;
 
-	// DO NOT DELETE ; NEEDED BY JPA !!!!!!!!!!!!
+	//NEEDED BY JPA
 	public User(){
 	}
 

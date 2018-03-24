@@ -91,8 +91,8 @@ public class LoginPage extends Application {
                 }
             }
         });
-        
-      // "Create User" button
+
+        // "Create User" button
         Button btnCreate = new Button();
         btnCreate.setText("Create User");
         btnCreate.setOnAction(new EventHandler<ActionEvent>() {
