@@ -18,7 +18,7 @@ public class User implements Serializable {
 	private Integer id;
 
 	@Basic(optional = false)
-	private String userName;
+	private String username;
 
     @Basic(optional = false)
 	private String password;
@@ -30,21 +30,21 @@ public class User implements Serializable {
 	public User(){
 	}
 
-    public User(String userName, String password, List userList) {
-        this.userName = userName;
+    public User(String username, String password, List userList) {
+        this.username = username;
         this.password = sha256(password);
         this.userList = userList;
     }
 
-    public User(String userName, String password) {
-        this.userName = userName;
+    public User(String username, String password) {
+        this.username = username;
         this.password = sha256(password);
     }
 
 
     public User(User user) {
         this.id = user.id;
-        this.userName = user.userName;
+        this.username = user.username;
         this.password = user.password;
         this.userList = user.userList;
     }
@@ -69,7 +69,7 @@ public class User implements Serializable {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", userName='" + userName + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", userList=" + userList +
                 '}';
@@ -83,12 +83,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

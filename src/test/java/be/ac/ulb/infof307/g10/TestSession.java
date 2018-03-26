@@ -26,14 +26,14 @@ public class TestSession {
 	public void testCreateSession() throws UserAlreadyExistException {
 		Connector conn = new Connector();
 		Session user = conn.createUser("Best Test", "SuperPassWord");
-		assertEquals(user.getUserName(), "Best Test");
+		assertEquals(user.getUsername(), "Best Test");
 	}
 
 	@Test
 	public void testOpenSession() throws IncorrectPasswordException {
 		Connector conn = new Connector();
 		Session user = conn.openSession("Mr. Test", "SuperPassWord");
-		assertEquals(user.getUserName(), "Mr. Test");
+		assertEquals(user.getUsername(), "Mr. Test");
 	}
 
 	@Test(expected = IncorrectPasswordException.class)

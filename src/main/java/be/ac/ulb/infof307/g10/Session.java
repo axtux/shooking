@@ -2,19 +2,19 @@ package be.ac.ulb.infof307.g10;
 
 public class Session {
 
-	private String userName;
+	private String username;
 	/* Possible other data
 	 * 
 	 * private String mail;
 	 * private String address;
 	 */
 	
-	public Session(String userName) {
-		this.userName = userName;
+	public Session(String username) {
+		this.username = username;
 	}
 	
-	public String getUserName() {
-		return this.userName;
+	public String getUsername() {
+		return this.username;
 	}
 	
 }
