@@ -97,7 +97,7 @@ public class LoginPage extends Application {
         btnCreate.setText("Create User");
         btnCreate.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                ConditionUtil condiUtil = new ConditionUtil();
+                TermsOfUseView condiUtil = new TermsOfUseView();
                 primaryStage.close();
             }
         });
