@@ -19,24 +19,25 @@ import javafx.scene.control.cell.PropertyValueFactory;
 /**
  *
  * @author Oscar
- * Source:https://www.youtube.com/watch?v=OT_qBWKiRfY 
+ * 
  */
 public class VistaController implements Initializable {
 
-    // Declaramos los botones
-    @FXML private Button aniadirBT;
-    @FXML private Button modificarBT;
-    @FXML private Button eliminarBT;
-    @FXML private Button nuevoBT;
-    @FXML private Button allezMagasinBT;
+    // Declare the buttons
+    @FXML private Button addBT;
+    @FXML private Button editBT;
+    @FXML private Button removeBT;
+    @FXML private Button newBT;
+    @FXML private Button goStoreBT;
+    @FXML private Button plusBT;
+    @FXML private Button  lessBT;
+    // Declare the textfileds
     
-    // Declaramos los textfileds
-    // Nous déclarons lestextfileds
     @FXML private TextField produitTF;
     @FXML private TextField quantiteTF;
     
-    // Declaramos la tabla y las columnas
-    // Déclare la table et les colonnes
+    // Declare the table and columns
+    
     @FXML private TableView<ListCourses> tableproduits;
     @FXML private TableColumn produitCL;
     @FXML private TableColumn quantiteCL;
@@ -46,68 +47,87 @@ public class VistaController implements Initializable {
     private int PositionProduitTable;
 
     /**
-     * Metodo que realiza las acciones tras pulsar el boton "Nuevo"
-     * Méthode qui effectue les actions après avoir appuyé sur le bouton "Nouveau"
+     * Method that performs the actions after pressing the "New" button
+     * 
      * @param event
      */
-    @FXML private void nuevo(ActionEvent event) {
+    @FXML private void createNewProduct(ActionEvent event) {
         produitTF.setText("");
         quantiteTF.setText("");
         
-        modificarBT.setDisable(true);
-        eliminarBT.setDisable(true);
-        aniadirBT.setDisable(false);
+        editBT.setDisable(true);
+        removeBT.setDisable(true);
+        addBT.setDisable(false);
     }
 
     /**
-     * Metodo que realiza las acciones tras pulsar el boton "AÃ±adir"
-     * Méthode qui effectue les actions après avoir cliqué sur le bouton "Ajouter"
+     * Method that performs the actions after pressing the "Add" button
+     *
      * @param event
      */
-    @FXML private void aniadir(ActionEvent event) {
+    @FXML private void addProduct(ActionEvent event) {
     	System.out.println("adding "+produitTF.getText()+quantiteTF.getText());
     }
 
     /**
-     * Metodo que realiza las acciones tras pulsar el boton "Modificar"
-     * Méthode qui effectue les actions après avoir appuyé sur le bouton "Modifier"
+     * Method that performs the actions after pressing the "Edit" button
+     * 
      * @param event
      */
-    @FXML private void modificar(ActionEvent event) {
+    @FXML private void editProduct(ActionEvent event) {
     	System.out.println("changing "+produitTF.getText()+quantiteTF.getText());
         ListCourses listCourses = new ListCourses();
         produits.set(PositionProduitTable, listCourses);
     }
 
     /**
-     * Metodo que realiza las acciones tras pulsar el boton "Eliminar"
-     * 
-     * Méthode qui effectue les actions après avoir appuyé sur le bouton "Supprimer"
+     *Method that performs the actions after pressing the "Remove" button
      * @param event
      */
-    @FXML private void eliminar(ActionEvent event) {
+    @FXML private void removeProduct(ActionEvent event) {
     	produits.remove(PositionProduitTable);
     }
+    /**
+     *Method that performs the actions after pressing the "Go to Store" button
+     * @param event
+     */
+    @FXML
+    void goToStore(ActionEvent event) {
+    	
+    	System.out.println("Welcome \n" );
+    }
+
+    /**
+     * Method that performs the actions after pressing the "+" button
+     */
     
     @FXML
-    void allezMagasin(ActionEvent event) {
-    	
-    	System.out.println("Bienvenue \n" );
+    void buttonPlus(ActionEvent event) {
+
     }
     /**
-     * Listener de la tabla productos
-     * écouteur de la table des produits
+     * Method that performs the actions after pressing the "-" button
      */
+    @FXML
+    void buttonLess(ActionEvent event) {
+
+    }
+    
+    /**
+     * Listener of the products table "des produits" 
+     */
+    
+    
     private final ListChangeListener<ListCourses> selecteurTable =
             new ListChangeListener<ListCourses>() {
                 public void onChanged(ListChangeListener.Change<? extends ListCourses> c) {
-                    ponerPersonaSeleccionada();
+                	putSelectedProduct();
                 }
             };
 
     /**
-     * PARA SELECCIONAR UNA CELDA DE LA TABLA "tablaproductos"
-     * POUR SÉLECTIONNER UNE CELLULE DE LA TABLE "produits de table"
+     * SELECT A CELL OF THE TABLE "produits de table"
+     * 
      */
     public ListCourses getTablaProductoSeleccionado() {
         if (tableproduits != null) {
@@ -121,36 +141,34 @@ public class VistaController implements Initializable {
     }
 
     /**
-     * Metodo para poner en los textFields la tupla que selccionemos
-     * Méthode pour mettre dans textFields le tuple que nous sélectionnons
+     * Method to put in textFields the tuple that we select
      */
-    private void ponerPersonaSeleccionada() {
+    private void putSelectedProduct() {
         final ListCourses listCourses = getTablaProductoSeleccionado();
         PositionProduitTable = produits.indexOf(listCourses);
 
         if (listCourses != null) {
 
-            // Pongo los textFields con los datos correspondientes
-        	// Je mets les textFields avec les données correspondantes
+            // Put the textFields with the corresponding data
             produitTF.setText("testProduct");
             quantiteTF.setText("testQuantity");
            
-            // Pongo los botones en su estado correspondiente
-           // Je mets les boutons dans leur état correspondant
-            modificarBT.setDisable(false);
-            eliminarBT.setDisable(false);
-            aniadirBT.setDisable(true);
+            // Put the buttons in their corresponding state
+           
+            editBT.setDisable(false);
+            removeBT.setDisable(false);
+            addBT.setDisable(true);
 
         }
     }
 
     /**
-     * MÃ©todo para inicializar la tabla
-     * Méthode d'initialisation de la table
+     * Method to initialize the table
+     * 
      */
-    private void inicializarTablaPersonas() {
-    	produitCL.setCellValueFactory(new PropertyValueFactory<ListCourses, String>("nombre"));
-    	quantiteCL.setCellValueFactory(new PropertyValueFactory<ListCourses, String>("apellido"));
+    private void initializeTablaproducts() {
+    	produitCL.setCellValueFactory(new PropertyValueFactory<ListCourses, String>("Product"));
+    	quantiteCL.setCellValueFactory(new PropertyValueFactory<ListCourses, String>("Amount"));
         
         produits = FXCollections.observableArrayList();
         tableproduits.setItems(produits);
@@ -158,22 +176,22 @@ public class VistaController implements Initializable {
 
     public void initialize(URL url, ResourceBundle rb) {
 
-        // Inicializamos la tabla
-    	// Initialise la table
-        this.inicializarTablaPersonas();
+        // initialize the table
+    	
+        this.initializeTablaproducts();
 
-        // Ponemos estos dos botones para que no se puedan seleccionar
-     // Nous mettons ces deux boutons pour qu'ils ne puissent pas être sélectionnés
-        modificarBT.setDisable(true);
-        eliminarBT.setDisable(true);
+     // Put these two buttons so they can not be selected
+    
+        editBT.setDisable(true);
+        removeBT.setDisable(true);
 
-        // Seleccionar las tuplas de la tabla de las productos
-     // Sélectionnez les tuples de la table des produits
+       // Select tuples from the product table
+     
         final ObservableList<ListCourses> tablaProductoSel = tableproduits.getSelectionModel().getSelectedItems();
         tablaProductoSel.addListener(selecteurTable);
 
-        // Inicializamos la tabla con algunos datos aleatorios
-        // Initialise la table avec quelques données aléatoires
+     // Initialize the table with some random data
+       
         for (int i = 0; i < 20; i++) {
             ListCourses p1 = new ListCourses();
             produits.add(p1);

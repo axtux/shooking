@@ -17,29 +17,29 @@
           <children>
             <TableView fx:id="tableproduits" prefHeight="498.0" prefWidth="526.0">
               <columns>
-                <TableColumn fx:id="produitCL" prefWidth="264.0000139474869" text="Produit" />
-                <TableColumn fx:id="quantiteCL" prefWidth="260.6666564941406" text="Quantité" />
+                <TableColumn fx:id="produitCL" prefWidth="264.0000139474869" text="Product" />
+                <TableColumn fx:id="quantiteCL" prefWidth="260.6666564941406" text="Amount" />
               </columns>
             </TableView>
           </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="498.0" prefWidth="414.0">
           <children>
-            <Label layoutX="14.0" layoutY="21.0" text="Produit:">
+            <Label layoutX="14.0" layoutY="21.0" text="Product:">
               <font>
                 <Font name="System Bold Italic" size="15.0" fx:id="x1" />
               </font>
             </Label>
-            <Label font="$x1" layoutX="14.0" layoutY="90.0" text="Quantité:" />
+            <Label font="$x1" layoutX="14.0" layoutY="90.0" text="Amount:" />
             <TextField fx:id="produitTF" layoutX="14.0" layoutY="45.0" prefHeight="26.0" prefWidth="239.0" />
             <TextField fx:id="quantiteTF" layoutX="13.0" layoutY="114.0" prefHeight="16.0" prefWidth="87.0" />
-            <Button fx:id="aniadirBT" font="$x1" layoutX="18.0" layoutY="198.0" mnemonicParsing="false" onAction="#aniadir" prefHeight="26.0" prefWidth="234.0" text="Ajouter" />
-            <Button fx:id="modificarBT" font="$x1" layoutX="19.0" layoutY="241.0" mnemonicParsing="false" onAction="#modificar" prefHeight="26.0" prefWidth="234.0" text="Modifier" />
-            <Button fx:id="eliminarBT" font="$x1" layoutX="19.0" layoutY="284.0" mnemonicParsing="false" onAction="#eliminar" prefHeight="26.0" prefWidth="234.0" text="Supprimer" />
-            <Button fx:id="nuevoBT" font="$x1" layoutX="19.0" layoutY="321.0" mnemonicParsing="false" onAction="#nuevo" prefHeight="34.0" prefWidth="234.0" text="Nouveau !!!" />
-                  <Button layoutX="120.0" layoutY="113.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="27.0" text="+" />
-                  <Button layoutX="154.0" layoutY="113.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="27.0" text="-" />
-                  <Button fx:id="allezMagasinBT" layoutX="20.0" layoutY="375.0" mnemonicParsing="false" onAction="#allezMagasin" prefHeight="34.0" prefWidth="234.0" text="Aller à le magasin">
+            <Button fx:id="addBT" font="$x1" layoutX="18.0" layoutY="198.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="26.0" prefWidth="234.0" text="Add" />
+            <Button fx:id="editBT" font="$x1" layoutX="19.0" layoutY="241.0" mnemonicParsing="false" onAction="#editProduct" prefHeight="26.0" prefWidth="234.0" text="Edit" />
+            <Button fx:id="removeBT" font="$x1" layoutX="19.0" layoutY="284.0" mnemonicParsing="false" onAction="#removeProduct" prefHeight="26.0" prefWidth="234.0" text="Remove" />
+            <Button fx:id="newBT" font="$x1" layoutX="19.0" layoutY="321.0" mnemonicParsing="false" onAction="#createNewProduct" prefHeight="34.0" prefWidth="234.0" text="New  " />
+                  <Button fx:id="plusBT" layoutX="120.0" layoutY="113.0" mnemonicParsing="false" onAction="#buttonPlus" prefHeight="19.0" prefWidth="27.0" text="+" />
+                  <Button fx:id="lessBT" layoutX="154.0" layoutY="113.0" mnemonicParsing="false" onAction="#buttonLess" prefHeight="19.0" prefWidth="27.0" text="-" />
+                  <Button fx:id="goStoreBT" layoutX="20.0" layoutY="375.0" mnemonicParsing="false" onAction="#goToStore" prefHeight="34.0" prefWidth="234.0" text="Go to the store">
                      <font>
                         <Font name="System Bold Italic" size="15.0" fx:id="x11" />
                      </font>

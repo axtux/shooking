@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 /**
  *
  * @author Oscar
- * Source:https://www.youtube.com/watch?v=OT_qBWKiRfY  
+ *   
  *
  */
 public class ListCourses extends Application {
