@@ -15,10 +15,10 @@
       <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="499.0" prefWidth="361.9998779296875">
           <children>
-            <TableView fx:id="tableproduits" prefHeight="498.0" prefWidth="526.0">
+            <TableView fx:id="tableProducts" prefHeight="498.0" prefWidth="526.0">
               <columns>
-                <TableColumn fx:id="produitCL" prefWidth="264.0000139474869" text="Product" />
-                <TableColumn fx:id="quantiteCL" prefWidth="260.6666564941406" text="Amount" />
+                <TableColumn fx:id="productCL" prefWidth="264.0000139474869" text="Product" />
+                <TableColumn fx:id="amountCL" prefWidth="260.6666564941406" text="Amount" />
               </columns>
             </TableView>
           </children>
@@ -31,8 +31,8 @@
               </font>
             </Label>
             <Label font="$x1" layoutX="14.0" layoutY="90.0" text="Amount:" />
-            <TextField fx:id="produitTF" layoutX="14.0" layoutY="45.0" prefHeight="26.0" prefWidth="239.0" />
-            <TextField fx:id="quantiteTF" layoutX="13.0" layoutY="114.0" prefHeight="16.0" prefWidth="87.0" />
+            <TextField fx:id="productTF" layoutX="14.0" layoutY="45.0" prefHeight="26.0" prefWidth="239.0" />
+            <TextField fx:id="amountTF" layoutX="13.0" layoutY="114.0" prefHeight="16.0" prefWidth="87.0" />
             <Button fx:id="addBT" font="$x1" layoutX="18.0" layoutY="198.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="26.0" prefWidth="234.0" text="Add" />
             <Button fx:id="editBT" font="$x1" layoutX="19.0" layoutY="241.0" mnemonicParsing="false" onAction="#editProduct" prefHeight="26.0" prefWidth="234.0" text="Edit" />
             <Button fx:id="removeBT" font="$x1" layoutX="19.0" layoutY="284.0" mnemonicParsing="false" onAction="#removeProduct" prefHeight="26.0" prefWidth="234.0" text="Remove" />

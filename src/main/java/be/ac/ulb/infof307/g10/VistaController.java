@@ -33,18 +33,18 @@ public class VistaController implements Initializable {
     @FXML private Button  lessBT;
     // Declare the textfileds
     
-    @FXML private TextField produitTF;
-    @FXML private TextField quantiteTF;
+    @FXML private TextField productTF;
+    @FXML private TextField amountTF;
     
     // Declare the table and columns
     
-    @FXML private TableView<ListCourses> tableproduits;
-    @FXML private TableColumn produitCL;
-    @FXML private TableColumn quantiteCL;
+    @FXML private TableView<ListCourses> tableProducts;
+    @FXML private TableColumn productCL;
+    @FXML private TableColumn amountCL;
     
-    ObservableList<ListCourses> produits;
+    ObservableList<ListCourses> products;
     
-    private int PositionProduitTable;
+    private int ProductTablePosition;
 
     /**
      * Method that performs the actions after pressing the "New" button
@@ -52,8 +52,8 @@ public class VistaController implements Initializable {
      * @param event
      */
     @FXML private void createNewProduct(ActionEvent event) {
-        produitTF.setText("");
-        quantiteTF.setText("");
+    	productTF.setText("");
+    	amountTF.setText("");
         
         editBT.setDisable(true);
         removeBT.setDisable(true);
@@ -66,7 +66,7 @@ public class VistaController implements Initializable {
      * @param event
      */
     @FXML private void addProduct(ActionEvent event) {
-    	System.out.println("adding "+produitTF.getText()+quantiteTF.getText());
+    	System.out.println("adding "+productTF.getText()+amountTF.getText());
     }
 
     /**
@@ -75,9 +75,9 @@ public class VistaController implements Initializable {
      * @param event
      */
     @FXML private void editProduct(ActionEvent event) {
-    	System.out.println("changing "+produitTF.getText()+quantiteTF.getText());
+    	System.out.println("changing "+productTF.getText()+amountTF.getText());
         ListCourses listCourses = new ListCourses();
-        produits.set(PositionProduitTable, listCourses);
+        products.set(ProductTablePosition, listCourses);
     }
 
     /**
@@ -85,7 +85,7 @@ public class VistaController implements Initializable {
      * @param event
      */
     @FXML private void removeProduct(ActionEvent event) {
-    	produits.remove(PositionProduitTable);
+    	products.remove(ProductTablePosition);
     }
     /**
      *Method that performs the actions after pressing the "Go to Store" button
@@ -114,7 +114,7 @@ public class VistaController implements Initializable {
     }
     
     /**
-     * Listener of the products table "des produits" 
+     * Listener of the table products  
      */
     
     
@@ -126,12 +126,12 @@ public class VistaController implements Initializable {
             };
 
     /**
-     * SELECT A CELL OF THE TABLE "produits de table"
      * 
+     * Select a cell of the table products
      */
     public ListCourses getTablaProductoSeleccionado() {
-        if (tableproduits != null) {
-            List<ListCourses> tabla = tableproduits.getSelectionModel().getSelectedItems();
+        if (tableProducts != null) {
+            List<ListCourses> tabla = tableProducts.getSelectionModel().getSelectedItems();
             if (tabla.size() == 1) {
                 final ListCourses competicionSeleccionada = tabla.get(0);
                 return competicionSeleccionada;
@@ -145,13 +145,13 @@ public class VistaController implements Initializable {
      */
     private void putSelectedProduct() {
         final ListCourses listCourses = getTablaProductoSeleccionado();
-        PositionProduitTable = produits.indexOf(listCourses);
+        ProductTablePosition = products.indexOf(listCourses);
 
         if (listCourses != null) {
 
             // Put the textFields with the corresponding data
-            produitTF.setText("testProduct");
-            quantiteTF.setText("testQuantity");
+        	productTF.setText("testProduct");
+        	amountTF.setText("testQuantity");
            
             // Put the buttons in their corresponding state
            
@@ -167,11 +167,11 @@ public class VistaController implements Initializable {
      * 
      */
     private void initializeTablaproducts() {
-    	produitCL.setCellValueFactory(new PropertyValueFactory<ListCourses, String>("Product"));
-    	quantiteCL.setCellValueFactory(new PropertyValueFactory<ListCourses, String>("Amount"));
+    	productCL.setCellValueFactory(new PropertyValueFactory<ListCourses, String>("Product"));
+    	amountCL.setCellValueFactory(new PropertyValueFactory<ListCourses, String>("Amount"));
         
-        produits = FXCollections.observableArrayList();
-        tableproduits.setItems(produits);
+    	products = FXCollections.observableArrayList();
+        tableProducts.setItems(products);
     }
 
     public void initialize(URL url, ResourceBundle rb) {
@@ -187,14 +187,14 @@ public class VistaController implements Initializable {
 
        // Select tuples from the product table
      
-        final ObservableList<ListCourses> tablaProductoSel = tableproduits.getSelectionModel().getSelectedItems();
+        final ObservableList<ListCourses> tablaProductoSel = tableProducts.getSelectionModel().getSelectedItems();
         tablaProductoSel.addListener(selecteurTable);
 
      // Initialize the table with some random data
        
         for (int i = 0; i < 20; i++) {
             ListCourses p1 = new ListCourses();
-            produits.add(p1);
+            products.add(p1);
         }
     }
 }
