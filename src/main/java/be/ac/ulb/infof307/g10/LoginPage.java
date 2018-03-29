@@ -112,7 +112,7 @@ public class LoginPage {
         //Page creation
         Scene scene = new Scene(hbox, 400, 400);
         stage.setScene(scene);
-        stage.setResizable(false);
+        //stage.setResizable(false);
         stage.show();
 
     }

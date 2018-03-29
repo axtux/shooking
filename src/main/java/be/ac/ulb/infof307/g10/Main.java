@@ -4,10 +4,8 @@ import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class Main extends Application {
@@ -36,24 +34,24 @@ public class Main extends Application {
 	
 	public void goToLogin() {
 		new LoginPage(stage);
-		center();
+		update();
 	}
 	
 	public void goToTerms() {
 		stage.setTitle("Terms of use");
 		loadFXML("TermsOfUse");
-		center();
+		update();
 	}
 	
 	public void goToSignUp() {
 		new IntCreateAcount(stage);
-		center();
+		update();
 	}
 	
 	public void goToShoppingList() {
 		stage.setTitle("Shopping list");
 		loadFXML("Vista");
-		center();
+		update();
 	}
 	
 	private void loadFXML(String name) {
@@ -69,9 +67,7 @@ public class Main extends Application {
 		}
 	}
 	
-	private void center() {
-		Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-		stage.setX((bounds.getWidth() - stage.getWidth()) / 2);
-		stage.setY((bounds.getHeight() - stage.getHeight()) / 2);
+	private void update() {
+		stage.centerOnScreen();
 	}
 }
