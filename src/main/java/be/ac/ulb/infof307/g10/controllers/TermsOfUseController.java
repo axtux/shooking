@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g10;
+package be.ac.ulb.infof307.g10.controllers;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import be.ac.ulb.infof307.g10.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;

@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g10;
+package be.ac.ulb.infof307.g10.controllers;
 
 import java.net.URL;
 import java.util.List;
