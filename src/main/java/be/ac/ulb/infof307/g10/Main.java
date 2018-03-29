@@ -52,7 +52,7 @@ public class Main extends Application {
 	
 	public void goToShoppingList() {
 		stage.setTitle("Shopping list");
-		loadFXML("Vista");
+		loadFXML("ShoppingList");
 		update();
 	}
 	
