@@ -1,16 +1,13 @@
 package be.ac.ulb.infof307.g10.controllers;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
-import java.util.Set;
 
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Product;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -23,10 +20,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 /**
@@ -106,7 +101,7 @@ public class ShoppingListController implements Initializable {
 			return;
 		}
 		try {
-			Integer i = Integer.parseUnsignedInt(amountTF.getText());
+			Integer.parseUnsignedInt(amountTF.getText());
 			products.remove(selected.getKey());
 			add(null);
 		} catch(NumberFormatException e) {
@@ -171,14 +166,20 @@ public class ShoppingListController implements Initializable {
 			selected = null;
 			editBT.setDisable(true);
 			removeBT.setDisable(true);
-			productTF.setText("");
-			amountTF.setText("");
+			//productTF.setText("");
+			//amountTF.setText("");
 		}
 		System.out.println("updated");
 	}
 	
 	private void updateInterface() {
 		items = FXCollections.observableArrayList(products.entrySet());
+		// sort by product description (case insensitive)
+		items.sort(new Comparator<Entry<Product, Integer>>() {
+			public int compare(Entry<Product, Integer> o1, Entry<Product, Integer> o2) {
+				return o1.getKey().getProductDesc().toLowerCase().compareTo(o2.getKey().getProductDesc().toLowerCase());
+			}
+		});
 		table.setItems(items);
 		System.out.println("interface updated");
 	}
