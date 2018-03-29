@@ -1,8 +1,8 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.Exception.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.Exception.UserAlreadyExistException;
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.exceptions.IncorrectPasswordException;
+import be.ac.ulb.infof307.g10.exceptions.UserAlreadyExistException;
 import be.ac.ulb.infof307.g10.models.User;
 
 import java.io.UnsupportedEncodingException;
