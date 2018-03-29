@@ -1,7 +1,8 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.Objects.User;
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.models.User;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
