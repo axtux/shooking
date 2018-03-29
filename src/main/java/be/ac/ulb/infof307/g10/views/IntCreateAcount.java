@@ -1,5 +1,7 @@
-package be.ac.ulb.infof307.g10;
+package be.ac.ulb.infof307.g10.views;
 
+import be.ac.ulb.infof307.g10.Connector;
+import be.ac.ulb.infof307.g10.Session;
 import be.ac.ulb.infof307.g10.Exception.UserAlreadyExistException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
