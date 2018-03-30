@@ -5,8 +5,16 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
 public class IntField extends TextField {
-	boolean signed;
+	private boolean signed;
 	
+	public boolean isSigned() {
+		return signed;
+	}
+
+	public void setSigned(boolean signed) {
+		this.signed = signed;
+	}
+
 	public IntField() {
 		this(true);
 	}

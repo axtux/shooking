@@ -198,6 +198,8 @@ public class ShoppingListController implements Initializable {
 			}
 		});
 		updateSelected();
+		
+		amountTF.setSigned(false);
 	}
 	
 }
