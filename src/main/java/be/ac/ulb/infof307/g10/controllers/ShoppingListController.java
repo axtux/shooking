@@ -8,6 +8,7 @@ import java.util.ResourceBundle;
 
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Product;
+import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -50,7 +51,7 @@ public class ShoppingListController implements Initializable {
 	@FXML
 	private TextField productTF;
 	@FXML
-	private TextField amountTF;
+	private IntField amountTF;
 
 	@FXML
 	private TableView<Map.Entry<Product, Integer>> table;
@@ -75,24 +76,16 @@ public class ShoppingListController implements Initializable {
 
 	@FXML
 	private void add(ActionEvent event) {
-		// parse quantity field
-		Integer quantity;
-		try {
-			quantity = Integer.parseUnsignedInt(amountTF.getText());
-		} catch(NumberFormatException e) {
-			System.out.println("wrong number");
-			return;
-		}
 		// add product
 		Product p = new Product(productTF.getText(), 0, 0, 0, 0);
-		products.put(p, quantity);
+		products.put(p, amountTF.getInt());
 		// select it
 		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i).getKey() == p) {
 				table.getSelectionModel().select(i);
 			}
 		}
-		System.out.println("added " + productTF.getText() + ": " + quantity.toString());
+		System.out.println("added " + productTF.getText() + ": " + amountTF.getText());
 	}
 
 	@FXML
@@ -100,13 +93,8 @@ public class ShoppingListController implements Initializable {
 		if (selected == null) {
 			return;
 		}
-		try {
-			Integer.parseUnsignedInt(amountTF.getText());
-			products.remove(selected.getKey());
-			add(null);
-		} catch(NumberFormatException e) {
-			updateSelected();
-		}
+		products.remove(selected.getKey());
+		add(null);
 		System.out.println("edited " + productTF.getText() + ": " + amountTF.getText());
 	}
 
@@ -128,26 +116,13 @@ public class ShoppingListController implements Initializable {
 
 	@FXML
 	void amountUp(ActionEvent event) {
-		try {
-			Integer i = Integer.parseUnsignedInt(amountTF.getText())+1;
-			amountTF.setText(i.toString());
-		} catch(NumberFormatException e) {
-			amountTF.setText("1");
-		}
+		amountTF.setInt(amountTF.getInt()+1);
 		System.out.println("amount up\n");
 	}
 
 	@FXML
 	void amountDown(ActionEvent event) {
-		try {
-			Integer i = Integer.parseUnsignedInt(amountTF.getText())-1;
-			if (i == -1) {
-				i = 0;
-			}
-			amountTF.setText(i.toString());
-		} catch(NumberFormatException e) {
-			amountTF.setText("0");
-		}
+		amountTF.setInt(amountTF.getInt()-1);
 		System.out.println("amount down\n");
 	}
 
@@ -166,8 +141,6 @@ public class ShoppingListController implements Initializable {
 			selected = null;
 			editBT.setDisable(true);
 			removeBT.setDisable(true);
-			//productTF.setText("");
-			//amountTF.setText("");
 		}
 		System.out.println("updated");
 	}
@@ -183,6 +156,9 @@ public class ShoppingListController implements Initializable {
 		table.setItems(items);
 		System.out.println("interface updated");
 	}
+	
+
+
 
 	public void initialize(URL url, ResourceBundle rb) {
 		products = FXCollections.observableHashMap();
