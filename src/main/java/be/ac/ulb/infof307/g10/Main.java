@@ -1,6 +1,5 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 
 public class Main {
 

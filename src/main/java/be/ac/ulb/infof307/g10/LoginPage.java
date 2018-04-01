@@ -78,8 +78,18 @@ public class LoginPage extends Application {
                         }
                     });
 
+                    Button research = new Button("Research");
+                    research.setOnAction(new EventHandler<ActionEvent>() {
+                        @Override
+                        public void handle(ActionEvent event) {
+                            ResearchPage rp = new ResearchPage();
+                            rp.start(primaryStage);
 
-                    VBox v = new VBox(logout);
+                        }
+                    });
+
+
+                    VBox v = new VBox(logout, research);
                     Scene sceneApp = new Scene(v, 400, 400);
                     primaryStage.setScene(sceneApp);
                     primaryStage.setResizable(false);
