@@ -10,6 +10,7 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.sqlite.SQLiteException;
 
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
@@ -24,12 +25,13 @@ public class TestDB {
 
 
     @Test
-    public void test_0010_InsertUser(){
+    public void test_0010_InsertUser() throws SQLiteException {
+
         DatabaseFacade.insertUser(new User("lala", "lala", null));
     }
 
     @Test(expected = RollbackException.class)
-    public void test_0011_InsertUser_uniqueConstraintExecptionExpected(){
+    public void test_0011_InsertUser_uniqueConstraintExecptionExpected() throws SQLiteException {
         DatabaseFacade.insertUser(new User("lala", "lala", null));
     }
 

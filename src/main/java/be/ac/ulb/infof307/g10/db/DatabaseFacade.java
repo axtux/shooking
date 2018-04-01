@@ -1,8 +1,11 @@
 package be.ac.ulb.infof307.g10.db;
 
+import be.ac.ulb.infof307.g10.Exception.UserAlreadyExistException;
 import be.ac.ulb.infof307.g10.Objects.*;
+import org.sqlite.SQLiteException;
 
 import javax.persistence.NoResultException;
+import javax.persistence.RollbackException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +35,7 @@ public class DatabaseFacade {
     }
 
 
-    public static void insertUser(User u) throws NoResultException{
+    public static void insertUser(User u) throws NoResultException, RollbackException {
         Connection.getTransaction().begin();
         Connection.getManager().persist(u);
         Connection.getTransaction().commit();

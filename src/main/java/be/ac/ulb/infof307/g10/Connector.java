@@ -4,7 +4,10 @@ import be.ac.ulb.infof307.g10.Exception.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.Exception.UserAlreadyExistException;
 import be.ac.ulb.infof307.g10.Objects.User;
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import org.sqlite.SQLiteException;
 
+import javax.persistence.NoResultException;
+import javax.persistence.RollbackException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -61,13 +64,18 @@ public class Connector {
 	 */
 	public Session createUser(String username, String password) throws UserAlreadyExistException {
 		//Hash the password
+		//FIXME - UserAlreadyExistException
         User u = new User(username, password);
         DatabaseFacade d = new DatabaseFacade();
-        if (d.getUser(username) != null){
-            throw new UserAlreadyExistException();
-        }
-        d.insertUser(u);
-        return new Session(username);
+
+        try{
+			d.insertUser(u);
+		}
+		catch (RollbackException e) {
+			throw new UserAlreadyExistException();
+		}
+		return new Session(username);
+
 	}
 
 	/**
