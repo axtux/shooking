@@ -97,10 +97,10 @@ public class Connector {
 	}
 
 	public boolean checkUserPassword(String username, String password) throws IncorrectPasswordException {
-        DatabaseFacade d = new DatabaseFacade();
-        System.out.println(d.getUser(username));
-        User u ;
         try {
+			DatabaseFacade d = new DatabaseFacade();
+			System.out.println(d.getUser(username));
+			User u ;
             u = new User(d.getUser(username));
             if (!u.getPassword().equals(sha256(password))) {
                 throw new IncorrectPasswordException();
@@ -110,6 +110,9 @@ public class Connector {
             //FIXME - clean me
             throw new IncorrectPasswordException();
         }
+        catch (NoResultException e){
+			throw new IncorrectPasswordException();
+		}
         return true;
     }
 }

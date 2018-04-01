@@ -1,12 +1,13 @@
 /**
  * Page de login
  */
-package be.ac.ulb.infof307.g10;
+package be.ac.ulb.infof307.g10.views;
 
 
-import be.ac.ulb.infof307.g10.Objects.Product;
-import be.ac.ulb.infof307.g10.Objects.Shop;
+import be.ac.ulb.infof307.g10.controllers.Research;
+import be.ac.ulb.infof307.g10.models.*;
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.models.Product;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,9 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 /**

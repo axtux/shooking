@@ -1,10 +1,10 @@
-package be.ac.ulb.infof307.g10;
+package be.ac.ulb.infof307.g10.controllers;
 
-import be.ac.ulb.infof307.g10.Objects.Product;
-import be.ac.ulb.infof307.g10.Objects.Shop;
+import be.ac.ulb.infof307.g10.models.*;
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 
 import java.util.*;
+import java.util.List;
 
 public class Research {
 

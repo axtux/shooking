@@ -1,9 +1,6 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.Objects.List;
-import be.ac.ulb.infof307.g10.Objects.Product;
-import be.ac.ulb.infof307.g10.Objects.Shop;
-import be.ac.ulb.infof307.g10.Objects.User;
+import be.ac.ulb.infof307.g10.models.*;
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -40,20 +37,13 @@ public class TestDB {
         Assert.assertNotEquals(null, DatabaseFacade.getUser("lala"));
     }
 
-    @Test
-    public void test_0030_DeleteUser(){
-        DatabaseFacade.deleteUser((DatabaseFacade.getUser("lala")));
-    }
 
-    @Test(expected = NoResultException.class)
-    public void test_0040_DeleteUser_noResultExceptionExpected(){
-        DatabaseFacade.deleteUser((DatabaseFacade.getUser("lala")));
-    }
 
-    @Test(expected = NoResultException.class)
-    public void test_0050_GetUser_noResultExceptionExpected(){
-        Assert.assertNotEquals(null, DatabaseFacade.getUser("lala"));
-    }
+
+//    @Test(expected = NoResultException.class)
+//    public void test_0050_GetUser_noResultExceptionExpected(){
+//        Assert.assertNotEquals(null, DatabaseFacade.getUser("lala"));
+//    }
 
 
     @Test
@@ -67,8 +57,9 @@ public class TestDB {
         DatabaseFacade.getProduct("6 Apples", "Pink ladies");
     }
 
+
     @Test
-    public void test_0070_GetProducts(){
+    public void test_0072_GetProducts(){
         System.out.println(DatabaseFacade.getProducts("6 Apples"));
     }
 
@@ -88,10 +79,7 @@ public class TestDB {
 
     }
 
-    @Test
-    public void test_0100_DeleteShop(){
-        DatabaseFacade.deleteShop(DatabaseFacade.getShop("Delhaize"));
-    }
+
 
     @Test
     public void test_0110_CreateList(){
@@ -102,12 +90,33 @@ public class TestDB {
         DatabaseFacade.getUser("lala").setList(l);
     }
 
+//    @Test
+//    public void test_0120_DeleteList(){
+//        DatabaseFacade.deleteList(DatabaseFacade.getUser("lala").getList());
+//    }
+
     @Test
-    public void test_0120_DeleteList(){
-        DatabaseFacade.deleteList(DatabaseFacade.getUser("lala").getList());
+    public void test_0990_DeleteUser(){
+        DatabaseFacade.deleteUser((DatabaseFacade.getUser("lala")));
+    }
+
+    @Test(expected = NoResultException.class)
+    public void test_0991_DeleteUser_noResultExceptionExpected(){
+        DatabaseFacade.deleteUser((DatabaseFacade.getUser("lala")));
     }
 
 
+    @Test
+    public void test_0994_DeleteProduct(){
+        DatabaseFacade.deleteProduct(DatabaseFacade.getProduct("6 Apples", "Pink ladies"));
+        DatabaseFacade.deleteProduct(DatabaseFacade.getProduct("6 Apples", "Jonagold"));
+    }
+
+
+    @Test
+    public void test_0998_DeleteShop(){
+        DatabaseFacade.deleteShop(DatabaseFacade.getShop("Delhaize"));
+    }
 
 
 

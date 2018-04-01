@@ -1,12 +1,11 @@
 package be.ac.ulb.infof307.g10.db;
 
-import be.ac.ulb.infof307.g10.Exception.UserAlreadyExistException;
-import be.ac.ulb.infof307.g10.Objects.*;
-import org.sqlite.SQLiteException;
+import be.ac.ulb.infof307.g10.models.Product;
+import be.ac.ulb.infof307.g10.models.Shop;
+import be.ac.ulb.infof307.g10.models.User;
 
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseFacade {
@@ -21,107 +20,184 @@ public class DatabaseFacade {
     }
 
     public static User getUser(String username) throws NoResultException{
-        Connection.getTransaction().begin();
-        User u = (User) Connection.getManager().createQuery("SELECT b from User b where b.username LIKE :username").setParameter("username", username).getSingleResult();
-        Connection.getTransaction().commit();
-        return u;
+        try {
+            Connection.getTransaction().begin();
+            User u = (User) Connection.getManager().createQuery("SELECT b from User b where b.username LIKE :username").setParameter("username", username).getSingleResult();
+            Connection.getTransaction().commit();
+            return u;
+        }catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
     }
 
     public static User getListOwner(Long list_id) throws NoResultException{
-        Connection.getTransaction().begin();
-        User u = (User) Connection.getManager().createQuery("SELECT b from User b where b.list_id LIKE :list_id").setParameter("list_id", list_id).getSingleResult();
-        Connection.getTransaction().commit();
-        return u;
+        try {
+            Connection.getTransaction().begin();
+            User u = (User) Connection.getManager().createQuery("SELECT b from User b where b.list_id LIKE :list_id").setParameter("list_id", list_id).getSingleResult();
+            Connection.getTransaction().commit();
+            return u;
+        }catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
+
     }
 
 
     public static void insertUser(User u) throws NoResultException, RollbackException {
-        Connection.getTransaction().begin();
-        Connection.getManager().persist(u);
-        Connection.getTransaction().commit();
+        try {
+            Connection.getTransaction().begin();
+            Connection.getManager().persist(u);
+            Connection.getTransaction().commit();
+        }catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
     }
 
     public static void updateUser(User u) throws NoResultException{
-        Connection.getTransaction().begin();
-        Connection.getManager().merge(u);
-        Connection.getTransaction().commit();
+        try {
+            Connection.getTransaction().begin();
+            Connection.getManager().merge(u);
+            Connection.getTransaction().commit();
+        }catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
     }
 
     public static void deleteUser(User u) throws NoResultException{
-        Connection.getTransaction().begin();
-        Connection.getManager().remove(u);
-        Connection.getTransaction().commit();
+        try {
+            Connection.getTransaction().begin();
+            Connection.getManager().remove(u);
+            Connection.getTransaction().commit();
+        }catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
     }
 
     public static void insertProduct(Product p) throws NoResultException{
-        Connection.getTransaction().begin();
-        Connection.getManager().persist(p);
-        Connection.getTransaction().commit();
+        try {
+            Connection.getTransaction().begin();
+            Connection.getManager().persist(p);
+            Connection.getTransaction().commit();
+        }catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
     }
 
     public static Product getProduct(String name, String description) throws NoResultException{
-        Connection.getTransaction().begin();
-        //FIXME - multiple result crash
-        Product p = (Product) Connection.getManager().createQuery("SELECT b FROM Product b WHERE b.name LIKE :name AND b.description LIKE :description").setParameter("name", name).setParameter("description", description).getSingleResult();
-        Connection.getTransaction().commit();
-        return p;
+        try {
+            Connection.getTransaction().begin();
+            //FIXME - multiple result crash
+            Product p = (Product) Connection.getManager().createQuery("SELECT b FROM Product b WHERE b.name LIKE :name AND b.description LIKE :description").setParameter("name", name).setParameter("description", description).getSingleResult();
+            Connection.getTransaction().commit();
+            return p;
+        }catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
     }
 
     public static List<Product> getProducts(String name) throws NoResultException{
-        Connection.getTransaction().begin();
-        List<Product> p = (List<Product>) Connection.getManager().createQuery("SELECT b FROM Product b WHERE b.name LIKE :name").setParameter("name", name).getResultList();
-        Connection.getTransaction().commit();
-        return p;
+        try {
+            Connection.getTransaction().begin();
+            List<Product> p = (List<Product>) Connection.getManager().createQuery("SELECT b FROM Product b WHERE b.name LIKE :name").setParameter("name", name).getResultList();
+            Connection.getTransaction().commit();
+            return p;
+        }catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
     }
 
     public static void deleteProduct(Product p) throws NoResultException{
-        Connection.getTransaction().begin();
-        Connection.getManager().remove(p);
-        Connection.getTransaction().commit();
+        try {
+            Connection.getTransaction().begin();
+            Connection.getManager().remove(p);
+            Connection.getTransaction().commit();
+        }catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
     }
 
     public static void insertShop(Shop s) throws NoResultException{
+        try{
         Connection.getTransaction().begin();
         Connection.getManager().persist(s);
-        Connection.getTransaction().commit();
+        Connection.getTransaction().commit();}
+        catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
     }
 
     public static Shop getShop(String name) throws NoResultException{
-        Connection.getTransaction().begin();
-        Shop s = (Shop) Connection.getManager().createQuery("SELECT b FROM Shop b WHERE b.name LIKE :name").setParameter("name", name).getSingleResult();
-        Connection.getTransaction().commit();
-        return s;
+        try {
+            Connection.getTransaction().begin();
+            Shop s = (Shop) Connection.getManager().createQuery("SELECT b FROM Shop b WHERE b.name LIKE :name").setParameter("name", name).getSingleResult();
+            Connection.getTransaction().commit();
+            return s;
+        }
+        catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
     }
 
     public static List<Shop> getShops(){
-        Connection.getTransaction().begin();
-        List<Shop> l = Connection.getManager().createNamedQuery("Shop.findAll").getResultList();
-        Connection.getTransaction().commit();
-        return  l;
+        try {
+            Connection.getTransaction().begin();
+            List<Shop> l = Connection.getManager().createNamedQuery("Shop.findAll").getResultList();
+            Connection.getTransaction().commit();
+            return l;
+        }catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
     }
 
 
     public static void deleteShop(Shop s) throws NoResultException{
-        Connection.getTransaction().begin();
-        Connection.getManager().remove(s);
-        Connection.getTransaction().commit();
+        try {
+            Connection.getTransaction().begin();
+            Connection.getManager().remove(s);
+            Connection.getTransaction().commit();
+        }catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
     }
 
-    public static void insertList(be.ac.ulb.infof307.g10.Objects.List l) throws NoResultException{
-        Connection.getTransaction().begin();
-        Connection.getManager().persist(l);
-        Connection.getTransaction().commit();
+    public static void insertList(be.ac.ulb.infof307.g10.models.List l) throws NoResultException{
+        try {
+            Connection.getTransaction().begin();
+            Connection.getManager().persist(l);
+            Connection.getTransaction().commit();
+        }catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
     }
 
-    public static void deleteList(be.ac.ulb.infof307.g10.Objects.List l) throws NoResultException{
-        //FIXME java.lang.IllegalStateException: ???
-        //Exception Description: Transaction is currently active
-        Connection.getTransaction().begin();
-        DatabaseFacade.getListOwner(l.getId()).setList(null);
-        Connection.getTransaction().commit();
-        Connection.getTransaction().begin();
-        Connection.getManager().remove(l);
-        Connection.getTransaction().commit();
+    public static void deleteList(be.ac.ulb.infof307.g10.models.List l) throws NoResultException{
+        try {
+            //FIXME java.lang.IllegalStateException: ???
+            //Exception Description: Transaction is currently active
+            Connection.getTransaction().begin();
+            DatabaseFacade.getListOwner(l.getId()).setList(null);
+            Connection.getTransaction().commit();
+            Connection.getTransaction().begin();
+            Connection.getManager().remove(l);
+            Connection.getTransaction().commit();
+        }catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
     }
 
 
