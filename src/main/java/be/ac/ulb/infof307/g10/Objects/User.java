@@ -1,5 +1,7 @@
 package be.ac.ulb.infof307.g10.Objects;
 
+import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -8,7 +10,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 @Entity
-//@Table(name="T_USERS")
 public class User implements Serializable {
 
     private static final long serialVersionUID = -0L;
@@ -17,6 +18,7 @@ public class User implements Serializable {
 	@Basic(optional = false)
 	private Integer id;
 
+	@Column(unique = true)
 	@Basic(optional = false)
 	private String username;
 
@@ -24,7 +26,7 @@ public class User implements Serializable {
 	private String password;
 
 	@OneToOne
-    private List userList;
+    private List list;
 
 	//NEEDED BY JPA
 	public User(){
@@ -33,7 +35,7 @@ public class User implements Serializable {
     public User(String username, String password, List userList) {
         this.username = username;
         this.password = sha256(password);
-        this.userList = userList;
+        this.list = userList;
     }
 
     public User(String username, String password) {
@@ -46,7 +48,7 @@ public class User implements Serializable {
         this.id = user.id;
         this.username = user.username;
         this.password = user.password;
-        this.userList = user.userList;
+        this.list = user.list;
     }
 
     public static String sha256(String password) {
@@ -71,7 +73,7 @@ public class User implements Serializable {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", userList=" + userList +
+                ", userList=" + list +
                 '}';
     }
 
@@ -99,14 +101,13 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public List getUserList() {
-        return userList;
+    public List getList() {
+        return list;
     }
 
-    public void setUserList(List userList) {
-        this.userList = userList;
+    public void setList(List list) {
+        this.list = list;
+        DatabaseFacade.updateUser(this);
     }
-
-
 }
 

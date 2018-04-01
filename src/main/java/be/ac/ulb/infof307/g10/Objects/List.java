@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-//@Table(name="T_LISTS")
+@NamedQueries({
+        @NamedQuery(name = "List.findAll", query = "SELECT l FROM List l")
+})
 public class List implements Serializable {
 
 	private static final long serialVersionUID = -0L;
@@ -14,35 +16,30 @@ public class List implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	@Basic(optional = false)
-	@OneToOne
-	private User user;
+	private Double amountTotal = 0.0;
 
-	@Basic(optional = false)
-	private Integer listId;
-
-	@OneToMany
-	private java.util.List<Product> productList;
-
-	@Basic(optional = true)
-	private Integer amount;
-
-	//TODO - test me
-    @ElementCollection
-    Map<Product,Integer> quantity = new HashMap<>();
+    @ElementCollection(fetch = FetchType.EAGER)
+    Map<Product,Integer> products_x_quantity = new HashMap<>();
 
 
 
     // NEEDED BY JPA
     public List(){
+        products_x_quantity = new HashMap<Product, Integer>();
     }
 
-    public List(User user, Integer listId, java.util.List<Product> productList, Integer amount, Map<Product, Integer> quantity) {
-        this.user = user;
-        this.listId = listId;
-        this.productList = productList;
-        this.amount = amount;
-        this.quantity = quantity;
+    public void addProduct(Product p, int quantity){
+        products_x_quantity.put(p, quantity);
+        amountTotal += p.getPrice()*quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "List{" +
+                "id=" + id +
+                ", amountTotal=" + amountTotal +
+                ", products_x_quantity=" + products_x_quantity +
+                '}';
     }
 
     public Long getId() {
@@ -53,43 +50,19 @@ public class List implements Serializable {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public Double getAmountTotal() {
+        return amountTotal;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAmountTotal(Double amountTotal) {
+        this.amountTotal = amountTotal;
     }
 
-    public Integer getListId() {
-        return listId;
+    public Map<Product, Integer> getProducts_x_quantity() {
+        return products_x_quantity;
     }
 
-    public void setListId(Integer listId) {
-        this.listId = listId;
-    }
-
-    public java.util.List<Product> getProductList() {
-        return productList;
-    }
-
-    public void setProductList(java.util.List<Product> productList) {
-        this.productList = productList;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
-    }
-
-    public Map<Product, Integer> getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Map<Product, Integer> quantity) {
-        this.quantity = quantity;
+    public void setProducts_x_quantity(Map<Product, Integer> products_x_quantity) {
+        this.products_x_quantity = products_x_quantity;
     }
 }

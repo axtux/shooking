@@ -3,41 +3,75 @@ package be.ac.ulb.infof307.g10.Objects;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
-//@Table(name="T_SHOPS")
+@NamedQueries({
+        @NamedQuery(name = "Shop.findAll", query = "SELECT s FROM Shop s")
+})
 public class Shop implements Serializable {
 
 	private static final long serialVersionUID = -0L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Basic(optional = false)
-	private Integer shopId;
+	private Integer id;
 
-	@Basic(optional = true)
-	public String shopDesc;
+    @Column(unique = true)
+	public String name;
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	Map<Product,Integer> stock = new HashMap<>();
 
 	// NEEDED BY JPA
 	public Shop(){
 	}
 
-	public Shop(String shopDesc) {
-		this.shopDesc = shopDesc;
-	}
+    public Shop(String name) {
+        this.name = name;
+        stock = new HashMap<Product, Integer>();
+    }
 
-	public Integer getShopId() {
-		return shopId;
-	}
+    public Shop(String name, Map<Product, Integer> stock) {
+        this.name = name;
+        this.stock = stock;
+    }
 
-	public void setShopId(Integer shopId) {
-		this.shopId = shopId;
-	}
+    public void addProduct(Product p, int quantity){
+	    stock.put(p, quantity);
+    }
 
-	public String getShopDesc() {
-		return shopDesc;
-	}
+    @Override
+    public String toString() {
+        return "Shop{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", stock=" + stock +
+                '}';
+    }
 
-	public void setShopDesc(String shopDesc) {
-		this.shopDesc = shopDesc;
-	}
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Map<Product, Integer> getStock() {
+        return stock;
+    }
+
+    public void setStock(Map<Product, Integer> stock) {
+        this.stock = stock;
+    }
 }

@@ -4,6 +4,9 @@
 package be.ac.ulb.infof307.g10;
 
 
+import be.ac.ulb.infof307.g10.Objects.Product;
+import be.ac.ulb.infof307.g10.Objects.Shop;
+import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -54,13 +57,12 @@ public class ResearchPage extends Application {
         btnResearch.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
             	//Récupération du champ "Login"
-                String product = textFieldProd.getText();
+
+                List<Product> pl = DatabaseFacade.getProducts(textFieldProd.getText());
                 Research r = new Research();
-                ArrayList<Object> stores = r.getStoreWithProduct(product);
-                System.out.println(product);
-                for (Object s: stores) {
-                    System.out.println(s);
-                    storesArea.setText(storesArea.getText() + s +"\n");
+                List<Shop> sl = r.getStoreWithProducts(pl);
+                for (Shop s: sl) {
+                    storesArea.setText(storesArea.getText() + s.getName() +"\n");
                 }
             }
         });

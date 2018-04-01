@@ -5,7 +5,7 @@
         <class>be.ac.ulb.infof307.g10.Objects.List</class>
         <class>be.ac.ulb.infof307.g10.Objects.Product</class>
         <class>be.ac.ulb.infof307.g10.Objects.Shop</class>
-        <class>be.ac.ulb.infof307.g10.Objects.Stock</class>
+        <!--<class>be.ac.ulb.infof307.g10.Objects.Stock</class>-->
         <class>be.ac.ulb.infof307.g10.Objects.User</class>
 
         <properties>

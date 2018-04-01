@@ -1,5 +1,9 @@
 package be.ac.ulb.infof307.g10;
 
+import be.ac.ulb.infof307.g10.Objects.Product;
+import be.ac.ulb.infof307.g10.Objects.Shop;
+import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+
 import java.util.*;
 
 public class Research {
@@ -10,22 +14,30 @@ public class Research {
      * @author Benjamin Nicodeme
      *
      */
-    public ArrayList<Object> getStoreWithProducts(ArrayList<Object> products){
-        //TODO - get elements from DB
-        ArrayList<Object> returnList = new ArrayList<>();
-        returnList.add("Store1");
-        returnList.add("Store2");
-        return returnList;
+    public List<Shop> getStoreWithProducts(List<Product> products){
+        List<Shop> sl = new ArrayList<>();
+
+        for (Product p : products) {
+            List<Shop> sl2 = getStoreWithProduct(p);
+            for (Shop s: sl2) {
+                if (!sl.contains(s)){
+                    sl.add(s);
+                }
+            }
+        }
+        return sl;
     }
 
 
-    public ArrayList<Object> getStoreWithProduct(Object product){
+    public List<Shop> getStoreWithProduct(Object product){
+        List<Shop> sl = new ArrayList<>();
+        for (Shop s : DatabaseFacade.getShops()) {
+            if (s.getStock().containsKey(product)){
+                sl.add(s);
+            }
 
-        //TODO - get elements from DB
-        ArrayList<Object> returnList = new ArrayList<>();
-        returnList.add("Store1");
-        returnList.add("Store2");
-        return returnList;
+        }
+        return sl;
     }
 
 }

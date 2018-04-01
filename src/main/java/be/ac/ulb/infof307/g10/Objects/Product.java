@@ -5,7 +5,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-//@Table(name="T_PRODUCTS")
 @NamedQueries({
 		@NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
 })
@@ -15,76 +14,112 @@ public class Product implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Basic(optional = false)
-	private Integer productId;
+	private Integer id;
 
-	private String productDesc;
+	private String name; // example : apple
 
-	private Integer calories;
+	private String description; // example pink ladies
 
-	private Integer sugar;
+	private Double calories;
 
-	private Integer proteins;
+	private Double sugar;
 
-	private Integer fat;
+	private Double proteins;
+
+	private Double fat;
+
+	private Double price;
 
 
 	// NEEDED BY JPA
 	public Product(){
 	}
 
-	public Product(String productDesc, Integer calories, Integer sugar, Integer proteins, Integer fat) {
-		this.productDesc = productDesc;
-		this.calories = calories;
-		this.sugar = sugar;
-		this.proteins = proteins;
-		this.fat = fat;
-	}
+    public Product(String name, String description, Double calories, Double sugar, Double proteins, Double fat, Double price) {
+        this.name = name;
+        this.description = description;
+        this.calories = calories;
+        this.sugar = sugar;
+        this.proteins = proteins;
+        this.fat = fat;
+        this.price = price;
+    }
 
-	public Integer getProductId() {
-		return productId;
-	}
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", calories=" + calories +
+                ", sugar=" + sugar +
+                ", proteins=" + proteins +
+                ", fat=" + fat +
+                ", price=" + price +
+                '}';
+    }
 
-	public void setProductId(Integer productId) {
-		this.productId = productId;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getProductDesc() {
-		return productDesc;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setProductDesc(String productDesc) {
-		this.productDesc = productDesc;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public Integer getCalories() {
-		return calories;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setCalories(Integer calories) {
-		this.calories = calories;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public Integer getSugar() {
-		return sugar;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setSugar(Integer sugar) {
-		this.sugar = sugar;
-	}
+    public Double getCalories() {
+        return calories;
+    }
 
-	public Integer getProteins() {
-		return proteins;
-	}
+    public void setCalories(Double calories) {
+        this.calories = calories;
+    }
 
-	public void setProteins(Integer proteins) {
-		this.proteins = proteins;
-	}
+    public Double getSugar() {
+        return sugar;
+    }
 
-	public Integer getFat() {
-		return fat;
-	}
+    public void setSugar(Double sugar) {
+        this.sugar = sugar;
+    }
 
-	public void setFat(Integer fat) {
-		this.fat = fat;
-	}
+    public Double getProteins() {
+        return proteins;
+    }
+
+    public void setProteins(Double proteins) {
+        this.proteins = proteins;
+    }
+
+    public Double getFat() {
+        return fat;
+    }
+
+    public void setFat(Double fat) {
+        this.fat = fat;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 }
