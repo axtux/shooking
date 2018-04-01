@@ -1,9 +1,9 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.Exception.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.Exception.UserAlreadyExistException;
-import be.ac.ulb.infof307.g10.Objects.User;
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.exceptions.IncorrectPasswordException;
+import be.ac.ulb.infof307.g10.exceptions.UserAlreadyExistException;
+import be.ac.ulb.infof307.g10.models.User;
 import org.sqlite.SQLiteException;
 
 import javax.persistence.NoResultException;
@@ -64,7 +64,6 @@ public class Connector {
 	 */
 	public Session createUser(String username, String password) throws UserAlreadyExistException {
 		//Hash the password
-		//FIXME - UserAlreadyExistException
         User u = new User(username, password);
         DatabaseFacade d = new DatabaseFacade();
 

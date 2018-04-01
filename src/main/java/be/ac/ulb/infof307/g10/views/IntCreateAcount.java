@@ -1,6 +1,8 @@
-package be.ac.ulb.infof307.g10;
+package be.ac.ulb.infof307.g10.views;
 
-import be.ac.ulb.infof307.g10.Exception.UserAlreadyExistException;
+import be.ac.ulb.infof307.g10.Connector;
+import be.ac.ulb.infof307.g10.Session;
+import be.ac.ulb.infof307.g10.exceptions.UserAlreadyExistException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -26,15 +28,13 @@ public class IntCreateAcount {
 		return (pwd1.equals(pwd2));
 	}
 	
-	public IntCreateAcount() {
-		
-		Stage secondStage = new Stage();
+	public IntCreateAcount(Stage stage) {
 		Group root = new Group();
 		
 		
 		//fields to enter the information
 		
-		secondStage.setTitle("Create account page");
+		stage.setTitle("Create account page");
 		//put the text and buttons on the horizontal center
         HBox hbox = new HBox(50);
         hbox.setAlignment(Pos.CENTER);
@@ -100,10 +100,10 @@ public class IntCreateAcount {
         hbox.getChildren().addAll(vbox);
 		
         Scene scene = new Scene(hbox,800,600,Color.WHITE);
-		secondStage.setScene(scene);
+        stage.setScene(scene);
 		
 		
-		secondStage.show();
+        stage.show();
 		
 		
 		

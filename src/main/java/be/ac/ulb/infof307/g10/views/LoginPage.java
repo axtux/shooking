@@ -1,10 +1,13 @@
 /**
  * Login Page
  */
-package be.ac.ulb.infof307.g10;
+package be.ac.ulb.infof307.g10.views;
 
 
-import be.ac.ulb.infof307.g10.Exception.IncorrectPasswordException;
+import be.ac.ulb.infof307.g10.Connector;
+import be.ac.ulb.infof307.g10.Main;
+import be.ac.ulb.infof307.g10.Session;
+import be.ac.ulb.infof307.g10.exceptions.IncorrectPasswordException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,18 +28,10 @@ import javafx.stage.Stage;
  * @author Pierre
  *
  */
-public class LoginPage extends Application {
+public class LoginPage {
 
-	/**
-	 * Launch of the user interface for the login page
-	 */
-	public static void main(String[] args) {
-		Application.launch(LoginPage.class,args);
-	}
-	
-	@Override
-	public void start(Stage primaryStage){
-		primaryStage.setTitle("Login Page");
+	public LoginPage(Stage stage) {
+		stage.setTitle("Login Page");
 		//Horizontal centering
         HBox hbox = new HBox(50);
         hbox.setAlignment(Pos.CENTER);
@@ -70,11 +65,12 @@ public class LoginPage extends Application {
                 	badPassLabel.setText("");
                 	// Run the app
 
+                	/*
                     Button logout = new Button("Log out");
                     logout.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent event) {
-                            primaryStage.hide();
+                        	stage.hide();
                         }
                     });
 
@@ -91,9 +87,10 @@ public class LoginPage extends Application {
 
                     VBox v = new VBox(logout, research);
                     Scene sceneApp = new Scene(v, 400, 400);
-                    primaryStage.setScene(sceneApp);
-                    primaryStage.setResizable(false);
-                    primaryStage.show();
+                    stage.setScene(sceneApp);
+                    stage.setResizable(false);
+                    stage.show();
+                    //*/Main.getInstance().goToShoppingList();
                 }
                 catch(IncorrectPasswordException e){
                 	System.out.println("Bad Password");
@@ -107,8 +104,9 @@ public class LoginPage extends Application {
         btnCreate.setText("Create User");
         btnCreate.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                ConditionUtil condiUtil = new ConditionUtil();
-                primaryStage.close();
+            	/*
+                TermsOfUseView condiUtil = new TermsOfUseView();
+                stage.close();//*/Main.getInstance().goToTerms();
             }
         });
 
@@ -126,9 +124,9 @@ public class LoginPage extends Application {
         
         //Page creation
         Scene scene = new Scene(hbox, 400, 400);
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.show();
+        stage.setScene(scene);
+        //stage.setResizable(false);
+        stage.show();
 
     }
 

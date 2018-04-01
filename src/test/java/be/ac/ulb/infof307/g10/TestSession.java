@@ -1,10 +1,11 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.Exception.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.Exception.UserAlreadyExistException;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import be.ac.ulb.infof307.g10.exceptions.IncorrectPasswordException;
+import be.ac.ulb.infof307.g10.exceptions.UserAlreadyExistException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
