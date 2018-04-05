@@ -1624,6 +1624,15 @@ public class DatabaseFacade {
 
     }
 
+    public static void empyDB(){
+        Connection.getTransaction().begin();
+        Connection.getManager().createQuery("delete from Product p").executeUpdate();
+        Connection.getManager().createQuery("delete from User u").executeUpdate();
+        Connection.getManager().createQuery("delete from Shop p").executeUpdate();
+        Connection.getManager().createQuery("delete from List l").executeUpdate();
+        Connection.getTransaction().commit();
+    }
+
     public static List<Product> getProduct(){
         Connection.getTransaction().begin();
         List<Product> l = Connection.getManager().createNamedQuery("Product.findAll").getResultList();

@@ -17,11 +17,12 @@ public class TestDB {
 
     @BeforeClass
     public static void createDB (){
-
+        DatabaseFacade.empyDB();
     }
+    
 
     @Test
-    public void fillDB(){
+    public void test_0009_fillDB(){
         DatabaseFacade.fillDB();
     }
 
