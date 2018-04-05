@@ -1,10 +1,11 @@
 package be.ac.ulb.infof307.g10.models;
 
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
-import be.ac.ulb.infof307.g10.exceptions.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.exceptions.UserAlreadyExistException;
-import be.ac.ulb.infof307.g10.exceptions.UserDontExistException;
 import be.ac.ulb.infof307.g10.models.User;
+import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
+import be.ac.ulb.infof307.g10.models.exceptions.UserAlreadyExistException;
+import be.ac.ulb.infof307.g10.models.exceptions.UserDontExistException;
+
 import org.sqlite.SQLiteException;
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
@@ -57,7 +58,7 @@ public class Connector {
             else {
             	throw new IncorrectPasswordException();
             }
-        } catch (NullPointerException e){
+        } catch (NoResultException e){
             throw new UserDontExistException();
         }
 	}
@@ -103,12 +104,6 @@ public class Connector {
 	}
 
 	public boolean checkUserPassword(String username, String password) throws IncorrectPasswordException {
-<<<<<<< HEAD:src/main/java/be/ac/ulb/infof307/g10/models/Connector.java
-        DatabaseFacade d = new DatabaseFacade();
-        //System.out.println(d.getUser(username));
-        User u ;
-=======
->>>>>>> master:src/main/java/be/ac/ulb/infof307/g10/Connector.java
         try {
 			DatabaseFacade d = new DatabaseFacade();
 			System.out.println(d.getUser(username));

@@ -1,8 +1,8 @@
 package be.ac.ulb.infof307.g10.views;
 
-import be.ac.ulb.infof307.g10.exceptions.UserAlreadyExistException;
 import be.ac.ulb.infof307.g10.models.Connector;
 import be.ac.ulb.infof307.g10.models.Session;
+import be.ac.ulb.infof307.g10.models.exceptions.UserAlreadyExistException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;

@@ -1,5 +1,8 @@
 package be.ac.ulb.infof307.g10.models;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class GestionShop {
 
 	public GestionShop(){
@@ -11,7 +14,7 @@ public class GestionShop {
 	 * 
 	 * @param	shop	The Shop to modify
 	 */
-	public void modifyShop(Shop shop){
+	public void modifyShop(Shop shop, String newName, Map<Product, Integer> newProduct){
 		
 	}
 	
@@ -20,15 +23,29 @@ public class GestionShop {
 	 * 
 	 * @return		A new Shop
 	 */
-	public Shop createShop(){
+	public Shop createShop(String name, Map<Product, Integer> stock){
 		
-		return new Shop();
+		return new Shop(name, stock);
+	}
+	
+	public Shop createShop(String name){
+		return new Shop(name);
 	}
 	
 	/**
 	 * Delete a Shop from DB
 	 */
-	public void delShop(){
+	public void delShop(String name){
 		
+	}
+	
+	/**
+	 * Return the Shop with the name "name" from the DB
+	 * 
+	 * @param	String	The name of the Shop
+	 * @return			A Shop from the DB
+	 */
+	public Shop getShop(String name){
+		return new Shop(name);
 	}
 }

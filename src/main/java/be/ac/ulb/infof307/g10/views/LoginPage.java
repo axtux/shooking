@@ -5,10 +5,10 @@ package be.ac.ulb.infof307.g10.views;
 
 
 import be.ac.ulb.infof307.g10.Main;
-import be.ac.ulb.infof307.g10.exceptions.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.exceptions.UserDontExistException;
 import be.ac.ulb.infof307.g10.models.Connector;
 import be.ac.ulb.infof307.g10.models.Session;
+import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
+import be.ac.ulb.infof307.g10.models.exceptions.UserDontExistException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

@@ -4,11 +4,11 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import be.ac.ulb.infof307.g10.exceptions.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.exceptions.UserAlreadyExistException;
-import be.ac.ulb.infof307.g10.exceptions.UserDontExistException;
 import be.ac.ulb.infof307.g10.models.Connector;
 import be.ac.ulb.infof307.g10.models.Session;
+import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
+import be.ac.ulb.infof307.g10.models.exceptions.UserAlreadyExistException;
+import be.ac.ulb.infof307.g10.models.exceptions.UserDontExistException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
