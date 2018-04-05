@@ -58,11 +58,14 @@ public class Main extends Application {
 	
 	private void loadFXML(String name) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("views/"+name+".fxml"));
+			//FIXME - FUCKING RETARDED, USE SEPARATOR CLASS + RETURN NULL clap clap!!!
+			System.out.println(getClass());
+			System.out.println("getclass "  + getClass().getClassLoader().getResource(name+".fxml"));
+			Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(name+".fxml"));
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();
-			
+
 		} catch (IOException e) {
 			// never happens as resource in packed with application
 			e.printStackTrace();

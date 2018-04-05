@@ -4,7 +4,10 @@ import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 import be.ac.ulb.infof307.g10.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.exceptions.UserAlreadyExistException;
 import be.ac.ulb.infof307.g10.models.User;
+import org.sqlite.SQLiteException;
 
+import javax.persistence.NoResultException;
+import javax.persistence.RollbackException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -63,11 +66,15 @@ public class Connector {
 		//Hash the password
         User u = new User(username, password);
         DatabaseFacade d = new DatabaseFacade();
-        if (d.getUser(username) != null){
-            throw new UserAlreadyExistException();
-        }
-        d.insertUser(u);
-        return new Session(username);
+
+        try{
+			d.insert(u);
+		}
+		catch (RollbackException e) {
+			throw new UserAlreadyExistException();
+		}
+		return new Session(username);
+
 	}
 
 	/**
@@ -83,17 +90,17 @@ public class Connector {
         if (checkUserPassword(username, password)){
             DatabaseFacade d = new DatabaseFacade();
             User u = d.getUser(username);
-            d.deleteUser(u);
+            d.delete(u);
             return true;
         }
         return false;
 	}
 
 	public boolean checkUserPassword(String username, String password) throws IncorrectPasswordException {
-        DatabaseFacade d = new DatabaseFacade();
-        System.out.println(d.getUser(username));
-        User u ;
         try {
+			DatabaseFacade d = new DatabaseFacade();
+			System.out.println(d.getUser(username));
+			User u ;
             u = new User(d.getUser(username));
             if (!u.getPassword().equals(sha256(password))) {
                 throw new IncorrectPasswordException();
@@ -103,6 +110,9 @@ public class Connector {
             //FIXME - clean me
             throw new IncorrectPasswordException();
         }
+        catch (NoResultException e){
+			throw new IncorrectPasswordException();
+		}
         return true;
     }
 }

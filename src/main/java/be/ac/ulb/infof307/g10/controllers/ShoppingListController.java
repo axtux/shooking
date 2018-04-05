@@ -77,7 +77,8 @@ public class ShoppingListController implements Initializable {
 	@FXML
 	private void add(ActionEvent event) {
 		// add product
-		Product p = new Product(productTF.getText(), 0, 0, 0, 0);
+		//FIXME
+		Product p = new Product(productTF.getText(), "", 0, 0, 0, 0, 0);
 		products.put(p, amountTF.getInt());
 		// select it
 		for (int i = 0; i < items.size(); i++) {
@@ -135,7 +136,7 @@ public class ShoppingListController implements Initializable {
 			selected = selection.get(0);
 			editBT.setDisable(false);
 			removeBT.setDisable(false);
-			productTF.setText(selected.getKey().getProductDesc());
+			productTF.setText(selected.getKey().getName());
 			amountTF.setText(selected.getValue().toString());
 		} else {
 			selected = null;
@@ -150,7 +151,7 @@ public class ShoppingListController implements Initializable {
 		// sort by product description (case insensitive)
 		items.sort(new Comparator<Entry<Product, Integer>>() {
 			public int compare(Entry<Product, Integer> o1, Entry<Product, Integer> o2) {
-				return o1.getKey().getProductDesc().toLowerCase().compareTo(o2.getKey().getProductDesc().toLowerCase());
+				return o1.getKey().getName().toLowerCase().compareTo(o2.getKey().getName().toLowerCase());
 			}
 		});
 		table.setItems(items);
@@ -167,7 +168,7 @@ public class ShoppingListController implements Initializable {
 			@Override
 			public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<Product, Integer>, String> p) {
 				// this callback returns property for just one cell
-				return new SimpleStringProperty(p.getValue().getKey().getProductDesc());
+				return new SimpleStringProperty(p.getValue().getKey().getName());
 			}
 		});
 		amountCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<Product, Integer>, String>, ObservableValue<String>>() {
@@ -186,9 +187,9 @@ public class ShoppingListController implements Initializable {
 			}
 		});
 		// TODO get actual data
-		products.put(new Product("Oeufs", 0, 0, 0, 0), 1);
-		products.put(new Product("Pâtes", 0, 0, 0, 0), 500);
-		products.put(new Product("Bière", 0, 0, 0, 0), 42);
+		products.put(new Product("Oeufs", "" , 0, 0, 0, 0, 0), 1);
+		products.put(new Product("Pâtes", "", 0, 0, 0, 0, 0), 500);
+		products.put(new Product("Bière", "", 0, 0, 0, 0, 0), 42);
 		
 		// add listener to call selected method
 		selection = table.getSelectionModel().getSelectedItems();

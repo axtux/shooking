@@ -5,7 +5,6 @@
         <class>be.ac.ulb.infof307.g10.models.List</class>
         <class>be.ac.ulb.infof307.g10.models.Product</class>
         <class>be.ac.ulb.infof307.g10.models.Shop</class>
-        <class>be.ac.ulb.infof307.g10.models.Stock</class>
         <class>be.ac.ulb.infof307.g10.models.User</class>
 
         <properties>
@@ -14,7 +13,7 @@
             <property name="javax.persistence.jdbc.user" value=""/>
             <property name="javax.persistence.jdbc.password" value=""/>
             <property name="javax.persistence.schema-generation.database.action" value="create"/>
-            <property name="eclipselink.logging.level" value="WARNING"/>
+            <property name="eclipselink.logging.level" value="FINE"/>
         </properties>
     </persistence-unit>
 
