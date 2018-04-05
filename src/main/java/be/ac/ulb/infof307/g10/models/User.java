@@ -107,7 +107,7 @@ public class User implements Serializable {
 
     public void setList(List list) {
         this.list = list;
-        DatabaseFacade.updateUser(this);
+        DatabaseFacade.update(this);
     }
 }
 

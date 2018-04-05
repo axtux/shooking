@@ -5,6 +5,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "PRODUCT",
+//        uniqueConstraints={ @UniqueConstraint(columnNames = {"NAME", "DESCRIPTION"})
+        indexes = {@Index(name = "I_UNIQUE_NAME_X_DESCRIPTION",  columnList="NAME,DESCRIPTION", unique = true),
+})
 @NamedQueries({
 		@NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
 })
@@ -16,8 +20,10 @@ public class Product implements Serializable {
 	@Basic(optional = false)
 	private Integer id;
 
+	@Column(name = "NAME")
 	private String name; // example : apple
 
+    @Column(name = "DESCRIPTION")
 	private String description; // example pink ladies
 
 	private Double calories;

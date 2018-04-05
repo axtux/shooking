@@ -22,14 +22,13 @@ public class TestDB {
 
 
     @Test
-    public void test_0010_InsertUser() throws SQLiteException {
-
-        DatabaseFacade.insertUser(new User("lala", "lala", null));
+    public void test_0010_InsertUser() {
+        DatabaseFacade.insert(new User("lala", "lala", null));
     }
 
     @Test(expected = RollbackException.class)
     public void test_0011_InsertUser_uniqueConstraintExecptionExpected() throws SQLiteException {
-        DatabaseFacade.insertUser(new User("lala", "lala", null));
+        DatabaseFacade.insert(new User("lala", "lala", null));
     }
 
     @Test
@@ -39,17 +38,22 @@ public class TestDB {
 
 
 
-
-//    @Test(expected = NoResultException.class)
-//    public void test_0050_GetUser_noResultExceptionExpected(){
-//        Assert.assertNotEquals(null, DatabaseFacade.getUser("lala"));
-//    }
+    @Test(expected = NoResultException.class)
+    public void test_0050_GetUser_noResultExceptionExpected(){
+        Assert.assertNotEquals(null, DatabaseFacade.getUser("fzvsvsfvsfvsf"));
+    }
 
 
     @Test
     public void test_0060_CreateProduct(){
-        DatabaseFacade.insertProduct(new Product("6 Apples", "Pink ladies",100.0, 200.0, 300.0, 400.0, 3.0));
-        DatabaseFacade.insertProduct(new Product("6 Apples", "Jonagold",100.0, 200.0, 300.0, 400.0, 3.2));
+        DatabaseFacade.insert(new Product("6 Apples", "Pink ladies",100.0, 200.0, 300.0, 400.0, 3.0));
+        DatabaseFacade.insert(new Product("6 Apples", "Jonagold",100.0, 200.0, 300.0, 400.0, 3.2));
+    }
+
+    @Test(expected = RollbackException.class)
+    public void test_0060_CreateProduct_uniqueConstraintExecptionExpected(){
+        DatabaseFacade.insert(new Product("6 Apples", "Pink ladies",100.0, 200.0, 300.0, 400.0, 3.0));
+        DatabaseFacade.insert(new Product("6 Apples", "Jonagold",100.0, 200.0, 300.0, 400.0, 3.2));
     }
 
     @Test
@@ -69,7 +73,7 @@ public class TestDB {
         Shop s = new Shop("Delhaize");
         s.addProduct(DatabaseFacade.getProduct("6 Apples", "Pink ladies"), 10);
         s.addProduct(DatabaseFacade.getProduct("6 Apples", "Jonagold"), 10);
-        DatabaseFacade.insertShop(s);
+        DatabaseFacade.insert(s);
     }
 
     @Test
@@ -86,36 +90,36 @@ public class TestDB {
         List l = new List();
         l.addProduct(DatabaseFacade.getProduct("6 Apples", "Pink ladies"), 1);
         l.addProduct(DatabaseFacade.getProduct("6 Apples", "Jonagold"), 2);
-        DatabaseFacade.insertList(l);
+        DatabaseFacade.insert(l);
         DatabaseFacade.getUser("lala").setList(l);
     }
 
 //    @Test
-//    public void test_0120_DeleteList(){
+//    public void test_0989_DeleteList(){
 //        DatabaseFacade.deleteList(DatabaseFacade.getUser("lala").getList());
 //    }
 
     @Test
     public void test_0990_DeleteUser(){
-        DatabaseFacade.deleteUser((DatabaseFacade.getUser("lala")));
+        DatabaseFacade.delete((DatabaseFacade.getUser("lala")));
     }
 
     @Test(expected = NoResultException.class)
     public void test_0991_DeleteUser_noResultExceptionExpected(){
-        DatabaseFacade.deleteUser((DatabaseFacade.getUser("lala")));
+        DatabaseFacade.delete((DatabaseFacade.getUser("lala")));
     }
 
 
     @Test
     public void test_0994_DeleteProduct(){
-        DatabaseFacade.deleteProduct(DatabaseFacade.getProduct("6 Apples", "Pink ladies"));
-        DatabaseFacade.deleteProduct(DatabaseFacade.getProduct("6 Apples", "Jonagold"));
+        DatabaseFacade.delete(DatabaseFacade.getProduct("6 Apples", "Pink ladies"));
+        DatabaseFacade.delete(DatabaseFacade.getProduct("6 Apples", "Jonagold"));
     }
 
 
     @Test
     public void test_0998_DeleteShop(){
-        DatabaseFacade.deleteShop(DatabaseFacade.getShop("Delhaize"));
+        DatabaseFacade.delete(DatabaseFacade.getShop("Delhaize"));
     }
 
 

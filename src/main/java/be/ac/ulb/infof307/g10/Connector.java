@@ -68,7 +68,7 @@ public class Connector {
         DatabaseFacade d = new DatabaseFacade();
 
         try{
-			d.insertUser(u);
+			d.insert(u);
 		}
 		catch (RollbackException e) {
 			throw new UserAlreadyExistException();
@@ -90,7 +90,7 @@ public class Connector {
         if (checkUserPassword(username, password)){
             DatabaseFacade d = new DatabaseFacade();
             User u = d.getUser(username);
-            d.deleteUser(u);
+            d.delete(u);
             return true;
         }
         return false;

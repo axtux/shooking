@@ -3,6 +3,7 @@ package be.ac.ulb.infof307.g10.db;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.User;
+import sun.rmi.transport.ObjectTable;
 
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
@@ -44,11 +45,10 @@ public class DatabaseFacade {
 
     }
 
-
-    public static void insertUser(User u) throws NoResultException, RollbackException {
+    public static void insert(Object o) throws NoResultException, RollbackException {
         try {
             Connection.getTransaction().begin();
-            Connection.getManager().persist(u);
+            Connection.getManager().persist(o);
             Connection.getTransaction().commit();
         }catch (NoResultException e){
             Connection.getTransaction().rollback();
@@ -56,10 +56,10 @@ public class DatabaseFacade {
         }
     }
 
-    public static void updateUser(User u) throws NoResultException{
+    public static void delete(Object o) throws NoResultException{
         try {
             Connection.getTransaction().begin();
-            Connection.getManager().merge(u);
+            Connection.getManager().remove(o);
             Connection.getTransaction().commit();
         }catch (NoResultException e){
             Connection.getTransaction().rollback();
@@ -67,10 +67,10 @@ public class DatabaseFacade {
         }
     }
 
-    public static void deleteUser(User u) throws NoResultException{
+    public static void update(Object o) throws NoResultException{
         try {
             Connection.getTransaction().begin();
-            Connection.getManager().remove(u);
+            Connection.getManager().merge(o);
             Connection.getTransaction().commit();
         }catch (NoResultException e){
             Connection.getTransaction().rollback();
@@ -78,16 +78,6 @@ public class DatabaseFacade {
         }
     }
 
-    public static void insertProduct(Product p) throws NoResultException{
-        try {
-            Connection.getTransaction().begin();
-            Connection.getManager().persist(p);
-            Connection.getTransaction().commit();
-        }catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        }
-    }
 
     public static Product getProduct(String name, String description) throws NoResultException{
         try {
@@ -114,27 +104,6 @@ public class DatabaseFacade {
         }
     }
 
-    public static void deleteProduct(Product p) throws NoResultException{
-        try {
-            Connection.getTransaction().begin();
-            Connection.getManager().remove(p);
-            Connection.getTransaction().commit();
-        }catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        }
-    }
-
-    public static void insertShop(Shop s) throws NoResultException{
-        try{
-        Connection.getTransaction().begin();
-        Connection.getManager().persist(s);
-        Connection.getTransaction().commit();}
-        catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        }
-    }
 
     public static Shop getShop(String name) throws NoResultException{
         try {
@@ -161,28 +130,6 @@ public class DatabaseFacade {
         }
     }
 
-
-    public static void deleteShop(Shop s) throws NoResultException{
-        try {
-            Connection.getTransaction().begin();
-            Connection.getManager().remove(s);
-            Connection.getTransaction().commit();
-        }catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        }
-    }
-
-    public static void insertList(be.ac.ulb.infof307.g10.models.List l) throws NoResultException{
-        try {
-            Connection.getTransaction().begin();
-            Connection.getManager().persist(l);
-            Connection.getTransaction().commit();
-        }catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        }
-    }
 
     public static void deleteList(be.ac.ulb.infof307.g10.models.List l) throws NoResultException{
         try {

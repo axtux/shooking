@@ -27,21 +27,21 @@ public class TestResearch {
 
 //        DatabaseFacade.insertUser(new User("researchTestUser", "researchTestUser", null));
 
-        DatabaseFacade.insertProduct(new Product("#Research 6 Apples", "Pink ladies",100.0, 200.0, 300.0, 400.0, 3.0));
-        DatabaseFacade.insertProduct(new Product("#Research 6 Apples", "Jonagold",100.0, 200.0, 300.0, 400.0, 3.2));
+        DatabaseFacade.insert(new Product("#Research 6 Apples", "Pink ladies",100.0, 200.0, 300.0, 400.0, 3.0));
+        DatabaseFacade.insert(new Product("#Research 6 Apples", "Jonagold",100.0, 200.0, 300.0, 400.0, 3.2));
 
         Shop s = new Shop("#Research Delhaize");
         s.addProduct(DatabaseFacade.getProduct("#Research 6 Apples", "Pink ladies"), 100);
         s.addProduct(DatabaseFacade.getProduct("#Research 6 Apples", "Jonagold"), 20);
-        DatabaseFacade.insertShop(s);
+        DatabaseFacade.insert(s);
 
         s = new Shop("#Research Carrefour");
         s.addProduct(DatabaseFacade.getProduct("#Research 6 Apples", "Pink ladies"), 10);
-        DatabaseFacade.insertShop(s);
+        DatabaseFacade.insert(s);
 
         s = new Shop("#Research Colruyt");
         s.addProduct(DatabaseFacade.getProduct("#Research 6 Apples", "Jonagold"), 300);
-        DatabaseFacade.insertShop(s);
+        DatabaseFacade.insert(s);
 
     }
 
@@ -61,10 +61,10 @@ public class TestResearch {
 
     @AfterClass
     public static void clean(){
-        DatabaseFacade.deleteShop(DatabaseFacade.getShop("#Research Delhaize"));
-        DatabaseFacade.deleteShop(DatabaseFacade.getShop("#Research Carrefour"));
-        DatabaseFacade.deleteShop(DatabaseFacade.getShop("#Research Colruyt"));
-        DatabaseFacade.deleteProduct(DatabaseFacade.getProduct("#Research 6 Apples", "Pink ladies"));
-        DatabaseFacade.deleteProduct(DatabaseFacade.getProduct("#Research 6 Apples", "Jonagold"));
+        DatabaseFacade.delete(DatabaseFacade.getShop("#Research Delhaize"));
+        DatabaseFacade.delete(DatabaseFacade.getShop("#Research Carrefour"));
+        DatabaseFacade.delete(DatabaseFacade.getShop("#Research Colruyt"));
+        DatabaseFacade.delete(DatabaseFacade.getProduct("#Research 6 Apples", "Pink ladies"));
+        DatabaseFacade.delete(DatabaseFacade.getProduct("#Research 6 Apples", "Jonagold"));
     }
 }
