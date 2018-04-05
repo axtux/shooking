@@ -27,20 +27,15 @@ import java.util.List;
  * @author Benjamin Nicodeme
  *
  */
-public class ResearchPage extends Application {
+public class ResearchPage {
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-	
-	@Override
 	public void start(Stage primaryStage){
 		primaryStage.setTitle("Research Page");
-		//Centrage horizontal des champs de texte et boutons
+        //Horizontal centering
         HBox hbox = new HBox(50);
         hbox.setAlignment(Pos.CENTER);
 
-        //Création du champ "Product"
+        //"product name" text field
         TextField textFieldProd = new TextField();
         textFieldProd.setPrefSize(300, 20);
         textFieldProd.setPromptText("Product name");
@@ -49,13 +44,13 @@ public class ResearchPage extends Application {
         TextArea storesArea = new TextArea();
 
 
-        //Création du bouton "Research"
+        //"Research" button creation
         Button btnResearch = new Button();
         btnResearch.setText("Research");
         btnResearch.setDefaultButton(true);
         btnResearch.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-            	//Récupération du champ "Login"
+            	//"Login" Textfield creation
 
                 List<Product> pl = DatabaseFacade.getProducts(textFieldProd.getText());
                 Research r = new Research();
@@ -68,20 +63,19 @@ public class ResearchPage extends Application {
 
 
 
-
         //Welcome label
         Label titleLabel = new Label("Here is the research product page");
         titleLabel.setFont(new Font("Arial", 20));
         
-        //Centrage des deux boutons
+        //horizontal buttons centring
         HBox hbox2 = new HBox(20,textFieldProd, btnResearch);
-        //Centrage vertical des champs de texte et boutons
+        //vertical centring
         VBox vbox = new VBox(titleLabel, hbox2, storesArea);
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
         hbox.getChildren().addAll(vbox);
         
-        //Création de la page principale
+        //main page creation
         Scene scene = new Scene(hbox, 400, 400);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
