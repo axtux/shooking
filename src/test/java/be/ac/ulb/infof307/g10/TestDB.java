@@ -16,8 +16,14 @@ import javax.persistence.RollbackException;
 public class TestDB {
 
     @BeforeClass
-    public static void createDB(){
+    public static void createDB (){
+        DatabaseFacade.empyDB();
+    }
+    
 
+    @Test
+    public void test_0009_fillDB(){
+        DatabaseFacade.fillDB();
     }
 
 
