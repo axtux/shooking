@@ -1,14 +1,17 @@
 package be.ac.ulb.infof307.g10.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.views.IntField;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -18,12 +21,19 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Pair;
 
 /**
  *
@@ -202,5 +212,26 @@ public class ShoppingListController implements Initializable {
 		
 		amountTF.setSigned(false);
 	}
-	
+
+	public void researchProduct(ActionEvent actionEvent) {
+		ResearchController rc = new ResearchController();
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("researchDialog.fxml"));
+			DialogPane page = (DialogPane) loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Research product");
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
+
+		}
+
+	}
 }
