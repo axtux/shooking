@@ -26,22 +26,22 @@ public class Product implements Serializable {
     @Column(name = "DESCRIPTION")
 	private String description; // example pink ladies
 
-	private Double calories;
+	private Integer calories;
 
-	private Double sugar;
+	private Integer sugar;
 
-	private Double proteins;
+	private Integer proteins;
 
-	private Double fat;
+	private Integer fat;
 
-	private Double price;
+	private Integer price;
 
 
 	// NEEDED BY JPA
 	public Product(){
 	}
 
-    public Product(String name, String description, Double calories, Double sugar, Double proteins, Double fat, Double price) {
+    public Product(String name, String description, Integer calories, Integer sugar, Integer proteins, Integer fat, Integer price) {
         this.name = name;
         this.description = description;
         this.calories = calories;
@@ -89,43 +89,43 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public Double getCalories() {
+    public Integer getCalories() {
         return calories;
     }
 
-    public void setCalories(Double calories) {
+    public void setCalories(Integer calories) {
         this.calories = calories;
     }
 
-    public Double getSugar() {
+    public Integer getSugar() {
         return sugar;
     }
 
-    public void setSugar(Double sugar) {
+    public void setSugar(Integer sugar) {
         this.sugar = sugar;
     }
 
-    public Double getProteins() {
+    public Integer getProteins() {
         return proteins;
     }
 
-    public void setProteins(Double proteins) {
+    public void setProteins(Integer proteins) {
         this.proteins = proteins;
     }
 
-    public Double getFat() {
+    public Integer getFat() {
         return fat;
     }
 
-    public void setFat(Double fat) {
+    public void setFat(Integer fat) {
         this.fat = fat;
     }
 
-    public Double getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 }

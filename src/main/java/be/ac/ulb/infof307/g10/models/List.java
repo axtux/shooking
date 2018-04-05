@@ -16,7 +16,7 @@ public class List implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	private Double amountTotal = 0.0;
+	private Integer amountTotal = 0;
 
     @ElementCollection(fetch = FetchType.EAGER)
     Map<Product,Integer> products_x_quantity = new HashMap<>();
@@ -50,11 +50,11 @@ public class List implements Serializable {
         this.id = id;
     }
 
-    public Double getAmountTotal() {
+    public Integer getAmountTotal() {
         return amountTotal;
     }
 
-    public void setAmountTotal(Double amountTotal) {
+    public void setAmountTotal(Integer amountTotal) {
         this.amountTotal = amountTotal;
     }
 

@@ -27,8 +27,8 @@ public class TestResearch {
 
 //        DatabaseFacade.insertUser(new User("researchTestUser", "researchTestUser", null));
 
-        DatabaseFacade.insert(new Product("#Research 6 Apples", "Pink ladies",100.0, 200.0, 300.0, 400.0, 3.0));
-        DatabaseFacade.insert(new Product("#Research 6 Apples", "Jonagold",100.0, 200.0, 300.0, 400.0, 3.2));
+        DatabaseFacade.insert(new Product("#Research 6 Apples", "Pink ladies",100, 200, 300, 400, 300));
+        DatabaseFacade.insert(new Product("#Research 6 Apples", "Jonagold",100, 200, 300, 400, 320));
 
         Shop s = new Shop("#Research Delhaize");
         s.addProduct(DatabaseFacade.getProduct("#Research 6 Apples", "Pink ladies"), 100);
