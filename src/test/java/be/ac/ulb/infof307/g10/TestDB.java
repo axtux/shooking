@@ -16,8 +16,13 @@ import javax.persistence.RollbackException;
 public class TestDB {
 
     @BeforeClass
-    public static void createDB(){
+    public static void createDB (){
 
+    }
+
+    @Test
+    public void fillDB(){
+        DatabaseFacade.fillDB();
     }
 
 
