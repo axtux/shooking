@@ -6,12 +6,15 @@ import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.exceptions.UserAlreadyExistException;
+import be.ac.ulb.infof307.g10.exceptions.UserDontExistException;
+import be.ac.ulb.infof307.g10.models.Connector;
+import be.ac.ulb.infof307.g10.models.Session;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class TestSession {
+public class TestConnector {
 //
 	@BeforeClass
 	public static void createDBTest() {
@@ -27,22 +30,28 @@ public class TestSession {
 	public void testCreateSession() throws UserAlreadyExistException {
 		Connector conn = new Connector();
 		Session user = conn.createUser("Best Test", "SuperPassWord");
-		assertEquals(user.getUsername(), "Best Test");
+		assertEquals(user.getUser().getUsername(), "Best Test");
 	}
 
 	@Test
-	public void testOpenSession() throws IncorrectPasswordException {
+	public void testOpenSession() throws IncorrectPasswordException, UserDontExistException {
 		Connector conn = new Connector();
 		Session user = conn.openSession("Mr. Test", "SuperPassWord");
-		assertEquals(user.getUsername(), "Mr. Test");
+		assertEquals(user.getUser().getUsername(), "Mr. Test");
 	}
 
 	@Test(expected = IncorrectPasswordException.class)
-	public void testCannotOpenSession() throws IncorrectPasswordException {
+	public void testCannotOpenSession() throws IncorrectPasswordException, UserDontExistException {
 		Connector conn = new Connector();
 		Session user = conn.openSession("Mr. Test", "BadPassword");
 	}
 
+	@Test(expected = UserDontExistException.class)
+	public void testUserDontExist() throws IncorrectPasswordException, UserDontExistException {
+		Connector conn = new Connector();
+		Session user = conn.openSession("BAdUser", "BadPassword");
+	}
+	
 	@Test(expected = UserAlreadyExistException.class)
 	public void testUserAlreadyExist() throws UserAlreadyExistException {
 		Connector conn = new Connector();
