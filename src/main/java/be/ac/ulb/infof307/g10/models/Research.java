@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g10.controllers;
+package be.ac.ulb.infof307.g10.models;
 
 import be.ac.ulb.infof307.g10.models.*;
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
