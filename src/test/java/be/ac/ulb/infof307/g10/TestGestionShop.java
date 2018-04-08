@@ -11,11 +11,12 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 import be.ac.ulb.infof307.g10.models.GestionShop;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Shop;
 
-public class TestShop {
+public class TestGestionShop {
 
 	static Map<Product, Integer> testingStock;
 	static Product pro1;
@@ -25,13 +26,15 @@ public class TestShop {
 	@BeforeClass
 	public static void createShopTest(){
 		testingStock = new HashMap<>();
-		pro1 = new Product("Chocolat", "", 1, 1, 1, 1, 9999);
-		pro2 = new Product("Miel", "", 1, 2, 3, 4, 5);
+		pro1 = DatabaseFacade.getProduct("Farine d'avoine", "Delhaize");
+		pro2 = DatabaseFacade.getProduct("pain", "Carrefour");
 		testingStock.put(pro1, 12);
 		gs = new GestionShop();
 		
+		gs.createShop("The Best Shopper");
 		gs.createShop("The Best Shop", testingStock);
 		gs.createShop("Shopshop");
+		gs.createShop("Shoppy");
 	}
 	
 	@Test
@@ -64,13 +67,29 @@ public class TestShop {
 		assertTrue(gs.getShop("The Best Shop").getStock().size() == 2);
 	}
 	
+	@Test
+	public void testModifyShopSetStock() {
+		Shop shop = gs.getShop("The Best Shop");
+		Map<Product, Integer> productList = new HashMap<>();
+		productList.put(pro2, 12000);
+		gs.modifyShop(shop, null, productList, true);
+		assertTrue(gs.getShop("The Best Shop").getStock().size() == 1);
+		
+	}
+	
 	@Test(expected = NoResultException.class)
-	public void testDelShop() {
+	public void testDelShopName() {
 		String name = "Shopshop";
 		gs.delShop(name);
 		gs.getShop(name);
 	}
 
+	@Test(expected = NoResultException.class)
+	public void testDelShopObject() {
+		Shop shop = gs.getShop("Shoppy");
+		gs.delShop(shop);
+		gs.getShop("Shoppy");
+	}
 	@AfterClass
 	public static void deleteTestingShop(){
 		gs.delShop("The Best Shop");
