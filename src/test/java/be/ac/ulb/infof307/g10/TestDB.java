@@ -11,6 +11,8 @@ import org.sqlite.SQLiteException;
 
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
+import java.util.Arrays;
+import java.util.Map;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestDB {
@@ -84,9 +86,29 @@ public class TestDB {
 
     @Test
     public void test_0090_GetShop(){
-        Shop s = DatabaseFacade.getShop("#DB Delhaize");
-//        System.out.println(Arrays.asList(s.getStock()));
+        DatabaseFacade.getShop("#DB Delhaize");
 
+
+    }
+
+    @Test
+    public void test_0091_updateShopStock(){
+        Shop shop = DatabaseFacade.getShop("#DB Delhaize");
+
+        System.out.println(Arrays.asList(shop.getStock()));
+        Product p = DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold");
+        int quantity = shop.getStock().get(DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold"));
+
+        shop.updateStock(p, quantity -3 );
+        DatabaseFacade.update(shop);
+
+        ////////////////////////
+
+        Shop shopCheck = DatabaseFacade.getShop("#DB Delhaize");
+        Product pCheck = DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold");
+
+        System.out.println(shopCheck.getQuantity(pCheck));
+        System.out.println(shopCheck);
     }
 
 

@@ -1,6 +1,8 @@
 package be.ac.ulb.infof307.g10.models;
 
 
+import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -42,6 +44,15 @@ public class Shop implements Serializable {
 	    stock.put(p, quantity);
     }
 
+    public void updateStock(Product p , int q){
+        stock.put(p, q);
+    }
+
+    public int getQuantity(Product p){
+	    return stock.get(p);
+    }
+
+
     @Override
     public String toString() {
         return "Shop{" +
@@ -74,4 +85,6 @@ public class Shop implements Serializable {
     public void setStock(Map<Product, Integer> stock) {
         this.stock = stock;
     }
+
+
 }
