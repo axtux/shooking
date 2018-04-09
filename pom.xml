@@ -49,7 +49,7 @@
             <!--<resource>-->
                 <!--<directory>src/main/resources</directory>-->
                 <!--<includes>-->
-                    <!--<include>terms_of_use.txt</include>-->
+                    <!--<include>**/*.txt</include>-->
                 <!--</includes>-->
             <!--</resource>-->
         <!--</resources>-->
