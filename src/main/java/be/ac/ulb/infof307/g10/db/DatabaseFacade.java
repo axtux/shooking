@@ -1738,7 +1738,7 @@ public class DatabaseFacade {
         }
     }
 
-    public static List<Shop> getShops(){
+    public static List<Shop> getShops() throws NoResultException {
         try {
             Connection.getTransaction().begin();
             List<Shop> l = Connection.getManager().createNamedQuery("Shop.findAll").getResultList();

@@ -1,7 +1,12 @@
 package be.ac.ulb.infof307.g10.models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+
+import javax.persistence.NoResultException;
+import javax.persistence.RollbackException;
 
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 
@@ -12,83 +17,153 @@ public class GestionShop {
 	}
 	
 	/**
-	 * Modify an existing Shop
+	 * Return the Shop with the name "name" from the DB.
+	 * Return null if the Shop doesn't exist.
 	 * 
-	 * @param	shop		The Shop to modify
-	 * @param	newName		The new name of the shop. If the name dont change, put "null"
-	 * @param	newProduct	Ah list (HasMap) of new product to add in the shop stock
-	 * @param	setStock	If is True, the newProduct list replace the entire stock of the Shop
+	 * @param	String	The name of the Shop
+	 * @return			A Shop from the DB, or null
 	 */
-	public void modifyShop(Shop shop, String newName, Map<Product, Integer> newProduct, boolean setStock){
-		if (newName != null) {
-			shop.setName(newName);
-		}
-		if (newProduct != null) {
-			if (setStock) {
-				shop.setStock(newProduct);
-			}
-			else {
-				for (Map.Entry<Product, Integer> entry : newProduct.entrySet()){
-					shop.addProduct(entry.getKey(), entry.getValue());
-				}
-			}
-		}
-		DatabaseFacade.update(shop);
-	}
-	
-	public void modifyShop(Shop shop, String newName, Map<Product, Integer> newProduct) {
-		modifyShop(shop, newName, newProduct, false);
-	}
-	
-	/**
-	 * Create a new Shop and put it in the DB
-	 * 
-	 * @param	name	The name of the Shop
-	 * @param	stock	The stock of the Shop. if the stock was empty, put null or nothing
-	 * @return			A new Shop
-	 */
-	public Shop createShop(String name, Map<Product, Integer> stock){
+	public Shop getShop(String name) {
 		Shop shop;
-		if (stock == null){
-			shop = new Shop(name);
+		try {
+			shop = DatabaseFacade.getShop(name);
+		} catch (NoResultException e) {
+			shop = null;
 		}
-		else {
-			shop = new Shop(name, stock);
-		}
-		DatabaseFacade.insert(shop);
 		return shop;
 	}
 	
+	
+	/**
+	 * Return a list of all shop in the DB.
+	 * The list is empty if there are no shop in the DB.
+	 * 
+	 * @return		A List of Shop
+	 */
+	public List<Shop> getShops() {
+		List<Shop> shops;
+		try {
+			shops = DatabaseFacade.getShops();
+		} catch (NoResultException e) {
+			shops = new ArrayList<>();
+		}
+		return shops;
+	}
+	
+	
+	/**
+	 * Create a new Shop and put it in the DB.
+	 * If the Shop is already exist, return null.
+	 * 
+	 * @param	name	The name of the Shop
+	 * @param	stock	The stock of the Shop. if the stock was empty, put null or nothing
+	 * @return			A new Shop or null
+	 */
+	public Shop createShop(String name, Map<Product, Integer> stock){
+		Shop shop;
+		try {
+			if (stock == null){
+				shop = new Shop(name);
+			}
+			else {
+				shop = new Shop(name, stock);
+			}
+			DatabaseFacade.insert(shop);
+		} catch (NoResultException e) {
+			shop = null;
+		} catch (RollbackException r) {
+			shop = null;
+		}
+		return shop;
+	}
+	
+	/**
+	 * Create a new Shop and put it in the DB.
+	 * If the Shop is already exist, return null.
+	 * 
+	 * @param name	The name of the Shop
+	 * @return		A new Shop or null
+	 */
 	public Shop createShop(String name){
 		return createShop(name, null);
 	}
 	
+	
 	/**
-	 * Delete a Shop from DB
+	 * Modify the Shop name and save it in the DB
+	 * 
+	 * @param shop		The shop to modify
+	 * @param newName	The new Shop name in String format
+	 */
+	public void modifyShopName(Shop shop, String newName){
+		shop.setName(newName);
+		DatabaseFacade.update(shop);
+	}
+	
+	
+	/**
+	 * Add a new product with quantity,
+	 * or modify the quantity of a product if this product is already in the stock.
+	 * 
+	 * @param shop		The shop to modify
+	 * @param product	The new product to add
+	 * @param quantity	The quantity of the product in Integer format
+	 */
+	public void modifyShopStock(Shop shop, Product product, Integer quantity){
+		shop.addProduct(product, quantity);
+		DatabaseFacade.update(shop);
+	}
+
+	
+	/**
+	 * Add a new product with quantity,
+	 * or modify the quantity of a product if this product is already in the stock.
+	 * If the product doesn't exist, the Shop is not modify.
+	 * 
+	 * @param shop			The shop to modify
+	 * @param product		The new product to add in String format
+	 * @param description	The description of the product in String format
+	 * @param quantity		The quantity of the product in Integer format
+	 */
+	public void modifyShopStock(Shop shop, String productName, String description, Integer quantity){
+		try {
+			Product product = DatabaseFacade.getProduct(productName, description);
+			modifyShopStock(shop, product, quantity);
+		} catch (NoResultException e) {} // Nothing to do
+	}
+	
+	public void modifyShopSetStock(Shop shop, Map<Product, Integer> newStock) {
+		shop.setStock(newStock);
+		DatabaseFacade.update(shop);
+	}
+	
+	
+	public void modifyShopSchedule(Shop shop){
+		//TODO
+	}
+	
+	
+	/**
+	 * Delete a Shop from DB.
 	 * 
 	 * @param	name	The Shop name in String format
 	 */
-	public void delShop(String name){
+	public void delShop(String name) {
 		Shop shop = getShop(name);
 		delShop(shop);
 	}
 	
 	/**
-	 * Delete a Shop from DB
+	 * Delete a Shop from DB.
 	 * 
 	 * @param shop	The Shop object
 	 */
 	public void delShop(Shop shop) {
-		DatabaseFacade.delete(shop);
+		try {
+			DatabaseFacade.delete(shop);
+		} catch (NoResultException e) {} //Nothing to do
+		
 	}
 	
-	/**
-	 * Return the Shop with the name "name" from the DB
-	 * 
-	 * @param	String	The name of the Shop
-	 * @return			A Shop from the DB
-	 */
-	public Shop getShop(String name){
-		return new Shop(name);
-	}
+
 }
