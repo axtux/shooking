@@ -22,13 +22,6 @@ public class Shop implements Serializable {
 
     @Column(unique = true)
 	public String name;
-    
-    //private String schedule; //TODO Change the format
-    // Why not 7 Strings ? (monday, Tuesday, ....)
-    
-    //private float latitude; //TODO
-    
-    //private float longitude; //TODO
 
     private String mondayTime;
     private String tuesdayTime;
