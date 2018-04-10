@@ -30,6 +30,17 @@ public class Shop implements Serializable {
     
     //private float longitude; //TODO
 
+    private String mondayTime;
+    private String tuesdayTime;
+    private String wednesdayTime;
+    private String thursdayTime;
+    private String fridayTime;
+    private String saturdayTime;
+    private String sundayTime;
+    
+    private float latitude;
+    private float longitude;
+    
 	@ElementCollection(fetch = FetchType.EAGER)
 	Map<Product,Integer> stock = new HashMap<>();
 
@@ -39,13 +50,30 @@ public class Shop implements Serializable {
 
     public Shop(String name) {
         this.name = name;
-        stock = new HashMap<Product, Integer>();
-        //this.schedule = "Monday     - CLOSED\nTuesday    - CLOSED\nWednesday  - CLOSED\nThursday   - CLOSED\nFriday     - CLOSED\nSaturday   - CLOSED\nSunday     - CLOSED";
+        this.stock = new HashMap<Product, Integer>();
+        this.mondayTime = "CLOSED";
+        this.tuesdayTime = "CLOSED";
+        this.wednesdayTime = "CLOSED";
+        this.thursdayTime = "CLOSED";
+        this.fridayTime = "CLOSED";
+        this.saturdayTime = "CLOSED";
+        this.sundayTime = "CLOSED";
+        this.latitude = (float) 0.0;
+        this.longitude = (float) 0.0;
     }
 
     public Shop(String name, Map<Product, Integer> stock) {
         this.name = name;
         this.stock = stock;
+        this.mondayTime = "CLOSED";
+        this.tuesdayTime = "CLOSED";
+        this.wednesdayTime = "CLOSED";
+        this.thursdayTime = "CLOSED";
+        this.fridayTime = "CLOSED";
+        this.saturdayTime = "CLOSED";
+        this.sundayTime = "CLOSED";
+        this.latitude = (float) 0.0;
+        this.longitude = (float) 0.0;
     }
 
     public void addProduct(Product p, int quantity){
@@ -94,5 +122,55 @@ public class Shop implements Serializable {
         this.stock = stock;
     }
 
+    public String getMondayTime() {
+    	return this.mondayTime;
+    }
+    
+    public String getTuesdayTime() {
+    	return this.tuesdayTime;
+    }
+    
+    public String getWednesdayTime() {
+    	return this.wednesdayTime;
+    }
+    
+    public String getThursdayTime() {
+    	return this.thursdayTime;
+    }
+    
+    public String getFridayTime() {
+    	return this.fridayTime;
+    }
+    
+    public String getSaturdayTime() {
+    	return this.saturdayTime;
+    }
+    
+    public String getSundayTime() {
+    	return this.sundayTime;
+    }
+    
+    public void setSchedule(String monday, String tuesday, String wednesday, String thursday, String friday, String saturday, String sunday){
+        this.mondayTime = monday;
+        this.tuesdayTime = tuesday;
+        this.wednesdayTime = wednesday;
+        this.thursdayTime = thursday;
+        this.fridayTime = friday;
+        this.saturdayTime = saturday;
+        this.sundayTime = sunday;
+    }
+    
+    public float getLatitude() {
+    	return this.latitude;
+    }
+    
+    public float getLongitude() {
+    	return this.longitude;
+    }
+    
+    public void setPosition(float latitude, float longitude) {
+    	this.latitude = latitude;
+    	this.longitude = longitude;
+    }
 
 }

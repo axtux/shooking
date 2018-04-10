@@ -36,6 +36,8 @@ public class TestGestionShop {
 		gs.createShop("#test Modify Shop Name");
 		gs.createShop("#test Modify Shop Stock", testingStock);
 		gs.createShop("#test Modify Shop Set Stock", testingStock);
+		gs.createShop("#test Modify Shop Schedule");
+		gs.createShop("#test Modify Shop Position");
 		gs.createShop("#test Delete Shop Name");
 		gs.createShop("#test Delete Shop Object");
 	}
@@ -84,6 +86,9 @@ public class TestGestionShop {
 		gs.modifyShopName(shop1, "#test The New Name");
 		Shop shop2 = gs.getShop("#test The New Name");
 		Shop shop3 = gs.getShop("#test Modify Shop Name");
+			// Current Shop
+		assertEquals(shop1.getName(), "#test The New Name");
+			// Shop save in DB
 		assertNotNull(shop2);
 		assertNull(shop3);
 	}
@@ -92,6 +97,9 @@ public class TestGestionShop {
 	public void testModifyShopStock() {
 		Shop shop = gs.getShop("#test Modify Shop Stock");
 		gs.modifyShopStock(shop, pro2, 12);
+			// Current Shop
+		assertEquals(shop.getStock().size(), 2);
+			// Shop save in DB
 		assertEquals(gs.getShop("#test Modify Shop Stock").getStock().size(), 2);
 	}
 	
@@ -101,8 +109,36 @@ public class TestGestionShop {
 		Map<Product, Integer> productList = new HashMap<>();
 		productList.put(pro2, 12000);
 		gs.modifyShopSetStock(shop, productList);
+			// Current Shop
+		assertEquals(shop.getStock().size(), 1);
+			// Shop save in DB
 		assertEquals(gs.getShop("#test Modify Shop Set Stock").getStock().size(), 1);
-		
+	}
+	
+	@Test
+	public void testModifyShopSchedule() {
+		Shop shop1 = gs.getShop("#test Modify Shop Schedule");
+		gs.modifyShopSchedule(shop1, "8am - 18pm", "CLOSED","","","","","");
+		Shop shop2 = gs.getShop("#test Modify Shop Schedule");
+			// Current Shop
+		assertEquals(shop1.getMondayTime(), "8am - 18pm");
+		assertEquals(shop1.getTuesdayTime(), "CLOSED");
+			// Shop save in DB
+		assertEquals(shop2.getMondayTime(), "8am - 18pm");
+		assertEquals(shop2.getTuesdayTime(), "CLOSED");
+	}
+	
+	@Test
+	public void testModifyShopPosition() {
+		Shop shop1 = gs.getShop("#test Modify Shop Position");
+		gs.modifyShopPosition(shop1, (float) 12.0, (float) 12.0);
+		Shop shop2 = gs.getShop("#test Modify Shop Position");
+			// Current Shop
+		assertEquals(shop1.getLatitude(), (float) 12.0, (float) 0.1);
+		assertEquals(shop1.getLongitude(), (float) 12.0, (float) 0.1);
+			// Shop save in DB
+		assertEquals(shop2.getLatitude(), (float) 12.0, (float) 0.1);
+		assertEquals(shop2.getLongitude(), (float) 12.0, (float) 0.1);
 	}
 	
 	@Test
@@ -134,5 +170,7 @@ public class TestGestionShop {
 		gs.delShop("#test The New Name");
 		gs.delShop("#test Modify Shop Stock");
 		gs.delShop("#test Modify Shop Set Stock");
+		gs.delShop("#test Modify Shop Schedule");
+		gs.delShop("#test Modify Shop Position");
 	}
 }

@@ -77,6 +77,7 @@ public class GestionShop {
 		return shop;
 	}
 	
+	
 	/**
 	 * Create a new Shop and put it in the DB.
 	 * If the Shop is already exist, return null.
@@ -132,14 +133,50 @@ public class GestionShop {
 		} catch (NoResultException e) {} // Nothing to do
 	}
 	
+	
+	/**
+	 * Reload a new stock for the Shop.
+	 * Save it in the DB.
+	 * 
+	 * @param shop		The shop to modify
+	 * @param newStock	The new stock to load
+	 */
 	public void modifyShopSetStock(Shop shop, Map<Product, Integer> newStock) {
 		shop.setStock(newStock);
 		DatabaseFacade.update(shop);
 	}
 	
 	
-	public void modifyShopSchedule(Shop shop){
-		//TODO
+	/**
+	 * Modify the opening time of the Shop.
+	 * Save it in the DB.
+	 * 
+	 * @param shop		The shop to modify
+	 * @param monday	The schedule for Monday
+	 * @param tuesday	The schedule for Tuesday
+	 * @param wednesday	The schedule for Wednesday
+	 * @param thursday	The schedule for Thursday
+	 * @param friday	The schedule for Friday
+	 * @param saturday	The schedule for Saturday
+	 * @param sunday	The schedule for Sunday
+	 */
+	public void modifyShopSchedule(Shop shop, String monday, String tuesday, String wednesday, String thursday, String friday, String saturday, String sunday){
+		shop.setSchedule(monday, tuesday, wednesday, thursday, friday, saturday, sunday);
+		DatabaseFacade.update(shop);
+	}
+	
+	
+	/**
+	 * Modify the Shop position on the map.
+	 * Save it in the DB.
+	 * 
+	 * @param shop		The shop to modify
+	 * @param latitude	The new latitude in float format
+	 * @param longitude	The new longitude in float format
+	 */
+	public void modifyShopPosition(Shop shop, float latitude, float longitude) {
+		shop.setPosition(latitude, longitude);
+		DatabaseFacade.update(shop);
 	}
 	
 	
@@ -152,6 +189,7 @@ public class GestionShop {
 		Shop shop = getShop(name);
 		delShop(shop);
 	}
+	
 	
 	/**
 	 * Delete a Shop from DB.
