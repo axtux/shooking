@@ -22,6 +22,13 @@ public class Shop implements Serializable {
 
     @Column(unique = true)
 	public String name;
+    
+    //private String schedule; //TODO Change the format
+    // Why not 7 Strings ? (monday, Tuesday, ....)
+    
+    //private float latitude; //TODO
+    
+    //private float longitude; //TODO
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	Map<Product,Integer> stock = new HashMap<>();
@@ -33,6 +40,7 @@ public class Shop implements Serializable {
     public Shop(String name) {
         this.name = name;
         stock = new HashMap<Product, Integer>();
+        //this.schedule = "Monday     - CLOSED\nTuesday    - CLOSED\nWednesday  - CLOSED\nThursday   - CLOSED\nFriday     - CLOSED\nSaturday   - CLOSED\nSunday     - CLOSED";
     }
 
     public Shop(String name, Map<Product, Integer> stock) {
