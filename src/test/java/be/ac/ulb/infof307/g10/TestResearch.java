@@ -30,16 +30,16 @@ public class TestResearch {
         DatabaseFacade.insert(new Product("#Research 6 Apples", "Pink ladies",100, 200, 300, 400, 300));
         DatabaseFacade.insert(new Product("#Research 6 Apples", "Jonagold",100, 200, 300, 400, 320));
 
-        Shop s = new Shop("#Research Delhaize");
+        Shop s = new Shop("#Research Delhaize", 0.0, 0.0);
         s.addProduct(DatabaseFacade.getProduct("#Research 6 Apples", "Pink ladies"), 100);
         s.addProduct(DatabaseFacade.getProduct("#Research 6 Apples", "Jonagold"), 20);
         DatabaseFacade.insert(s);
 
-        s = new Shop("#Research Carrefour");
+        s = new Shop("#Research Carrefour", 0.0, 0.0);
         s.addProduct(DatabaseFacade.getProduct("#Research 6 Apples", "Pink ladies"), 10);
         DatabaseFacade.insert(s);
 
-        s = new Shop("#Research Colruyt");
+        s = new Shop("#Research Colruyt", 0.0, 0.0);
         s.addProduct(DatabaseFacade.getProduct("#Research 6 Apples", "Jonagold"), 300);
         DatabaseFacade.insert(s);
 

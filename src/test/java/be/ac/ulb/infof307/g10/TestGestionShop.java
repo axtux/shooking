@@ -32,14 +32,14 @@ public class TestGestionShop {
 		testingStock.put(pro1, 12);
 		gs = new GestionShop();
 		
-		gs.createShop("#test Get Shop");
-		gs.createShop("#test Modify Shop Name");
-		gs.createShop("#test Modify Shop Stock", testingStock);
-		gs.createShop("#test Modify Shop Set Stock", testingStock);
-		gs.createShop("#test Modify Shop Schedule");
-		gs.createShop("#test Modify Shop Position");
-		gs.createShop("#test Delete Shop Name");
-		gs.createShop("#test Delete Shop Object");
+		gs.createShop("#test Get Shop", 0.0, 0.0);
+		gs.createShop("#test Modify Shop Name", 0.0, 0.0);
+		gs.createShop("#test Modify Shop Stock", testingStock, 0.0, 0.0);
+		gs.createShop("#test Modify Shop Set Stock", testingStock, 0.0, 0.0);
+		gs.createShop("#test Modify Shop Schedule", 0.0, 0.0);
+		gs.createShop("#test Modify Shop Position", 0.0, 0.0);
+		gs.createShop("#test Delete Shop Name", 0.0, 0.0);
+		gs.createShop("#test Delete Shop Object", 0.0, 0.0);
 	}
 	
 	@Test
@@ -61,21 +61,21 @@ public class TestGestionShop {
 	
 	@Test
 	public void testCreateShop() {
-		Shop shop1 = gs.createShop("#test Create Shop");
+		Shop shop1 = gs.createShop("#test Create Shop", 0.0, 0.0);
 		Shop shop2 = gs.getShop("#test Create Shop");
 		assertEquals(shop1, shop2);
 	}
 	
 	@Test
 	public void testCreateShopFail() {
-		Shop shop1 = gs.createShop("#test Create Shop Fail");
-		Shop shop2 = gs.createShop("#test Create Shop Fail");
+		Shop shop1 = gs.createShop("#test Create Shop Fail", 0.0, 0.0);
+		Shop shop2 = gs.createShop("#test Create Shop Fail", 12.0, 12.0);
 		assertNull(shop2);
 	}
 	
 	@Test
 	public void testCreateShopWithStock() {
-		Shop shop1 = gs.createShop("#test Create Shop With Stock", testingStock);
+		Shop shop1 = gs.createShop("#test Create Shop With Stock", testingStock, 0.0, 0.0);
 		Shop shop2 = gs.getShop("#test Create Shop with Stock");
 		assertEquals(shop1, shop2);
 	}
@@ -131,14 +131,14 @@ public class TestGestionShop {
 	@Test
 	public void testModifyShopPosition() {
 		Shop shop1 = gs.getShop("#test Modify Shop Position");
-		gs.modifyShopPosition(shop1, (float) 12.0, (float) 12.0);
+		gs.modifyShopPosition(shop1, 12.0, 12.0);
 		Shop shop2 = gs.getShop("#test Modify Shop Position");
 			// Current Shop
-		assertEquals(shop1.getLatitude(), (float) 12.0, (float) 0.1);
-		assertEquals(shop1.getLongitude(), (float) 12.0, (float) 0.1);
+		assertEquals(shop1.getLatitude(), 12.0, 0.1);
+		assertEquals(shop1.getLongitude(), 12.0, 0.1);
 			// Shop save in DB
-		assertEquals(shop2.getLatitude(), (float) 12.0, (float) 0.1);
-		assertEquals(shop2.getLongitude(), (float) 12.0, (float) 0.1);
+		assertEquals(shop2.getLatitude(), 12.0, 0.1);
+		assertEquals(shop2.getLongitude(), 12.0, 0.1);
 	}
 	
 	@Test

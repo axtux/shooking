@@ -31,8 +31,10 @@ public class Shop implements Serializable {
     private String saturdayTime;
     private String sundayTime;
     
-    private float latitude;
-    private float longitude;
+    private double latitude;
+    private double longitude;
+    	// TODO
+    	// maybe change to GMapsFX.LatLong object when import in project
     
 	@ElementCollection(fetch = FetchType.EAGER)
 	Map<Product,Integer> stock = new HashMap<>();
@@ -41,7 +43,7 @@ public class Shop implements Serializable {
 	public Shop(){
 	}
 
-    public Shop(String name) {
+    public Shop(String name, double latitude, double longitude) {
         this.name = name;
         this.stock = new HashMap<Product, Integer>();
         this.mondayTime = "CLOSED";
@@ -51,11 +53,11 @@ public class Shop implements Serializable {
         this.fridayTime = "CLOSED";
         this.saturdayTime = "CLOSED";
         this.sundayTime = "CLOSED";
-        this.latitude = (float) 0.0;
-        this.longitude = (float) 0.0;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
-    public Shop(String name, Map<Product, Integer> stock) {
+    public Shop(String name, Map<Product, Integer> stock, double latitude, double longitude) {
         this.name = name;
         this.stock = stock;
         this.mondayTime = "CLOSED";
@@ -65,8 +67,8 @@ public class Shop implements Serializable {
         this.fridayTime = "CLOSED";
         this.saturdayTime = "CLOSED";
         this.sundayTime = "CLOSED";
-        this.latitude = (float) 0.0;
-        this.longitude = (float) 0.0;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public void addProduct(Product p, int quantity){
@@ -153,15 +155,15 @@ public class Shop implements Serializable {
         this.sundayTime = sunday;
     }
     
-    public float getLatitude() {
+    public double getLatitude() {
     	return this.latitude;
     }
     
-    public float getLongitude() {
+    public double getLongitude() {
     	return this.longitude;
     }
     
-    public void setPosition(float latitude, float longitude) {
+    public void setPosition(double latitude, double longitude) {
     	this.latitude = latitude;
     	this.longitude = longitude;
     }

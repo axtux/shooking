@@ -59,14 +59,14 @@ public class GestionShop {
 	 * @param	stock	The stock of the Shop. if the stock was empty, put null or nothing
 	 * @return			A new Shop or null
 	 */
-	public Shop createShop(String name, Map<Product, Integer> stock){
+	public Shop createShop(String name, Map<Product, Integer> stock, double latitude, double longitude){
 		Shop shop;
 		try {
 			if (stock == null){
-				shop = new Shop(name);
+				shop = new Shop(name, latitude, longitude);
 			}
 			else {
-				shop = new Shop(name, stock);
+				shop = new Shop(name, stock, latitude, longitude);
 			}
 			DatabaseFacade.insert(shop);
 		} catch (NoResultException e) {
@@ -85,8 +85,8 @@ public class GestionShop {
 	 * @param name	The name of the Shop
 	 * @return		A new Shop or null
 	 */
-	public Shop createShop(String name){
-		return createShop(name, null);
+	public Shop createShop(String name, double latitude, double longitude){
+		return createShop(name, null, latitude, longitude);
 	}
 	
 	
@@ -174,7 +174,7 @@ public class GestionShop {
 	 * @param latitude	The new latitude in float format
 	 * @param longitude	The new longitude in float format
 	 */
-	public void modifyShopPosition(Shop shop, float latitude, float longitude) {
+	public void modifyShopPosition(Shop shop, double latitude, double longitude) {
 		shop.setPosition(latitude, longitude);
 		DatabaseFacade.update(shop);
 	}
