@@ -117,27 +117,33 @@ public class Shop implements Serializable {
      * Return the opening time, in String format, of the chosen day.
      * 0 for Monday to 6 for Sunday.
      * Return an empty String if the number of the day was incorrect.
+     * Throw an IndexOutOfBoundsException if the day number is incorrect.
      * 
      * @param day	The day represent with an Integer (0 to 6 for Monday to Sunday)
      * @return		The opening time in String format, or an empty String
+     * @throws		IndexOutOfBoundsException
      */
-    public String getSchedule(int day) {
-    	if (0 <= day && day < 7){
+    public String getSchedule(int day) throws IndexOutOfBoundsException {
+    	if (0 <= day && day < this.schedule.length){
     		return this.schedule[day];
     	}
-    	return "";
+    	throw new IndexOutOfBoundsException();
     }
     
     /**
      * Change the opening time of the day number "day".
      * 0 for Monday to 6 for Sunday.
+     * Throw an IndexOutOfBoundsException if the day number is incorrect.
      * 
      * @param day			The day represent with an Integer (0 to 6 for Monday to Sunday)
      * @param newSchedule	The new opening time for this day
+     * @throws				IndexOutOfBoundsException
      */
-    public void setSchedule(int day, String newSchedule){
-        if (0 <= day && day <7){
+    public void setSchedule(int day, String newSchedule) throws IndexOutOfBoundsException {
+        if (0 <= day && day < this.schedule.length){
         	this.schedule[day] = newSchedule;
+        } else {
+        	throw new IndexOutOfBoundsException();
         }
     }
     

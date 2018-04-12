@@ -27,10 +27,10 @@ public class TestShopManagement {
 	@BeforeClass
 	public static void createShopTest(){
 		testingStock = new HashMap<>();
-        DatabaseFacade.insert(new Product("#test Product 1", "AAA",100, 200, 300, 400, 300));
-        DatabaseFacade.insert(new Product("#test Product 2", "BBB",100, 200, 300, 400, 320));
-		pro1 = DatabaseFacade.getProduct("#test Product 1", "AAA");
-		pro2 = DatabaseFacade.getProduct("#test Product 2", "BBB");
+		pro1 = new Product("#test Product 1", "AAA",100, 200, 300, 400, 300);
+		pro2 = new Product("#test Product 2", "BBB",100, 200, 300, 400, 320);
+        DatabaseFacade.insert(pro1);
+        DatabaseFacade.insert(pro2);
 		testingStock.put(pro1, 12);
 		
 		ShopManagement.createShop("#test Get Shop", 0.0, 0.0);
@@ -173,5 +173,8 @@ public class TestShopManagement {
 		ShopManagement.delShop("#test Modify Shop Set Stock");
 		ShopManagement.delShop("#test Modify Shop Schedule");
 		ShopManagement.delShop("#test Modify Shop Position");
+		
+		//DatabaseFacade.delete(pro1);
+		//DatabaseFacade.delete(pro2);
 	}
 }
