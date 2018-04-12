@@ -22,14 +22,8 @@ public class Shop implements Serializable {
 
     @Column(unique = true)
 	public String name;
-
-    private String mondayTime;
-    private String tuesdayTime;
-    private String wednesdayTime;
-    private String thursdayTime;
-    private String fridayTime;
-    private String saturdayTime;
-    private String sundayTime;
+    
+    private String[] schedule;
     
     private double latitude;
     private double longitude;
@@ -46,13 +40,14 @@ public class Shop implements Serializable {
     public Shop(String name, double latitude, double longitude) {
         this.name = name;
         this.stock = new HashMap<Product, Integer>();
-        this.mondayTime = "CLOSED";
-        this.tuesdayTime = "CLOSED";
-        this.wednesdayTime = "CLOSED";
-        this.thursdayTime = "CLOSED";
-        this.fridayTime = "CLOSED";
-        this.saturdayTime = "CLOSED";
-        this.sundayTime = "CLOSED";
+        this.schedule = new String[7];
+        this.schedule[0] = "CLOSED";
+        this.schedule[1] = "CLOSED";
+        this.schedule[2] = "CLOSED";
+        this.schedule[3] = "CLOSED";
+        this.schedule[4] = "CLOSED";
+        this.schedule[5] = "CLOSED";
+        this.schedule[6] = "CLOSED";
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -60,13 +55,14 @@ public class Shop implements Serializable {
     public Shop(String name, Map<Product, Integer> stock, double latitude, double longitude) {
         this.name = name;
         this.stock = stock;
-        this.mondayTime = "CLOSED";
-        this.tuesdayTime = "CLOSED";
-        this.wednesdayTime = "CLOSED";
-        this.thursdayTime = "CLOSED";
-        this.fridayTime = "CLOSED";
-        this.saturdayTime = "CLOSED";
-        this.sundayTime = "CLOSED";
+        this.schedule = new String[7];
+        this.schedule[0] = "CLOSED";
+        this.schedule[1] = "CLOSED";
+        this.schedule[2] = "CLOSED";
+        this.schedule[3] = "CLOSED";
+        this.schedule[4] = "CLOSED";
+        this.schedule[5] = "CLOSED";
+        this.schedule[6] = "CLOSED";
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -117,42 +113,32 @@ public class Shop implements Serializable {
         this.stock = stock;
     }
 
-    public String getMondayTime() {
-    	return this.mondayTime;
+    /**
+     * Return the opening time, in String format, of the chosen day.
+     * 0 for Monday to 6 for Sunday.
+     * Return an empty String if the number of the day was incorrect.
+     * 
+     * @param day	The day represent with an Integer (0 to 6 for Monday to Sunday)
+     * @return		The opening time in String format, or an empty String
+     */
+    public String getSchedule(int day) {
+    	if (0 <= day && day < 7){
+    		return this.schedule[day];
+    	}
+    	return "";
     }
     
-    public String getTuesdayTime() {
-    	return this.tuesdayTime;
-    }
-    
-    public String getWednesdayTime() {
-    	return this.wednesdayTime;
-    }
-    
-    public String getThursdayTime() {
-    	return this.thursdayTime;
-    }
-    
-    public String getFridayTime() {
-    	return this.fridayTime;
-    }
-    
-    public String getSaturdayTime() {
-    	return this.saturdayTime;
-    }
-    
-    public String getSundayTime() {
-    	return this.sundayTime;
-    }
-    
-    public void setSchedule(String monday, String tuesday, String wednesday, String thursday, String friday, String saturday, String sunday){
-        this.mondayTime = monday;
-        this.tuesdayTime = tuesday;
-        this.wednesdayTime = wednesday;
-        this.thursdayTime = thursday;
-        this.fridayTime = friday;
-        this.saturdayTime = saturday;
-        this.sundayTime = sunday;
+    /**
+     * Change the opening time of the day number "day".
+     * 0 for Monday to 6 for Sunday.
+     * 
+     * @param day			The day represent with an Integer (0 to 6 for Monday to Sunday)
+     * @param newSchedule	The new opening time for this day
+     */
+    public void setSchedule(int day, String newSchedule){
+        if (0 <= day && day <7){
+        	this.schedule[day] = newSchedule;
+        }
     }
     
     public double getLatitude() {

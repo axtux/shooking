@@ -10,9 +10,9 @@ import javax.persistence.RollbackException;
 
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 
-public class GestionShop {
+public class ShopManagement {
 
-	public GestionShop(){
+	public ShopManagement(){
 		
 	}
 	
@@ -23,7 +23,7 @@ public class GestionShop {
 	 * @param	String	The name of the Shop
 	 * @return			A Shop from the DB, or null
 	 */
-	public Shop getShop(String name) {
+	public static Shop getShop(String name) {
 		Shop shop;
 		try {
 			shop = DatabaseFacade.getShop(name);
@@ -40,7 +40,7 @@ public class GestionShop {
 	 * 
 	 * @return		A List of Shop
 	 */
-	public List<Shop> getShops() {
+	public static List<Shop> getShops() {
 		List<Shop> shops;
 		try {
 			shops = DatabaseFacade.getShops();
@@ -59,7 +59,7 @@ public class GestionShop {
 	 * @param	stock	The stock of the Shop. if the stock was empty, put null or nothing
 	 * @return			A new Shop or null
 	 */
-	public Shop createShop(String name, Map<Product, Integer> stock, double latitude, double longitude){
+	public static Shop createShop(String name, Map<Product, Integer> stock, double latitude, double longitude){
 		Shop shop;
 		try {
 			if (stock == null){
@@ -85,7 +85,7 @@ public class GestionShop {
 	 * @param name	The name of the Shop
 	 * @return		A new Shop or null
 	 */
-	public Shop createShop(String name, double latitude, double longitude){
+	public static Shop createShop(String name, double latitude, double longitude){
 		return createShop(name, null, latitude, longitude);
 	}
 	
@@ -96,7 +96,7 @@ public class GestionShop {
 	 * @param shop		The shop to modify
 	 * @param newName	The new Shop name in String format
 	 */
-	public void modifyShopName(Shop shop, String newName){
+	public static void modifyShopName(Shop shop, String newName){
 		shop.setName(newName);
 		DatabaseFacade.update(shop);
 	}
@@ -110,7 +110,7 @@ public class GestionShop {
 	 * @param product	The new product to add
 	 * @param quantity	The quantity of the product in Integer format
 	 */
-	public void modifyShopStock(Shop shop, Product product, Integer quantity){
+	public static void modifyShopStock(Shop shop, Product product, Integer quantity){
 		shop.addProduct(product, quantity);
 		DatabaseFacade.update(shop);
 	}
@@ -126,7 +126,7 @@ public class GestionShop {
 	 * @param description	The description of the product in String format
 	 * @param quantity		The quantity of the product in Integer format
 	 */
-	public void modifyShopStock(Shop shop, String productName, String description, Integer quantity){
+	public static void modifyShopStock(Shop shop, String productName, String description, Integer quantity){
 		try {
 			Product product = DatabaseFacade.getProduct(productName, description);
 			modifyShopStock(shop, product, quantity);
@@ -141,7 +141,7 @@ public class GestionShop {
 	 * @param shop		The shop to modify
 	 * @param newStock	The new stock to load
 	 */
-	public void modifyShopSetStock(Shop shop, Map<Product, Integer> newStock) {
+	public static void modifyShopSetStock(Shop shop, Map<Product, Integer> newStock) {
 		shop.setStock(newStock);
 		DatabaseFacade.update(shop);
 	}
@@ -160,8 +160,14 @@ public class GestionShop {
 	 * @param saturday	The schedule for Saturday
 	 * @param sunday	The schedule for Sunday
 	 */
-	public void modifyShopSchedule(Shop shop, String monday, String tuesday, String wednesday, String thursday, String friday, String saturday, String sunday){
-		shop.setSchedule(monday, tuesday, wednesday, thursday, friday, saturday, sunday);
+	public static void modifyShopSchedule(Shop shop, String monday, String tuesday, String wednesday, String thursday, String friday, String saturday, String sunday){
+		shop.setSchedule(0, monday);
+		shop.setSchedule(1, tuesday);
+		shop.setSchedule(2, wednesday);
+		shop.setSchedule(3, thursday);
+		shop.setSchedule(4, friday);
+		shop.setSchedule(5, saturday);
+		shop.setSchedule(6, sunday);
 		DatabaseFacade.update(shop);
 	}
 	
@@ -174,7 +180,7 @@ public class GestionShop {
 	 * @param latitude	The new latitude in float format
 	 * @param longitude	The new longitude in float format
 	 */
-	public void modifyShopPosition(Shop shop, double latitude, double longitude) {
+	public static void modifyShopPosition(Shop shop, double latitude, double longitude) {
 		shop.setPosition(latitude, longitude);
 		DatabaseFacade.update(shop);
 	}
@@ -185,7 +191,7 @@ public class GestionShop {
 	 * 
 	 * @param	name	The Shop name in String format
 	 */
-	public void delShop(String name) {
+	public static void delShop(String name) {
 		Shop shop = getShop(name);
 		delShop(shop);
 	}
@@ -196,7 +202,7 @@ public class GestionShop {
 	 * 
 	 * @param shop	The Shop object
 	 */
-	public void delShop(Shop shop) {
+	public static void delShop(Shop shop) {
 		try {
 			DatabaseFacade.delete(shop);
 		} catch (NoResultException e) {} //Nothing to do
