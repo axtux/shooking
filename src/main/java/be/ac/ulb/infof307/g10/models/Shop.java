@@ -22,7 +22,14 @@ public class Shop implements Serializable {
 
     @Column(unique = true)
 	public String name;
-
+    
+    private String[] schedule;
+    
+    private double latitude;
+    private double longitude;
+    	// TODO
+    	// maybe change to GMapsFX.LatLong object when import in project
+    
 	@ElementCollection(fetch = FetchType.EAGER)
 	Map<Product,Integer> stock = new HashMap<>();
 
@@ -30,14 +37,34 @@ public class Shop implements Serializable {
 	public Shop(){
 	}
 
-    public Shop(String name) {
+    public Shop(String name, double latitude, double longitude) {
         this.name = name;
-        stock = new HashMap<Product, Integer>();
+        this.stock = new HashMap<Product, Integer>();
+        this.schedule = new String[7];
+        this.schedule[0] = "CLOSED";
+        this.schedule[1] = "CLOSED";
+        this.schedule[2] = "CLOSED";
+        this.schedule[3] = "CLOSED";
+        this.schedule[4] = "CLOSED";
+        this.schedule[5] = "CLOSED";
+        this.schedule[6] = "CLOSED";
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
-    public Shop(String name, Map<Product, Integer> stock) {
+    public Shop(String name, Map<Product, Integer> stock, double latitude, double longitude) {
         this.name = name;
         this.stock = stock;
+        this.schedule = new String[7];
+        this.schedule[0] = "CLOSED";
+        this.schedule[1] = "CLOSED";
+        this.schedule[2] = "CLOSED";
+        this.schedule[3] = "CLOSED";
+        this.schedule[4] = "CLOSED";
+        this.schedule[5] = "CLOSED";
+        this.schedule[6] = "CLOSED";
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public void addProduct(Product p, int quantity){
@@ -86,5 +113,51 @@ public class Shop implements Serializable {
         this.stock = stock;
     }
 
+    /**
+     * Return the opening time, in String format, of the chosen day.
+     * 0 for Monday to 6 for Sunday.
+     * Return an empty String if the number of the day was incorrect.
+     * Throw an IndexOutOfBoundsException if the day number is incorrect.
+     * 
+     * @param day	The day represent with an Integer (0 to 6 for Monday to Sunday)
+     * @return		The opening time in String format, or an empty String
+     * @throws		IndexOutOfBoundsException
+     */
+    public String getSchedule(int day) throws IndexOutOfBoundsException {
+    	if (0 <= day && day < this.schedule.length){
+    		return this.schedule[day];
+    	}
+    	throw new IndexOutOfBoundsException();
+    }
+    
+    /**
+     * Change the opening time of the day number "day".
+     * 0 for Monday to 6 for Sunday.
+     * Throw an IndexOutOfBoundsException if the day number is incorrect.
+     * 
+     * @param day			The day represent with an Integer (0 to 6 for Monday to Sunday)
+     * @param newSchedule	The new opening time for this day
+     * @throws				IndexOutOfBoundsException
+     */
+    public void setSchedule(int day, String newSchedule) throws IndexOutOfBoundsException {
+        if (0 <= day && day < this.schedule.length){
+        	this.schedule[day] = newSchedule;
+        } else {
+        	throw new IndexOutOfBoundsException();
+        }
+    }
+    
+    public double getLatitude() {
+    	return this.latitude;
+    }
+    
+    public double getLongitude() {
+    	return this.longitude;
+    }
+    
+    public void setPosition(double latitude, double longitude) {
+    	this.latitude = latitude;
+    	this.longitude = longitude;
+    }
 
 }

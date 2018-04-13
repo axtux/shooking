@@ -1,11 +1,12 @@
-package be.ac.ulb.infof307.g10;
+package be.ac.ulb.infof307.g10.models;
 
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
-import be.ac.ulb.infof307.g10.exceptions.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.exceptions.UserAlreadyExistException;
 import be.ac.ulb.infof307.g10.models.User;
-import org.sqlite.SQLiteException;
+import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
+import be.ac.ulb.infof307.g10.models.exceptions.UserAlreadyExistException;
+import be.ac.ulb.infof307.g10.models.exceptions.UserDontExistException;
 
+import org.sqlite.SQLiteException;
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
 import java.io.UnsupportedEncodingException;
@@ -29,11 +30,9 @@ public class Connector {
 		try {
 			digest = MessageDigest.getInstance("SHA-256");
 			encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		try {
 			return new String(encodedHash, "UTF-8");
+		} catch (NoSuchAlgorithmException e) {
+			return "";
 		} catch (UnsupportedEncodingException e) { // this exception never append because "UTF-8" is a correct encoding
 			return "";
 		}
@@ -46,12 +45,22 @@ public class Connector {
 	 * @param password	The password of the user in String format
 	 * @return			A Session object that represent the user
 	 * @throws IncorrectPasswordException	Append if the password of the user is incorrect
+	 * @throws UserDontExistException 				Append if the username doesn't exist in DB
 	 */
-	public Session openSession(String username, String password) throws IncorrectPasswordException {
-        if (checkUserPassword(username, password)) {
-            return new Session(username);
+	public Session openSession(String username, String password) throws IncorrectPasswordException, UserDontExistException {
+        DatabaseFacade d = new DatabaseFacade();
+        User u ;
+        try {
+            u = new User(d.getUser(username));
+            if (u.getPassword().equals(sha256(password))) {
+                return new Session(u);
+            }
+            else {
+            	throw new IncorrectPasswordException();
+            }
+        } catch (NoResultException e){
+            throw new UserDontExistException();
         }
-        return null;
 	}
 	
 	/**
@@ -66,15 +75,13 @@ public class Connector {
 		//Hash the password
         User u = new User(username, password);
         DatabaseFacade d = new DatabaseFacade();
-
         try{
 			d.insert(u);
 		}
 		catch (RollbackException e) {
 			throw new UserAlreadyExistException();
 		}
-		return new Session(username);
-
+		return new Session(u);
 	}
 
 	/**
@@ -105,8 +112,7 @@ public class Connector {
             if (!u.getPassword().equals(sha256(password))) {
                 throw new IncorrectPasswordException();
             }
-        }
-        catch (NullPointerException e){
+        } catch (NullPointerException e){
             //FIXME - clean me
             throw new IncorrectPasswordException();
         }

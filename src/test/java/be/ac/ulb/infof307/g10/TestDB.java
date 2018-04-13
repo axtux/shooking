@@ -78,7 +78,7 @@ public class TestDB {
 
     @Test
     public void test_0080_CreateShop(){
-        Shop s = new Shop("#DB Delhaize");
+        Shop s = new Shop("#DB Delhaize", 0.0, 0.0);
         s.addProduct(DatabaseFacade.getProduct("#DB 6 Apples", "Pink ladies"), 10);
         s.addProduct(DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold"), 10);
         DatabaseFacade.insert(s);

@@ -897,10 +897,10 @@ public class DatabaseFacade {
         insert(new Product ("Turbot", "Colruyt", 118, 1, 16, 6, 610));
         insert(new Product ("Turbot", "Aldi", 118, 1, 16, 6, 600));
 
-        Shop delhaize = new Shop("Delhaize");
-        Shop carrefour = new Shop("Carrefour");
-        Shop colruyt = new Shop("Colruyt");
-        Shop aldi = new Shop("Aldi");
+        Shop delhaize = new Shop("Delhaize", 0.0, 0.0);
+        Shop carrefour = new Shop("Carrefour", 0.0, 0.0);
+        Shop colruyt = new Shop("Colruyt", 0.0, 0.0);
+        Shop aldi = new Shop("Aldi", 0.0, 0.0);
 
 
         delhaize.addProduct(getProduct("Farine d'avoine", "Delhaize"), 53);
@@ -1738,7 +1738,7 @@ public class DatabaseFacade {
         }
     }
 
-    public static List<Shop> getShops(){
+    public static List<Shop> getShops() throws NoResultException {
         try {
             Connection.getTransaction().begin();
             List<Shop> l = Connection.getManager().createNamedQuery("Shop.findAll").getResultList();
