@@ -91,7 +91,7 @@ public class LoginPage {
                     stage.setScene(sceneApp);
                     stage.setResizable(false);
                     stage.show();
-                    //*/Main.getInstance().goToShoppingList();
+                    //*/Main.getInstance().goToMenu();
                 }
                 catch(IncorrectPasswordException e){
                 	System.out.println("Bad Password");
