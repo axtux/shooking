@@ -8,12 +8,12 @@
         <class>be.ac.ulb.infof307.g10.models.User</class>
 
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:./db/genlog10.db"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:database.db"/>
             <property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
             <property name="javax.persistence.jdbc.user" value=""/>
             <property name="javax.persistence.jdbc.password" value=""/>
             <property name="javax.persistence.schema-generation.database.action" value="create"/>
-            <property name="eclipselink.logging.level" value="FINE"/>
+            <property name="eclipselink.logging.level" value="WARNING"/>
         </properties>
     </persistence-unit>
 
