@@ -8,10 +8,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import static javafx.geometry.Pos.TOP_CENTER;
 
 /**
  * This class correspond to the view of the Menu after the connection
@@ -22,26 +25,29 @@ public class Menu {
 
         stage.setTitle("Menu");
 
-        //Horizontal centering
-        HBox hbox = new HBox(50);
-        hbox.setAlignment(Pos.CENTER);
+
+        BorderPane bpane = new BorderPane();
 
         //Welcome label
-        Label titleLabel = new Label("What do you want to do ?");
+        Label titleLabel = new Label("Select your choice");
         titleLabel.setFont(new Font("Arial", 30));
 
+
+        //Horizontal centering
+        HBox hbox = new HBox(50,titleLabel);
+        hbox.setAlignment(Pos.CENTER);
 
         //creation of the product list button
 
         Button btnList = new Button();
-        btnList.setText("See my list");
+        btnList.setText("See the list");
         btnList.setDefaultButton(true);
         btnList.setOnAction(new EventHandler<ActionEvent>() {
                               public void handle(ActionEvent event) {
                                   Main.getInstance().goToShoppingList();
                               }
         });
-
+        //TODO modify the list page to came back to the menu
         //creation of the map button
 
         Button btnMap = new Button();
@@ -49,23 +55,25 @@ public class Menu {
         btnMap.setDefaultButton(true);
         btnMap.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                Main.getInstance().goToMenu();//change to map
+                Main.getInstance().goToMenu();//TODO change to map
             }
         });
 
 
-
         //buttons centering
-        HBox hbox2 = new HBox(50,btnList,btnMap);
-        //vetical centering
-        VBox vbox = new VBox(titleLabel, hbox2);
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setSpacing(10);
 
-        hbox.getChildren().addAll(vbox);
+        //vetical centering of the choice buttons
+        VBox vbox = new VBox(btnList,btnMap);
+        vbox.setAlignment(Pos.CENTER);
+        vbox.setSpacing(20);
+
+        //set the position of each part
+
+        bpane.setTop(hbox);
+        bpane.setCenter(vbox);
 
         //Page creation
-        Scene scene = new Scene(hbox, 400, 400);
+        Scene scene = new Scene(bpane, 400, 400);
         stage.setScene(scene);
         stage.show();
     }
