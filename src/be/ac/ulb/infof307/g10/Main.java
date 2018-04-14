@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import be.ac.ulb.infof307.g10.views.IntCreateAcount;
 import be.ac.ulb.infof307.g10.views.LoginPage;
+import be.ac.ulb.infof307.g10.views.MapRendering;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -53,6 +54,11 @@ public class Main extends Application {
 	public void goToShoppingList() {
 		stage.setTitle("Shopping list");
 		loadFXML("ShoppingList");
+		update();
+	}
+	
+	public void goToMap(){
+		new MapRendering(stage);
 		update();
 	}
 	
