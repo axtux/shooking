@@ -32,6 +32,18 @@ public MapRendering(Stage stage){
     stage.show();
 }
 
+   public void markerHandler(GMapMouseEvent event){
+        LatLong latLong = event.getLatLong();
+        MarkerOptions markerOptions = new MarkerOptions();
+    
+        markerOptions.position( latLong )
+                .visible(Boolean.TRUE)
+                .title("My Marker");
+
+    Marker marker = new Marker( markerOptions );//need to be save on the data base
+    map.addMarker(marker); //To change body of generated methods, choose Tools | Templates.
+   }
+
 @Override
 public void mapInitialized() {
     //Set the initial properties of the map.
@@ -50,20 +62,12 @@ public void mapInitialized() {
    map = mapView.createMap(mapOptions);
     
    map.addMouseEventHandler(UIEventType.click, (GMapMouseEvent event) -> {
-   LatLong latLong = event.getLatLong();
-   MarkerOptions markerOptions = new MarkerOptions();
-    
-    markerOptions.position( latLong )
-                .visible(Boolean.TRUE)
-                .title("My Marker");
-
-    Marker marker = new Marker( markerOptions );//need to be save on the data base
-    map.addMarker(marker); //To change body of generated methods, choose Tools | Templates.
+       markerHandler(event);
 });
             
-   
-   
         }
+
+
     };
     
    
