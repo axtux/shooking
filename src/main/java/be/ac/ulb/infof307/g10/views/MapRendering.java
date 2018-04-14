@@ -21,9 +21,7 @@ GoogleMap map;
 public MapRendering(Stage stage){
 	mapView = new GoogleMapView();
     mapView.addMapInializedListener(this);
-
     Scene scene = new Scene(mapView);
-
     stage.setTitle("Maps");
     stage.setScene(scene);
     stage.show();
@@ -47,17 +45,17 @@ public void mapInitialized() {
             .zoom(12);
 
     map = mapView.createMap(mapOptions);
-
+    /**
     //Add a marker to the map
     MarkerOptions markerOptions = new MarkerOptions();
-
+    
     markerOptions.position( new LatLong(47.6, -122.3) )
                 .visible(Boolean.TRUE)
                 .title("My Marker");
 
     Marker marker = new Marker( markerOptions );
 
-    map.addMarker(marker);
+    map.addMarker(marker);**/
 
 }
 
