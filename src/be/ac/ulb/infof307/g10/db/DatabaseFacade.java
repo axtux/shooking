@@ -7,7 +7,10 @@ import sun.rmi.transport.ObjectTable;
 
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseFacade {
 
@@ -1744,6 +1747,33 @@ public class DatabaseFacade {
         }
     }
 
+    public List<Shop> getShopWhereProductIsAvailable(List<Product> products) throws NoResultException{
+    	List<Shop> shops = new List<Shop>;
+        for(Product p: products){
+        	shops.add(this.getShopWhereProductIsAvailable(p.getName()));
+        }
+        return shops;
+    }
+    
+    public List<Shop> getShopWhereProductIsAvailable(String product) throws NoResultException{
+        try {
+            Connection.getTransaction().begin();
+            List<Shop> l = Connection.getManager().createNamedQuery("Shop.findAll").getResultList();
+            Connection.getTransaction().commit();
+            List<Shop> shopList = new ArrayList<Shop>();
+            for(Shop s: l){
+            	Map<Product, Integer> stock = s.getStock();
+            	if(stock.containsKey(product)){
+            		shopList.add(s);
+            	}
+            }
+            return shopList;
+        }catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
+    }
+    
     public static List<Shop> getShops() throws NoResultException {
         try {
             Connection.getTransaction().begin();
