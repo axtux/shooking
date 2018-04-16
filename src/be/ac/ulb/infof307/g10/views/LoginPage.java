@@ -64,34 +64,7 @@ public class LoginPage {
                 	Connector conn = new Connector();
                 	Session user = conn.openSession(log, pwd);
                 	badPassLabel.setText("");
-                	// Run the app
-
-                	/*
-                    Button logout = new Button("Log out");
-                    logout.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                        	stage.hide();
-                        }
-                    });
-
-                    Button research = new Button("Research");
-                    research.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent event) {
-                            ResearchPage rp = new ResearchPage();
-                            rp.start(primaryStage);
-
-                        }
-                    });
-
-
-                    VBox v = new VBox(logout, research);
-                    Scene sceneApp = new Scene(v, 400, 400);
-                    stage.setScene(sceneApp);
-                    stage.setResizable(false);
-                    stage.show();
-                    */
+                	
                 	Main.getInstance().goToMenu();
                 }
                 catch(IncorrectPasswordException e){

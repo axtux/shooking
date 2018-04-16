@@ -27,6 +27,7 @@ GoogleMapView mapView;
 GoogleMap map;
 
 public MapRendering(Stage stage){
+
     //creation of the map
     mapView = new GoogleMapView();
     mapView.addMapInializedListener(this);
@@ -98,7 +99,8 @@ public void mapInitialized() {
             .zoom(12);
     
    map = mapView.createMap(mapOptions);
-    
+
+   //Add a marker to the map
    map.addMouseEventHandler(UIEventType.click, (GMapMouseEvent event) -> {
        markerHandler(event);
 });
@@ -110,6 +112,6 @@ public void mapInitialized() {
     
    
 
-    //Add a marker to the map
+
 
 
