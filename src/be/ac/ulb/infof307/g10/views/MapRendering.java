@@ -1,5 +1,6 @@
 package be.ac.ulb.infof307.g10.views;
 
+import be.ac.ulb.infof307.g10.Main;
 import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
@@ -12,9 +13,12 @@ import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 
@@ -24,9 +28,27 @@ GoogleMapView mapView;
 GoogleMap map;
 
 public MapRendering(Stage stage){
+    //creation of the map
     mapView = new GoogleMapView();
     mapView.addMapInializedListener(this);
-    Scene scene = new Scene(mapView);
+
+    //creation button logout
+
+    Button btnLogout = new Button();
+    btnLogout.setText("Logout");
+    btnLogout.setDefaultButton(true);
+    btnLogout.setOnAction(new EventHandler<ActionEvent>() {
+        public void handle(ActionEvent event) {
+            Main.getInstance().goToLogin();
+        }
+    });
+
+    //organisation of the view
+    BorderPane bpane = new BorderPane();
+    bpane.setCenter(mapView);
+    bpane.setRight(btnLogout);
+
+    Scene scene = new Scene(bpane);
     stage.setTitle("Maps");
     stage.setScene(scene);
     stage.show();
