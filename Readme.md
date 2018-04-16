@@ -7,10 +7,10 @@ la réputation des informations existantes.
 
 # Utilisation
 
-Java version 1.8
-JUnit version 4.12
-GMapsFx version 2.12
-JPA version 2.1.0
+- Java version 1.8
+- JUnit version 4.12
+- GMapsFx version 2.12
+- JPA version 2.1.0
 
 ## Compilation et Exécution
 
