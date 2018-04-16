@@ -13,9 +13,11 @@ import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 
@@ -40,11 +42,28 @@ public MapRendering(Stage stage){
         }
     });
 
+    //creation button go back menu
+
+    Button btnGoBack = new Button();
+    btnGoBack.setText("Go back to the Menu");
+    btnGoBack.setDefaultButton(true);
+    btnGoBack.setOnAction(new EventHandler<ActionEvent>() {
+        public void handle(ActionEvent event) {
+            Main.getInstance().goToMenu();
+        }
+    });
+
     //organisation of the view
+
+    VBox vbox = new VBox(btnGoBack,btnLogout);
+    vbox.setAlignment(Pos.TOP_RIGHT);
+    vbox.setSpacing(10);
+
     BorderPane bpane = new BorderPane();
     bpane.setCenter(mapView);
-    bpane.setRight(btnLogout);
+    bpane.setRight(vbox);
 
+    //creation of the scene and configuration
     Scene scene = new Scene(bpane);
     stage.setTitle("Maps");
     stage.setScene(scene);
