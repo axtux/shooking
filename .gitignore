@@ -3,5 +3,4 @@
 *.iml
 /target/
 .*
-db/genlog10.db
-
+database.db
