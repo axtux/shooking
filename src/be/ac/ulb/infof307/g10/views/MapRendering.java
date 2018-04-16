@@ -48,8 +48,8 @@ public MapRendering(Stage stage){
 public void mapInitialized() {
     //Set the initial properties of the map.
     MapOptions mapOptions = new MapOptions();
-
-    mapOptions.center(new LatLong(50.8504500, 4.3487800))
+    LatLong latLong = new LatLong((double)50.8504500, (double)4.3487800);
+    mapOptions.center(latLong)
             .mapType(MapTypeIdEnum.ROADMAP)
             .overviewMapControl(false)
             .panControl(false)
