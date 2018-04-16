@@ -1748,9 +1748,9 @@ public class DatabaseFacade {
     }
 
     public List<Shop> getShopWhereProductIsAvailable(List<Product> products) throws NoResultException{
-    	List<Shop> shops = new List<Shop>;
+    	List<Shop> shops = new ArrayList<>();
         for(Product p: products){
-        	shops.add(this.getShopWhereProductIsAvailable(p.getName()));
+        	shops.addAll(this.getShopWhereProductIsAvailable(p.getName()));
         }
         return shops;
     }
