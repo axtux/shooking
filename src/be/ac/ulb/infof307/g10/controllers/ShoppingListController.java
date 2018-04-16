@@ -5,14 +5,11 @@ import java.net.URL;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.views.IntField;
-import be.ac.ulb.infof307.g10.views.MapRendering;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -24,17 +21,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import javafx.util.Pair;
 
 /**
  *
@@ -120,13 +111,17 @@ public class ShoppingListController implements Initializable {
 	}
 
 	@FXML
-	void goToStore(ActionEvent event) {
-		// go to the map
-		System.out.println(products);
-		Stage stage = new Stage();
-		MapRendering mapRendering = new MapRendering(stage);
-		mapRendering.mapInitialized();
-		System.out.println("gone store \n");
+	void goToStore(ActionEvent event) { //TODO change the name of the function (not adapted anymore)
+		// go to the menu
+		Main.getInstance().goToMenu();
+		System.out.println("go back to the Menu\n");
+	}
+
+	@FXML
+	void logout(ActionEvent event) {
+		// go to the login page
+		Main.getInstance().goToLogin();
+		System.out.println("logout\n");
 	}
 
 	@FXML
