@@ -8,7 +8,7 @@ import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Connector;
 import be.ac.ulb.infof307.g10.models.Session;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.models.exceptions.UserDontExistException;
+import be.ac.ulb.infof307.g10.models.exceptions.UserDoesNotExistException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -70,7 +70,7 @@ public class LoginPage {
                 catch(IncorrectPasswordException e){
                 	System.out.println("Bad Password");
                 	badPassLabel.setText("Incorrect Password !");
-                } catch(UserDontExistException e) {
+                } catch(UserDoesNotExistException e) {
                 	badPassLabel.setText("This user don't exist !");
                 }
             }

@@ -73,7 +73,6 @@ public class ShoppingListController implements Initializable {
 		// in case selection is not update, clear fields
 		productTF.clear();
 		amountTF.clear();
-		System.out.println("cleared");
 	}
 
 	@FXML
@@ -88,7 +87,6 @@ public class ShoppingListController implements Initializable {
 				table.getSelectionModel().select(i);
 			}
 		}
-		System.out.println("added " + productTF.getText() + ": " + amountTF.getText());
 	}
 
 	@FXML
@@ -98,7 +96,6 @@ public class ShoppingListController implements Initializable {
 		}
 		products.remove(selected.getKey());
 		add(null);
-		System.out.println("edited " + productTF.getText() + ": " + amountTF.getText());
 	}
 
 	@FXML
@@ -107,7 +104,6 @@ public class ShoppingListController implements Initializable {
 			return;
 		}
 		products.remove(selected.getKey());
-		System.out.println("removed " + productTF.getText() + ": " + amountTF.getText());
 	}
 
 	@FXML
@@ -127,13 +123,11 @@ public class ShoppingListController implements Initializable {
 	@FXML
 	void amountUp(ActionEvent event) {
 		amountTF.setInt(amountTF.getInt()+1);
-		System.out.println("amount up\n");
 	}
 
 	@FXML
 	void amountDown(ActionEvent event) {
 		amountTF.setInt(amountTF.getInt()-1);
-		System.out.println("amount down\n");
 	}
 
 	/**
@@ -152,7 +146,6 @@ public class ShoppingListController implements Initializable {
 			editBT.setDisable(true);
 			removeBT.setDisable(true);
 		}
-		System.out.println("updated");
 	}
 	
 	private void updateInterface() {
@@ -164,7 +157,6 @@ public class ShoppingListController implements Initializable {
 			}
 		});
 		table.setItems(items);
-		System.out.println("interface updated");
 	}
 	
 

@@ -20,7 +20,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-
+/**
+ * Map page
+ * @author pierre
+ *
+ */
 public class MapRendering implements MapComponentInitializedListener {
 
 GoogleMapView mapView;

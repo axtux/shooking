@@ -2,6 +2,7 @@ package be.ac.ulb.infof307.g10.views;
 
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Connector;
+
 import be.ac.ulb.infof307.g10.models.Session;
 import be.ac.ulb.infof307.g10.models.exceptions.UserAlreadyExistException;
 import javafx.event.ActionEvent;
@@ -19,7 +20,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-
+/**
+ * 
+ * User creation interface
+ *
+ */
 public class IntCreateAcount {
 	
 	private int positionX;
