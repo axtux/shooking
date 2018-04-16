@@ -1,1 +1,1 @@
-mvn exec:java -Dexec.mainClass="be.ac.ulb.infof307.g10.Main"
+java -jar target/groupe10-1.0-SNAPSHOT-jar-with-dependencies.jar

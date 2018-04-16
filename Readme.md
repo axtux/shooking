@@ -15,8 +15,11 @@ la réputation des informations existantes.
 ## Compilation et Exécution
 
 La compilation se fait grâce à Maven.
-- mvn package
-- ./run.Sh
+
+- ./compile.sh
+- (./fillDB.sh) #only if needed
+- ./run.sh
+
 
 # Configuration :
 
