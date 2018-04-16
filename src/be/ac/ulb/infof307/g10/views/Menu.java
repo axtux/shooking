@@ -55,7 +55,7 @@ public class Menu {
         btnMap.setDefaultButton(true);
         btnMap.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                Main.getInstance().goToMenu();//TODO change to map
+                Main.getInstance().goToMap();
             }
         });
 
