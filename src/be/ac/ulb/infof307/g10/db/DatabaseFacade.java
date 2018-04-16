@@ -18,6 +18,9 @@ public class DatabaseFacade {
 
     public static void fillDB(){
 
+        insert(new User("User1", "User1"));
+        insert(new User("User2", "User2"));
+
         insert(new Product ("Farine d'avoine", "Delhaize", 353, 65, 12, 5, 530));
         insert(new Product ("Farine d'avoine", "Carrefour", 353, 65, 12, 5, 520));
         insert(new Product ("Farine d'avoine", "Colruyt", 353, 65, 12, 5, 510));
