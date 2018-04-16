@@ -1,6 +1,6 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import be.ac.ulb.infof307.g10.Main;
 import javafx.fxml.FXML;
@@ -31,23 +32,11 @@ public class TermsOfUseController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("initialization");
-		
-		// TODO move this to model
-		URL file = getClass().getClassLoader().getResource("terms_of_use.txt");
-		List<String> lines;
-		try {
-			lines = Files.readAllLines(Paths.get(file.toURI()), StandardCharsets.UTF_8);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return;
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return;
-		}
-		String content = String.join("\n", lines);
+		InputStream in = getClass().getResourceAsStream("/terms_of_use.txt");
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		String content = reader.lines().collect(Collectors.joining());
 		button.setText("I agree");
 		text.setText(content);
+
 	}
 }
