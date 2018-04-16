@@ -4,7 +4,7 @@ import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.UserAlreadyExistException;
-import be.ac.ulb.infof307.g10.models.exceptions.UserDontExistException;
+import be.ac.ulb.infof307.g10.models.exceptions.UserDoesNotExistException;
 
 import org.sqlite.SQLiteException;
 import javax.persistence.NoResultException;
@@ -45,9 +45,9 @@ public class Connector {
 	 * @param password	The password of the user in String format
 	 * @return			A Session object that represent the user
 	 * @throws IncorrectPasswordException	Append if the password of the user is incorrect
-	 * @throws UserDontExistException 				Append if the username doesn't exist in DB
+	 * @throws UserDoesNotExistException 				Append if the username doesn't exist in DB
 	 */
-	public Session openSession(String username, String password) throws IncorrectPasswordException, UserDontExistException {
+	public Session openSession(String username, String password) throws IncorrectPasswordException, UserDoesNotExistException {
         DatabaseFacade d = new DatabaseFacade();
         User u ;
         try {
@@ -59,7 +59,7 @@ public class Connector {
             	throw new IncorrectPasswordException();
             }
         } catch (NoResultException e){
-            throw new UserDontExistException();
+            throw new UserDoesNotExistException();
         }
 	}
 	

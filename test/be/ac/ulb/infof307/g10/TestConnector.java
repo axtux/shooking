@@ -8,7 +8,7 @@ import be.ac.ulb.infof307.g10.models.Connector;
 import be.ac.ulb.infof307.g10.models.Session;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.UserAlreadyExistException;
-import be.ac.ulb.infof307.g10.models.exceptions.UserDontExistException;
+import be.ac.ulb.infof307.g10.models.exceptions.UserDoesNotExistException;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -34,20 +34,20 @@ public class TestConnector {
 	}
 
 	@Test
-	public void testOpenSession() throws IncorrectPasswordException, UserDontExistException {
+	public void testOpenSession() throws IncorrectPasswordException, UserDoesNotExistException {
 		Connector conn = new Connector();
 		Session user = conn.openSession("Mr. Test", "SuperPassWord");
 		assertEquals(user.getUser().getUsername(), "Mr. Test");
 	}
 
 	@Test(expected = IncorrectPasswordException.class)
-	public void testCannotOpenSession() throws IncorrectPasswordException, UserDontExistException {
+	public void testCannotOpenSession() throws IncorrectPasswordException, UserDoesNotExistException {
 		Connector conn = new Connector();
 		Session user = conn.openSession("Mr. Test", "BadPassword");
 	}
 
-	@Test(expected = UserDontExistException.class)
-	public void testUserDontExist() throws IncorrectPasswordException, UserDontExistException {
+	@Test(expected = UserDoesNotExistException.class)
+	public void testUserDontExist() throws IncorrectPasswordException, UserDoesNotExistException {
 		Connector conn = new Connector();
 		Session user = conn.openSession("BAdUser", "BadPassword");
 	}

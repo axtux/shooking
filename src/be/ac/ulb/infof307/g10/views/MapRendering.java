@@ -17,7 +17,11 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-
+/**
+ * Map page
+ * @author pierre
+ *
+ */
 public class MapRendering implements MapComponentInitializedListener {
 
 GoogleMapView mapView;

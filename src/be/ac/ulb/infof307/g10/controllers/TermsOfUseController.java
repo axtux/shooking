@@ -30,7 +30,6 @@ public class TermsOfUseController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		System.out.println("initialization");
 		
 		// TODO move this to model
 		URL file = getClass().getClassLoader().getResource("terms_of_use.txt");
