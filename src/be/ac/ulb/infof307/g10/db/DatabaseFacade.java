@@ -7,15 +7,16 @@ import sun.rmi.transport.ObjectTable;
 
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseFacade {
 
     public DatabaseFacade(){}
 
     public static void fillDB(){
-        insert(new User("User1", "User1", null));
-        insert(new User("User2", "User2", null));
 
         insert(new Product ("Farine d'avoine", "Delhaize", 353, 65, 12, 5, 530));
         insert(new Product ("Farine d'avoine", "Carrefour", 353, 65, 12, 5, 520));
@@ -1639,6 +1640,14 @@ public class DatabaseFacade {
         Connection.getTransaction().commit();
         return  l;
     }
+    
+    public static List<Product> getProductByName(String productName){
+        Connection.getTransaction().begin();
+        List<Product> l = Connection.getManager().createQuery("SELECT b from Product b where b.name LIKE :productname").setParameter("productname", productName).getResultList();
+        Connection.getTransaction().commit();
+
+        return  l;
+    }
 
     public static User getUser(String username) throws NoResultException{
         try {
@@ -1649,7 +1658,7 @@ public class DatabaseFacade {
         }catch (NoResultException e){
             Connection.getTransaction().rollback();
             throw new NoResultException();
-        }
+        } 
     }
 
     public static User getListOwner(Long list_id) throws NoResultException{
@@ -1738,6 +1747,33 @@ public class DatabaseFacade {
         }
     }
 
+    public List<Shop> getShopWhereProductIsAvailable(List<Product> products) throws NoResultException{
+    	List<Shop> shops = new ArrayList<>();
+        for(Product p: products){
+        	shops.addAll(this.getShopWhereProductIsAvailable(p.getName()));
+        }
+        return shops;
+    }
+    
+    public List<Shop> getShopWhereProductIsAvailable(String product) throws NoResultException{
+        try {
+            Connection.getTransaction().begin();
+            List<Shop> l = Connection.getManager().createNamedQuery("Shop.findAll").getResultList();
+            Connection.getTransaction().commit();
+            List<Shop> shopList = new ArrayList<Shop>();
+            for(Shop s: l){
+            	Map<Product, Integer> stock = s.getStock();
+            	if(stock.containsKey(product)){
+            		shopList.add(s);
+            	}
+            }
+            return shopList;
+        }catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }
+    }
+    
     public static List<Shop> getShops() throws NoResultException {
         try {
             Connection.getTransaction().begin();

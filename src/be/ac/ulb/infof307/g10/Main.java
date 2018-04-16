@@ -5,6 +5,8 @@ import java.io.IOException;
 import be.ac.ulb.infof307.g10.views.IntCreateAcount;
 import be.ac.ulb.infof307.g10.views.LoginPage;
 import be.ac.ulb.infof307.g10.views.Menu;
+import be.ac.ulb.infof307.g10.views.MapRendering;
+import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,6 +34,8 @@ public class Main extends Application {
 	}
 	
 	public static void main(String[] args) {
+		//DatabaseFacade db = new DatabaseFacade();
+		//db.fillDB();
 		launch(args);
 	}
 	
@@ -61,7 +65,12 @@ public class Main extends Application {
 		new Menu(stage);
 		update();
 	}
-	
+
+	public void goToMap(){
+		new MapRendering(stage);
+		update();
+	}
+
 	private void loadFXML(String name) {
 		try {
 			//FIXME - FUCKING RETARDED, USE SEPARATOR CLASS + RETURN NULL clap clap!!!
