@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.views.IntField;
+import be.ac.ulb.infof307.g10.views.MapRendering;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -120,8 +121,11 @@ public class ShoppingListController implements Initializable {
 
 	@FXML
 	void goToStore(ActionEvent event) {
-		// TODO go elsewhere
-		Main.getInstance().goToLogin();
+		// go to the map
+		System.out.println(products);
+		Stage stage = new Stage();
+		MapRendering mapRendering = new MapRendering(stage);
+		mapRendering.mapInitialized();
 		System.out.println("gone store \n");
 	}
 

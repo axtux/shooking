@@ -1639,6 +1639,13 @@ public class DatabaseFacade {
         Connection.getTransaction().commit();
         return  l;
     }
+    
+    public static List<Product> getProductByName(String productName){
+        Connection.getTransaction().begin();
+        List<Product> l = Connection.getManager().createQuery("SELECT * from Product b where b.name LIKE :productname").setParameter("productname", productName).getResultList();
+        Connection.getTransaction().commit();
+        return  l;
+    }
 
     public static User getUser(String username) throws NoResultException{
         try {
