@@ -14,8 +14,6 @@ public class DatabaseFacade {
     public DatabaseFacade(){}
 
     public static void fillDB(){
-        insert(new User("User1", "User1", null));
-        insert(new User("User2", "User2", null));
 
         insert(new Product ("Farine d'avoine", "Delhaize", 353, 65, 12, 5, 530));
         insert(new Product ("Farine d'avoine", "Carrefour", 353, 65, 12, 5, 520));
@@ -1642,8 +1640,9 @@ public class DatabaseFacade {
     
     public static List<Product> getProductByName(String productName){
         Connection.getTransaction().begin();
-        List<Product> l = Connection.getManager().createQuery("SELECT * from Product b where b.name LIKE :productname").setParameter("productname", productName).getResultList();
+        List<Product> l = Connection.getManager().createQuery("SELECT b from Product b where b.name LIKE :productname").setParameter("productname", productName).getResultList();
         Connection.getTransaction().commit();
+
         return  l;
     }
 
@@ -1656,7 +1655,7 @@ public class DatabaseFacade {
         }catch (NoResultException e){
             Connection.getTransaction().rollback();
             throw new NoResultException();
-        }
+        } 
     }
 
     public static User getListOwner(Long list_id) throws NoResultException{
