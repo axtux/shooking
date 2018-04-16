@@ -111,7 +111,7 @@ public class ShoppingListController implements Initializable {
 	}
 
 	@FXML
-	void goToStore(ActionEvent event) { //TODO change the name of the function (not adapted anymore)
+	void goBack(ActionEvent event) {
 		// go to the menu
 		Main.getInstance().goToMenu();
 		System.out.println("go back to the Menu\n");

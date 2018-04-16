@@ -1,5 +1,6 @@
 package be.ac.ulb.infof307.g10.views;
 
+import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Connector;
 import be.ac.ulb.infof307.g10.models.Session;
 import be.ac.ulb.infof307.g10.models.exceptions.UserAlreadyExistException;
@@ -12,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -89,6 +91,17 @@ public class IntCreateAcount {
                 }
             }
         });
+
+        //creation button logout
+
+        Button btnLogout = new Button();
+        btnLogout.setText("Login page");
+        btnLogout.setDefaultButton(true);
+        btnLogout.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                Main.getInstance().goToLogin();
+            }
+        });
         
         
         //the two buttons are in the center
@@ -98,8 +111,12 @@ public class IntCreateAcount {
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(10);
         hbox.getChildren().addAll(vbox);
-		
-        Scene scene = new Scene(hbox,800,600,Color.WHITE);
+
+        BorderPane bpane = new BorderPane();
+        bpane.setCenter(hbox);
+        bpane.setRight(btnLogout);
+
+        Scene scene = new Scene(bpane,800,600,Color.WHITE);
         stage.setScene(scene);
 		
 		
