@@ -73,9 +73,6 @@ public class Main extends Application {
 
 	private void loadFXML(String name) {
 		try {
-			//FIXME - FUCKING RETARDED, USE SEPARATOR CLASS + RETURN NULL clap clap!!!
-			System.out.println(getClass());
-			System.out.println("getclass "  + getClass().getClassLoader().getResource(name+".fxml"));
 			Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(name+".fxml"));
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
