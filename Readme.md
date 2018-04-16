@@ -17,8 +17,9 @@ la réputation des informations existantes.
 La compilation se fait grâce à Maven.
 
 - ./compile.sh
-- ./run.sh
 - (./fillDB.sh) #only if needed
+- ./run.sh
+
 
 # Configuration :
 
