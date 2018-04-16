@@ -1,21 +1,18 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.stream.Collectors;
-
 import be.ac.ulb.infof307.g10.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class TermsOfUseController implements Initializable {
 	@FXML
