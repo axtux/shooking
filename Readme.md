@@ -14,7 +14,6 @@ la réputation des informations existantes.
 
 ## Compilation et Exécution
 
-TO DO: Informations sur la façon de compiler votre projet 
 La compilation se fait grâce à Maven.
 - mvn package
 - ./run.Sh
