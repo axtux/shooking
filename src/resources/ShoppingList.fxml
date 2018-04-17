@@ -40,9 +40,14 @@
             <Button fx:id="removeBT" font="$x1" layoutX="19.0" layoutY="277.0" mnemonicParsing="false" onAction="#remove" prefHeight="26.0" prefWidth="234.0" text="Remove" />
                   <Button fx:id="amountUpBT" layoutX="120.0" layoutY="113.0" mnemonicParsing="false" onAction="#amountUp" prefHeight="19.0" prefWidth="27.0" text="+" />
                   <Button fx:id="amountDownBT" layoutX="154.0" layoutY="113.0" mnemonicParsing="false" onAction="#amountDown" prefHeight="19.0" prefWidth="27.0" text="-" />
-                  <Button layoutX="19.0" layoutY="455.0" mnemonicParsing="false" onAction="#goToStore" prefHeight="29.0" prefWidth="234.0" text="Go to the store">
+                  <Button layoutX="19.0" layoutY="455.0" mnemonicParsing="false" onAction="#goBack" prefHeight="29.0" prefWidth="234.0" text="Go back to the menu">
                      <font>
                         <Font name="System Bold Italic" size="15.0" fx:id="x11" />
+                     </font>
+                  </Button>
+                  <Button layoutX="19.0" layoutY="500.0" mnemonicParsing="false" onAction="#logout" prefHeight="29.0" prefWidth="234.0" text="Logout">
+                     <font>
+                        <Font name="System Bold Italic" size="15.0" fx:id="x12" />
                      </font>
                   </Button>
                   <Button fx:id="researchBT" layoutX="19.0" layoutY="389.0" mnemonicParsing="false" onAction="#researchProduct" prefHeight="27.0" prefWidth="234.0" text="Research product">
