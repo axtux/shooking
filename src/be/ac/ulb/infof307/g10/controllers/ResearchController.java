@@ -14,41 +14,36 @@ import javafx.scene.control.TextField;
 import java.util.List;
 
 public class ResearchController {
-    @FXML
-    private TextField productTF;
+	@FXML
+	private TextField productTF;
 
-    @FXML
-    private TextArea shopTA;
+	@FXML
+	private TextArea shopTA;
 
-    @FXML
-    private Button researchBT;
+	@FXML
+	private Button researchBT;
 
+	public void research(ActionEvent actionEvent) {
+		Research r = new Research();
+		shopTA.setText("");
 
-    //public void research(ActionEvent actionEvent) {
-    //    Research r = new Research();
-    //   shopTA.setText("");
+		List<Shop> shopList = r.getStoreWithProducts(DatabaseFacade.getProducts(productTF.getText()));
+		String shopNames = "";
+		for (Shop s : shopList) {
+			shopNames += s.getName() + "\n";
+		}
+		shopTA.setText(shopNames);
+	}
 
-    //   List<Shop> shopList = r.getStoreWithProducts(DatabaseFacade.getProducts(productTF.getText())
-    //  );
-    //  String shopNames = "";
-    //  for (Shop s : shopList
-    //       ) {
-    //      shopNames += s.getName() + "\n";
-    //  }
-    //  shopTA.setText(shopNames);
-    //}
-    
-    public void research(ActionEvent actionEvent) {
-        DatabaseFacade r = new DatabaseFacade();
-        shopTA.setText("");
+	public void researchProducts(ActionEvent actionEvent) {
+		shopTA.setText("");
 
-        List<Product> productsList = DatabaseFacade.getProductByName(productTF.getText());
-        
-        String productsNames = "";
-        for (Product s : productsList
-             ) {
-        	productsNames += s.getName() + "\n";
-        }
-        shopTA.setText(productsNames);
-    }
+		List<Product> productsList = DatabaseFacade.getProductByName(productTF.getText());
+
+		String productsNames = "";
+		for (Product s : productsList) {
+			productsNames += s.getName() + "\n";
+		}
+		shopTA.setText(productsNames);
+	}
 }
