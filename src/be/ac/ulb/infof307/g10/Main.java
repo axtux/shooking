@@ -8,6 +8,7 @@ import be.ac.ulb.infof307.g10.views.Menu;
 import be.ac.ulb.infof307.g10.views.MapRendering;
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -62,13 +63,19 @@ public class Main extends Application {
 	}
 
 	public void goToMenu() {
-		new Menu(stage);
+		stage.setTitle("Menu");
+		loadFXML("Menfsfh");
+		//new Menu(stage);
 		update();
 	}
 
 	public void goToMap(){
 		new MapRendering(stage);
 		update();
+	}
+
+	public void exit(){
+		Platform.exit();
 	}
 
 	private void loadFXML(String name) {
@@ -87,4 +94,5 @@ public class Main extends Application {
 	private void update() {
 		stage.centerOnScreen();
 	}
+
 }

@@ -27,11 +27,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-/**
- *
- * @author Oscar
- * 
- */
+
 public class ShoppingListController implements Initializable {
 	@FXML
 	private Button clearBT;
@@ -43,8 +39,6 @@ public class ShoppingListController implements Initializable {
 	private Button removeBT;
 	@FXML
 	private Button newBT;
-	@FXML
-	private Button goStoreBT;
 	@FXML
 	private Button amountUpBT;
 	@FXML
@@ -131,7 +125,7 @@ public class ShoppingListController implements Initializable {
 	}
 
 	/**
-	 * Select a cell of the table products
+	 * Update the information for the view when the user select a cell of the table products
 	 */
 	private void updateSelected() {
 		int size = selection.size();
@@ -141,7 +135,7 @@ public class ShoppingListController implements Initializable {
 			removeBT.setDisable(false);
 			productTF.setText(selected.getKey().getName());
 			amountTF.setText(selected.getValue().toString());
-		} else {
+		} else { //no product selected
 			selected = null;
 			editBT.setDisable(true);
 			removeBT.setDisable(true);
