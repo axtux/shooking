@@ -38,7 +38,6 @@ public class Menu {
         hbox.setAlignment(Pos.CENTER);
 
         //creation of the product list button
-
         Button btnList = new Button();
         btnList.setText("See the list");
         btnList.setDefaultButton(true);
@@ -47,9 +46,8 @@ public class Menu {
                                   Main.getInstance().goToShoppingList();
                               }
         });
-        //TODO modify the list page to came back to the menu
-        //creation of the map button
 
+        //creation of the map button
         Button btnMap = new Button();
         btnMap.setText("See the map");
         btnMap.setDefaultButton(true);
