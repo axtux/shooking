@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.image.*?>
-
 <?import javafx.scene.text.*?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -17,7 +16,7 @@
                   <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exit" text="Exit" />
                   <ImageView fitHeight="84.0" fitWidth="86.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="pictures/trolley.png" />
+                        <Image url="@pictures/trolley.png" />
                      </image>
                   </ImageView>
                </children>
@@ -26,8 +25,8 @@
          <center>
             <VBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToShoppingList" text="Shopping List" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToMap" text="Shop Map" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToShoppingList" text="Shopping List" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToMap" text="Shop Map" />
                </children>
             </VBox>
          </center>
