@@ -1,10 +1,10 @@
 package be.ac.ulb.infof307.g10;
 
+import java.io.IOException;
+
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
-import be.ac.ulb.infof307.g10.views.IntCreateAcount;
 import be.ac.ulb.infof307.g10.views.LoginPage;
 import be.ac.ulb.infof307.g10.views.MapRendering;
-import be.ac.ulb.infof307.g10.views.Menu;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -56,7 +56,8 @@ public class Main extends Application {
 	}
 	
 	public void goToSignUp() {
-		new IntCreateAcount(stage);
+		stage.setTitle("Creation of account");
+		loadFXML("CreateAccount");
 		update();
 	}
 	public void goToRecipe() {
