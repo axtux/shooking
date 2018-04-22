@@ -64,8 +64,7 @@ public class Main extends Application {
 
 	public void goToMenu() {
 		stage.setTitle("Menu");
-		loadFXML("Menfsfh");
-		//new Menu(stage);
+		loadFXML("Menu");
 		update();
 	}
 
