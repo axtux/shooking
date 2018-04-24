@@ -8,12 +8,6 @@ import java.util.List;
 
 public class Research {
 
-
-    /**
-     * Research class
-     * @author Benjamin Nicodeme
-     *
-     */
     public List<Shop> getStoreWithProducts(List<Product> products){
         List<Shop> sl = new ArrayList<>();
 
