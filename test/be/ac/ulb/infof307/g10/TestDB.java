@@ -12,7 +12,6 @@ import org.sqlite.SQLiteException;
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
 import java.util.Arrays;
-import java.util.Map;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestDB {
@@ -115,16 +114,16 @@ public class TestDB {
 
     @Test
     public void test_0110_CreateList(){
-        List l = new List();
+        ShoppingList l = new ShoppingList();
         l.addProduct(DatabaseFacade.getProduct("#DB 6 Apples", "Pink ladies"), 1);
         l.addProduct(DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold"), 2);
         DatabaseFacade.insert(l);
-        DatabaseFacade.getUser("#DB lala").setList(l);
+        DatabaseFacade.getUser("#DB lala").setShoppingList(l);
     }
 
 //    @Test
 //    public void test_0989_DeleteList(){
-//        DatabaseFacade.deleteList(DatabaseFacade.getUser("#DB lala").getList());
+//        DatabaseFacade.deleteList(DatabaseFacade.getUser("#DB lala").getShoppingList());
 //    }
 
     @Test

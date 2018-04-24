@@ -76,7 +76,7 @@ public class File {
 		
 	}
 	/**
-	 * List entries into directory.
+	 * ShoppingList entries into directory.
 	 * @param pathname Directory to read.
 	 * @return Sorted list of entry names relative to pathname or null on error.
 	 */
@@ -104,7 +104,7 @@ public class File {
 		return paths;
 	}
 	/**
-	 * List entries ending with suffix into directory. Comparison is case insensitive.
+	 * ShoppingList entries ending with suffix into directory. Comparison is case insensitive.
 	 * @param pathname Directory to read.
 	 * @param suffix only entries ending with this suffix will be listed.
 	 * @return Sorted list of entry names relative to pathname or null on error.

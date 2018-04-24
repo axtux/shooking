@@ -38,7 +38,7 @@ public class ShopManagement {
 	 * Return a list of all shop in the DB.
 	 * The list is empty if there are no shop in the DB.
 	 * 
-	 * @return		A List of Shop
+	 * @return		A ShoppingList of Shop
 	 */
 	public static List<Shop> getShops() {
 		List<Shop> shops;
