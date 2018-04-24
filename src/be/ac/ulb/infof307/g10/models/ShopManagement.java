@@ -1,7 +1,6 @@
 package be.ac.ulb.infof307.g10.models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class ShopManagement {
 	public static Shop getShop(String name) {
 		Shop shop;
 		try {
-			shop = DatabaseFacade.getShop(name);
+			shop = DatabaseFacade.getShopFromName(name);
 		} catch (NoResultException e) {
 			shop = null;
 		}
@@ -43,7 +42,7 @@ public class ShopManagement {
 	public static List<Shop> getShops() {
 		List<Shop> shops;
 		try {
-			shops = DatabaseFacade.getShops();
+			shops = DatabaseFacade.getAllShops();
 		} catch (NoResultException e) {
 			shops = new ArrayList<>();
 		}
@@ -132,7 +131,7 @@ public class ShopManagement {
 	 */
 	public static void modifyShopStock(Shop shop, String productName, String description, Integer quantity){
 		try {
-			Product product = DatabaseFacade.getProduct(productName, description);
+			Product product = DatabaseFacade.getProductFromNameAndDesc(productName, description);
 			modifyShopStock(shop, product, quantity);
 		} catch (NoResultException e) {} // Nothing to do
 	}

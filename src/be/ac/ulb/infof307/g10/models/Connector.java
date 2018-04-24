@@ -1,19 +1,16 @@
 package be.ac.ulb.infof307.g10.models;
 
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
-import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.UserAlreadyExistException;
 import be.ac.ulb.infof307.g10.models.exceptions.UserDoesNotExistException;
 
-import org.sqlite.SQLiteException;
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.*;
 
 
 public class Connector {
@@ -51,7 +48,7 @@ public class Connector {
         DatabaseFacade d = new DatabaseFacade();
         User u ;
         try {
-            u = new User(d.getUser(username));
+            u = new User(d.getUserFromUsername(username));
             if (u.getPassword().equals(sha256(password))) {
                 return new Session(u);
             }
@@ -96,7 +93,7 @@ public class Connector {
 		// Delete the user in the DB if the password is correct
         if (checkUserPassword(username, password)){
             DatabaseFacade d = new DatabaseFacade();
-            User u = d.getUser(username);
+            User u = d.getUserFromUsername(username);
             d.delete(u);
             return true;
         }
@@ -106,9 +103,9 @@ public class Connector {
 	public boolean checkUserPassword(String username, String password) throws IncorrectPasswordException {
         try {
 			DatabaseFacade d = new DatabaseFacade();
-			System.out.println(d.getUser(username));
+			System.out.println(d.getUserFromUsername(username));
 			User u ;
-            u = new User(d.getUser(username));
+            u = new User(d.getUserFromUsername(username));
             if (!u.getPassword().equals(sha256(password))) {
                 throw new IncorrectPasswordException();
             }
