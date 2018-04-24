@@ -40,14 +40,14 @@ public class TestDB {
 
     @Test
     public void test_0020_GetUser(){
-        Assert.assertNotEquals(null, DatabaseFacade.getUser("#DB lala"));
+        Assert.assertNotEquals(null, DatabaseFacade.getUserFromUsername("#DB lala"));
     }
 
 
 
     @Test(expected = NoResultException.class)
     public void test_0050_GetUser_noResultExceptionExpected(){
-        Assert.assertNotEquals(null, DatabaseFacade.getUser("fzvsvsfvsfvsf"));
+        Assert.assertNotEquals(null, DatabaseFacade.getUserFromUsername("fzvsvsfvsfvsf"));
     }
 
 
@@ -65,46 +65,46 @@ public class TestDB {
 
     @Test
     public void test_0070_GetProduct(){
-        DatabaseFacade.getProduct("#DB 6 Apples", "Pink ladies");
+        DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies");
     }
 
 
     @Test
     public void test_0072_GetProducts(){
-        System.out.println(DatabaseFacade.getProducts("#DB 6 Apples"));
+        System.out.println(DatabaseFacade.getAllProducts("#DB 6 Apples"));
     }
 
 
     @Test
     public void test_0080_CreateShop(){
         Shop s = new Shop("#DB Delhaize", 0.0, 0.0);
-        s.addProduct(DatabaseFacade.getProduct("#DB 6 Apples", "Pink ladies"), 10);
-        s.addProduct(DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold"), 10);
+        s.addProduct(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"), 10);
+        s.addProduct(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"), 10);
         DatabaseFacade.insert(s);
     }
 
     @Test
     public void test_0090_GetShop(){
-        DatabaseFacade.getShop("#DB Delhaize");
+        DatabaseFacade.getShopFromName("#DB Delhaize");
 
 
     }
 
     @Test
     public void test_0091_updateShopStock(){
-        Shop shop = DatabaseFacade.getShop("#DB Delhaize");
+        Shop shop = DatabaseFacade.getShopFromName("#DB Delhaize");
 
         System.out.println(Arrays.asList(shop.getStock()));
-        Product p = DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold");
-        int quantity = shop.getStock().get(DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold"));
+        Product p = DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold");
+        int quantity = shop.getStock().get(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"));
 
         shop.updateStock(p, quantity -3 );
         DatabaseFacade.update(shop);
 
         ////////////////////////
 
-        Shop shopCheck = DatabaseFacade.getShop("#DB Delhaize");
-        Product pCheck = DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold");
+        Shop shopCheck = DatabaseFacade.getShopFromName("#DB Delhaize");
+        Product pCheck = DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold");
 
         System.out.println(shopCheck.getQuantity(pCheck));
         System.out.println(shopCheck);
@@ -115,38 +115,38 @@ public class TestDB {
     @Test
     public void test_0110_CreateList(){
         ShoppingList l = new ShoppingList();
-        l.addProduct(DatabaseFacade.getProduct("#DB 6 Apples", "Pink ladies"), 1);
-        l.addProduct(DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold"), 2);
+        l.addProduct(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"), 1);
+        l.addProduct(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"), 2);
         DatabaseFacade.insert(l);
-        DatabaseFacade.getUser("#DB lala").setShoppingList(l);
+        DatabaseFacade.getUserFromUsername("#DB lala").setShoppingList(l);
     }
 
 //    @Test
 //    public void test_0989_DeleteList(){
-//        DatabaseFacade.deleteList(DatabaseFacade.getUser("#DB lala").getShoppingList());
+//        DatabaseFacade.deleteList(DatabaseFacade.getUserFromUsername("#DB lala").getShoppingList());
 //    }
 
     @Test
     public void test_0990_DeleteUser(){
-        DatabaseFacade.delete((DatabaseFacade.getUser("#DB lala")));
+        DatabaseFacade.delete((DatabaseFacade.getUserFromUsername("#DB lala")));
     }
 
     @Test(expected = NoResultException.class)
     public void test_0991_DeleteUser_noResultExceptionExpected(){
-        DatabaseFacade.delete((DatabaseFacade.getUser("#DB lala")));
+        DatabaseFacade.delete((DatabaseFacade.getUserFromUsername("#DB lala")));
     }
 
 
     @Test
     public void test_0994_DeleteProduct(){
-        DatabaseFacade.delete(DatabaseFacade.getProduct("#DB 6 Apples", "Pink ladies"));
-        DatabaseFacade.delete(DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold"));
+        DatabaseFacade.delete(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"));
+        DatabaseFacade.delete(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"));
     }
 
 
     @Test
     public void test_0998_DeleteShop(){
-        DatabaseFacade.delete(DatabaseFacade.getShop("#DB Delhaize"));
+        DatabaseFacade.delete(DatabaseFacade.getShopFromName("#DB Delhaize"));
     }
 
 
