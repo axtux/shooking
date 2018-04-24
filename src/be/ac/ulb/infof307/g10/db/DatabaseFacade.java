@@ -2,8 +2,8 @@ package be.ac.ulb.infof307.g10.db;
 
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Shop;
+import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.User;
-import sun.rmi.transport.ObjectTable;
 
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
@@ -1633,7 +1633,7 @@ public class DatabaseFacade {
         Connection.getManager().createQuery("delete from Product p").executeUpdate();
         Connection.getManager().createQuery("delete from User u").executeUpdate();
         Connection.getManager().createQuery("delete from Shop p").executeUpdate();
-        Connection.getManager().createQuery("delete from List l").executeUpdate();
+        Connection.getManager().createQuery("delete from ShoppingList l").executeUpdate();
         Connection.getTransaction().commit();
     }
 
@@ -1790,12 +1790,12 @@ public class DatabaseFacade {
     }
 
 
-    public static void deleteList(be.ac.ulb.infof307.g10.models.List l) throws NoResultException{
+    public static void deleteList(ShoppingList l) throws NoResultException{
         try {
             //FIXME java.lang.IllegalStateException: ???
             //Exception Description: Transaction is currently active
             Connection.getTransaction().begin();
-            DatabaseFacade.getListOwner(l.getId()).setList(null);
+            DatabaseFacade.getListOwner(l.getId()).setShoppingList(null);
             Connection.getTransaction().commit();
             Connection.getTransaction().begin();
             Connection.getManager().remove(l);
@@ -1844,11 +1844,11 @@ public class DatabaseFacade {
 //        Connection.getTransaction().commit();
 //    }
 //
-//    public static List<Transaction> getAllTransactionsWithAddress(String... addresses){
-//        List<String> addr = Arrays.asList(addresses);
+//    public static ShoppingList<Transaction> getAllTransactionsWithAddress(String... addresses){
+//        ShoppingList<String> addr = Arrays.asList(addresses);
 //        Connection.getTransaction().begin();
 //        @SuppressWarnings("unchecked")
-//		List<Transaction> transactions = Connection.getManager().createQuery("SELECT t from Transaction t where t.outputOut.address IN :addr1 or t.outputBack.address IN :addr2")
+//		ShoppingList<Transaction> transactions = Connection.getManager().createQuery("SELECT t from Transaction t where t.outputOut.address IN :addr1 or t.outputBack.address IN :addr2")
 //                .setParameter("addr1", addr)
 //                .setParameter("addr2", addr).getResultList();
 //        Connection.getTransaction().commit();

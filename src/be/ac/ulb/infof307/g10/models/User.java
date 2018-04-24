@@ -26,16 +26,16 @@ public class User implements Serializable {
 	private String password;
 
 	@OneToOne
-    private List list;
+    private ShoppingList shoppingList;
 
 	//NEEDED BY JPA
 	public User(){
 	}
 
-    public User(String username, String password, List userList) {
+    public User(String username, String password, ShoppingList userShoppingList) {
         this.username = username;
         this.password = sha256(password);
-        this.list = userList;
+        this.shoppingList = userShoppingList;
     }
 
     public User(String username, String password) {
@@ -48,7 +48,7 @@ public class User implements Serializable {
         this.id = user.id;
         this.username = user.username;
         this.password = user.password;
-        this.list = user.list;
+        this.shoppingList = user.shoppingList;
     }
 
     public static String sha256(String password) {
@@ -73,7 +73,7 @@ public class User implements Serializable {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", userList=" + list +
+                ", userList=" + shoppingList +
                 '}';
     }
 
@@ -101,12 +101,12 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public List getList() {
-        return list;
+    public ShoppingList getShoppingList() {
+        return shoppingList;
     }
 
-    public void setList(List list) {
-        this.list = list;
+    public void setShoppingList(ShoppingList shoppingList) {
+        this.shoppingList = shoppingList;
         DatabaseFacade.update(this);
     }
 }
