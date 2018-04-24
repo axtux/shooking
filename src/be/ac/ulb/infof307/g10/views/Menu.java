@@ -58,12 +58,22 @@ public class Menu {
                 Main.getInstance().goToMap();
             }
         });
+      //creation of the product list button
+
+        Button btnRec = new Button();
+        btnRec.setText("Create recipe");
+        btnRec.setDefaultButton(true);
+        btnRec.setOnAction(new EventHandler<ActionEvent>() {
+                              public void handle(ActionEvent event) {
+                                  Main.getInstance().goToRecipe();
+                              }
+        });
 
 
         //buttons centering
 
         //vetical centering of the choice buttons
-        VBox vbox = new VBox(btnList,btnMap);
+        VBox vbox = new VBox(btnList,btnMap,btnRec);
         vbox.setAlignment(Pos.CENTER);
         vbox.setSpacing(20);
 
