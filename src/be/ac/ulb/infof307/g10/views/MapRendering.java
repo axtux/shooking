@@ -6,7 +6,6 @@ import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
 import com.lynden.gmapsfx.javascript.object.GoogleMap;
 import com.lynden.gmapsfx.javascript.object.InfoWindow;
-import com.lynden.gmapsfx.javascript.object.InfoWindowOptions;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
@@ -27,6 +26,7 @@ import netscape.javascript.JSObject;
 public class MapRendering implements MapComponentInitializedListener {
 	GoogleMapView mapView;
 	GoogleMap map;
+	InfoWindow popup;
 
 	public MapRendering(Stage stage) {
 		// creation of the map
@@ -53,7 +53,7 @@ public class MapRendering implements MapComponentInitializedListener {
 			}
 		});
 
-		// organisation of the view
+		// organization of the view
 		VBox vbox = new VBox(btnGoBack, btnLogout);
 		vbox.setAlignment(Pos.TOP_RIGHT);
 		vbox.setSpacing(10);
@@ -79,13 +79,10 @@ public class MapRendering implements MapComponentInitializedListener {
 		map.addMarker(marker); // To change body of generated methods, choose Tools | Templates.
 
 		// popup
-		InfoWindowOptions infoOptions = new InfoWindowOptions();
-		infoOptions.content("hola mundo");
-		InfoWindow window = new InfoWindow(infoOptions);
-		
-		window.open(map, marker);
+		popup.setContent("Hello world");
+		popup.open(map, marker);
 		map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
-			window.open(map, marker);
+			popup.open(map, marker);
 		});
 	}
 
@@ -98,6 +95,7 @@ public class MapRendering implements MapComponentInitializedListener {
 				.rotateControl(false).scaleControl(false).streetViewControl(false).zoomControl(false).zoom(12);
 
 		map = mapView.createMap(mapOptions);
+		popup = new InfoWindow();
 
 		// Add a marker to the map
 		map.addMouseEventHandler(UIEventType.click, (GMapMouseEvent event) -> {
