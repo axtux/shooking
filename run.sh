@@ -1,1 +1,1 @@
-java -jar target/groupe10-1.0-SNAPSHOT-jar-with-dependencies.jar
+java -jar dist/g10-iteration-X.jar
