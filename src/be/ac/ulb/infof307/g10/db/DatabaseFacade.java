@@ -9,9 +9,7 @@ import be.ac.ulb.infof307.g10.models.User;
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class DatabaseFacade {
 

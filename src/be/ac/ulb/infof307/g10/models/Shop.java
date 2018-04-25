@@ -1,8 +1,5 @@
 package be.ac.ulb.infof307.g10.models;
 
-
-import be.ac.ulb.infof307.g10.db.DatabaseFacade;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashMap;
