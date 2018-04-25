@@ -1,17 +1,17 @@
 package be.ac.ulb.infof307.g10;
 
-import java.io.IOException;
-
+import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 import be.ac.ulb.infof307.g10.views.IntCreateAcount;
 import be.ac.ulb.infof307.g10.views.LoginPage;
-import be.ac.ulb.infof307.g10.views.Menu;
 import be.ac.ulb.infof307.g10.views.MapRendering;
-import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.views.Menu;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class Main extends Application {
 	/*
@@ -29,6 +29,10 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage stage){
+
+		if (DatabaseFacade.isDBEmpty())
+			DatabaseFacade.fillDB();
+
 		this.stage = stage;
 		goToLogin();
 	}
