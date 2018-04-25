@@ -25,7 +25,7 @@ public class ShopManagement {
 	public static Shop getShop(String name) {
 		Shop shop;
 		try {
-			shop = DatabaseFacade.getShop(name);
+			shop = DatabaseFacade.getShopFromName(name);
 		} catch (NoResultException e) {
 			shop = null;
 		}

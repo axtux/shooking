@@ -199,7 +199,7 @@ public class DatabaseFacade {
     }
 
     /**
-     * 
+     *
      * @param l
      * @throws NoResultException
      */
