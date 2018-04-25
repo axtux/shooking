@@ -47,7 +47,7 @@ public class Recipe implements Serializable {
 	 * Constructor needed by JPA
 	 */
 	public Recipe(){
-		this("", 1, new HashMap<>(), new ArrayList<>());
+		this("");
 	}
 	
 	/**
@@ -55,7 +55,7 @@ public class Recipe implements Serializable {
 	 * @param name	Name of the Recipe
 	 */
 	public Recipe(String name) {
-		this(name, 1, new HashMap<>(), new ArrayList<>());
+		this(name, 1);
 	}
 	
 	/**
@@ -64,7 +64,7 @@ public class Recipe implements Serializable {
 	 * @param servings Number of people for the recipe
 	 */
 	public Recipe(String name, int servings){
-		this(name, servings, new HashMap<>(), new ArrayList<>());
+		this(name, servings, new HashMap<>());
 	}
 	
 	/**
