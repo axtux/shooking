@@ -1,18 +1,24 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.models.*;
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.models.Product;
+import be.ac.ulb.infof307.g10.models.Shop;
+import be.ac.ulb.infof307.g10.models.ShoppingList;
+import be.ac.ulb.infof307.g10.models.User;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.sqlite.SQLiteException;
 
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
 import java.util.Arrays;
 
+/**
+ * The tests have to be executed in a certain order, so they are sorted by name and executed by name ascending
+ * Some tests of this class do not have asserts beacause an exception make the test fail when it has to
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestDB {
 
@@ -34,7 +40,7 @@ public class TestDB {
     }
 
     @Test(expected = RollbackException.class)
-    public void test_0011_InsertUser_uniqueConstraintExecptionExpected() throws SQLiteException {
+    public void test_0011_InsertUser_uniqueConstraintExecptionExpected() {
         DatabaseFacade.insert(new User("#DB lala", "#DB lala", null));
     }
 
@@ -42,7 +48,6 @@ public class TestDB {
     public void test_0020_GetUser(){
         Assert.assertNotEquals(null, DatabaseFacade.getUser("#DB lala"));
     }
-
 
 
     @Test(expected = NoResultException.class)
@@ -86,8 +91,6 @@ public class TestDB {
     @Test
     public void test_0090_GetShop(){
         DatabaseFacade.getShop("#DB Delhaize");
-
-
     }
 
     @Test

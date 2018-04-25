@@ -34,7 +34,7 @@ public class DatabaseFacade {
         Connection.getManager().createQuery("delete from Shop p").executeUpdate();
         Connection.getManager().createQuery("delete from ShoppingList l").executeUpdate();
         Connection.getTransaction().commit();
-        
+
     }
 
 
