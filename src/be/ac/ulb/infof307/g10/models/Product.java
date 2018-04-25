@@ -40,6 +40,10 @@ public class Product implements Serializable {
 	// NEEDED BY JPA
 	public Product(){
 	}
+	
+	public Product(Product p) {
+		this(p.name, p.description, p.calories, p.sugar, p.proteins, p.fat, p.price);
+	}
 
     public Product(String name, String description, Integer calories, Integer sugar, Integer proteins, Integer fat, Integer price) {
         this.name = name;
@@ -64,7 +68,13 @@ public class Product implements Serializable {
                 ", price=" + price +
                 '}';
     }
-
+/**
+ * Clone method for copying the maps using Products objects (e.g. Recipe.java)
+ */
+    public Product clone() {
+    	return new Product(this);
+  	}
+    
     public Integer getId() {
         return id;
     }
