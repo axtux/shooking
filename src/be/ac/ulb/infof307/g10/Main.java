@@ -29,15 +29,12 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage stage){
-	    DatabaseFacade.initDB();
-
 		this.stage = stage;
 		goToLogin();
 	}
 	
 	public static void main(String[] args) {
-		//DatabaseFacade db = new DatabaseFacade();
-		//db.fillDB();
+        DatabaseFacade.initDB();
 		launch(args);
 	}
 	
