@@ -26,15 +26,20 @@ public class Main extends Application {
 	}
 	
 	private Stage stage;
-	
-	@Override
+
+    @Override
+    public void init() throws Exception {
+        super.init();
+        DatabaseFacade.initDB();
+    }
+
+    @Override
 	public void start(Stage stage){
 		this.stage = stage;
 		goToLogin();
 	}
 	
 	public static void main(String[] args) {
-        DatabaseFacade.initDB();
 		launch(args);
 	}
 	
