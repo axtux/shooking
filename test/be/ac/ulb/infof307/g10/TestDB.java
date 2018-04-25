@@ -80,7 +80,7 @@ public class TestDB {
 
     @Test
     public void test_0072_GetProducts(){
-        System.out.println(DatabaseFacade.getProducts("#DB 6 Apples"));
+        DatabaseFacade.getProducts("#DB 6 Apples");
     }
 
 
@@ -101,7 +101,7 @@ public class TestDB {
     public void test_0091_updateShopStock(){
         Shop shop = DatabaseFacade.getShop("#DB Delhaize");
 
-        System.out.println(Arrays.asList(shop.getStock()));
+        Arrays.asList(shop.getStock());
         Product p = DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold");
         int quantity = shop.getStock().get(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"));
 
@@ -113,8 +113,7 @@ public class TestDB {
         Shop shopCheck = DatabaseFacade.getShop("#DB Delhaize");
         Product pCheck = DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold");
 
-        System.out.println(shopCheck.getQuantity(pCheck));
-        System.out.println(shopCheck);
+        //shopCheck.getQuantity(pCheck);;
     }
 
 
