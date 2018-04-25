@@ -32,7 +32,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class recipe implements Initializable {
+public class RecipeController implements Initializable {
 
    
     @FXML
