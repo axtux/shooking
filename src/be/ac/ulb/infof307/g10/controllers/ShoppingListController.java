@@ -10,7 +10,6 @@ import java.util.ResourceBundle;
 
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.property.SimpleStringProperty;
@@ -57,8 +56,6 @@ public class ShoppingListController implements Initializable {
 	
 
 	@FXML
-	private TextField productTF;
-	@FXML
 	private IntField amountTF;
 
 	@FXML
@@ -77,7 +74,6 @@ public class ShoppingListController implements Initializable {
 	private void clear(ActionEvent event) {
 		table.getSelectionModel().clearSelection();
 		// in case selection is not update, clear fields
-		productTF.clear();
 		amountTF.clear();
 	}
 
@@ -85,7 +81,7 @@ public class ShoppingListController implements Initializable {
 	private void add(ActionEvent event) {
 		// add product
 		//FIXME
-		Product p = new Product(productTF.getText(), 0, "");
+		Product p = new Product(productsListCombo.getSelectionModel().getSelectedItem().toString(), 0, "");
 		products.put(p, amountTF.getInt());
 		// select it
 		for (int i = 0; i < items.size(); i++) {
@@ -145,7 +141,6 @@ public class ShoppingListController implements Initializable {
 			selected = selection.get(0);
 			editBT.setDisable(false);
 			removeBT.setDisable(false);
-			productTF.setText(selected.getKey().getName());
 			amountTF.setText(selected.getValue().toString());
 		} else {
 			selected = null;
@@ -193,10 +188,12 @@ public class ShoppingListController implements Initializable {
 				updateInterface();
 			}
 		});
+		// add available products in the select list
 		List<Product> allProducts = Database.getAllProducts();
-		
 		for(int i=0; i < allProducts.size(); i++){
-			productsListCombo.getItems().add(allProducts.get(i).getName());
+			if(!productsListCombo.getItems().contains(allProducts.get(i).getName())){
+				productsListCombo.getItems().add(allProducts.get(i).getName());
+			}
 		}
 		
 		// add listener to call selected method
