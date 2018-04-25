@@ -206,7 +206,7 @@ public class ShoppingListController implements Initializable {
 
 	public void researchProduct(ActionEvent actionEvent) {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("researchDialog.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ResearchDialog.fxml"));
 			DialogPane page = loader.load();
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Research product");

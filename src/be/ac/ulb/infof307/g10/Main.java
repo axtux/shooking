@@ -59,8 +59,8 @@ public class Main extends Application {
 		update();
 	}
 	public void goToRecipe() {
-		stage.setTitle("RECIPE");
-		loadFXML("recipe");
+		stage.setTitle("Recipe");
+		loadFXML("Recipe");
 		update();
 	}
 	public void goToShoppingList() {
@@ -81,7 +81,7 @@ public class Main extends Application {
 
 	private void loadFXML(String name) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(name+".fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/FXML/"+name+".fxml"));
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();
