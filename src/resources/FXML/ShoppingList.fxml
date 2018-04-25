@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import be.ac.ulb.infof307.g10.views.IntField?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -57,7 +58,7 @@
                         <Font size="15.0" />
                      </font>
                   </Button>
-                  <ComboBox layoutX="16.0" layoutY="88.0" prefHeight="27.0" prefWidth="234.0" />
+                  <ComboBox fx:id="productsListCombo" layoutX="16.0" layoutY="88.0" prefHeight="27.0" prefWidth="234.0" />
                   <ComboBox layoutX="16.0" layoutY="33.0" prefHeight="27.0" prefWidth="234.0" />
                   <Label layoutX="16.0" layoutY="14.0" text="List:">
                      <font>

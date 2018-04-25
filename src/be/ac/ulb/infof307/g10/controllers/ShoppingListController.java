@@ -52,6 +52,9 @@ public class ShoppingListController implements Initializable {
 	private Button amountUpBT;
 	@FXML
 	private Button amountDownBT;
+	@FXML
+	private ComboBox productsListCombo;
+	
 
 	@FXML
 	private TextField productTF;
@@ -191,6 +194,10 @@ public class ShoppingListController implements Initializable {
 			}
 		});
 		List<Product> allProducts = Database.getAllProducts();
+		
+		for(int i=0; i < allProducts.size(); i++){
+			productsListCombo.getItems().add(allProducts.get(i).getName());
+		}
 		
 		// add listener to call selected method
 		selection = table.getSelectionModel().getSelectedItems();
