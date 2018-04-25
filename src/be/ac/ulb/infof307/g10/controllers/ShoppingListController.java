@@ -3,11 +3,14 @@ package be.ac.ulb.infof307.g10.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
 import be.ac.ulb.infof307.g10.Main;
+import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.property.SimpleStringProperty;
@@ -187,10 +190,7 @@ public class ShoppingListController implements Initializable {
 				updateInterface();
 			}
 		});
-		// TODO get actual data
-		products.put(new Product("Oeufs", 0, ""), 1);
-		products.put(new Product("Pâtes", 0, ""), 500);
-		products.put(new Product("Bière", 0, ""), 42);
+		List<Product> allProducts = Database.getAllProducts();
 		
 		// add listener to call selected method
 		selection = table.getSelectionModel().getSelectedItems();
