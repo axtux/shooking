@@ -54,7 +54,11 @@ public class Main extends Application {
 		new IntCreateAcount(stage);
 		update();
 	}
-	
+	public void goToRecipe() {
+		stage.setTitle("RECIPE");
+		loadFXML("recipe");
+		update();
+	}
 	public void goToShoppingList() {
 		stage.setTitle("Shopping list");
 		loadFXML("ShoppingList");
