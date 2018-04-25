@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g10.db;
 
 import be.ac.ulb.infof307.g10.models.Product;
+import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.User;
@@ -45,6 +46,7 @@ public class DatabaseFacade {
         Connection.getManager().createQuery("delete from User u").executeUpdate();
         Connection.getManager().createQuery("delete from Shop p").executeUpdate();
         Connection.getManager().createQuery("delete from ShoppingList l").executeUpdate();
+        Connection.getManager().createQuery("delete from Recipe r").executeUpdate();
         Connection.getTransaction().commit();
 
     }
@@ -211,6 +213,32 @@ public class DatabaseFacade {
         }
     }
 
+
+    public static Recipe getRecipe(String name) throws NoResultException {
+        try {
+            Connection.getTransaction().begin();
+            Recipe r = (Recipe) Connection.getManager().createQuery("SELECT b FROM Recipe b WHERE b.name LIKE :name").setParameter("name", name).getSingleResult();
+            Connection.getTransaction().commit();
+            return r;
+        }
+        catch (NoResultException e){
+            Connection.getTransaction().rollback();
+            throw new NoResultException();
+        }	
+    }
+        
+    public static List<Recipe> getAllRecipes() throws NoResultException {
+    	try{
+    		Connection.getTransaction().begin();
+    		List<Recipe> l = Connection.getManager().createNamedQuery("Recipe.findAll").getResultList();
+    		Connection.getTransaction().commit();
+    		return l;
+    	}catch (NoResultException e){
+    		Connection.getTransaction().rollback();
+    		throw new NoResultException();
+    	}
+    }
+    
     /**
      *
      * @param l

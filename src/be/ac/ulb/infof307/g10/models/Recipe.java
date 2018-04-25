@@ -22,6 +22,17 @@ public class Recipe implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	/**
+	 * Name of the recipe
+	 */
+	private String name;
+	
+	/**
+	 * Number of people for the recipe
+	 */
+	private int servings = 1;
+	
 	/**
 	 * Mapping between products and quantities of it
 	 */
@@ -38,6 +49,63 @@ public class Recipe implements Serializable {
 	public Recipe(){
 		ingredients=new HashMap<>();
 		steps=new ArrayList<>();
+	}
+	
+	/**
+	 * Constructor for a new Recipe
+	 * @param name	Name of the Recipe
+	 */
+	public Recipe(String name) {
+		this.setName(name);
+		this.ingredients = new HashMap<>();
+		this.steps = new ArrayList<>();
+	}
+	
+	/**
+	 * Constructor for a new Recipe
+	 * @param name	Name of the Recipe
+	 * @param servings Number of people for the recipe
+	 */
+	public Recipe(String name, int servings){
+		this.setName(name);
+		this.ingredients = new HashMap<>();
+		this.steps = new ArrayList<>();
+		this.servings = servings;
+	}
+	
+	/**
+	 * Constructor for a new Recipe
+	 * @param name	Name of the Recipe
+	 * @param servings Number of people for the recipe
+	 * @param ingredients	HashMap of the ingredient (Product, Quantity)
+	 */
+	public Recipe(String name, int servings, Map<Product, Float> ingredients){
+		this.setName(name);
+		this.ingredients = ingredients;
+		this.steps = new ArrayList<>();
+		this.servings = servings;
+	}
+	
+	/**
+	 * Constructor for a new Recipe
+	 * @param name	Name of the Recipe
+	 * @param servings Number of people for the recipe
+	 * @param ingredients	HashMap of the ingredient (Product, Quantity)
+	 * @param steps		ArrayList of String represent the steps for the Recipe
+	 */
+	public Recipe(String name, int servings, Map<Product, Float> ingredients, ArrayList<String> steps) {
+		this.setName(name);
+		this.ingredients = ingredients;
+		this.steps = steps;
+		this.servings = servings;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	/**
@@ -125,4 +193,9 @@ public class Recipe implements Serializable {
 	public void removeIngredient(Product p){
 		ingredients.remove(p);
 	}
+
+	public int getServings(){
+		return this.servings;
+	}
+
 }
