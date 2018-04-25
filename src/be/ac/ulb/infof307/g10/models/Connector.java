@@ -43,12 +43,11 @@ public class Connector {
 	 * @throws UserDoesNotExistException 				Append if the username doesn't exist in DB
 	 */
 	//FIXME - really same methid than CheckUserPassword
-	public Session openSession(String username, String password) throws IncorrectPasswordException, UserDoesNotExistException {
+	public User openSession(String username, String password) throws IncorrectPasswordException, UserDoesNotExistException {
         try {
-			User u ;
-            u = new User(DatabaseFacade.getUser(username));
+			User u = new User(DatabaseFacade.getUser(username));
             if (u.getPassword().equals(sha256(password))) {
-                return new Session(u);
+                return u;
             }
             else {
             	throw new IncorrectPasswordException();
@@ -66,11 +65,11 @@ public class Connector {
 	 * @return			A Session object that represent the user
 	 * @throws UserAlreadyExistException	Append if the id is not already taken by an other user
 	 */
-	public Session createUser(String username, String password) throws UserAlreadyExistException {
+	public User createUser(String username, String password) throws UserAlreadyExistException {
         try{
 			User u = new User(username, password);
 			DatabaseFacade.insert(u);
-			return new Session(u);
+			return u;
 		}
 		catch (RollbackException e) {
 			throw new UserAlreadyExistException();
