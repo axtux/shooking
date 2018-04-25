@@ -29,9 +29,7 @@ public class Main extends Application {
 	
 	@Override
 	public void start(Stage stage){
-
-		if (DatabaseFacade.isDBEmpty())
-			DatabaseFacade.fillDB();
+	    DatabaseFacade.initDB();
 
 		this.stage = stage;
 		goToLogin();

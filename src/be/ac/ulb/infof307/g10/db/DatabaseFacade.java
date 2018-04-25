@@ -16,6 +16,11 @@ public class DatabaseFacade {
 
     public DatabaseFacade(){}
 
+    public static void initDB(){
+        if (isDBEmpty())
+            fillDB();
+    }
+
     /**
      * fill db
      */
