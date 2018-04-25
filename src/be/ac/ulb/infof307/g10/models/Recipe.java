@@ -31,7 +31,7 @@ public class Recipe implements Serializable {
 	/**
 	 * Number of people for the recipe
 	 */
-	private int servings = 1;
+	private int servings;
 	
 	/**
 	 * Mapping between products and quantities of it
@@ -47,8 +47,7 @@ public class Recipe implements Serializable {
 	 * Constructor needed by JPA
 	 */
 	public Recipe(){
-		ingredients=new HashMap<>();
-		steps=new ArrayList<>();
+		this("", 1, new HashMap<>(), new ArrayList<>());
 	}
 	
 	/**
@@ -56,9 +55,7 @@ public class Recipe implements Serializable {
 	 * @param name	Name of the Recipe
 	 */
 	public Recipe(String name) {
-		this.setName(name);
-		this.ingredients = new HashMap<>();
-		this.steps = new ArrayList<>();
+		this(name, 1, new HashMap<>(), new ArrayList<>());
 	}
 	
 	/**
@@ -67,10 +64,7 @@ public class Recipe implements Serializable {
 	 * @param servings Number of people for the recipe
 	 */
 	public Recipe(String name, int servings){
-		this.setName(name);
-		this.ingredients = new HashMap<>();
-		this.steps = new ArrayList<>();
-		this.servings = servings;
+		this(name, servings, new HashMap<>(), new ArrayList<>());
 	}
 	
 	/**
@@ -80,10 +74,7 @@ public class Recipe implements Serializable {
 	 * @param ingredients	HashMap of the ingredient (Product, Quantity)
 	 */
 	public Recipe(String name, int servings, Map<Product, Float> ingredients){
-		this.setName(name);
-		this.ingredients = ingredients;
-		this.steps = new ArrayList<>();
-		this.servings = servings;
+		this(name, servings, ingredients, new ArrayList<>());
 	}
 	
 	/**
@@ -95,9 +86,9 @@ public class Recipe implements Serializable {
 	 */
 	public Recipe(String name, int servings, Map<Product, Float> ingredients, ArrayList<String> steps) {
 		this.setName(name);
+		this.servings = servings;
 		this.ingredients = ingredients;
 		this.steps = steps;
-		this.servings = servings;
 	}
 	
 	public String getName() {
