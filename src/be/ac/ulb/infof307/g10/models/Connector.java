@@ -4,35 +4,13 @@ import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.UserAlreadyExistException;
 import be.ac.ulb.infof307.g10.models.exceptions.UserDoesNotExistException;
+import be.ac.ulb.infof307.g10.utils.Hash;
 
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 
 public class Connector {
-
-	/**
-	 * Sha 256 hash function
-	 * 
-	 * @param password	The password of the user in String format
-	 * @return			A hash of this password in String format
-	 */
-	public static String sha256(String password) {
-		try {
-			MessageDigest digest;
-			byte[] encodedHash = null;
-			digest = MessageDigest.getInstance("SHA-256");
-			encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-			return new String(encodedHash, "UTF-8");
-		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-			return "";
-		}
-	}
-	
 	/**
 	 * Check in the DB if the information (username and Password) are correct and, if it's ok, return a Session object to connect the user
 	 * 
@@ -46,7 +24,7 @@ public class Connector {
 	public User openSession(String username, String password) throws IncorrectPasswordException, UserDoesNotExistException {
         try {
 			User u = new User(DatabaseFacade.getUser(username));
-            if (u.getPassword().equals(sha256(password))) {
+            if (u.getPassword().equals(Hash.sha256(password))) {
                 return u;
             }
             else {
@@ -97,7 +75,7 @@ public class Connector {
         try {
 			User u ;
             u = new User(DatabaseFacade.getUser(username));
-            if (!u.getPassword().equals(sha256(password))) {
+            if (!u.getPassword().equals(Hash.sha256(password))) {
                 throw new IncorrectPasswordException();
             }
         } catch (NullPointerException | NoResultException e){
