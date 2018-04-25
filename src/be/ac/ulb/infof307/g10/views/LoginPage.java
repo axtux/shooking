@@ -6,7 +6,7 @@ package be.ac.ulb.infof307.g10.views;
 
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Connector;
-import be.ac.ulb.infof307.g10.models.Session;
+import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.UserDoesNotExistException;
 import javafx.application.Application;
@@ -59,10 +59,10 @@ public class LoginPage {
                 String log = textFieldLog.getText();
                 //Capture of the "password" field
                 String pwd = pwdField.getText();
-                System.out.println(pwd);
+//                System.out.println(pwd);
                 try{
                 	Connector conn = new Connector();
-                	Session user = conn.openSession(log, pwd);
+                	User user = conn.openSession(log, pwd);
                 	badPassLabel.setText("");
                 	
                 	Main.getInstance().goToMenu();

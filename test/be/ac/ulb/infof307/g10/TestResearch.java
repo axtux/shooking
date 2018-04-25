@@ -25,8 +25,6 @@ public class TestResearch {
         l = new ArrayList<>();
         p = new Object();
 
-//        DatabaseFacade.insertUser(new User("researchTestUser", "researchTestUser", null));
-
         DatabaseFacade.insert(new Product("#Research 6 Apples", "Pink ladies",100, 200, 300, 400, 300));
         DatabaseFacade.insert(new Product("#Research 6 Apples", "Jonagold",100, 200, 300, 400, 320));
 
@@ -47,14 +45,13 @@ public class TestResearch {
 
 
     @Test
-    public void testGetStoresWithProducts() {
+    public void test_0001_GetStoresWithProducts() {
         Research r = new Research();
         r.getStoreWithProducts(DatabaseFacade.getProducts("#Research 6 Apples"));
-//        r.getStoreWithProducts(l);
     }
 
     @Test
-    public void testGetStoresWithProduct() {
+    public void test_0002_GetStoresWithProduct() {
         Research r = new Research();
         r.getStoreWithProduct(DatabaseFacade.getProductFromNameAndDesc("#Research 6 Apples", "Pink ladies"));
     }

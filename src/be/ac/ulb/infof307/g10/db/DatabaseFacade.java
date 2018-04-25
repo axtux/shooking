@@ -16,11 +16,23 @@ public class DatabaseFacade {
 
     public DatabaseFacade(){}
 
+    public static void initDB(){
+        if (isDBEmpty()) {
+            Data.fillDB();
+        }
+    }
+
     /**
-     * fill db
+     * test is db is empty
+     * @return emptyness of the db
      */
-    public static void fillDB(){
-        (new FillDB()).fill();
+    public static boolean isDBEmpty(){
+        Connection.getTransaction().begin();
+        List<Product> lTest = Connection.getManager().createNamedQuery("Product.findAll").getResultList();
+        Connection.getTransaction().commit();
+        if (lTest.isEmpty())
+            return true;
+        return false;
     }
 
 
@@ -34,7 +46,7 @@ public class DatabaseFacade {
         Connection.getManager().createQuery("delete from Shop p").executeUpdate();
         Connection.getManager().createQuery("delete from ShoppingList l").executeUpdate();
         Connection.getTransaction().commit();
-        
+
     }
 
 
