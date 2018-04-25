@@ -16,12 +16,18 @@ public class DatabaseFacade {
 
     public DatabaseFacade(){}
 
+    /**
+     * fill db
+     */
     public static void fillDB(){
         (new FillDB()).fill();
     }
 
 
-    public static void empyDB(){
+    /**
+     * empty db
+     */
+    public static void emptyDB(){
         Connection.getTransaction().begin();
         Connection.getManager().createQuery("delete from Product p").executeUpdate();
         Connection.getManager().createQuery("delete from User u").executeUpdate();
@@ -37,7 +43,7 @@ public class DatabaseFacade {
      * @return
      * @throws NoResultException
      */
-    public static User getUserFromUsername(String username) throws NoResultException{
+    public static User getUser(String username) throws NoResultException{
         try {
             Connection.getTransaction().begin();
             User u = (User) Connection.getManager().createQuery("SELECT b from User b where b.username LIKE :username").setParameter("username", username).getSingleResult();
@@ -122,7 +128,7 @@ public class DatabaseFacade {
      *
      * @param name
      * @param description
-     * @return
+     * @return a product from a name and description
      * @throws NoResultException
      */
     public static Product getProductFromNameAndDesc(String name, String description) throws NoResultException{
@@ -141,10 +147,10 @@ public class DatabaseFacade {
     /**
      *
      * @param name
-     * @return
+     * @return a list of product from a name
      * @throws NoResultException
      */
-    public static List<Product> getAllProducts(String name) throws NoResultException{
+    public static List<Product> getProducts(String name) throws NoResultException{
         try {
             Connection.getTransaction().begin();
             List<Product> p = (List<Product>) Connection.getManager().createQuery("SELECT b FROM Product b WHERE b.name LIKE :name").setParameter("name", name).getResultList();
@@ -158,24 +164,11 @@ public class DatabaseFacade {
 
     /**
      *
-     * @param productName
-     * @return
-     */
-    public static List<Product> getProductFromName(String productName){
-        Connection.getTransaction().begin();
-        List<Product> l = Connection.getManager().createQuery("SELECT b from Product b where b.name LIKE :productname").setParameter("productname", productName).getResultList();
-        Connection.getTransaction().commit();
-
-        return  l;
-    }
-
-    /**
-     *
      * @param name
-     * @return
+     * @return a shop from its name
      * @throws NoResultException
      */
-    public static Shop getShopFromName(String name) throws NoResultException{
+    public static Shop getShop(String name) throws NoResultException{
         try {
             Connection.getTransaction().begin();
             Shop s = (Shop) Connection.getManager().createQuery("SELECT b FROM Shop b WHERE b.name LIKE :name").setParameter("name", name).getSingleResult();
@@ -190,46 +183,7 @@ public class DatabaseFacade {
 
     /**
      *
-     * @param products
-     * @return
-     * @throws NoResultException
-     */
-    public List<Shop> getShopWhereProductIsAvailable(List<Product> products) throws NoResultException{
-    	List<Shop> shops = new ArrayList<>();
-        for(Product p: products){
-        	shops.addAll(this.getShopWhereProductIsAvailable(p.getName()));
-        }
-        return shops;
-    }
-
-    /**
-     *
-     * @param product
-     * @return
-     * @throws NoResultException
-     */
-    public List<Shop> getShopWhereProductIsAvailable(String product) throws NoResultException{
-        try {
-            Connection.getTransaction().begin();
-            List<Shop> l = Connection.getManager().createNamedQuery("Shop.findAll").getResultList();
-            Connection.getTransaction().commit();
-            List<Shop> shopList = new ArrayList<Shop>();
-            for(Shop s: l){
-            	Map<Product, Integer> stock = s.getStock();
-            	if(stock.containsKey(product)){
-            		shopList.add(s);
-            	}
-            }
-            return shopList;
-        }catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        }
-    }
-
-    /**
-     *
-     * @return
+     * @return all shops
      * @throws NoResultException
      */
     public static List<Shop> getAllShops() throws NoResultException {

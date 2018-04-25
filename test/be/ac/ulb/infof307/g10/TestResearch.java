@@ -49,7 +49,7 @@ public class TestResearch {
     @Test
     public void testGetStoresWithProducts() {
         Research r = new Research();
-        r.getStoreWithProducts(DatabaseFacade.getAllProducts("#Research 6 Apples"));
+        r.getStoreWithProducts(DatabaseFacade.getProducts("#Research 6 Apples"));
 //        r.getStoreWithProducts(l);
     }
 
@@ -61,9 +61,9 @@ public class TestResearch {
 
     @AfterClass
     public static void clean(){
-        DatabaseFacade.delete(DatabaseFacade.getShopFromName("#Research Delhaize"));
-        DatabaseFacade.delete(DatabaseFacade.getShopFromName("#Research Carrefour"));
-        DatabaseFacade.delete(DatabaseFacade.getShopFromName("#Research Colruyt"));
+        DatabaseFacade.delete(DatabaseFacade.getShop("#Research Delhaize"));
+        DatabaseFacade.delete(DatabaseFacade.getShop("#Research Carrefour"));
+        DatabaseFacade.delete(DatabaseFacade.getShop("#Research Colruyt"));
         DatabaseFacade.delete(DatabaseFacade.getProductFromNameAndDesc("#Research 6 Apples", "Pink ladies"));
         DatabaseFacade.delete(DatabaseFacade.getProductFromNameAndDesc("#Research 6 Apples", "Jonagold"));
     }

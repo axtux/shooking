@@ -27,7 +27,7 @@ public class ResearchController {
 		Research r = new Research();
 		shopTA.setText("");
 
-		List<Shop> shopList = r.getStoreWithProducts(DatabaseFacade.getAllProducts(productTF.getText()));
+		List<Shop> shopList = r.getStoreWithProducts(DatabaseFacade.getProducts(productTF.getText()));
 		String shopNames = "";
 		for (Shop s : shopList) {
 			shopNames += s.getName() + "\n";
@@ -38,7 +38,7 @@ public class ResearchController {
 	public void researchProducts(ActionEvent actionEvent) {
 		shopTA.setText("");
 
-		List<Product> productsList = DatabaseFacade.getProductFromName(productTF.getText());
+		List<Product> productsList = DatabaseFacade.getProducts(productTF.getText());
 
 		String productsNames = "";
 		for (Product s : productsList) {
