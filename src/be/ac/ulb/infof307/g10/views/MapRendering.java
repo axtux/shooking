@@ -1,10 +1,10 @@
 package be.ac.ulb.infof307.g10.views;
 
-import com.lynden.gmapsfx.GoogleMapView;
+import com.lynden.gmapsfx.ClusteredGoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
-import com.lynden.gmapsfx.javascript.object.GoogleMap;
+import com.lynden.gmapsfx.javascript.object.ClusteredGoogleMap;
 import com.lynden.gmapsfx.javascript.object.InfoWindow;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapOptions;
@@ -24,13 +24,13 @@ import javafx.stage.Stage;
 import netscape.javascript.JSObject;
 
 public class MapRendering implements MapComponentInitializedListener {
-	GoogleMapView mapView;
-	GoogleMap map;
+	ClusteredGoogleMapView mapView;
+	ClusteredGoogleMap map;
 	InfoWindow popup;
 
 	public MapRendering(Stage stage) {
 		// creation of the map
-		mapView = new GoogleMapView();
+		mapView = new ClusteredGoogleMapView();
 		mapView.addMapInializedListener(this);
 
 		// creation button logout
@@ -76,7 +76,7 @@ public class MapRendering implements MapComponentInitializedListener {
 		markerOptions.position(latLong).visible(Boolean.TRUE).title("My Marker");
 
 		Marker marker = new Marker(markerOptions);// need to be save on the database
-		map.addMarker(marker); // To change body of generated methods, choose Tools | Templates.
+		map.addClusterableMarker(marker);
 
 		// popup
 		popup.setContent("Hello world");
@@ -91,14 +91,21 @@ public class MapRendering implements MapComponentInitializedListener {
 		// Set the initial properties of the map.
 		MapOptions mapOptions = new MapOptions();
 		LatLong latLong = new LatLong((double) 50.8504500, (double) 4.3487800);
-		mapOptions.center(latLong).mapType(MapTypeIdEnum.ROADMAP).overviewMapControl(false).panControl(false)
-				.rotateControl(false).scaleControl(false).streetViewControl(false).zoomControl(false).zoom(12);
+		mapOptions.center(latLong)
+			.mapType(MapTypeIdEnum.ROADMAP)
+			.overviewMapControl(false)
+			.panControl(false)
+			.rotateControl(false)
+			.scaleControl(false)
+			.streetViewControl(false)
+			.zoomControl(false)
+			.zoom(12);
 
 		map = mapView.createMap(mapOptions);
 		popup = new InfoWindow();
 
-		// Add a marker to the map
-		map.addMouseEventHandler(UIEventType.click, (GMapMouseEvent event) -> {
+		// Add a marker to the map on right clic
+		map.addMouseEventHandler(UIEventType.rightclick, (GMapMouseEvent event) -> {
 			markerHandler(event);
 		});
 
