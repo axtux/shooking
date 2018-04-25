@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NamedQueries({
 		@NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
 })
-public class Product implements Serializable {
+public class Product implements Serializable, Cloneable {
 
     private static final long serialVersionUID = -0L;
 	@Id
@@ -65,6 +65,17 @@ public class Product implements Serializable {
                 '}';
     }
 
+    public Object clone() {
+    	Object o = null;
+    	try {
+      		o = super.clone();
+    	} catch(CloneNotSupportedException cnse) {
+      		// Never appends
+      		cnse.printStackTrace(System.err);
+	    }
+	    return o;
+  	}
+    
     public Integer getId() {
         return id;
     }
