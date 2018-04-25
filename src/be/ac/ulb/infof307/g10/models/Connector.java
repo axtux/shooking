@@ -48,7 +48,7 @@ public class Connector {
         DatabaseFacade d = new DatabaseFacade();
         User u ;
         try {
-            u = new User(d.getUserFromUsername(username));
+            u = new User(d.getUser(username));
             if (u.getPassword().equals(sha256(password))) {
                 return new Session(u);
             }
@@ -93,7 +93,7 @@ public class Connector {
 		// Delete the user in the DB if the password is correct
         if (checkUserPassword(username, password)){
             DatabaseFacade d = new DatabaseFacade();
-            User u = d.getUserFromUsername(username);
+            User u = d.getUser(username);
             d.delete(u);
             return true;
         }
@@ -103,9 +103,9 @@ public class Connector {
 	public boolean checkUserPassword(String username, String password) throws IncorrectPasswordException {
         try {
 			DatabaseFacade d = new DatabaseFacade();
-			System.out.println(d.getUserFromUsername(username));
+			System.out.println(d.getUser(username));
 			User u ;
-            u = new User(d.getUserFromUsername(username));
+            u = new User(d.getUser(username));
             if (!u.getPassword().equals(sha256(password))) {
                 throw new IncorrectPasswordException();
             }
