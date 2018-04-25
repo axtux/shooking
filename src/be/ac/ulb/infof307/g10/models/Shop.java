@@ -1,8 +1,5 @@
 package be.ac.ulb.infof307.g10.models;
 
-
-import be.ac.ulb.infof307.g10.db.DatabaseFacade;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -38,23 +35,12 @@ public class Shop implements Serializable {
 	}
 
     public Shop(String name, double latitude, double longitude) {
-        this.name = name;
-        this.stock = new HashMap<Product, Integer>();
-        this.schedule = new String[7];
-        this.schedule[0] = "CLOSED";
-        this.schedule[1] = "CLOSED";
-        this.schedule[2] = "CLOSED";
-        this.schedule[3] = "CLOSED";
-        this.schedule[4] = "CLOSED";
-        this.schedule[5] = "CLOSED";
-        this.schedule[6] = "CLOSED";
-        this.latitude = latitude;
-        this.longitude = longitude;
+    	this(name, new HashMap<>(), latitude, longitude);
     }
 
     public Shop(String name, Map<Product, Integer> stock, double latitude, double longitude) {
         this.name = name;
-        this.stock = stock;
+        this.stock = new HashMap<>(stock);
         this.schedule = new String[7];
         this.schedule[0] = "CLOSED";
         this.schedule[1] = "CLOSED";
@@ -123,10 +109,7 @@ public class Shop implements Serializable {
      * @return		The opening time in String format, or an empty String
      */
     public String getSchedule(int day) throws IndexOutOfBoundsException {
-    	if (0 <= day && day < this.schedule.length){
-    		return this.schedule[day];
-    	}
-    	throw new IndexOutOfBoundsException();
+    	return this.schedule[day];
     }
     
     /**
@@ -138,11 +121,7 @@ public class Shop implements Serializable {
      * @param newSchedule	The new opening time for this day
      */
     public void setSchedule(int day, String newSchedule) throws IndexOutOfBoundsException {
-        if (0 <= day && day < this.schedule.length){
-        	this.schedule[day] = newSchedule;
-        } else {
-        	throw new IndexOutOfBoundsException();
-        }
+        this.schedule[day] = newSchedule;
     }
     
     public double getLatitude() {
