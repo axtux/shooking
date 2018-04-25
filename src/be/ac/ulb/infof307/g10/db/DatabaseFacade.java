@@ -17,9 +17,15 @@ public class DatabaseFacade {
     public DatabaseFacade(){}
 
     public static void initDB(){
-        if (isDBEmpty()) {
-            Data.fillDB();
-        }
+        if (isDBEmpty())
+            fillDB();
+    }
+
+    /**
+     * fill db
+     */
+    public static void fillDB(){
+        (new FillDB()).fill();
     }
 
     /**
