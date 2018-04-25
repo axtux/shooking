@@ -1,42 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.ac.ulb.infof307.g10.controllers.MenuController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.ac.ulb.infof307.g10.controllers.MenuController">
    <children>
-      <BorderPane prefHeight="500.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <right>
-            <VBox spacing="5.0" BorderPane.alignment="TOP_LEFT">
-               <children>
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToLogin" text="Login Page" />
-                  <Button alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#exit" text="Exit" />
-                  <ImageView fitHeight="84.0" fitWidth="86.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@pictures/trolley.png" />
-                     </image>
-                  </ImageView>
-               </children>
-            </VBox>
-         </right>
-         <center>
-            <VBox alignment="CENTER" spacing="20.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToShoppingList" text="Shopping List" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToMap" text="Shop Map" />
-               </children>
-            </VBox>
-         </center>
-         <top>
-            <Label alignment="TOP_CENTER" text="Select your choice" textAlignment="CENTER" BorderPane.alignment="CENTER">
+      <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <MenuBar>
+               <menus>
+                  <Menu fx:id="goMenu" mnemonicParsing="false" text="go to">
+                     <items>
+                        <MenuItem fx:id="shoppingListItem" mnemonicParsing="false" onAction="#goToShoppingList" text="Shopping List">
+                           <graphic>
+                              <ImageView fitHeight="70.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@pictures/trolley.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                        <MenuItem fx:id="mapItem" mnemonicParsing="false" onAction="#goToMap" text="Map">
+                           <graphic>
+                              <ImageView fitHeight="70.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@pictures/map.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </MenuItem>
+                     </items>
+                  </Menu>
+                  <Menu fx:id="logoutMenu" mnemonicParsing="false" onAction="#goToLogin" text="Logout" />
+                  <Menu fx:id="ExitMenu" mnemonicParsing="false" onAction="#exit" text="Exit" />
+               </menus>
+            </MenuBar>
+            <Label fx:id="titlePage" alignment="TOP_CENTER" text="Title">
                <font>
-                  <Font size="31.0" />
+                  <Font size="40.0" />
                </font>
             </Label>
-         </top>
-      </BorderPane>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

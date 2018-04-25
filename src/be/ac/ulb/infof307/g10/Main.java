@@ -2,7 +2,6 @@ package be.ac.ulb.infof307.g10;
 
 import java.io.IOException;
 
-import be.ac.ulb.infof307.g10.views.LoginPage;
 import be.ac.ulb.infof307.g10.views.MapRendering;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -38,7 +37,8 @@ public class Main extends Application {
 	}
 	
 	public void goToLogin() {
-		new LoginPage(stage);
+		stage.setTitle("Login Page");
+		loadFXML("Login");
 		update();
 	}
 	
