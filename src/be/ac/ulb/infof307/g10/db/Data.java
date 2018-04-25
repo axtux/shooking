@@ -1,6 +1,6 @@
 package be.ac.ulb.infof307.g10.db;
 
-import be.ac.ulb.infof307.g10.controllers.recipe;
+import be.ac.ulb.infof307.g10.controllers.RecipeController;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
