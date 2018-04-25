@@ -1,5 +1,6 @@
 package be.ac.ulb.infof307.g10;
 
+import be.ac.ulb.infof307.g10.db.Data;
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Shop;
@@ -34,7 +35,7 @@ public class TestDB {
 
     @Test
     public void test_0009_fillDB(){
-        DatabaseFacade.fillDB();
+        Data.fillDB();
     }
 
 
