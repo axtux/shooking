@@ -38,7 +38,7 @@ public class ResearchController {
 	public void researchProducts(ActionEvent actionEvent) {
 		shopTA.setText("");
 
-		List<Product> productsList = DatabaseFacade.getProductByName(productTF.getText());
+		List<Product> productsList = DatabaseFacade.getProducts(productTF.getText());
 
 		String productsNames = "";
 		for (Product s : productsList) {

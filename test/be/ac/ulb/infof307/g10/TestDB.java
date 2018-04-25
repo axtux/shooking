@@ -18,7 +18,7 @@ public class TestDB {
 
     @BeforeClass
     public static void createDB (){
-        DatabaseFacade.empyDB();
+        DatabaseFacade.emptyDB();
     }
     
 
@@ -65,7 +65,7 @@ public class TestDB {
 
     @Test
     public void test_0070_GetProduct(){
-        DatabaseFacade.getProduct("#DB 6 Apples", "Pink ladies");
+        DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies");
     }
 
 
@@ -78,8 +78,8 @@ public class TestDB {
     @Test
     public void test_0080_CreateShop(){
         Shop s = new Shop("#DB Delhaize", 0.0, 0.0);
-        s.addProduct(DatabaseFacade.getProduct("#DB 6 Apples", "Pink ladies"), 10);
-        s.addProduct(DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold"), 10);
+        s.addProduct(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"), 10);
+        s.addProduct(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"), 10);
         DatabaseFacade.insert(s);
     }
 
@@ -95,8 +95,8 @@ public class TestDB {
         Shop shop = DatabaseFacade.getShop("#DB Delhaize");
 
         System.out.println(Arrays.asList(shop.getStock()));
-        Product p = DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold");
-        int quantity = shop.getStock().get(DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold"));
+        Product p = DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold");
+        int quantity = shop.getStock().get(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"));
 
         shop.updateStock(p, quantity -3 );
         DatabaseFacade.update(shop);
@@ -104,7 +104,7 @@ public class TestDB {
         ////////////////////////
 
         Shop shopCheck = DatabaseFacade.getShop("#DB Delhaize");
-        Product pCheck = DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold");
+        Product pCheck = DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold");
 
         System.out.println(shopCheck.getQuantity(pCheck));
         System.out.println(shopCheck);
@@ -115,8 +115,8 @@ public class TestDB {
     @Test
     public void test_0110_CreateList(){
         ShoppingList l = new ShoppingList();
-        l.addProduct(DatabaseFacade.getProduct("#DB 6 Apples", "Pink ladies"), 1);
-        l.addProduct(DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold"), 2);
+        l.addProduct(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"), 1);
+        l.addProduct(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"), 2);
         DatabaseFacade.insert(l);
         DatabaseFacade.getUser("#DB lala").setShoppingList(l);
     }
@@ -139,8 +139,8 @@ public class TestDB {
 
     @Test
     public void test_0994_DeleteProduct(){
-        DatabaseFacade.delete(DatabaseFacade.getProduct("#DB 6 Apples", "Pink ladies"));
-        DatabaseFacade.delete(DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold"));
+        DatabaseFacade.delete(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"));
+        DatabaseFacade.delete(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"));
     }
 
 
