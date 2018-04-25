@@ -50,7 +50,7 @@ public class Recipe implements Serializable {
 		HashMap<Product,Float> copy = new HashMap<>();
 		for (Map.Entry<Product, Float> entry : ingredients.entrySet())
 	    {
-	       copy.put((Product)entry.getKey().clone(),entry.getValue());
+	       copy.put(entry.getKey().clone(), entry.getValue());
 	    }
 	    return copy;
 	}

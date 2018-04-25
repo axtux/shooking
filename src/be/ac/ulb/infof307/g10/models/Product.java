@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NamedQueries({
 		@NamedQuery(name = "Product.findAll", query = "SELECT p FROM Product p")
 })
-public class Product implements Serializable, Cloneable {
+public class Product implements Serializable {
 
     private static final long serialVersionUID = -0L;
 	@Id
@@ -39,6 +39,10 @@ public class Product implements Serializable, Cloneable {
 
 	// NEEDED BY JPA
 	public Product(){
+	}
+	
+	public Product(Product p) {
+		this(p.name, p.description, p.calories, p.sugar, p.proteins, p.fat, p.price);
 	}
 
     public Product(String name, String description, Integer calories, Integer sugar, Integer proteins, Integer fat, Integer price) {
@@ -67,15 +71,8 @@ public class Product implements Serializable, Cloneable {
 /**
  * Clone method for copying the maps using Products objects (e.g. Recipe.java)
  */
-    public Object clone() {
-    	Object o = null;
-    	try {
-      		o = super.clone();
-    	} catch(CloneNotSupportedException cnse) {
-      		// Never appends
-      		cnse.printStackTrace(System.err);
-	    }
-	    return o;
+    public Product clone() {
+    	return new Product(this);
   	}
     
     public Integer getId() {
