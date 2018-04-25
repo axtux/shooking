@@ -16,11 +16,29 @@ public class DatabaseFacade {
 
     public DatabaseFacade(){}
 
+    public static void initDB(){
+        if (isDBEmpty())
+            fillDB();
+    }
+
     /**
      * fill db
      */
     public static void fillDB(){
         (new FillDB()).fill();
+    }
+
+    /**
+     * test is db is empty
+     * @return emptyness of the db
+     */
+    public static boolean isDBEmpty(){
+        Connection.getTransaction().begin();
+        List<Product> lTest = Connection.getManager().createNamedQuery("Product.findAll").getResultList();
+        Connection.getTransaction().commit();
+        if (lTest.isEmpty())
+            return true;
+        return false;
     }
 
 

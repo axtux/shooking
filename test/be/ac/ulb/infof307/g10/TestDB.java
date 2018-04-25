@@ -26,7 +26,11 @@ public class TestDB {
     public static void createDB (){
         DatabaseFacade.emptyDB();
     }
-    
+
+    @Test
+    public void test_0008_isDBempty(){
+        Assert.assertTrue(DatabaseFacade.isDBEmpty());
+    }
 
     @Test
     public void test_0009_fillDB(){
