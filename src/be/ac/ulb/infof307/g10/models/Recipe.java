@@ -3,7 +3,6 @@ package be.ac.ulb.infof307.g10.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Entity;
@@ -70,12 +69,7 @@ public class Recipe implements Serializable {
 	 * @return The i th step
 	 */
 	public String getStep(int index) throws IndexOutOfBoundsException{
-		try{
-			return steps.get(index);
-		}
-		catch(IndexOutOfBoundsException e){
-			throw e; //tmp
-		}
+		return steps.get(index);
 	}
 	
 	/**
@@ -84,12 +78,7 @@ public class Recipe implements Serializable {
 	 * @param s	the new i th step
 	 */
 	public void modifyStep(int index, String s) throws IndexOutOfBoundsException {
-		if (steps.size() < index){
-			steps.set(index, s);
-		}
-		else{
-			throw new IndexOutOfBoundsException();
-		}
+		steps.set(index, s);
 	}
 	
 	/**
@@ -107,12 +96,8 @@ public class Recipe implements Serializable {
 	 * @param indexFinal The new index of the step to move
 	 */
 	public void moveStep(int indexInit , int indexFinal)throws IndexOutOfBoundsException{
-		try {
-			String step = steps.remove(indexInit);
-			steps.add(indexFinal, step);
-		} catch (IndexOutOfBoundsException e) {
-			throw e;
-		}
+		String step = steps.remove(indexInit);
+		steps.add(indexFinal, step);
 	}
 	
 	/**
@@ -120,13 +105,9 @@ public class Recipe implements Serializable {
 	 * @param index	The index of the step
 	 */
 	public void removeStep(int index) throws IndexOutOfBoundsException {
-		if (steps.size() > index){
-			steps.remove(index);
-		}
-		else {
-			throw new IndexOutOfBoundsException();
-		}
+		steps.remove(index);
 	}
+	
 	/**
 	 * Add an ingredient in the ingredients list.
 	 * If the product is already present, the older quantity is erased by the new one
@@ -144,7 +125,4 @@ public class Recipe implements Serializable {
 	public void removeIngredient(Product p){
 		ingredients.remove(p);
 	}
-	
-	
-	
 }
