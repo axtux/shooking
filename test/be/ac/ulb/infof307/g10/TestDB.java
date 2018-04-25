@@ -3,6 +3,7 @@ package be.ac.ulb.infof307.g10;
 import be.ac.ulb.infof307.g10.db.Data;
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 import be.ac.ulb.infof307.g10.models.Product;
+import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.User;
@@ -14,6 +15,9 @@ import org.junit.runners.MethodSorters;
 
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
+
+import static org.junit.Assert.*;
+
 import java.util.Arrays;
 
 /**
@@ -156,6 +160,30 @@ public class TestDB {
         DatabaseFacade.delete(DatabaseFacade.getShop("#DB Delhaize"));
     }
 
+    @Test
+    public void test_1000_CreateRecipe() {
+    	Recipe r = new Recipe("#test new recette", 1);
+    	DatabaseFacade.insert(r);
+    	
+    }
+    
+    @Test
+    public void test_1001_ModifyRecipe() {
+    	Recipe r = new Recipe("#test modify recipe", 1);
+    	DatabaseFacade.insert(r);
+    	r.setName("#test new name");
+    	r.addStep("#test step 1");
+    	DatabaseFacade.update(r);
+    	assertNotNull(DatabaseFacade.getRecipe("#test new name"));
+    }
+    
+    @Test(expected = NoResultException.class)
+    public void test_1002_DeleteRecipe() {
+    	DatabaseFacade.insert(new Recipe("#test Delete Recipe", 1));
+    	Recipe r = DatabaseFacade.getRecipe("#test Delete Recipe");
+    	DatabaseFacade.delete(r);
+    	DatabaseFacade.getRecipe("#test Delete Recipe"); // throw an exception
+    }
 
 
 

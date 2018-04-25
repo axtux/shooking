@@ -6,6 +6,7 @@
         <class>be.ac.ulb.infof307.g10.models.Product</class>
         <class>be.ac.ulb.infof307.g10.models.Shop</class>
         <class>be.ac.ulb.infof307.g10.models.User</class>
+	<class>be.ac.ulb.infof307.g10.models.Recipe</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:database.db"/>

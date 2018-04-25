@@ -1,6 +1,8 @@
 package be.ac.ulb.infof307.g10.db;
 
+import be.ac.ulb.infof307.g10.controllers.recipe;
 import be.ac.ulb.infof307.g10.models.Product;
+import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.User;
 
@@ -34,6 +36,11 @@ public class Data {
 		for(User u: getUsers()) {
 			insert(u);
 		}
+		
+		// insert recipes
+		for(Recipe r: getRecipes()) {
+			insert(r);
+		}
 	}
 	
 	public static List<User> getUsers() {
@@ -53,6 +60,19 @@ public class Data {
 		list.add(new Shop("Colruyt", 0.0, 0.0));
 		list.add(new Shop("Carrefour", 0.0, 0.0));
 		list.add(new Shop("Delhaize", 0.0, 0.0));
+		
+		return list;
+	}
+	
+	/**
+	 * Return a List of Recipes to put it in the DB
+	 * @return	List of Recipes
+	 */
+	public static List<Recipe> getRecipes() {
+		ArrayList<Recipe> list = new ArrayList<>();
+		
+		list.add(new Recipe("Omelette au fromage", 1));
+		list.add(new Recipe("Pancake tombé dans la neige avant le 31 Décembre", 1));
 		
 		return list;
 	}

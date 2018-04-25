@@ -22,6 +22,17 @@ public class Recipe implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	/**
+	 * Name of the recipe
+	 */
+	private String name;
+	
+	/**
+	 * Number of people for the recipe
+	 */
+	private int servings;
+	
 	/**
 	 * Mapping between products and quantities of it
 	 */
@@ -36,8 +47,56 @@ public class Recipe implements Serializable {
 	 * Constructor needed by JPA
 	 */
 	public Recipe(){
-		ingredients=new HashMap<>();
-		steps=new ArrayList<>();
+		this("");
+	}
+	
+	/**
+	 * Constructor for a new Recipe
+	 * @param name	Name of the Recipe
+	 */
+	public Recipe(String name) {
+		this(name, 1);
+	}
+	
+	/**
+	 * Constructor for a new Recipe
+	 * @param name	Name of the Recipe
+	 * @param servings Number of people for the recipe
+	 */
+	public Recipe(String name, int servings){
+		this(name, servings, new HashMap<>());
+	}
+	
+	/**
+	 * Constructor for a new Recipe
+	 * @param name	Name of the Recipe
+	 * @param servings Number of people for the recipe
+	 * @param ingredients	HashMap of the ingredient (Product, Quantity)
+	 */
+	public Recipe(String name, int servings, Map<Product, Float> ingredients){
+		this(name, servings, ingredients, new ArrayList<>());
+	}
+	
+	/**
+	 * Constructor for a new Recipe
+	 * @param name	Name of the Recipe
+	 * @param servings Number of people for the recipe
+	 * @param ingredients	HashMap of the ingredient (Product, Quantity)
+	 * @param steps		ArrayList of String represent the steps for the Recipe
+	 */
+	public Recipe(String name, int servings, Map<Product, Float> ingredients, ArrayList<String> steps) {
+		this.setName(name);
+		this.servings = servings;
+		this.ingredients = ingredients;
+		this.steps = steps;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	/**
@@ -125,4 +184,9 @@ public class Recipe implements Serializable {
 	public void removeIngredient(Product p){
 		ingredients.remove(p);
 	}
+
+	public int getServings(){
+		return this.servings;
+	}
+
 }
