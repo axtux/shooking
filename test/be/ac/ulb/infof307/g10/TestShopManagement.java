@@ -44,45 +44,45 @@ public class TestShopManagement {
 	}
 	
 	@Test
-	public void testGetShop() {
+	public void test_0001_GetShop() {
 		Shop shop = ShopManagement.getShop("#test Get Shop");
 		assertNotNull(shop);
 	}
 	
 	@Test
-	public void testGetShopFail() {
+	public void test_0002_GetShopFail() {
 		Shop shop = ShopManagement.getShop("#test This Shop never exist");
 		assertNull(shop);
 	}
 
 	@Test
-	public void testGetShops() {
+	public void test_0003_GetShops() {
 		List<Shop> shops = ShopManagement.getShops();
 	}
 	
 	@Test
-	public void testCreateShop() {
+	public void test_0004_CreateShop() {
 		Shop shop1 = ShopManagement.createShop("#test Create Shop", 0.0, 0.0);
 		Shop shop2 = ShopManagement.getShop("#test Create Shop");
 		assertEquals(shop1, shop2);
 	}
 	
 	@Test
-	public void testCreateShopFail() {
+	public void test_0005_CreateShopFail() {
 		Shop shop1 = ShopManagement.createShop("#test Create Shop Fail", 0.0, 0.0);
 		Shop shop2 = ShopManagement.createShop("#test Create Shop Fail", 12.0, 12.0);
 		assertNull(shop2);
 	}
 	
 	@Test
-	public void testCreateShopWithStock() {
+	public void test_0006_CreateShopWithStock() {
 		Shop shop1 = ShopManagement.createShop("#test Create Shop With Stock", testingStock, 0.0, 0.0);
 		Shop shop2 = ShopManagement.getShop("#test Create Shop with Stock");
 		assertEquals(shop1, shop2);
 	}
 	
 	@Test
-	public void testModifyShopName(){
+	public void test_000_ModifyShopName(){
 		Shop shop1 = ShopManagement.getShop("#test Modify Shop Name");
 		ShopManagement.modifyShopName(shop1, "#test The New Name");
 		Shop shop2 = ShopManagement.getShop("#test The New Name");
@@ -95,7 +95,7 @@ public class TestShopManagement {
 	}
 	
 	@Test
-	public void testModifyShopStock() {
+	public void test_0007_ModifyShopStock() {
 		Shop shop = ShopManagement.getShop("#test Modify Shop Stock");
 		ShopManagement.modifyShopStock(shop, pro2, 12);
 			// Current Shop
@@ -105,7 +105,7 @@ public class TestShopManagement {
 	}
 	
 	@Test
-	public void testModifyShopSetStock() {
+	public void test_0008_ModifyShopSetStock() {
 		Shop shop = ShopManagement.getShop("#test Modify Shop Set Stock");
 		Map<Product, Integer> productList = new HashMap<>();
 		productList.put(pro2, 12000);
@@ -117,7 +117,7 @@ public class TestShopManagement {
 	}
 	
 	@Test
-	public void testModifyShopSchedule() {
+	public void test_0009_ModifyShopSchedule() {
 		Shop shop1 = ShopManagement.getShop("#test Modify Shop Schedule");
 		ShopManagement.modifyShopSchedule(shop1, "8am - 18pm", "CLOSED","","","","","");
 		Shop shop2 = ShopManagement.getShop("#test Modify Shop Schedule");
@@ -130,7 +130,7 @@ public class TestShopManagement {
 	}
 	
 	@Test
-	public void testModifyShopPosition() {
+	public void test_0010_ModifyShopPosition() {
 		Shop shop1 = ShopManagement.getShop("#test Modify Shop Position");
 		ShopManagement.modifyShopPosition(shop1, 12.0, 12.0);
 		Shop shop2 = ShopManagement.getShop("#test Modify Shop Position");
@@ -143,7 +143,7 @@ public class TestShopManagement {
 	}
 	
 	@Test
-	public void testDelShopName() {
+	public void test_0011_DelShopName() {
 		String name = "#test Delete Shop Name";
 		Shop shop1 = ShopManagement.getShop(name);
 		ShopManagement.delShop(name);
@@ -153,7 +153,7 @@ public class TestShopManagement {
 	}
 
 	@Test
-	public void testDelShopObject() {
+	public void test_0012_DelShopObject() {
 		Shop shop1 = ShopManagement.getShop("#test Delete Shop Object");
 		ShopManagement.delShop(shop1);
 		Shop shop2 = ShopManagement.getShop("#test Delete Shop Object");

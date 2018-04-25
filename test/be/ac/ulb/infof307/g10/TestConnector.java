@@ -1,25 +1,25 @@
 package be.ac.ulb.infof307.g10;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import be.ac.ulb.infof307.g10.models.Connector;
 import be.ac.ulb.infof307.g10.models.Session;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.UserAlreadyExistException;
 import be.ac.ulb.infof307.g10.models.exceptions.UserDoesNotExistException;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
+/**
+ * Some tests of this class do not have asserts beacause an exception make the test fail when it has to
+ */
 public class TestConnector {
 //
 	@BeforeClass
 	public static void createDBTest() {
-		Connector conn = new Connector();
 		try {
+            Connector conn = new Connector();
 			conn.createUser("Mr. Test", "SuperPassWord");
 		} catch (UserAlreadyExistException e) {
 			e.printStackTrace();
@@ -27,53 +27,52 @@ public class TestConnector {
 	}
 
 	@Test
-	public void testCreateSession() throws UserAlreadyExistException {
+	public void test_0001_CreateSession() throws UserAlreadyExistException {
 		Connector conn = new Connector();
 		Session user = conn.createUser("Best Test", "SuperPassWord");
 		assertEquals(user.getUser().getUsername(), "Best Test");
 	}
 
 	@Test
-	public void testOpenSession() throws IncorrectPasswordException, UserDoesNotExistException {
+	public void test_0002_OpenSession() throws IncorrectPasswordException, UserDoesNotExistException {
 		Connector conn = new Connector();
 		Session user = conn.openSession("Mr. Test", "SuperPassWord");
 		assertEquals(user.getUser().getUsername(), "Mr. Test");
 	}
 
 	@Test(expected = IncorrectPasswordException.class)
-	public void testCannotOpenSession() throws IncorrectPasswordException, UserDoesNotExistException {
+	public void test_0003_CannotOpenSession() throws IncorrectPasswordException, UserDoesNotExistException {
 		Connector conn = new Connector();
-		Session user = conn.openSession("Mr. Test", "BadPassword");
+		conn.openSession("Mr. Test", "BadPassword");
 	}
 
 	@Test(expected = UserDoesNotExistException.class)
-	public void testUserDontExist() throws IncorrectPasswordException, UserDoesNotExistException {
+	public void test_0004_UserDontExist() throws IncorrectPasswordException, UserDoesNotExistException {
 		Connector conn = new Connector();
 		Session user = conn.openSession("BAdUser", "BadPassword");
 	}
 	
 	@Test(expected = UserAlreadyExistException.class)
-	public void testUserAlreadyExist() throws UserAlreadyExistException {
+	public void test_0005_UserAlreadyExist() throws UserAlreadyExistException {
 		Connector conn = new Connector();
-		Session user1 = conn.createUser("Dupont", "Tintin");
-		Session user2 = conn.createUser("Dupont", "Hadock");
+		conn.createUser("Dupont", "Tintin");
+		conn.createUser("Dupont", "Hadock");
 	}
 
 	@Test
-	public void testDestroyUser() throws UserAlreadyExistException, IncorrectPasswordException {
+	public void test_0006_DestroyUser() throws UserAlreadyExistException, IncorrectPasswordException {
 		Connector conn = new Connector();
-		Session user = conn.createUser("badUser", "badPassWord");
-		assertTrue(conn.destroyUser("badUser", "badPassWord"));
+		conn.createUser("badUser", "badPassWord");
+		conn.destroyUser("badUser", "badPassWord");
 	}
 
 	@Test(expected = IncorrectPasswordException.class)
-	public void testCannotDestroyUser() throws UserAlreadyExistException, IncorrectPasswordException {
+	public void test_0007_CannotDestroyUser() throws UserAlreadyExistException, IncorrectPasswordException {
 		Connector conn = new Connector();
-		Session user = conn.createUser("GoodUser", "GoodPassword");
-		assertFalse(conn.destroyUser("GoodUser", "BadPassword"));
+		conn.createUser("GoodUser", "GoodPassword");
+		conn.destroyUser("GoodUser", "BadPassword");
 	}
 
-	//TODO test sha256
 
 	@AfterClass
 	public static void destroyDB() throws IncorrectPasswordException {

@@ -22,15 +22,13 @@ public class Connector {
 	 * @return			A hash of this password in String format
 	 */
 	public static String sha256(String password) {
-		MessageDigest digest;
-		byte[] encodedHash = null;
 		try {
+			MessageDigest digest;
+			byte[] encodedHash = null;
 			digest = MessageDigest.getInstance("SHA-256");
 			encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
 			return new String(encodedHash, "UTF-8");
-		} catch (NoSuchAlgorithmException e) {
-			return "";
-		} catch (UnsupportedEncodingException e) { // this exception never append because "UTF-8" is a correct encoding
+		} catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			return "";
 		}
 	}
@@ -44,11 +42,11 @@ public class Connector {
 	 * @throws IncorrectPasswordException	Append if the password of the user is incorrect
 	 * @throws UserDoesNotExistException 				Append if the username doesn't exist in DB
 	 */
+	//FIXME - really same methid than CheckUserPassword
 	public Session openSession(String username, String password) throws IncorrectPasswordException, UserDoesNotExistException {
-        DatabaseFacade d = new DatabaseFacade();
-        User u ;
         try {
-            u = new User(d.getUser(username));
+			User u ;
+            u = new User(DatabaseFacade.getUser(username));
             if (u.getPassword().equals(sha256(password))) {
                 return new Session(u);
             }
@@ -69,16 +67,15 @@ public class Connector {
 	 * @throws UserAlreadyExistException	Append if the id is not already taken by an other user
 	 */
 	public Session createUser(String username, String password) throws UserAlreadyExistException {
-		//Hash the password
-        User u = new User(username, password);
-        DatabaseFacade d = new DatabaseFacade();
         try{
-			d.insert(u);
+			User u = new User(username, password);
+			DatabaseFacade.insert(u);
+			return new Session(u);
 		}
 		catch (RollbackException e) {
 			throw new UserAlreadyExistException();
 		}
-		return new Session(u);
+
 	}
 
 	/**
@@ -89,33 +86,23 @@ public class Connector {
 	 * @return			true if the user is correctly deleted
 	 * @throws IncorrectPasswordException	Append if the password of the user is incorrect
 	 */
-	public Boolean destroyUser(String username, String password) throws IncorrectPasswordException {
-		// Delete the user in the DB if the password is correct
-        if (checkUserPassword(username, password)){
-            DatabaseFacade d = new DatabaseFacade();
-            User u = d.getUser(username);
-            d.delete(u);
-            return true;
-        }
-        return false;
+	//FIXME - exceptions and not bool
+	public void destroyUser(String username, String password) throws IncorrectPasswordException {
+        checkUserPassword(username, password);
+        User u = DatabaseFacade.getUser(username);
+        DatabaseFacade.delete(u);
 	}
 
-	public boolean checkUserPassword(String username, String password) throws IncorrectPasswordException {
+	//FIXME - exceptions and not bool
+	public void checkUserPassword(String username, String password) throws IncorrectPasswordException {
         try {
-			DatabaseFacade d = new DatabaseFacade();
-			System.out.println(d.getUser(username));
 			User u ;
-            u = new User(d.getUser(username));
+            u = new User(DatabaseFacade.getUser(username));
             if (!u.getPassword().equals(sha256(password))) {
                 throw new IncorrectPasswordException();
             }
-        } catch (NullPointerException e){
-            //FIXME - clean me
+        } catch (NullPointerException | NoResultException e){
             throw new IncorrectPasswordException();
         }
-        catch (NoResultException e){
-			throw new IncorrectPasswordException();
-		}
-        return true;
     }
 }

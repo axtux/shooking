@@ -59,7 +59,7 @@ public class LoginPage {
                 String log = textFieldLog.getText();
                 //Capture of the "password" field
                 String pwd = pwdField.getText();
-                System.out.println(pwd);
+//                System.out.println(pwd);
                 try{
                 	Connector conn = new Connector();
                 	Session user = conn.openSession(log, pwd);
