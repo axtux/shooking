@@ -64,7 +64,9 @@ public class Product implements Serializable, Cloneable {
                 ", price=" + price +
                 '}';
     }
-
+/**
+ * Clone method for copying the maps using Products objects (e.g. Recipe.java)
+ */
     public Object clone() {
     	Object o = null;
     	try {
