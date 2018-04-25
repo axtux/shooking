@@ -5,7 +5,7 @@ import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.User;
 
-import static be.ac.ulb.infof307.g10.db.DatabaseFacade.insert;
+import static be.ac.ulb.infof307.g10.db.Database.insert;
 
 import java.util.ArrayList;
 import java.util.List;

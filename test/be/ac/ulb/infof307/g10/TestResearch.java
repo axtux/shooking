@@ -2,7 +2,7 @@ package be.ac.ulb.infof307.g10;
 
 import be.ac.ulb.infof307.g10.models.Research;
 import be.ac.ulb.infof307.g10.models.*;
-import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.db.Database;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -25,21 +25,21 @@ public class TestResearch {
         l = new ArrayList<>();
         p = new Object();
 
-        DatabaseFacade.insert(new Product("#Research 6 Apples", "Pink ladies",100, 200, 300, 400, 300));
-        DatabaseFacade.insert(new Product("#Research 6 Apples", "Jonagold",100, 200, 300, 400, 320));
+        Database.insert(new Product("#Research 6 Apples", "Pink ladies",100, 200, 300, 400, 300));
+        Database.insert(new Product("#Research 6 Apples", "Jonagold",100, 200, 300, 400, 320));
 
         Shop s = new Shop("#Research Delhaize", 0.0, 0.0);
-        s.addProduct(DatabaseFacade.getProductFromNameAndDesc("#Research 6 Apples", "Pink ladies"), 100);
-        s.addProduct(DatabaseFacade.getProductFromNameAndDesc("#Research 6 Apples", "Jonagold"), 20);
-        DatabaseFacade.insert(s);
+        s.addProduct(Database.getProductFromNameAndDesc("#Research 6 Apples", "Pink ladies"), 100);
+        s.addProduct(Database.getProductFromNameAndDesc("#Research 6 Apples", "Jonagold"), 20);
+        Database.insert(s);
 
         s = new Shop("#Research Carrefour", 0.0, 0.0);
-        s.addProduct(DatabaseFacade.getProductFromNameAndDesc("#Research 6 Apples", "Pink ladies"), 10);
-        DatabaseFacade.insert(s);
+        s.addProduct(Database.getProductFromNameAndDesc("#Research 6 Apples", "Pink ladies"), 10);
+        Database.insert(s);
 
         s = new Shop("#Research Colruyt", 0.0, 0.0);
-        s.addProduct(DatabaseFacade.getProductFromNameAndDesc("#Research 6 Apples", "Jonagold"), 300);
-        DatabaseFacade.insert(s);
+        s.addProduct(Database.getProductFromNameAndDesc("#Research 6 Apples", "Jonagold"), 300);
+        Database.insert(s);
 
     }
 
@@ -47,21 +47,21 @@ public class TestResearch {
     @Test
     public void test_0001_GetStoresWithProducts() {
         Research r = new Research();
-        r.getStoreWithProducts(DatabaseFacade.getProducts("#Research 6 Apples"));
+        r.getStoreWithProducts(Database.getProducts("#Research 6 Apples"));
     }
 
     @Test
     public void test_0002_GetStoresWithProduct() {
         Research r = new Research();
-        r.getStoreWithProduct(DatabaseFacade.getProductFromNameAndDesc("#Research 6 Apples", "Pink ladies"));
+        r.getStoreWithProduct(Database.getProductFromNameAndDesc("#Research 6 Apples", "Pink ladies"));
     }
 
     @AfterClass
     public static void clean(){
-        DatabaseFacade.delete(DatabaseFacade.getShop("#Research Delhaize"));
-        DatabaseFacade.delete(DatabaseFacade.getShop("#Research Carrefour"));
-        DatabaseFacade.delete(DatabaseFacade.getShop("#Research Colruyt"));
-        DatabaseFacade.delete(DatabaseFacade.getProductFromNameAndDesc("#Research 6 Apples", "Pink ladies"));
-        DatabaseFacade.delete(DatabaseFacade.getProductFromNameAndDesc("#Research 6 Apples", "Jonagold"));
+        Database.delete(Database.getShop("#Research Delhaize"));
+        Database.delete(Database.getShop("#Research Carrefour"));
+        Database.delete(Database.getShop("#Research Colruyt"));
+        Database.delete(Database.getProductFromNameAndDesc("#Research 6 Apples", "Pink ladies"));
+        Database.delete(Database.getProductFromNameAndDesc("#Research 6 Apples", "Jonagold"));
     }
 }

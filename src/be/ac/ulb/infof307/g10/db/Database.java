@@ -11,12 +11,9 @@ import javax.persistence.RollbackException;
 
 import java.util.List;
 
-public class DatabaseFacade {
-
-    public DatabaseFacade(){}
-
-    public static void initDB(){
-        if (isDBEmpty()) {
+public class Database {
+    public static void init(){
+        if (isEmpty()) {
             Data.fillDB();
         }
     }
@@ -25,20 +22,18 @@ public class DatabaseFacade {
      * test is db is empty
      * @return emptyness of the db
      */
-    public static boolean isDBEmpty(){
+    public static boolean isEmpty(){
         Connection.getTransaction().begin();
         List<Product> lTest = Connection.getManager().createNamedQuery("Product.findAll").getResultList();
         Connection.getTransaction().commit();
-        if (lTest.isEmpty())
-            return true;
-        return false;
+        return lTest.isEmpty();
     }
 
 
     /**
      * empty db
      */
-    public static void emptyDB(){
+    public static void empty(){
         Connection.getTransaction().begin();
         Connection.getManager().createQuery("delete from Product p").executeUpdate();
         Connection.getManager().createQuery("delete from User u").executeUpdate();
@@ -247,7 +242,7 @@ public class DatabaseFacade {
             //FIXME java.lang.IllegalStateException: ???
             //Exception Description: Transaction is currently active
             Connection.getTransaction().begin();
-            DatabaseFacade.getListOwner(l.getId()).setShoppingList(null);
+            Database.getListOwner(l.getId()).setShoppingList(null);
             Connection.getTransaction().commit();
             Connection.getTransaction().begin();
             Connection.getManager().remove(l);

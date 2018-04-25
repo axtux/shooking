@@ -1,6 +1,6 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.views.IntCreateAcount;
 import be.ac.ulb.infof307.g10.views.LoginPage;
 import be.ac.ulb.infof307.g10.views.MapRendering;
@@ -30,7 +30,7 @@ public class Main extends Application {
     @Override
     public void init() throws Exception {
         super.init();
-        DatabaseFacade.initDB();
+        Database.init();
     }
 
     @Override

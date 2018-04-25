@@ -1,6 +1,6 @@
 package be.ac.ulb.infof307.g10.models;
 
-import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.UserAlreadyExistException;
 import be.ac.ulb.infof307.g10.models.exceptions.UserDoesNotExistException;
@@ -23,7 +23,7 @@ public class Connector {
 	//FIXME - really same methid than CheckUserPassword
 	public User openSession(String username, String password) throws IncorrectPasswordException, UserDoesNotExistException {
         try {
-			User u = new User(DatabaseFacade.getUser(username));
+			User u = new User(Database.getUser(username));
             if (u.getPassword().equals(Hash.sha256(password))) {
                 return u;
             }
@@ -46,7 +46,7 @@ public class Connector {
 	public User createUser(String username, String password) throws UserAlreadyExistException {
         try{
 			User u = new User(username, password);
-			DatabaseFacade.insert(u);
+			Database.insert(u);
 			return u;
 		}
 		catch (RollbackException e) {
@@ -66,15 +66,15 @@ public class Connector {
 	//FIXME - exceptions and not bool
 	public void destroyUser(String username, String password) throws IncorrectPasswordException {
         checkUserPassword(username, password);
-        User u = DatabaseFacade.getUser(username);
-        DatabaseFacade.delete(u);
+        User u = Database.getUser(username);
+        Database.delete(u);
 	}
 
 	//FIXME - exceptions and not bool
 	public void checkUserPassword(String username, String password) throws IncorrectPasswordException {
         try {
 			User u ;
-            u = new User(DatabaseFacade.getUser(username));
+            u = new User(Database.getUser(username));
             if (!u.getPassword().equals(Hash.sha256(password))) {
                 throw new IncorrectPasswordException();
             }

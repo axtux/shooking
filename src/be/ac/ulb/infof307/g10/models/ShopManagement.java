@@ -7,7 +7,7 @@ import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
 
-import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.db.Database;
 
 public class ShopManagement {
 
@@ -25,7 +25,7 @@ public class ShopManagement {
 	public static Shop getShop(String name) {
 		Shop shop;
 		try {
-			shop = DatabaseFacade.getShop(name);
+			shop = Database.getShop(name);
 		} catch (NoResultException e) {
 			shop = null;
 		}
@@ -42,7 +42,7 @@ public class ShopManagement {
 	public static List<Shop> getShops() {
 		List<Shop> shops;
 		try {
-			shops = DatabaseFacade.getAllShops();
+			shops = Database.getAllShops();
 		} catch (NoResultException e) {
 			shops = new ArrayList<>();
 		}
@@ -69,7 +69,7 @@ public class ShopManagement {
 			else {
 				shop = new Shop(name, stock, latitude, longitude);
 			}
-			DatabaseFacade.insert(shop);
+			Database.insert(shop);
 		} catch (NoResultException e) {
 			shop = null;
 		} catch (RollbackException r) {
@@ -101,7 +101,7 @@ public class ShopManagement {
 	 */
 	public static void modifyShopName(Shop shop, String newName){
 		shop.setName(newName);
-		DatabaseFacade.update(shop);
+		Database.update(shop);
 	}
 	
 	
@@ -115,7 +115,7 @@ public class ShopManagement {
 	 */
 	public static void modifyShopStock(Shop shop, Product product, Integer quantity){
 		shop.addProduct(product, quantity);
-		DatabaseFacade.update(shop);
+		Database.update(shop);
 	}
 
 	
@@ -131,7 +131,7 @@ public class ShopManagement {
 	 */
 	public static void modifyShopStock(Shop shop, String productName, String description, Integer quantity){
 		try {
-			Product product = DatabaseFacade.getProductFromNameAndDesc(productName, description);
+			Product product = Database.getProductFromNameAndDesc(productName, description);
 			modifyShopStock(shop, product, quantity);
 		} catch (NoResultException e) {} // Nothing to do
 	}
@@ -146,7 +146,7 @@ public class ShopManagement {
 	 */
 	public static void modifyShopSetStock(Shop shop, Map<Product, Integer> newStock) {
 		shop.setStock(newStock);
-		DatabaseFacade.update(shop);
+		Database.update(shop);
 	}
 	
 	
@@ -171,7 +171,7 @@ public class ShopManagement {
 		shop.setSchedule(4, friday);
 		shop.setSchedule(5, saturday);
 		shop.setSchedule(6, sunday);
-		DatabaseFacade.update(shop);
+		Database.update(shop);
 	}
 	
 	
@@ -185,7 +185,7 @@ public class ShopManagement {
 	 */
 	public static void modifyShopPosition(Shop shop, double latitude, double longitude) {
 		shop.setPosition(latitude, longitude);
-		DatabaseFacade.update(shop);
+		Database.update(shop);
 	}
 	
 	
@@ -207,7 +207,7 @@ public class ShopManagement {
 	 */
 	public static void delShop(Shop shop) {
 		try {
-			DatabaseFacade.delete(shop);
+			Database.delete(shop);
 		} catch (NoResultException e) {} //Nothing to do
 		
 	}
