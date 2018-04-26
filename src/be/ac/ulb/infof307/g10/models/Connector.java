@@ -60,7 +60,6 @@ public class Connector {
 	 * 
 	 * @param username	The id of the user in String format
 	 * @param password	The password of the user in String format
-	 * @return			true if the user is correctly deleted
 	 * @throws IncorrectPasswordException	Append if the password of the user is incorrect
 	 */
 	//FIXME - exceptions and not bool

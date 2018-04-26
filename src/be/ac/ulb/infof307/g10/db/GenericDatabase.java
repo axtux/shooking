@@ -111,7 +111,8 @@ public class GenericDatabase {
 	/**
 	 * Get one Object of type c from database corresponding to query bounds with params
 	 * Params have to be positional parameters. E.g. ?1 for first parameter.
-	 * @param c Return Object type
+	 * @param <T> Type of Object to get
+	 * @param type Return Object type
 	 * @param query JPQL Query
 	 * @param params Optional positional parameters starting at 1 ("?1" for first parameter)
 	 * @return Object of type T
@@ -123,7 +124,8 @@ public class GenericDatabase {
 
 	/**
 	 * Get all Object of type c from database corresponding to query bounds with params
-	 * @param c Return Object type
+	 * @param <T> Type of Object to get
+	 * @param type Return Object type
 	 * @param query JPQL Query
 	 * @param params Optional positional parameters starting at 1 ("?1" for first parameter)
 	 * @return Objects of type T
@@ -141,7 +143,7 @@ public class GenericDatabase {
 	 * Delete all objects of class type from database
 	 * @param type Type of objects to delete
 	 */
-	public static <T> void deleteAll(Class type) {
+	public static void deleteAll(Class type) {
 		begin();
 		getEM().createQuery("delete from "+type.getSimpleName()+" o").executeUpdate();
 		commit();
@@ -149,7 +151,6 @@ public class GenericDatabase {
 
 	/**
 	 * Delete all objects from database
-	 * @param type Type of objects to delete
 	 */
 	public static void empty() {
 		// clear links between objects and database
@@ -185,8 +186,7 @@ public class GenericDatabase {
 
 	/**
 	 * Update detached object into database.
-	 * @param o
-	 * @throws RollbackException
+	 * @param o Object to update
 	 */
 	public static void update(Object o) throws RollbackException {
 		begin();
@@ -196,8 +196,7 @@ public class GenericDatabase {
 
 	/**
 	 * Delete object from database.
-	 * @param o
-	 * @throws NoResultException
+	 * @param o Object to delete
 	 */
 	public static void delete(Object o) throws NoResultException {
 		begin();
@@ -208,7 +207,7 @@ public class GenericDatabase {
 	/**
 	 * Detach object from database. Any further modification of the object will not be saved into database
 	 * unless you use {@link #update(Object)} method.
-	 * @param o
+	 * @param o Object to detach
 	 */
 	public static void detach(Object o) {
 		begin();
