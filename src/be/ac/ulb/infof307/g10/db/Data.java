@@ -5,8 +5,6 @@ import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.User;
 
-import static be.ac.ulb.infof307.g10.db.Database.insert;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -16,7 +14,8 @@ public class Data {
 		List<Shop> shops = getShops();
 		List<Product> products;
 		int i = 0;
-		
+
+		Database.setAutoCommit(false);
 		for(Shop s: shops) {
 			products = getProducts();
 			for(Product p: products) {
@@ -25,21 +24,23 @@ public class Data {
 				p.setPrice(p.getPrice()+10*i);
 				// add product to shop with random quantity
 				s.addProduct(p, ThreadLocalRandom.current().nextInt(100));
-				insert(p);
+				Database.insert(p);
 			}
 			i++;
-			insert(s);
+			Database.insert(s);
 		}
 
 		// insert users
 		for(User u: getUsers()) {
-			insert(u);
+			Database.insert(u);
 		}
 		
 		// insert recipes
 		for(Recipe r: getRecipes()) {
-			insert(r);
+			Database.insert(r);
 		}
+
+		Database.setAutoCommit(true);
 	}
 	
 	public static List<User> getUsers() {

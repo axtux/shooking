@@ -19,6 +19,7 @@ public class GenericDatabase {
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
 	private static EntityTransaction et;
+	private static boolean autoCommit = true;
 
 	/**
 	 * Return the EntityManager
@@ -62,6 +63,33 @@ public class GenericDatabase {
 		}
 		
 		return arr;
+	}
+
+	/**
+	 * Disable autoCommit before doing lots of operations on database. Re-enable when finished.
+	 * @param autoCommit New value. Default true.
+	 */
+	public static void setAutoCommit(boolean autoCommit) {
+		GenericDatabase.autoCommit = autoCommit;
+		if(autoCommit) {
+			// commit after staring auto commit
+			getET().commit();
+		} else {
+			// begin transaction before
+			getET().begin();
+		}
+	}
+
+	private static void begin() {
+		if (autoCommit) {
+			getET().begin();
+		}
+	}
+
+	private static void commit() {
+		if (autoCommit) {
+			getET().commit();
+		}
 	}
 
 	/**
@@ -114,9 +142,9 @@ public class GenericDatabase {
 	 * @param type Type of objects to delete
 	 */
 	public static <T> void deleteAll(Class type) {
-		getET().begin();
+		begin();
 		getEM().createQuery("delete from "+type.getSimpleName()+" o").executeUpdate();
-		getET().commit();
+		commit();
 	}
 
 	/**
@@ -125,9 +153,11 @@ public class GenericDatabase {
 	 */
 	public static void empty() {
 		getEM().clear();
+		setAutoCommit(false);
 		for(Class c: getManagedClasses()) {
 			deleteAll(c);
 		}
+		setAutoCommit(true);
 	}
 
 	public static boolean isEmpty() {
@@ -145,9 +175,9 @@ public class GenericDatabase {
 	 * @param o Object to insert
 	 */
 	public static void insert(Object o) throws RollbackException {
-		getET().begin();
+		begin();
 		getEM().persist(o);
-		getET().commit();
+		commit();
 	}
 
 	/**
@@ -156,9 +186,9 @@ public class GenericDatabase {
 	 * @throws RollbackException
 	 */
 	public static void update(Object o) throws RollbackException {
-		getET().begin();
+		begin();
 		getEM().merge(o);
-		getET().commit();
+		commit();
 	}
 
 	/**
@@ -167,9 +197,9 @@ public class GenericDatabase {
 	 * @throws NoResultException
 	 */
 	public static void delete(Object o) throws NoResultException {
-		getET().begin();
+		begin();
 		getEM().remove(o);
-		getET().commit();
+		commit();
 	}
 
 	/**
@@ -178,8 +208,8 @@ public class GenericDatabase {
 	 * @param o
 	 */
 	public static void detach(Object o) {
-		getET().begin();
+		begin();
 		getEM().detach(o);
-		getET().commit();
+		commit();
 	}
 }
