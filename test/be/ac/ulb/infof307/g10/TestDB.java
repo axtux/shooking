@@ -1,31 +1,41 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.models.*;
+import be.ac.ulb.infof307.g10.db.Data;
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.models.Product;
+import be.ac.ulb.infof307.g10.models.Shop;
+import be.ac.ulb.infof307.g10.models.ShoppingList;
+import be.ac.ulb.infof307.g10.models.User;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.sqlite.SQLiteException;
 
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
 import java.util.Arrays;
-import java.util.Map;
 
+/**
+ * The tests have to be executed in a certain order, so they are sorted by name and executed by name ascending
+ * Some tests of this class do not have asserts beacause an exception make the test fail when it has to
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestDB {
 
     @BeforeClass
     public static void createDB (){
-        DatabaseFacade.empyDB();
+        DatabaseFacade.emptyDB();
     }
-    
+
+    @Test
+    public void test_0008_isDBempty(){
+        Assert.assertTrue(DatabaseFacade.isDBEmpty());
+    }
 
     @Test
     public void test_0009_fillDB(){
-        DatabaseFacade.fillDB();
+        Data.fillDB();
     }
 
 
@@ -35,7 +45,7 @@ public class TestDB {
     }
 
     @Test(expected = RollbackException.class)
-    public void test_0011_InsertUser_uniqueConstraintExecptionExpected() throws SQLiteException {
+    public void test_0011_InsertUser_uniqueConstraintExecptionExpected() {
         DatabaseFacade.insert(new User("#DB lala", "#DB lala", null));
     }
 
@@ -43,7 +53,6 @@ public class TestDB {
     public void test_0020_GetUser(){
         Assert.assertNotEquals(null, DatabaseFacade.getUser("#DB lala"));
     }
-
 
 
     @Test(expected = NoResultException.class)
@@ -66,38 +75,36 @@ public class TestDB {
 
     @Test
     public void test_0070_GetProduct(){
-        DatabaseFacade.getProduct("#DB 6 Apples", "Pink ladies");
+        DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies");
     }
 
 
     @Test
     public void test_0072_GetProducts(){
-        System.out.println(DatabaseFacade.getProducts("#DB 6 Apples"));
+        DatabaseFacade.getProducts("#DB 6 Apples");
     }
 
 
     @Test
     public void test_0080_CreateShop(){
         Shop s = new Shop("#DB Delhaize", 0.0, 0.0);
-        s.addProduct(DatabaseFacade.getProduct("#DB 6 Apples", "Pink ladies"), 10);
-        s.addProduct(DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold"), 10);
+        s.addProduct(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"), 10);
+        s.addProduct(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"), 10);
         DatabaseFacade.insert(s);
     }
 
     @Test
     public void test_0090_GetShop(){
         DatabaseFacade.getShop("#DB Delhaize");
-
-
     }
 
     @Test
     public void test_0091_updateShopStock(){
         Shop shop = DatabaseFacade.getShop("#DB Delhaize");
 
-        System.out.println(Arrays.asList(shop.getStock()));
-        Product p = DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold");
-        int quantity = shop.getStock().get(DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold"));
+        Arrays.asList(shop.getStock());
+        Product p = DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold");
+        int quantity = shop.getStock().get(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"));
 
         shop.updateStock(p, quantity -3 );
         DatabaseFacade.update(shop);
@@ -105,26 +112,25 @@ public class TestDB {
         ////////////////////////
 
         Shop shopCheck = DatabaseFacade.getShop("#DB Delhaize");
-        Product pCheck = DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold");
+        Product pCheck = DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold");
 
-        System.out.println(shopCheck.getQuantity(pCheck));
-        System.out.println(shopCheck);
+        //shopCheck.getQuantity(pCheck);;
     }
 
 
 
     @Test
     public void test_0110_CreateList(){
-        List l = new List();
-        l.addProduct(DatabaseFacade.getProduct("#DB 6 Apples", "Pink ladies"), 1);
-        l.addProduct(DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold"), 2);
+        ShoppingList l = new ShoppingList();
+        l.addProduct(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"), 1);
+        l.addProduct(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"), 2);
         DatabaseFacade.insert(l);
-        DatabaseFacade.getUser("#DB lala").setList(l);
+        DatabaseFacade.getUser("#DB lala").setShoppingList(l);
     }
 
 //    @Test
 //    public void test_0989_DeleteList(){
-//        DatabaseFacade.deleteList(DatabaseFacade.getUser("#DB lala").getList());
+//        DatabaseFacade.deleteList(DatabaseFacade.getUser("#DB lala").getShoppingList());
 //    }
 
     @Test
@@ -140,8 +146,8 @@ public class TestDB {
 
     @Test
     public void test_0994_DeleteProduct(){
-        DatabaseFacade.delete(DatabaseFacade.getProduct("#DB 6 Apples", "Pink ladies"));
-        DatabaseFacade.delete(DatabaseFacade.getProduct("#DB 6 Apples", "Jonagold"));
+        DatabaseFacade.delete(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"));
+        DatabaseFacade.delete(DatabaseFacade.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"));
     }
 
 

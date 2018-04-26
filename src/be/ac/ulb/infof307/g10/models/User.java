@@ -1,13 +1,10 @@
 package be.ac.ulb.infof307.g10.models;
 
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.utils.Hash;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 @Entity
 public class User implements Serializable {
@@ -26,21 +23,21 @@ public class User implements Serializable {
 	private String password;
 
 	@OneToOne
-    private List list;
+    private ShoppingList shoppingList;
 
 	//NEEDED BY JPA
 	public User(){
 	}
 
-    public User(String username, String password, List userList) {
+    public User(String username, String password, ShoppingList userShoppingList) {
         this.username = username;
-        this.password = sha256(password);
-        this.list = userList;
+        this.password = Hash.sha256(password);
+        this.shoppingList = userShoppingList;
     }
 
     public User(String username, String password) {
         this.username = username;
-        this.password = sha256(password);
+        this.password = Hash.sha256(password);
     }
 
 
@@ -48,23 +45,7 @@ public class User implements Serializable {
         this.id = user.id;
         this.username = user.username;
         this.password = user.password;
-        this.list = user.list;
-    }
-
-    public static String sha256(String password) {
-        MessageDigest digest;
-        byte[] encodedHash = null;
-        try {
-            digest = MessageDigest.getInstance("SHA-256");
-            encodedHash = digest.digest(password.getBytes(StandardCharsets.UTF_8));
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        try {
-            return new String(encodedHash, "UTF-8");
-        } catch (UnsupportedEncodingException e) { // this exception never append because "UTF-8" is a correct encoding
-            return "";
-        }
+        this.shoppingList = user.shoppingList;
     }
 
     @Override
@@ -73,7 +54,7 @@ public class User implements Serializable {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", userList=" + list +
+                ", userList=" + shoppingList +
                 '}';
     }
 
@@ -101,12 +82,12 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public List getList() {
-        return list;
+    public ShoppingList getShoppingList() {
+        return shoppingList;
     }
 
-    public void setList(List list) {
-        this.list = list;
+    public void setShoppingList(ShoppingList shoppingList) {
+        this.shoppingList = shoppingList;
         DatabaseFacade.update(this);
     }
 }

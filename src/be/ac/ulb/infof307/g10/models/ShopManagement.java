@@ -1,7 +1,6 @@
 package be.ac.ulb.infof307.g10.models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
 
@@ -20,7 +19,7 @@ public class ShopManagement {
 	 * Return the Shop with the name "name" from the DB.
 	 * Return null if the Shop doesn't exist.
 	 * 
-	 * @param	String	The name of the Shop
+	 * @param name		The name of the Shop
 	 * @return			A Shop from the DB, or null
 	 */
 	public static Shop getShop(String name) {
@@ -35,15 +34,15 @@ public class ShopManagement {
 	
 	
 	/**
-	 * Return a list of all shop in the DB.
+	 * Return a list of all shop in the DB
 	 * The list is empty if there are no shop in the DB.
 	 * 
-	 * @return		A List of Shop
+	 * @return		A ShoppingList of Shop
 	 */
 	public static List<Shop> getShops() {
 		List<Shop> shops;
 		try {
-			shops = DatabaseFacade.getShops();
+			shops = DatabaseFacade.getAllShops();
 		} catch (NoResultException e) {
 			shops = new ArrayList<>();
 		}
@@ -57,6 +56,8 @@ public class ShopManagement {
 	 * 
 	 * @param	name	The name of the Shop
 	 * @param	stock	The stock of the Shop. if the stock was empty, put null or nothing
+	 * @param latitude	Shop coordinates latitude
+	 * @param longitude	Shop coordinates longitude
 	 * @return			A new Shop or null
 	 */
 	public static Shop createShop(String name, Map<Product, Integer> stock, double latitude, double longitude){
@@ -82,8 +83,10 @@ public class ShopManagement {
 	 * Create a new Shop and put it in the DB.
 	 * If the Shop is already exist, return null.
 	 * 
-	 * @param name	The name of the Shop
-	 * @return		A new Shop or null
+	 * @param name		The name of the Shop
+	 * @param latitude	Shop coordinates latitude
+	 * @param longitude	Shop coordinates longitude
+	 * @return			A new Shop or null
 	 */
 	public static Shop createShop(String name, double latitude, double longitude){
 		return createShop(name, null, latitude, longitude);
@@ -122,13 +125,13 @@ public class ShopManagement {
 	 * If the product doesn't exist, the Shop is not modify.
 	 * 
 	 * @param shop			The shop to modify
-	 * @param product		The new product to add in String format
+	 * @param productName		The new product to add in String format
 	 * @param description	The description of the product in String format
 	 * @param quantity		The quantity of the product in Integer format
 	 */
 	public static void modifyShopStock(Shop shop, String productName, String description, Integer quantity){
 		try {
-			Product product = DatabaseFacade.getProduct(productName, description);
+			Product product = DatabaseFacade.getProductFromNameAndDesc(productName, description);
 			modifyShopStock(shop, product, quantity);
 		} catch (NoResultException e) {} // Nothing to do
 	}

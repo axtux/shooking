@@ -7,18 +7,50 @@ la réputation des informations existantes.
 
 # Utilisation
 
-- Java version 1.8
-- JUnit version 4.12
-- GMapsFx version 2.12
-- JPA version 2.1.0
+## Prérequis
+- Java 1.8+
+- Maven
 
-## Compilation et Exécution
+## Librairies utilisées
+Ces librairies seront téléchargées et installées automatiquement par Maven. Aucune action n'est nécessaire.
 
-La compilation se fait grâce à Maven.
+- Eclipselink 2.6.5
+- SQLite-JDBC 3.21.0.1
+- JUnit 4.12
+- JavaFX 3.1.7
+- GMapsFx 2.12.0
 
-- ./compile.sh
-- (./fillDB.sh) #only if needed
-- ./run.sh
+## Eclipse
+Le projet peut être importé dans Eclipse en tant que projet Maven. Attention, plusieurs modifications majeures ont eu lieu durant le développement. En cas de problème :
+1. Supprimer le projet dans Eclipse
+1. Recloner le dépôt
+1. Ré-importer le projet dans Eclipse
+
+## Ligne commande
+`Makefile` + `make.bat` = :heart:
+
+Les commandes ci-dessous sont disponibles sur Windows, MacOS et Linux.
+
+### Compilation
+```
+make jar
+```
+
+### Exécution
+Nécessite d'avoir compilé
+```
+make run
+```
+
+### Tests
+```
+make test
+```
+
+### Javadoc
+```
+make doc
+```
 
 
 # Configuration :
@@ -30,10 +62,6 @@ Pas de serveur
 ## Client
 
 Pas de client
-
-# Tests
-
-La commande "mvn package" exécute chaque test.
 
 # Misc
 

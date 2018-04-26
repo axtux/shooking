@@ -3,12 +3,15 @@ package be.ac.ulb.infof307.g10;
 import java.io.IOException;
 
 import be.ac.ulb.infof307.g10.views.*;
+import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class Main extends Application {
 	/*
@@ -23,16 +26,20 @@ public class Main extends Application {
 	}
 	
 	private Stage stage;
-	
-	@Override
+
+    @Override
+    public void init() throws Exception {
+        super.init();
+        DatabaseFacade.initDB();
+    }
+
+    @Override
 	public void start(Stage stage){
 		this.stage = stage;
 		goToLogin();
 	}
 	
 	public static void main(String[] args) {
-		//DatabaseFacade db = new DatabaseFacade();
-		//db.fillDB();
 		launch(args);
 	}
 	
@@ -60,8 +67,11 @@ public class Main extends Application {
 		page.setTitle("Login Page");
 
 	}
-
-
+	public void goToRecipe() {
+		stage.setTitle("RECIPE");
+		loadFXML("recipe");
+		update();
+	}
 	public void goToShoppingList() {
 		GeneralView page = new GeneralView(stage, "ShoppingList", "Menu");
 		String[] buttons = {"logout","goTo"};
@@ -74,11 +84,11 @@ public class Main extends Application {
 
 
 	public void goToMap(){
-		GeneralView page = new GeneralView(stage, "Login", "Menu");
+		//TODO checker si pas fxml GeneralView page = new GeneralView(stage, "Login", "Menu");
 		String[] buttons = {"logout","goTo"};
-		page.disableButtons(buttons);
+		//page.disableButtons(buttons);
 
-		page.setTitle("Login Page");
+		//page.setTitle("Login Page");
 
 	}
 
@@ -104,7 +114,5 @@ public class Main extends Application {
 	private void update(Stage stage) {
 		stage.centerOnScreen();
 	}
-
-
 
 }

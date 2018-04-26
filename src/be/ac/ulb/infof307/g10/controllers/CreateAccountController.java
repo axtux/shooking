@@ -2,7 +2,7 @@ package be.ac.ulb.infof307.g10.controllers;
 
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Connector;
-import be.ac.ulb.infof307.g10.models.Session;
+import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.exceptions.UserAlreadyExistException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -53,7 +53,7 @@ public class CreateAccountController {
         if (pwd.equals(pwd2)) {
             try{
                 Connector conn = new Connector();
-                Session user = conn.createUser(log, pwd);
+                User user = conn.createUser(log, pwd);
                 //print it is ok
                 errorLabel.setText("User created successfully");
 

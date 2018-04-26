@@ -192,10 +192,9 @@ public class ShoppingListController extends MainController {
 	}
 
 	public void researchProduct(ActionEvent actionEvent) {
-		ResearchController rc = new ResearchController();
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("researchDialog.fxml"));
-			DialogPane page = (DialogPane) loader.load();
+			DialogPane page = loader.load();
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Research product");
 			dialogStage.initModality(Modality.APPLICATION_MODAL);

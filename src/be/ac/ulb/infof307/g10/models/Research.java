@@ -1,6 +1,5 @@
 package be.ac.ulb.infof307.g10.models;
 
-import be.ac.ulb.infof307.g10.models.*;
 import be.ac.ulb.infof307.g10.db.DatabaseFacade;
 
 import java.util.*;
@@ -8,12 +7,6 @@ import java.util.List;
 
 public class Research {
 
-
-    /**
-     * Research class
-     * @author Benjamin Nicodeme
-     *
-     */
     public List<Shop> getStoreWithProducts(List<Product> products){
         List<Shop> sl = new ArrayList<>();
 
@@ -31,7 +24,7 @@ public class Research {
 
     public List<Shop> getStoreWithProduct(Object product){
         List<Shop> sl = new ArrayList<>();
-        for (Shop s : DatabaseFacade.getShops()) {
+        for (Shop s : DatabaseFacade.getAllShops()) {
             if (s.getStock().containsKey(product)){
                 sl.add(s);
             }
