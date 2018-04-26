@@ -23,6 +23,7 @@ public class Database extends GenericDatabase {
 	}
 
 	public static void empty(){
+		getEM().clear();
 		getET().begin();
 		getEM().createQuery("delete from Product p").executeUpdate();
 		getEM().createQuery("delete from User u").executeUpdate();
