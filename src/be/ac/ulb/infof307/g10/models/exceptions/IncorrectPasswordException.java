@@ -1,6 +1,6 @@
 package be.ac.ulb.infof307.g10.models.exceptions;
 
-public class IncorrectPasswordException extends Exception {
+public class IncorrectPasswordException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
 	public IncorrectPasswordException() {

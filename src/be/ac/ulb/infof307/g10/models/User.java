@@ -1,6 +1,9 @@
 package be.ac.ulb.infof307.g10.models;
 
 import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingUserException;
+import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingUserException;
 import be.ac.ulb.infof307.g10.utils.Hash;
 
 import javax.persistence.*;
@@ -26,6 +29,7 @@ public class User implements Serializable {
 	private ShoppingList shoppingList;
 
 	// NEEDED BY JPA
+	@SuppressWarnings("unused")
 	private User() {}
 
 	public User(String username, String password) {
@@ -71,6 +75,10 @@ public class User implements Serializable {
 		this.hashedPassword = Hash.sha256(password);
 	}
 
+	public boolean isPassword(String password) {
+		return Hash.sha256(password).equals(hashedPassword);
+	}
+
 	public ShoppingList getShoppingList() {
 		return new ShoppingList(shoppingList);
 	}
@@ -80,6 +88,31 @@ public class User implements Serializable {
 			this.shoppingList = null;
 		} else {
 			this.shoppingList = new ShoppingList(shoppingList);
+		}
+	}
+
+	// static methods
+	public static User login(String username, String password)
+		throws IncorrectPasswordException, NonExistingUserException {
+		try {
+			User u = Database.getUser(username);
+			if (u.isPassword(password)) {
+				return u;
+			}
+			throw new IncorrectPasswordException();
+		} catch(NoResultException e) {
+			throw new NonExistingUserException(e);
+		}
+	}
+	
+	public static User signup(String username, String password)
+		throws ExistingUserException {
+		try {
+			User u = new User(username, password);
+			Database.insert(u);
+			return u;
+		} catch (RollbackException e) {
+			throw new ExistingUserException(e);
 		}
 	}
 }
