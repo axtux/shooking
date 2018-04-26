@@ -27,13 +27,12 @@ public class Main extends Application {
 	
 	private Stage stage;
 
-    @Override
-    public void init() throws Exception {
-        super.init();
-        Database.init();
-    }
+	@Override
+	public void init() {
+		Database.init();
+	}
 
-    @Override
+	@Override
 	public void start(Stage stage){
 		this.stage = stage;
 		goToLogin();
