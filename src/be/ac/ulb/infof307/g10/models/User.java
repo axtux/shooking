@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Entity
 public class User implements Serializable {
 
-    private static final long serialVersionUID = -0L;
+	private static final long serialVersionUID = -0L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Basic(optional = false)
@@ -19,76 +19,68 @@ public class User implements Serializable {
 	@Basic(optional = false)
 	private String username;
 
-    @Basic(optional = false)
-	private String password;
+	@Basic(optional = false)
+	private String hashedPassword;
 
 	@OneToOne
-    private ShoppingList shoppingList;
+	private ShoppingList shoppingList;
 
-	//NEEDED BY JPA
-	public User(){
+	// NEEDED BY JPA
+	private User() {
 	}
 
-    public User(String username, String password, ShoppingList userShoppingList) {
-        this.username = username;
-        this.password = Hash.sha256(password);
-        this.shoppingList = userShoppingList;
-    }
+	public User(String username, String password) {
+		this(username, password, null);
+	}
 
-    public User(String username, String password) {
-        this.username = username;
-        this.password = Hash.sha256(password);
-    }
+	public User(String username, String password, ShoppingList shoppingList) {
+		this.username = username;
+		setPassword(password);
+		setShoppingList(shoppingList);
+	}
 
+	/**
+	 * Create a full copy of user (ShoppingList is also copied)
+	 * @param user User to copy
+	 */
+	public User(User user) {
+		this.id = user.id;
+		this.username = user.username;
+		this.hashedPassword = user.hashedPassword;
+		setShoppingList(user.shoppingList);
+	}
 
-    public User(User user) {
-        this.id = user.id;
-        this.username = user.username;
-        this.password = user.password;
-        this.shoppingList = user.shoppingList;
-    }
+	@Override
+	public String toString() {
+		return "User{" + "id=" + id + ", username=" + username + ", hashedPassword=" + hashedPassword + ", userList="
+				+ shoppingList + '}';
+	}
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", userList=" + shoppingList +
-                '}';
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public Integer getId() {
-        return id;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+	public String getHashedPassword() {
+		return hashedPassword;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public void setPassword(String password) {
+		this.hashedPassword = Hash.sha256(password);
+	}
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	public ShoppingList getShoppingList() {
+		return new ShoppingList(shoppingList);
+	}
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public ShoppingList getShoppingList() {
-        return shoppingList;
-    }
-
-    public void setShoppingList(ShoppingList shoppingList) {
-        this.shoppingList = shoppingList;
-        Database.update(this);
-    }
+	public void setShoppingList(ShoppingList shoppingList) {
+		if (shoppingList == null) {
+			this.shoppingList = null;
+		} else {
+			this.shoppingList = new ShoppingList(shoppingList);
+		}
+	}
 }
-

@@ -24,7 +24,7 @@ public class Connector {
 	public User openSession(String username, String password) throws IncorrectPasswordException, UserDoesNotExistException {
         try {
 			User u = new User(Database.getUser(username));
-            if (u.getPassword().equals(Hash.sha256(password))) {
+            if (u.getHashedPassword().equals(Hash.sha256(password))) {
                 return u;
             }
             else {
@@ -74,7 +74,7 @@ public class Connector {
         try {
 			User u ;
             u = new User(Database.getUser(username));
-            if (!u.getPassword().equals(Hash.sha256(password))) {
+            if (!u.getHashedPassword().equals(Hash.sha256(password))) {
                 throw new IncorrectPasswordException();
             }
         } catch (NullPointerException | NoResultException e){

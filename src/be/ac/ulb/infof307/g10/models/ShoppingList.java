@@ -4,64 +4,71 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 @Entity
-@NamedQueries({
-        @NamedQuery(name = "ShoppingList.findAll", query = "SELECT l FROM ShoppingList l")
-})
 public class ShoppingList implements Serializable {
-
 
 	private static final long serialVersionUID = -0L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private Integer amountTotal = 0;
-    @ElementCollection(fetch = FetchType.EAGER)
-    Map<Product,Integer> productsAndAssociatedQuantity ;//= new HashMap<>();
+	@ElementCollection(fetch = FetchType.EAGER)
+	Map<Product, Integer> productsAndQuantity;
 
+	// NEEDED BY JPA
+	public ShoppingList() {
+		productsAndQuantity = new HashMap<>();
+	}
 
+	/**
+	 * Copy ShoppingList
+	 * @param sl Shopping list to copy
+	 */
+	public ShoppingList(ShoppingList sl) {
+		setProductsAndQuantity(sl.productsAndQuantity);
+	}
 
-    // NEEDED BY JPA
-    public ShoppingList(){
-        productsAndAssociatedQuantity = new HashMap<>();
-    }
+	public void setProduct(Product p, int quantity) {
+		productsAndQuantity.put(p, quantity);
+	}
 
-    public void addProduct(Product p, int quantity){
-        productsAndAssociatedQuantity.put(p, quantity);
-        amountTotal += p.getPrice()*quantity;
-    }
+	public void addProduct(Product p, int quantity) {
+		int before = productsAndQuantity.getOrDefault(p, 0);
+		setProduct(p, quantity+before);
+	}
 
-    @Override
-    public String toString() {
-        return "ShoppingList{" +
-                "id=" + id +
-                ", amountTotal=" + amountTotal +
-                ", productsAndAssociatedQuantity=" + productsAndAssociatedQuantity +
-                '}';
-    }
+	public void removeProduct(Product p) {
+		productsAndQuantity.remove(p);
+	}
 
-    public Long getId() {
-        return id;
-    }
+	@Override
+	public String toString() {
+		return "ShoppingList{" + "id=" + id + ", productsAndAssociatedQuantity=" + productsAndQuantity.toString() + '}';
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Integer getAmountTotal() {
-        return amountTotal;
-    }
+	public Set<Product> getProducts() {
+		return productsAndQuantity.keySet();
+	}
 
-    public void setAmountTotal(Integer amountTotal) {
-        this.amountTotal = amountTotal;
-    }
+	public Map<Product, Integer> getProductsAndQuantity() {
+		return copyMap(productsAndQuantity);
+	}
 
-    public Map<Product, Integer> getProductsAndAssociatedQuantity() {
-        return productsAndAssociatedQuantity;
-    }
+	public void setProductsAndQuantity(Map<Product, Integer> productsAndQuantity) {
+		this.productsAndQuantity = copyMap(productsAndQuantity);
+	}
 
-    public void setAllProductsAndQuantity(Map<Product, Integer> productsAndAssociatedQuantity) {
-        this.productsAndAssociatedQuantity = productsAndAssociatedQuantity;
-    }
+	private static Map<Product, Integer> copyMap(Map<Product, Integer> map) {
+		Map<Product, Integer> copy = new HashMap<Product, Integer>();
+		for(Entry<Product, Integer> e: map.entrySet()) {
+			copy.put(new Product(e.getKey()), e.getValue());
+		}
+		return copy;
+	}
 }
