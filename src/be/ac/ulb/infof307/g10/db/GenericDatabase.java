@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g10.db;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -10,6 +11,7 @@ import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
+import javax.persistence.metamodel.ManagedType;
 
 public class GenericDatabase {
 	private static final String NAME = "GL10PU";
@@ -41,6 +43,25 @@ public class GenericDatabase {
 			et = getEM().getTransaction();
 		}
 		return et;
+	}
+
+	/**
+	 * Get managed classes by this database
+	 * @return Array of simpleName of the managed classes
+	 */
+	public static String[] getManagedClasses() {
+		// get managed types from metamodel
+		Set<ManagedType<?>> mt = getEM().getMetamodel().getManagedTypes();
+		
+		int size = mt.size();
+		String[] arr = new String[size];
+		
+		for(ManagedType<?> t: mt) {
+			size--;
+			arr[size] = t.getJavaType().getSimpleName();
+		}
+		
+		return arr;
 	}
 
 	/**
