@@ -1,8 +1,6 @@
 package be.ac.ulb.infof307.g10.views;
 
 import be.ac.ulb.infof307.g10.Main;
-import be.ac.ulb.infof307.g10.models.Connector;
-
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingUserException;
 import javafx.event.ActionEvent;
@@ -82,8 +80,7 @@ public class IntCreateAcount {
                 System.out.println(pwd2);
                 if (pwd.equals(pwd2)) {
 	                try{
-	                	Connector conn = new Connector();
-	                	User user = conn.createUser(log, pwd);
+	                	User user = User.signup(log, pwd);
 	                	errorLabel.setText("");
 	                }
 	                catch(ExistingUserException e){
