@@ -4,7 +4,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
 @Entity
@@ -35,12 +34,19 @@ public class ShoppingList implements Serializable {
 	}
 
 	public void addProduct(Product p, int quantity) {
-		int before = productsAndQuantity.getOrDefault(p, 0);
-		setProduct(p, quantity+before);
+		setProduct(p, quantity+getQuantity(p));
 	}
 
 	public void removeProduct(Product p) {
 		productsAndQuantity.remove(p);
+	}
+	
+	public int getQuantity(Product p) {
+		return productsAndQuantity.getOrDefault(p, 0);
+	}
+	
+	public int size() {
+		return productsAndQuantity.size();
 	}
 
 	@Override
@@ -65,10 +71,14 @@ public class ShoppingList implements Serializable {
 	}
 
 	private static Map<Product, Integer> copyMap(Map<Product, Integer> map) {
-		Map<Product, Integer> copy = new HashMap<Product, Integer>();
-		for(Entry<Product, Integer> e: map.entrySet()) {
-			copy.put(new Product(e.getKey()), e.getValue());
+		return new HashMap<Product, Integer>(map);
+	}
+	
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) {
+			return false;
 		}
-		return copy;
+		ShoppingList osl = (ShoppingList) o;
+		return productsAndQuantity.equals(osl.productsAndQuantity);
 	}
 }

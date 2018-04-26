@@ -26,8 +26,7 @@ public class User implements Serializable {
 	private ShoppingList shoppingList;
 
 	// NEEDED BY JPA
-	private User() {
-	}
+	private User() {}
 
 	public User(String username, String password) {
 		this(username, password, null);
