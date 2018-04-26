@@ -33,7 +33,7 @@ public class Database extends GenericDatabase {
 		getET().commit();
 	}
 
-	public static User getUser(String username) {
+	public static User getUser(String username) throws NoResultException {
 		return getOne(User.class, "SELECT b from User b where b.username LIKE ?1", username);
 	}
 	
@@ -46,11 +46,11 @@ public class Database extends GenericDatabase {
 				name, description);
 	}
 	
-	public static List<Product> getProducts(String name) throws NoResultException{
+	public static List<Product> getProducts(String name) {
 		return getAll(Product.class, "SELECT b FROM Product b WHERE b.name LIKE ?1", name);
 	}
 	
-	public static List<Product> getAllProducts() throws NoResultException{
+	public static List<Product> getAllProducts() {
 		return getAll(Product.class, "SELECT p FROM Product p");
 	}
 	
@@ -58,7 +58,7 @@ public class Database extends GenericDatabase {
 		return getOne(Shop.class, "SELECT b FROM Shop b WHERE b.name LIKE ?1", name);
 	}
 	
-	public static List<Shop> getAllShops() throws NoResultException {
+	public static List<Shop> getAllShops() {
 		return getAll(Shop.class, "SELECT s FROM Shop s");
 	}
 	
@@ -66,7 +66,7 @@ public class Database extends GenericDatabase {
 		return getOne(Recipe.class, "SELECT b FROM Recipe b WHERE b.name LIKE ?1", name);
 	}
 	
-	public static List<Recipe> getAllRecipes() throws NoResultException {
+	public static List<Recipe> getAllRecipes() {
 		return getAll(Recipe.class, "SELECT b FROM Recipe b");
 	}
 	
