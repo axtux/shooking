@@ -17,8 +17,8 @@ public class Connector {
 	 * @param username	The id of the user in String format
 	 * @param password	The password of the user in String format
 	 * @return			A Session object that represent the user
-	 * @throws IncorrectPasswordException	Append if the password of the user is incorrect
-	 * @throws UserDoesNotExistException 				Append if the username doesn't exist in DB
+	 * @throws IncorrectPasswordException	Happen if the password of the user is incorrect
+	 * @throws UserDoesNotExistException 				Happen if the username doesn't exist in DB
 	 */
 	//FIXME - really same methid than CheckUserPassword
 	public User openSession(String username, String password) throws IncorrectPasswordException, UserDoesNotExistException {
@@ -41,7 +41,7 @@ public class Connector {
 	 * @param username	The id of the user in Sting format
 	 * @param password	The password of the user in String format
 	 * @return			A Session object that represent the user
-	 * @throws UserAlreadyExistException	Append if the id is not already taken by an other user
+	 * @throws UserAlreadyExistException	Happen if the id is not already taken by an other user
 	 */
 	public User createUser(String username, String password) throws UserAlreadyExistException {
         try{
@@ -60,7 +60,7 @@ public class Connector {
 	 * 
 	 * @param username	The id of the user in String format
 	 * @param password	The password of the user in String format
-	 * @throws IncorrectPasswordException	Append if the password of the user is incorrect
+	 * @throws IncorrectPasswordException	Happen if the password of the user is incorrect
 	 */
 	//FIXME - exceptions and not bool
 	public void destroyUser(String username, String password) throws IncorrectPasswordException {
