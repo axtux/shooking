@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
 import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
@@ -43,57 +44,83 @@ public class GenericDatabase {
 	}
 
 	/**
-	 * Get one Object of type c from database with query and params
-	 * @param c Return Object type
-	 * @param query JPQL Query
-	 * @param params Optional positional parameters (?X starting at 1)
-	 * @return Object of type T
+	 * Create TypedQuery of type with query bound with positional params
+	 * @param type
+	 * @param query
+	 * @param params Optional positional parameters starting at 1 ("?1" for first parameter)
+	 * @return
 	 */
-	public static <T> T getOne(Class<T> c, String query, Object ... params) {
-		TypedQuery<T> tq = getEM().createQuery(query, c);
+	private static <T> TypedQuery<T> createQuery(Class<T> type, String query, Object[] params) {
+		TypedQuery<T> tq = getEM().createQuery(query, type);
 		int i = 1;
 		for(Object p: params) {
 			tq = tq.setParameter(i, p);
 			i++;
 		}
-		return tq.getSingleResult();
+		return tq;
+	}
+	/**
+	 * Get one Object of type c from database corresponding to query bounds with params
+	 * Params have to be positional parameters. E.g. ?1 for first parameter.
+	 * @param c Return Object type
+	 * @param query JPQL Query
+	 * @param params Optional positional parameters starting at 1 ("?1" for first parameter)
+	 * @return Object of type T
+	 */
+	public static <T> T getOne(Class<T> type, String query, Object ... params)
+			throws NoResultException, NonUniqueResultException {
+		return createQuery(type, query, params).getSingleResult();
 	}
 
 	/**
-	 * Get all Objects of type c from database with query and params
+	 * Get all Object of type c from database corresponding to query bounds with params
 	 * @param c Return Object type
 	 * @param query JPQL Query
-	 * @param params Optional positional parameters (?X starting at 1)
+	 * @param params Optional positional parameters starting at 1 ("?1" for first parameter)
 	 * @return Objects of type T
 	 */
-	public static <T> List<T> getAll(Class<T> c, String query, Object ... params) {
-		TypedQuery<T> tq = getEM().createQuery(query, c);
-		int i = 1;
-		for(Object p: params) {
-			tq.setParameter(i, p);
-			i++;
-		}
-		return tq.getResultList();
+	public static <T> List<T> getAll(Class<T> type, String query, Object ... params) {
+		return createQuery(type, query, params).getResultList();
 	}
 
+	/**
+	 * Insert an object into database. Any further modification will be reflected into database
+	 * unless you call the {@link #detach(Object)} method.
+	 * @param o Object to insert
+	 */
 	public static void insert(Object o) throws RollbackException {
 		getET().begin();
 		getEM().persist(o);
 		getET().commit();
 	}
 
+	/**
+	 * Update detached object into database.
+	 * @param o
+	 * @throws RollbackException
+	 */
 	public static void update(Object o) throws RollbackException {
 		getET().begin();
 		getEM().merge(o);
 		getET().commit();
 	}
 
+	/**
+	 * Delete object from database.
+	 * @param o
+	 * @throws NoResultException
+	 */
 	public static void delete(Object o) throws NoResultException {
 		getET().begin();
 		getEM().remove(o);
 		getET().commit();
 	}
 
+	/**
+	 * Detach object from database. Any further modification of the object will not be saved into database
+	 * unless you use {@link #update(Object)} method.
+	 * @param o
+	 */
 	public static void detach(Object o) {
 		getET().begin();
 		getEM().detach(o);
