@@ -18,21 +18,6 @@ public class Database extends GenericDatabase {
 		}
 	}
 
-	public static boolean isEmpty(){
-		return getAllProducts().isEmpty();
-	}
-
-	public static void empty(){
-		getEM().clear();
-		getET().begin();
-		getEM().createQuery("delete from Product p").executeUpdate();
-		getEM().createQuery("delete from User u").executeUpdate();
-		getEM().createQuery("delete from Shop p").executeUpdate();
-		getEM().createQuery("delete from ShoppingList l").executeUpdate();
-		getEM().createQuery("delete from Recipe r").executeUpdate();
-		getET().commit();
-	}
-
 	public static User getUser(String username) throws NoResultException {
 		return getOne(User.class, "SELECT b from User b where b.username LIKE ?1", username);
 	}
@@ -51,7 +36,7 @@ public class Database extends GenericDatabase {
 	}
 	
 	public static List<Product> getAllProducts() {
-		return getAll(Product.class, "SELECT p FROM Product p");
+		return getAll(Product.class);
 	}
 	
 	public static Shop getShop(String name) throws NoResultException{

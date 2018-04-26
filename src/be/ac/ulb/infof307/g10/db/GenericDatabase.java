@@ -49,16 +49,16 @@ public class GenericDatabase {
 	 * Get managed classes by this database
 	 * @return Array of simpleName of the managed classes
 	 */
-	public static String[] getManagedClasses() {
+	public static Class[] getManagedClasses() {
 		// get managed types from metamodel
 		Set<ManagedType<?>> mt = getEM().getMetamodel().getManagedTypes();
 		
 		int size = mt.size();
-		String[] arr = new String[size];
+		Class[] arr = new Class[size];
 		
 		for(ManagedType<?> t: mt) {
 			size--;
-			arr[size] = t.getJavaType().getSimpleName();
+			arr[size] = t.getJavaType();
 		}
 		
 		return arr;
@@ -102,6 +102,41 @@ public class GenericDatabase {
 	 */
 	public static <T> List<T> getAll(Class<T> type, String query, Object ... params) {
 		return createQuery(type, query, params).getResultList();
+	}
+
+	public static <T> List<T> getAll(Class<T> type) {
+		String sql = "SELECT o from "+type.getSimpleName()+" o";
+		return getAll(type, sql);
+	}
+
+	/**
+	 * Delete all objects of class type from database
+	 * @param type Type of objects to delete
+	 */
+	public static <T> void deleteAll(Class type) {
+		getET().begin();
+		getEM().createQuery("delete from "+type.getSimpleName()+" o").executeUpdate();
+		getET().commit();
+	}
+
+	/**
+	 * Delete all objects from database
+	 * @param type Type of objects to delete
+	 */
+	public static void empty() {
+		getEM().clear();
+		for(Class c: getManagedClasses()) {
+			deleteAll(c);
+		}
+	}
+
+	public static boolean isEmpty() {
+		for(Class c: getManagedClasses()) {
+			if (!getAll(c).isEmpty()) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
