@@ -23,6 +23,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
@@ -35,6 +36,21 @@ import javafx.util.Callback;
  * 
  */
 public class ShoppingListController implements Initializable {
+
+	@FXML
+	private Button submitNewProduct;
+	@FXML
+	private TextField newProductName;
+	@FXML
+	private TextField newProductCalories;
+	@FXML
+	private TextField newProductSugar;
+	@FXML
+	private TextField newProductProteins;
+	@FXML
+	private TextField newProductFat;
+	@FXML
+	private Button createNewProductBtn;
 	@FXML
 	private Button clearBT;
 	@FXML
@@ -76,6 +92,18 @@ public class ShoppingListController implements Initializable {
 		// in case selection is not update, clear fields
 		amountTF.clear();
 	}
+
+	@FXML
+	private void createNewProduct(ActionEvent event) throws IOException {
+		Stage stage = new Stage();
+		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("AddNewProduct.fxml"));
+		stage.setScene(new Scene(root));
+		stage.setTitle("Create New Product");
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.initOwner(createNewProductBtn.getScene().getWindow());
+		stage.showAndWait();
+	}
+	
 
 	@FXML
 	private void add(ActionEvent event) {
@@ -160,7 +188,26 @@ public class ShoppingListController implements Initializable {
 		table.setItems(items);
 	}
 	
+	public void researchProduct(ActionEvent actionEvent) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("researchDialog.fxml"));
+			DialogPane page = loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Research product");
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
 
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
+
+		}
+
+	}
 
 
 	public void initialize(URL url, ResourceBundle rb) {
@@ -208,24 +255,5 @@ public class ShoppingListController implements Initializable {
 		amountTF.setSigned(false);
 	}
 
-	public void researchProduct(ActionEvent actionEvent) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ResearchDialog.fxml"));
-			DialogPane page = loader.load();
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Research product");
-			dialogStage.initModality(Modality.APPLICATION_MODAL);
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
 
-
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
-		} catch (IOException e) {
-			// Exception gets thrown if the fxml file could not be loaded
-			e.printStackTrace();
-
-		}
-
-	}
 }

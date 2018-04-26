@@ -65,7 +65,7 @@
                         <Font name="System Bold Italic" size="15.0" fx:id="x13" />
                      </font>
                   </Label>
-                  <Button fx:id="addBT1" font="$x1" layoutX="16.0" layoutY="123.0" mnemonicParsing="false" onAction="#add" prefHeight="26.0" prefWidth="234.0" text="Create New Product" />
+                  <Button fx:id="createNewProductBtn" font="$x1" layoutX="16.0" layoutY="123.0" mnemonicParsing="false" onAction="#createNewProduct" prefHeight="26.0" prefWidth="234.0" text="Create New Product" />
                   <Button fx:id="researchBT1" layoutX="18.0" layoutY="388.0" mnemonicParsing="false" onAction="#researchProduct" prefHeight="27.0" prefWidth="234.0" text="Save List">
                      <font>
                         <Font size="15.0" />
