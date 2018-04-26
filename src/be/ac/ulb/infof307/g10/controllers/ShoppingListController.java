@@ -182,6 +182,12 @@ public class ShoppingListController implements Initializable {
 
 		}
 	}
+	public void submitNewProduct(ActionEvent actionEvent) {
+		System.out.println("create product");
+	}
+
+		
+	
 	
 	public void researchProduct(ActionEvent actionEvent) {
 		try {
