@@ -7,250 +7,70 @@ import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.User;
 
 import javax.persistence.NoResultException;
-import javax.persistence.RollbackException;
 
 import java.util.List;
 
-public class Database {
-    public static void init(){
-        if (isEmpty()) {
-            Data.fillDB();
-        }
-    }
+public class Database extends GenericDatabase {
 
-    /**
-     * test is db is empty
-     * @return emptyness of the db
-     */
-    public static boolean isEmpty(){
-        Connection.getTransaction().begin();
-        List<Product> lTest = Connection.getManager().createNamedQuery("Product.findAll").getResultList();
-        Connection.getTransaction().commit();
-        return lTest.isEmpty();
-    }
+	public static void init(){
+		if (isEmpty()) {
+			Data.fillDB();
+		}
+	}
 
+	public static boolean isEmpty(){
+		return getAllProducts().isEmpty();
+	}
 
-    /**
-     * empty db
-     */
-    public static void empty(){
-        Connection.getTransaction().begin();
-        Connection.getManager().createQuery("delete from Product p").executeUpdate();
-        Connection.getManager().createQuery("delete from User u").executeUpdate();
-        Connection.getManager().createQuery("delete from Shop p").executeUpdate();
-        Connection.getManager().createQuery("delete from ShoppingList l").executeUpdate();
-        Connection.getManager().createQuery("delete from Recipe r").executeUpdate();
-        Connection.getTransaction().commit();
+	public static void empty(){
+		getET().begin();
+		getEM().createQuery("delete from Product p").executeUpdate();
+		getEM().createQuery("delete from User u").executeUpdate();
+		getEM().createQuery("delete from Shop p").executeUpdate();
+		getEM().createQuery("delete from ShoppingList l").executeUpdate();
+		getEM().createQuery("delete from Recipe r").executeUpdate();
+		getET().commit();
+	}
 
-    }
-
-
-    /**
-     *
-     * @param username
-     * @return
-     * @throws NoResultException
-     */
-    public static User getUser(String username) throws NoResultException{
-        try {
-            Connection.getTransaction().begin();
-            User u = (User) Connection.getManager().createQuery("SELECT b from User b where b.username LIKE :username").setParameter("username", username).getSingleResult();
-            Connection.getTransaction().commit();
-            return u;
-        }catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        } 
-    }
-
-    /**
-     *
-     * @param list_id
-     * @return
-     * @throws NoResultException
-     */
-    public static User getListOwner(Long list_id) throws NoResultException{
-        try {
-            Connection.getTransaction().begin();
-            User u = (User) Connection.getManager().createQuery("SELECT b from User b where b.list_id LIKE :list_id").setParameter("list_id", list_id).getSingleResult();
-            Connection.getTransaction().commit();
-            return u;
-        }catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        }
-
-    }
-
-    /**
-     *
-     * @param o
-     * @throws NoResultException
-     * @throws RollbackException
-     */
-    public static void insert(Object o) throws NoResultException, RollbackException {
-        try {
-            Connection.getTransaction().begin();
-            Connection.getManager().persist(o);
-            Connection.getTransaction().commit();
-        }catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        }
-    }
-
-    /**
-     *
-     * @param o
-     * @throws NoResultException
-     */
-    public static void delete(Object o) throws NoResultException{
-        try {
-            Connection.getTransaction().begin();
-            Connection.getManager().remove(o);
-            Connection.getTransaction().commit();
-        }catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        }
-    }
-
-    /**
-     *
-     * @param o
-     * @throws NoResultException
-     */
-    public static void update(Object o) throws NoResultException{
-        try {
-            Connection.getTransaction().begin();
-            Connection.getManager().merge(o);
-            Connection.getTransaction().commit();
-        }catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        }
-    }
-
-
-    /**
-     *
-     * @param name
-     * @param description
-     * @return a product from a name and description
-     * @throws NoResultException
-     */
-    public static Product getProductFromNameAndDesc(String name, String description) throws NoResultException{
-        try {
-            Connection.getTransaction().begin();
-            //FIXME - multiple result crash
-            Product p = (Product) Connection.getManager().createQuery("SELECT b FROM Product b WHERE b.name LIKE :name AND b.description LIKE :description").setParameter("name", name).setParameter("description", description).getSingleResult();
-            Connection.getTransaction().commit();
-            return p;
-        }catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        }
-    }
-
-    /**
-     *
-     * @param name
-     * @return a list of product from a name
-     * @throws NoResultException
-     */
-    public static List<Product> getProducts(String name) throws NoResultException{
-        try {
-            Connection.getTransaction().begin();
-            List<Product> p = (List<Product>) Connection.getManager().createQuery("SELECT b FROM Product b WHERE b.name LIKE :name").setParameter("name", name).getResultList();
-            Connection.getTransaction().commit();
-            return p;
-        }catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        }
-    }
-
-    /**
-     *
-     * @param name
-     * @return a shop from its name
-     * @throws NoResultException
-     */
-    public static Shop getShop(String name) throws NoResultException{
-        try {
-            Connection.getTransaction().begin();
-            Shop s = (Shop) Connection.getManager().createQuery("SELECT b FROM Shop b WHERE b.name LIKE :name").setParameter("name", name).getSingleResult();
-            Connection.getTransaction().commit();
-            return s;
-        }
-        catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        }
-    }
-
-    /**
-     *
-     * @return all shops
-     * @throws NoResultException
-     */
-    public static List<Shop> getAllShops() throws NoResultException {
-        try {
-            Connection.getTransaction().begin();
-            List<Shop> l = Connection.getManager().createNamedQuery("Shop.findAll").getResultList();
-            Connection.getTransaction().commit();
-            return l;
-        }catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        }
-    }
-
-
-    public static Recipe getRecipe(String name) throws NoResultException {
-        try {
-            Connection.getTransaction().begin();
-            Recipe r = (Recipe) Connection.getManager().createQuery("SELECT b FROM Recipe b WHERE b.name LIKE :name").setParameter("name", name).getSingleResult();
-            Connection.getTransaction().commit();
-            return r;
-        }
-        catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        }	
-    }
-        
-    public static List<Recipe> getAllRecipes() throws NoResultException {
-    	try{
-    		Connection.getTransaction().begin();
-    		List<Recipe> l = Connection.getManager().createNamedQuery("Recipe.findAll").getResultList();
-    		Connection.getTransaction().commit();
-    		return l;
-    	}catch (NoResultException e){
-    		Connection.getTransaction().rollback();
-    		throw new NoResultException();
-    	}
-    }
-    
-    /**
-     *
-     * @param l
-     * @throws NoResultException
-     */
-    public static void deleteList(ShoppingList l) throws NoResultException{
-        try {
-            //FIXME java.lang.IllegalStateException: ???
-            //Exception Description: Transaction is currently active
-            Connection.getTransaction().begin();
-            Database.getListOwner(l.getId()).setShoppingList(null);
-            Connection.getTransaction().commit();
-            Connection.getTransaction().begin();
-            Connection.getManager().remove(l);
-            Connection.getTransaction().commit();
-        }catch (NoResultException e){
-            Connection.getTransaction().rollback();
-            throw new NoResultException();
-        }
-    }
-
+	public static User getUser(String username) {
+		return getOne(User.class, "SELECT b from User b where b.username LIKE ?1", username);
+	}
+	
+	public static User getListOwner(Long list_id) throws NoResultException{
+		return getOne(User.class, "SELECT b from User b where b.list_id LIKE ?1", list_id);
+	}
+	
+	public static Product getProductFromNameAndDesc(String name, String description) throws NoResultException{
+		return getOne(Product.class, "SELECT b FROM Product b WHERE b.name LIKE ?1 AND b.description LIKE ?2",
+				name, description);
+	}
+	
+	public static List<Product> getProducts(String name) throws NoResultException{
+		return getAll(Product.class, "SELECT b FROM Product b WHERE b.name LIKE ?1", name);
+	}
+	
+	public static List<Product> getAllProducts() throws NoResultException{
+		return getAll(Product.class, "SELECT p FROM Product p");
+	}
+	
+	public static Shop getShop(String name) throws NoResultException{
+		return getOne(Shop.class, "SELECT b FROM Shop b WHERE b.name LIKE ?1", name);
+	}
+	
+	public static List<Shop> getAllShops() throws NoResultException {
+		return getAll(Shop.class, "SELECT s FROM Shop s");
+	}
+	
+	public static Recipe getRecipe(String name) throws NoResultException {
+		return getOne(Recipe.class, "SELECT b FROM Recipe b WHERE b.name LIKE ?1", name);
+	}
+	
+	public static List<Recipe> getAllRecipes() throws NoResultException {
+		return getAll(Recipe.class, "SELECT b FROM Recipe b");
+	}
+	
+	public static void deleteList(ShoppingList l) throws NoResultException{
+		Database.getListOwner(l.getId()).setShoppingList(null);
+		delete(l);
+	}
 }
