@@ -38,20 +38,6 @@ import javafx.util.Callback;
 public class ShoppingListController implements Initializable {
 
 	@FXML
-	private Button submitNewProduct;
-	@FXML
-	private TextField newProductName;
-	@FXML
-	private TextField newProductCalories;
-	@FXML
-	private TextField newProductSugar;
-	@FXML
-	private TextField newProductProteins;
-	@FXML
-	private TextField newProductFat;
-	@FXML
-	private Button createNewProductBtn;
-	@FXML
 	private Button clearBT;
 	@FXML
 	private Button addBT;
@@ -91,19 +77,7 @@ public class ShoppingListController implements Initializable {
 		table.getSelectionModel().clearSelection();
 		// in case selection is not update, clear fields
 		amountTF.clear();
-	}
-
-	@FXML
-	private void createNewProduct(ActionEvent event) throws IOException {
-		Stage stage = new Stage();
-		Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("AddNewProduct.fxml"));
-		stage.setScene(new Scene(root));
-		stage.setTitle("Create New Product");
-		stage.initModality(Modality.APPLICATION_MODAL);
-		stage.initOwner(createNewProductBtn.getScene().getWindow());
-		stage.showAndWait();
-	}
-	
+	}	
 
 	@FXML
 	private void add(ActionEvent event) {
@@ -187,10 +161,31 @@ public class ShoppingListController implements Initializable {
 		});
 		table.setItems(items);
 	}
+
+	@FXML
+	private void createNewProduct(ActionEvent event) throws IOException {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("AddNewProduct.fxml"));
+			DialogPane page = loader.load();
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Create new product");
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+		} catch (IOException e) {
+			// Exception gets thrown if the fxml file could not be loaded
+			e.printStackTrace();
+
+		}
+	}
 	
 	public void researchProduct(ActionEvent actionEvent) {
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("researchDialog.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("ResearchDialog.fxml"));
 			DialogPane page = loader.load();
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Research product");
