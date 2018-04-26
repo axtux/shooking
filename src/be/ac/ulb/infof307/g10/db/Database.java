@@ -10,6 +10,9 @@ import javax.persistence.NoResultException;
 
 import java.util.List;
 
+/**
+ * Adding some queries to GenericDatabase to meet the need of our custom objects.
+ */
 public class Database extends GenericDatabase {
 
 	public static void init(){

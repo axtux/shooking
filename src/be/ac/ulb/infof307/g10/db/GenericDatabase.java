@@ -13,8 +13,17 @@ import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 import javax.persistence.metamodel.ManagedType;
 
+/**
+ * Persistence database to manage Objects persistence.
+ * This database is generic (as its name suggest), and is working without knowing object type.
+ * Feel free to extends this class to add your own queries to your database.
+ */
 public class GenericDatabase {
-	private static final String NAME = "GL10PU";
+	/**
+	 * Can be defined within underlying class
+	 * TODO should be ?
+	 */
+	protected static String NAME = "GL10PU";
 	
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
