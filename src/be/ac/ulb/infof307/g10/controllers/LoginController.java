@@ -6,9 +6,11 @@ import be.ac.ulb.infof307.g10.models.Session;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.UserDoesNotExistException;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,15 +23,6 @@ public class LoginController {
     PasswordField pwdField; //password input field
     @FXML
     Label printLabel; //text field to show if the login of the account is not possible, or if the connection succeed
-
-    @FXML
-    MenuController menu; //menu of the page
-
-    public void initialize(URL url, ResourceBundle rb) {
-        menu.title.setText("Login Page");
-
-
-    }
 
     public void submit(){
         String log = loginField.getText();

@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 
 import java.util.List;
 
-public class ResearchController {
+public class ResearchController  {
 	@FXML
 	private TextField productTF;
 

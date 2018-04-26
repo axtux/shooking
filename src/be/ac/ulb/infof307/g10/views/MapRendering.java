@@ -54,7 +54,7 @@ public MapRendering(Stage stage){
     btnGoBack.setDefaultButton(true);
     btnGoBack.setOnAction(new EventHandler<ActionEvent>() {
         public void handle(ActionEvent event) {
-            Main.getInstance().goToMenu();
+           // Main.getInstance().goToMenu();
         }
     });
 

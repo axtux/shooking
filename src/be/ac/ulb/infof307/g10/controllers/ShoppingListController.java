@@ -28,7 +28,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 
-public class ShoppingListController implements Initializable {
+public class ShoppingListController extends MainController {
 	@FXML
 	private Button clearBT;
 	@FXML
@@ -98,13 +98,6 @@ public class ShoppingListController implements Initializable {
 			return;
 		}
 		products.remove(selected.getKey());
-	}
-
-	@FXML
-	void goBack(ActionEvent event) {
-		// go to the menu
-		Main.getInstance().goToMenu();
-		System.out.println("go back to the Menu\n");
 	}
 
 	@FXML

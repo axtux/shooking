@@ -14,11 +14,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-public class TermsOfUseController implements Initializable {
+public class TermsOfUseController implements Initializable  {
 	@FXML
 	private TextArea text;
 	@FXML
 	private Button button;
+
 	@FXML
 	void agree(MouseEvent event) {
 		button.setDisable(true);

@@ -2,7 +2,7 @@ package be.ac.ulb.infof307.g10;
 
 import java.io.IOException;
 
-import be.ac.ulb.infof307.g10.views.MapRendering;
+import be.ac.ulb.infof307.g10.views.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -37,38 +37,49 @@ public class Main extends Application {
 	}
 	
 	public void goToLogin() {
-		stage.setTitle("Login Page");
-		loadFXML("Login");
-		update();
+		GeneralView page = new GeneralView(stage, "Login", "Menu");
+		String[] buttons = {"logout","goTo"};
+		page.disableButtons(buttons);
+
+		page.setTitle("Login Page");
+		//loadFXML("Login");
+		//update();
 	}
-	
+
 	public void goToTerms() {
 		stage.setTitle("Terms of use");
 		loadFXML("TermsOfUse");
-		update();
-	}
-	
-	public void goToSignUp() {
-		stage.setTitle("Creation of account");
-		loadFXML("CreateAccount");
-		update();
-	}
-	
-	public void goToShoppingList() {
-		stage.setTitle("Shopping list");
-		loadFXML("ShoppingList");
-		update();
+		update(stage);
 	}
 
-	public void goToMenu() {
-		stage.setTitle("Menu");
-		loadFXML("Menu");
-		update();
+	public void goToSignUp() {
+		GeneralView page = new GeneralView(stage, "CreateAccount", "Menu");
+		String[] buttons = {"logout","goTo"};
+		page.disableButtons(buttons);
+
+		page.setTitle("Login Page");
+
 	}
+
+
+	public void goToShoppingList() {
+		GeneralView page = new GeneralView(stage, "ShoppingList", "Menu");
+		String[] buttons = {"logout","goTo"};
+		page.disableButtons(buttons);
+
+		page.setTitle("Login Page");
+
+	}
+
+
 
 	public void goToMap(){
-		new MapRendering(stage);
-		update();
+		GeneralView page = new GeneralView(stage, "Login", "Menu");
+		String[] buttons = {"logout","goTo"};
+		page.disableButtons(buttons);
+
+		page.setTitle("Login Page");
+
 	}
 
 	public void exit(){
@@ -77,7 +88,9 @@ public class Main extends Application {
 
 	private void loadFXML(String name) {
 		try {
+
 			Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(name+".fxml"));
+
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();
@@ -87,9 +100,11 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 	}
-	
-	private void update() {
+
+	private void update(Stage stage) {
 		stage.centerOnScreen();
 	}
+
+
 
 }

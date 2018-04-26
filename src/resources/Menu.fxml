@@ -14,7 +14,7 @@
                <menus>
                   <Menu fx:id="goMenu" mnemonicParsing="false" text="go to">
                      <items>
-                        <MenuItem fx:id="shoppingListItem" mnemonicParsing="false" onAction="#goToShoppingList" text="Shopping List">
+                        <MenuItem fx:id="shoppingListItem" mnemonicParsing="false"  text="Shopping List">
                            <graphic>
                               <ImageView fitHeight="70.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -24,7 +24,7 @@
                            </graphic>
                         </MenuItem>
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem fx:id="mapItem" mnemonicParsing="false" onAction="#goToMap" text="Map">
+                        <MenuItem fx:id="mapItem" mnemonicParsing="false"  text="Map">
                            <graphic>
                               <ImageView fitHeight="70.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -35,8 +35,8 @@
                         </MenuItem>
                      </items>
                   </Menu>
-                  <Menu fx:id="logoutMenu" mnemonicParsing="false" onAction="#goToLogin" text="Logout" />
-                  <Menu fx:id="ExitMenu" mnemonicParsing="false" onAction="#exit" text="Exit" />
+                  <Menu fx:id="logoutMenu" mnemonicParsing="false"  text="Logout" />
+                  <Menu fx:id="ExitMenu" mnemonicParsing="false"  text="Exit" />
                </menus>
             </MenuBar>
             <Label fx:id="titlePage" alignment="TOP_CENTER" text="Title">

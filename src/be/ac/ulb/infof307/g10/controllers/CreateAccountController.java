@@ -25,7 +25,7 @@ public class CreateAccountController {
     @FXML
     Label errorLabel; //text field to show if the creation of the account is not possible
 
-
+    /*
     @FXML
     public void goToLogin(ActionEvent event){
         Main.getInstance().goToLogin();
@@ -36,7 +36,7 @@ public class CreateAccountController {
         Main.getInstance().exit();
     }
 
-
+*/
     @FXML
     public void submit(ActionEvent event){
         //field login recovered
