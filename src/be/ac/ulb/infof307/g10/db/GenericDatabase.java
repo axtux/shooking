@@ -25,7 +25,7 @@ public class GenericDatabase {
 	 * Return the EntityManager
 	 * @return EntityManager
 	 */
-	public static EntityManager getEM() {
+	private static EntityManager getEM() {
 		if (emf == null || !emf.isOpen()) {
 			emf = Persistence.createEntityManagerFactory(NAME);
 		}
@@ -39,7 +39,7 @@ public class GenericDatabase {
 	 * Return underlying transaction
 	 * @return EntityTransaction
 	 */
-	public static EntityTransaction getET() {
+	private static EntityTransaction getET() {
 		if (et == null) {
 			et = getEM().getTransaction();
 		}
@@ -152,11 +152,14 @@ public class GenericDatabase {
 	 * @param type Type of objects to delete
 	 */
 	public static void empty() {
+		// clear links between objects and database
 		getEM().clear();
+		// start batch operations
 		setAutoCommit(false);
 		for(Class c: getManagedClasses()) {
 			deleteAll(c);
 		}
+		// end batch operations
 		setAutoCommit(true);
 	}
 
