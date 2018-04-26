@@ -12,7 +12,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.ShopManagement;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Shop;
@@ -29,8 +29,8 @@ public class TestShopManagement {
 		testingStock = new HashMap<>();
 		pro1 = new Product("#test Product 1", "AAA",100, 200, 300, 400, 300);
 		pro2 = new Product("#test Product 2", "BBB",100, 200, 300, 400, 320);
-        DatabaseFacade.insert(pro1);
-        DatabaseFacade.insert(pro2);
+        Database.insert(pro1);
+        Database.insert(pro2);
 		testingStock.put(pro1, 12);
 		
 		ShopManagement.createShop("#test Get Shop", 0.0, 0.0);

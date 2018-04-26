@@ -344,7 +344,7 @@ public void initialize(URL url, ResourceBundle rb) {
 public void researchProduct(ActionEvent actionEvent) {
 	ResearchController rc = new ResearchController();
 	try {
-		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("researchDialog.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ResearchDialog.fxml"));
 		DialogPane page = (DialogPane) loader.load();
 		Stage dialogStage = new Stage();
 		dialogStage.setTitle("Research product");

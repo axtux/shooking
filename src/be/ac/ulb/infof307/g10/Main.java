@@ -1,6 +1,6 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.views.IntCreateAcount;
 import be.ac.ulb.infof307.g10.views.LoginPage;
 import be.ac.ulb.infof307.g10.views.MapRendering;
@@ -27,13 +27,12 @@ public class Main extends Application {
 	
 	private Stage stage;
 
-    @Override
-    public void init() throws Exception {
-        super.init();
-        DatabaseFacade.initDB();
-    }
+	@Override
+	public void init() {
+		Database.init();
+	}
 
-    @Override
+	@Override
 	public void start(Stage stage){
 		this.stage = stage;
 		goToLogin();
@@ -59,8 +58,8 @@ public class Main extends Application {
 		update();
 	}
 	public void goToRecipe() {
-		stage.setTitle("RECIPE");
-		loadFXML("recipe");
+		stage.setTitle("Recipe");
+		loadFXML("Recipe");
 		update();
 	}
 	public void goToShoppingList() {
@@ -81,7 +80,7 @@ public class Main extends Application {
 
 	private void loadFXML(String name) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(name+".fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/FXML/"+name+".fxml"));
 			Scene scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();

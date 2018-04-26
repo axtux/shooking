@@ -1,6 +1,6 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Research;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.Product;
@@ -27,7 +27,7 @@ public class ResearchController {
 		Research r = new Research();
 		shopTA.setText("");
 
-		List<Shop> shopList = r.getStoreWithProducts(DatabaseFacade.getProducts(productTF.getText()));
+		List<Shop> shopList = r.getStoreWithProducts(Database.getProducts(productTF.getText()));
 		String shopNames = "";
 		for (Shop s : shopList) {
 			shopNames += s.getName() + "\n";
@@ -38,7 +38,7 @@ public class ResearchController {
 	public void researchProducts(ActionEvent actionEvent) {
 		shopTA.setText("");
 
-		List<Product> productsList = DatabaseFacade.getProducts(productTF.getText());
+		List<Product> productsList = Database.getProducts(productTF.getText());
 
 		String productsNames = "";
 		for (Product s : productsList) {

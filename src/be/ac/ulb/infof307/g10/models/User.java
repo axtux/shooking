@@ -1,6 +1,6 @@
 package be.ac.ulb.infof307.g10.models;
 
-import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.utils.Hash;
 
 import javax.persistence.*;
@@ -88,7 +88,7 @@ public class User implements Serializable {
 
     public void setShoppingList(ShoppingList shoppingList) {
         this.shoppingList = shoppingList;
-        DatabaseFacade.update(this);
+        Database.update(this);
     }
 }
 
