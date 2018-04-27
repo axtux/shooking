@@ -60,10 +60,12 @@ public class Main extends Application {
 
 	public void goToCreateAccount() {
 		GeneralView page = new GeneralView(stage, "CreateAccount", "Menu");
+
 		List<String> buttons = Arrays.asList("logout","shoppingList","map");
 		page.disableButtons(buttons);
 
 		page.setTitle("Create your Account");
+		stage.setTitle("Account");
 
 	}
 	public void goToRecipe() {

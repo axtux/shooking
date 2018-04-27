@@ -61,7 +61,7 @@ public class GeneralView extends Parent {
         } catch (IOException e) { // never happens as resource in packed with application
             e.printStackTrace();
         }
-        return null;
+        return null;//should never return this
     }
 
     private void update() {
