@@ -1,6 +1,8 @@
 package be.ac.ulb.infof307.g10;
 
 import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.models.User;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingUserException;
 import be.ac.ulb.infof307.g10.views.IntCreateAcount;
 import be.ac.ulb.infof307.g10.views.LoginPage;
 import be.ac.ulb.infof307.g10.views.MapRendering;
@@ -26,6 +28,7 @@ public class Main extends Application {
 	}
 	
 	private Stage stage;
+	private User user;
 
 	@Override
 	public void init() {
@@ -35,7 +38,16 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage){
 		this.stage = stage;
-		goToLogin();
+		//* TODO remove for release
+		try {
+			this.user = User.login("test", "test");
+			System.out.println("user test logged in");
+		} catch(NonExistingUserException e) {
+			this.user = User.signup("test", "test");
+			System.out.println("user test signed up");
+		}
+		goToMenu();
+		//*/goToLogin();
 	}
 	
 	public static void main(String[] args) {
