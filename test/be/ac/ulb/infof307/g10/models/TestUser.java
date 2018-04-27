@@ -15,11 +15,13 @@ public class TestUser {
 	@BeforeClass
 	public static void beforeClass() {
 		Database.deleteAll(User.class);
+		Database.deleteAll(Product.class);
 	}
 
 	@After
 	public void after() {
 		Database.deleteAll(User.class);
+		Database.deleteAll(Product.class);
 	}
 
 
@@ -75,5 +77,30 @@ public class TestUser {
 	public void signupExistingUserExceptionTest() {
 		User.signup("test", "test");
 		User.signup("test", "test");
+	}
+	
+	@Test
+	public void databaseTest() {
+		ShoppingList sl = new ShoppingList();
+		Product p1 = new Product("test1", "test1", 0, 0, 0, 0, 0);
+		Product p2 = new Product("test2", "test2", 0, 0, 0, 0, 0);
+		Product p3 = new Product("test3", "test3", 0, 0, 0, 0, 0);
+		sl.setProduct(p1, 42);
+		sl.setProduct(p2, 13);
+		
+		User u = new User("test", "test", sl);
+		// FIXME actually, products need to be already into database, is it a problem ?
+		for(Product p: u.getShoppingList().getProducts()) {
+			Database.insert(p);
+		}
+		Database.insert(u);
+		// user stays bound to database
+		Database.insert(p3);
+		sl.addProduct(p3, 7);
+		u.setShoppingList(sl);
+		
+		User dbu = Database.getUser("test");
+		System.out.println(dbu);
+		Assert.assertEquals(3, dbu.getShoppingList().size());
 	}
 }

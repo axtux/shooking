@@ -25,7 +25,7 @@ public class User implements Serializable {
 	@Basic(optional = false)
 	private String hashedPassword;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.PERSIST)
 	private ShoppingList shoppingList;
 
 	// NEEDED BY JPA
@@ -85,7 +85,7 @@ public class User implements Serializable {
 
 	public void setShoppingList(ShoppingList shoppingList) {
 		if (shoppingList == null) {
-			this.shoppingList = null;
+			this.shoppingList = new ShoppingList();
 		} else {
 			this.shoppingList = new ShoppingList(shoppingList);
 		}
