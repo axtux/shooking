@@ -1,13 +1,18 @@
 package be.ac.ulb.infof307.g10.models;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 @Entity
-public class ShoppingList implements Serializable {
+public class ShoppingList extends ModelObject {
 
 	private static final long serialVersionUID = -0L;
 	@Id
@@ -47,11 +52,6 @@ public class ShoppingList implements Serializable {
 	
 	public int size() {
 		return productsAndQuantity.size();
-	}
-
-	@Override
-	public String toString() {
-		return "ShoppingList{" + "id=" + id + ", productsAndAssociatedQuantity=" + productsAndQuantity.toString() + '}';
 	}
 
 	public Long getId() {

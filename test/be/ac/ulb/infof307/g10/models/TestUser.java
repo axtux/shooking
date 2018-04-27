@@ -14,49 +14,36 @@ public class TestUser {
 
 	@BeforeClass
 	public static void beforeClass() {
-		Database.deleteAll(User.class);
-		Database.deleteAll(Product.class);
+		Database.empty();
 	}
 
 	@After
 	public void after() {
-		Database.deleteAll(User.class);
-		Database.deleteAll(Product.class);
+		Database.empty();
 	}
 
-
 	@Test
-	public void usernameTest() {
-		User user = new User("test", "test");
-		Assert.assertEquals("test", user.getUsername());
+	public void signupTest() {
+		User u = User.signup("test", "test");
+		Assert.assertEquals("test", u.getUsername());
 	}
 	
 	@Test
-	public void copyTest() {
-		User user = new User("test", "test");
-		User copy = new User(user);
-		copy.setPassword("other");
-		Assert.assertEquals(user.getUsername(), copy.getUsername());
-		Assert.assertNotEquals(user.getHashedPassword(), copy.getHashedPassword());
+	public void signupPersistenceTest() {
+		User u = User.signup("test", "test");
+		Database.close();
+		u = Database.getUser("test");
+		Assert.assertNotNull(u);
 	}
-	
-	@Test
-	public void deepCopyTest() {
-		ShoppingList sl = new ShoppingList();
-		Product p1 = new Product("test1", "test1", 0, 0, 0, 0, 0);
-		Product p2 = new Product("test2", "test2", 0, 0, 0, 0, 0);
-		sl.addProduct(p1, 42);
-		sl.addProduct(p2, 13);
-		User user = new User("test", "test", sl);
-		User copy = new User(user);
-		sl.addProduct(new Product("test3", "test3", 0, 0, 0, 0, 0),  7);
-		sl.addProduct(p1, 42);
-		Assert.assertEquals(2, copy.getShoppingList().size());
-		Assert.assertEquals(42, copy.getShoppingList().getQuantity(p1));
+
+	@Test(expected = ExistingUserException.class)
+	public void signupExistingUserExceptionTest() {
+		User.signup("test", "test");
+		User.signup("test", "test");
 	}
 
 	@Test
-	public void signupLoginTest() {
+	public void loginTest() {
 		User.signup("test", "test");
 		User u = User.login("test", "test");
 		Assert.assertEquals("test", u.getUsername());
@@ -72,36 +59,44 @@ public class TestUser {
 	public void loginNonExistingUserExceptionTest() {
 		User.login("badUser", "anyPassword");
 	}
-	
-	@Test(expected = ExistingUserException.class)
-	public void signupExistingUserExceptionTest() {
-		User.signup("test", "test");
-		User.signup("test", "test");
-	}
-	
+
 	@Test
-	public void databaseTest() {
-		ShoppingList sl = new ShoppingList();
+	public void shoppingListTest() {
+		User u = User.signup("test", "test");
+		ShoppingList sl = u.getShoppingList();
+		
 		Product p1 = new Product("test1", "test1", 0, 0, 0, 0, 0);
 		Product p2 = new Product("test2", "test2", 0, 0, 0, 0, 0);
-		Product p3 = new Product("test3", "test3", 0, 0, 0, 0, 0);
+		// products have to be in database
+		Database.insert(p1);
+		Database.insert(p2);
+		
 		sl.setProduct(p1, 42);
 		sl.setProduct(p2, 13);
 		
-		User u = new User("test", "test", sl);
-		// FIXME actually, products need to be already into database, is it a problem ?
-		for(Product p: u.getShoppingList().getProducts()) {
-			Database.insert(p);
-		}
-		Database.insert(u);
+		Assert.assertEquals(2, u.getShoppingList().size());
+	}
+	
+	@Test
+	public void shoppingListPersistenceTest() {
+		User u = User.signup("test", "test");
+		ShoppingList sl = u.getShoppingList();
 		
-		// user stays bound to database
-		sl = u.getShoppingList();
-		Database.insert(p3);
-		sl.addProduct(p3, 7);
+		Product p1 = new Product("test1", "test1", 0, 0, 0, 0, 0);
+		Product p2 = new Product("test2", "test2", 0, 0, 0, 0, 0);
+		// products have to be in database
+		Database.insert(p1);
+		Database.insert(p2);
 		
-		User dbu = Database.getUser("test");
-		System.out.println(dbu);
-		Assert.assertEquals(3, dbu.getShoppingList().size());
+		sl.setProduct(p1, 42);
+		sl.setProduct(p2, 13);
+		Database.detach(u);
+		
+		u.save();
+		Database.close();
+		
+		User o = Database.getUser("test");
+		System.out.println(o);
+		Assert.assertEquals(2, o.getShoppingList().size());
 	}
 }

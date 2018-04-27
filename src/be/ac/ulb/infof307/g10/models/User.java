@@ -1,16 +1,28 @@
 package be.ac.ulb.infof307.g10.models;
 
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NoResultException;
+import javax.persistence.OneToOne;
+import javax.persistence.RollbackException;
+
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingUserException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingUserException;
 import be.ac.ulb.infof307.g10.utils.Hash;
 
-import javax.persistence.*;
-import java.io.Serializable;
-
+/**
+ * Manage user, password and shopping list.
+ * Use static methods to get instance.
+ */
 @Entity
-public class User implements Serializable {
+public class User extends ModelObject {
 
 	private static final long serialVersionUID = -0L;
 	@Id
@@ -29,34 +41,12 @@ public class User implements Serializable {
 	private ShoppingList shoppingList;
 
 	// NEEDED BY JPA
-	@SuppressWarnings("unused")
 	private User() {}
 
-	public User(String username, String password) {
-		this(username, password, null);
-	}
-
-	public User(String username, String password, ShoppingList shoppingList) {
+	private User(String username, String password) {
 		this.username = username;
 		setPassword(password);
-		setShoppingList(shoppingList);
-	}
-
-	/**
-	 * Create a full copy of user (ShoppingList is also copied)
-	 * @param user User to copy
-	 */
-	public User(User user) {
-		this.id = user.id;
-		this.username = user.username;
-		this.hashedPassword = user.hashedPassword;
-		setShoppingList(user.shoppingList);
-	}
-
-	@Override
-	public String toString() {
-		return "User{" + "id=" + id + ", username=" + username + ", hashedPassword=" + hashedPassword + ", userList="
-				+ shoppingList + '}';
+		this.shoppingList = new ShoppingList();
 	}
 
 	public Integer getId() {
@@ -82,15 +72,7 @@ public class User implements Serializable {
 	public ShoppingList getShoppingList() {
 		return shoppingList;
 	}
-
-	public void setShoppingList(ShoppingList shoppingList) {
-		if (shoppingList == null) {
-			this.shoppingList = new ShoppingList();
-		} else {
-			this.shoppingList = new ShoppingList(shoppingList);
-		}
-	}
-
+	
 	// static methods
 	public static User login(String username, String password)
 		throws IncorrectPasswordException, NonExistingUserException {
