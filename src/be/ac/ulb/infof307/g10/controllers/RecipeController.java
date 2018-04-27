@@ -32,7 +32,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-public class recipe implements Initializable {
+public class RecipeController implements Initializable {
 
    
     @FXML
@@ -211,12 +211,6 @@ public class recipe implements Initializable {
     }
 
     @FXML
-    void goBack(ActionEvent event) {
-    	// go to the menu
-    			Main.getInstance().goToMenu();
-    }
-
-    @FXML
     void logout(ActionEvent event) {
     	// go to the login page
     			Main.getInstance().goToLogin();
@@ -231,10 +225,10 @@ public class recipe implements Initializable {
 		products.remove(selected.getKey());
 
 }
-// Create Recipe
+// Create RecipeController
     @FXML
     void CreateRecipe(ActionEvent event) {
-    	System.out.println("New Recipe");
+    	System.out.println("New RecipeController");
     }
 
     @FXML

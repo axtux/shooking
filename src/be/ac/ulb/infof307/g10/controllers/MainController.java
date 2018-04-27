@@ -14,61 +14,46 @@ import javafx.fxml.Initializable;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
 
-    public void goToLogin(Stage stage) {
-        GeneralView page = new GeneralView(stage, "Login", "Menu");
-        String[] buttons = {"logout","goTo"};
-        page.disableButtons(buttons);
-
-        page.setTitle("Login Page");
-        //loadFXML("Login");
-        //update();
+    public void goToLogin() {
+        Main.getInstance().goToLogin();
     }
 
+    public void goToTerms() {
+        Main.getInstance().goToTerms();
+    }
 
-     public void goToTerms(Stage stage) {
-         stage.setTitle("Terms of use");
-         loadFXML("TermsOfUse",stage);
-         update(stage);
-     }
+    public void goToSignUp() {
+        Main.getInstance().goToCreateAccount();
 
-     public void goToSignUp(Stage stage) {
-         GeneralView page = new GeneralView(stage, "CreateAccount", "Menu");
-         String[] buttons = {"logout","goTo"};
-         page.disableButtons(buttons);
+    }
+    public void goToRecipe() {
+        Main.getInstance().goToRecipe();
+    }
+    public void goToShoppingList() {
+        Main.getInstance().goToShoppingList();
 
-         page.setTitle("Login Page");
+    }
 
-     }
+    public void goToCreateAccount(){
+        Main.getInstance().goToTerms();
+    }
 
+    public void goToMap(){
+        //TODO checker si pas fxml GeneralView page = new GeneralView(stage, "Login", "Menu");
+        Main.getInstance().goToLogin();
 
-     public void goToShoppingList(Stage stage) {
-         GeneralView page = new GeneralView(stage, "ShoppingList", "Menu");
-         String[] buttons = {"logout","goTo"};
-         page.disableButtons(buttons);
+    }
 
-         page.setTitle("Login Page");
-
-     }
-
-
-
-     public void goToMap(Stage stage){
-         GeneralView page = new GeneralView(stage, "Login", "Menu");
-         String[] buttons = {"logout","goTo"};
-         page.disableButtons(buttons);
-
-         page.setTitle("Login Page");
-
-     }
-
-     public void exit(){
-         Platform.exit();
-     }
+    public void exit(){
+        Platform.exit();
+    }
 
     private void loadFXML(String name, Stage stage) {
         try {

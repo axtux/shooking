@@ -12,6 +12,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main extends Application {
 	/*
@@ -44,37 +47,33 @@ public class Main extends Application {
 	}
 	
 	public void goToLogin() {
-		GeneralView page = new GeneralView(stage, "Login", "Menu");
-		String[] buttons = {"logout","goTo"};
-		page.disableButtons(buttons);
-
-		page.setTitle("Login Page");
-		//loadFXML("Login");
-		//update();
+		stage.setTitle("Login Page");
+		loadFXML("Login");
+		update();
 	}
 
 	public void goToTerms() {
 		stage.setTitle("Terms of use");
 		loadFXML("TermsOfUse");
-		update(stage);
+		update();
 	}
 
-	public void goToSignUp() {
+	public void goToCreateAccount() {
 		GeneralView page = new GeneralView(stage, "CreateAccount", "Menu");
-		String[] buttons = {"logout","goTo"};
+		List<String> buttons = Arrays.asList("logout","shoppingList","map");
 		page.disableButtons(buttons);
 
-		page.setTitle("Login Page");
+		page.setTitle("Create your Account");
 
 	}
 	public void goToRecipe() {
-		stage.setTitle("RECIPE");
-		loadFXML("recipe");
+		stage.setTitle("Recipe");
+		loadFXML("Recipe");
 		update();
 	}
 	public void goToShoppingList() {
 		GeneralView page = new GeneralView(stage, "ShoppingList", "Menu");
-		String[] buttons = {"logout","goTo"};
+		List<String> buttons = Arrays.asList("logout","goTo");
 		page.disableButtons(buttons);
 
 		page.setTitle("Login Page");
@@ -85,7 +84,7 @@ public class Main extends Application {
 
 	public void goToMap(){
 		//TODO checker si pas fxml GeneralView page = new GeneralView(stage, "Login", "Menu");
-		String[] buttons = {"logout","goTo"};
+		List<String> buttons = Arrays.asList("logout","goTo");
 		//page.disableButtons(buttons);
 
 		//page.setTitle("Login Page");
@@ -111,7 +110,7 @@ public class Main extends Application {
 		}
 	}
 
-	private void update(Stage stage) {
+	private void update() {
 		stage.centerOnScreen();
 	}
 

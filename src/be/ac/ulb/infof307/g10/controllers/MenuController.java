@@ -12,7 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 
 
-public class MenuController implements Initializable {
+public class MenuController extends MainController {
 
     @FXML
     Label titlePage; //title of the page

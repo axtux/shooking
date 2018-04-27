@@ -24,7 +24,7 @@ public class TermsOfUseController implements Initializable  {
 	void agree(MouseEvent event) {
 		button.setDisable(true);
 		System.out.println("agreed");
-		Main.getInstance().goToSignUp();
+		Main.getInstance().goToCreateAccount();
 	}
 
 	@Override

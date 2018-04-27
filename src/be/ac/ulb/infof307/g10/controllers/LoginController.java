@@ -16,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginController {
+public class LoginController extends MainController{
 
     @FXML
     TextField loginField; //login field
@@ -25,6 +25,7 @@ public class LoginController {
     @FXML
     Label printLabel; //text field to show if the login of the account is not possible, or if the connection succeed
 
+    @FXML
     public void submit(){
         String log = loginField.getText();
         //Capture of the "password" field
@@ -43,4 +44,5 @@ public class LoginController {
             printLabel.setText("This user don't exist !");
         }
     }
+
 }

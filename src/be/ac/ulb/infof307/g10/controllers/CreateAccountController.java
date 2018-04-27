@@ -14,7 +14,7 @@ import javafx.scene.control.TextField;
  * Controller class for the create account page
  * His aim is to detect some wrong cases in the input password and update the errorLabel
  */
-public class CreateAccountController {
+public class CreateAccountController extends MainController {
 
     @FXML
     TextField textFieldLog; //login field
@@ -25,18 +25,6 @@ public class CreateAccountController {
     @FXML
     Label errorLabel; //text field to show if the creation of the account is not possible
 
-    /*
-    @FXML
-    public void goToLogin(ActionEvent event){
-        Main.getInstance().goToLogin();
-    }
-
-    @FXML
-    public void exit(ActionEvent event){
-        Main.getInstance().exit();
-    }
-
-*/
     @FXML
     public void submit(ActionEvent event){
         //field login recovered
@@ -56,6 +44,7 @@ public class CreateAccountController {
                 User user = conn.createUser(log, pwd);
                 //print it is ok
                 errorLabel.setText("User created successfully");
+                goToLogin();
 
             }
             catch(UserAlreadyExistException e){
