@@ -76,11 +76,11 @@ public class GeneralView extends Parent {
     public void disableButtons(List<String> btns ) {
 
         VBox vbox = (VBox) menu.getChildren().get(0);
-        HBox menubar = (HBox) vbox.getChildren().get(0); //the hbox with buttons (it seems in the view like a menubar) is the first children
+        HBox menuBar = (HBox) vbox.getChildren().get(0); //the hbox with buttons (it seems in the view like a menubar) is the first children
 
-        for (Node btn : menubar.getChildren()) { //we check the corresponding buttons in the hbox
+        for (Node btn : menuBar.getChildren()) { //we check the corresponding buttons in the hbox
             if(btns.contains(btn.getId()))
-                btn.setDisable(true);
+                btn.setDisable(true);//disable the button
         }
 
     }
