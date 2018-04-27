@@ -54,6 +54,10 @@ public class Main extends Application {
 		launch(args);
 	}
 	
+	public User getUser() {
+		return user;
+	}
+	
 	public void goToLogin() {
 		new LoginPage(stage);
 		update();
