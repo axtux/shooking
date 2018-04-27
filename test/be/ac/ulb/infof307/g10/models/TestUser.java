@@ -78,6 +78,27 @@ public class TestUser {
 	}
 	
 	@Test
+	public void userShoppingListPersistenceTest() {
+		User u = User.signup("test", "test");
+		ShoppingList sl = u.getShoppingList();
+		
+		Product p1 = new Product("test1", "test1", 0, 0, 0, 0, 0);
+		Product p2 = new Product("test2", "test2", 0, 0, 0, 0, 0);
+		// products have to be in database
+		Database.insert(p1);
+		Database.insert(p2);
+		
+		sl.setProduct(p1, 42);
+		sl.setProduct(p2, 13);
+		u.save();
+		Database.close();
+		
+		User o = Database.getUser("test");
+		System.out.println(o);
+		Assert.assertEquals(2, o.getShoppingList().size());
+	}
+	
+	@Test
 	public void shoppingListPersistenceTest() {
 		User u = User.signup("test", "test");
 		ShoppingList sl = u.getShoppingList();
@@ -90,9 +111,7 @@ public class TestUser {
 		
 		sl.setProduct(p1, 42);
 		sl.setProduct(p2, 13);
-		Database.detach(u);
-		
-		u.save();
+		sl.save();
 		Database.close();
 		
 		User o = Database.getUser("test");
