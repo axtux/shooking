@@ -223,4 +223,14 @@ public class GenericDatabase {
 		getEM().detach(o);
 		commit();
 	}
+	
+	/**
+	 * Refresh object from database.
+	 * @param o Object to refresh
+	 */
+	public static void refresh(Object o) {
+		begin();
+		getEM().refresh(o);
+		commit();
+	}
 }
