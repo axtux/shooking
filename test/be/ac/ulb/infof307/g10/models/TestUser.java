@@ -60,8 +60,7 @@ public class TestUser {
 		User.login("badUser", "anyPassword");
 	}
 
-	@Test
-	public void shoppingListTest() {
+	public static User userWithShoppingList() {
 		User u = User.signup("test", "test");
 		ShoppingList sl = u.getShoppingList();
 		
@@ -74,22 +73,18 @@ public class TestUser {
 		sl.setProduct(p1, 42);
 		sl.setProduct(p2, 13);
 		
+		return u;
+	}
+	
+	@Test
+	public void shoppingListTest() {
+		User u = userWithShoppingList();
 		Assert.assertEquals(2, u.getShoppingList().size());
 	}
 	
 	@Test
 	public void userShoppingListPersistenceTest() {
-		User u = User.signup("test", "test");
-		ShoppingList sl = u.getShoppingList();
-		
-		Product p1 = new Product("test1", "test1", 0, 0, 0, 0, 0);
-		Product p2 = new Product("test2", "test2", 0, 0, 0, 0, 0);
-		// products have to be in database
-		Database.insert(p1);
-		Database.insert(p2);
-		
-		sl.setProduct(p1, 42);
-		sl.setProduct(p2, 13);
+		User u = userWithShoppingList();
 		u.save();
 		Database.close();
 		
@@ -100,18 +95,8 @@ public class TestUser {
 	
 	@Test
 	public void shoppingListPersistenceTest() {
-		User u = User.signup("test", "test");
-		ShoppingList sl = u.getShoppingList();
-		
-		Product p1 = new Product("test1", "test1", 0, 0, 0, 0, 0);
-		Product p2 = new Product("test2", "test2", 0, 0, 0, 0, 0);
-		// products have to be in database
-		Database.insert(p1);
-		Database.insert(p2);
-		
-		sl.setProduct(p1, 42);
-		sl.setProduct(p2, 13);
-		sl.save();
+		User u = userWithShoppingList();
+		u.getShoppingList().save();
 		Database.close();
 		
 		User o = Database.getUser("test");
