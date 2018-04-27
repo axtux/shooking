@@ -94,10 +94,11 @@ public class TestUser {
 			Database.insert(p);
 		}
 		Database.insert(u);
+		
 		// user stays bound to database
+		sl = u.getShoppingList();
 		Database.insert(p3);
 		sl.addProduct(p3, 7);
-		u.setShoppingList(sl);
 		
 		User dbu = Database.getUser("test");
 		System.out.println(dbu);

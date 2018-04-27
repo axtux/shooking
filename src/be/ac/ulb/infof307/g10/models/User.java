@@ -25,7 +25,7 @@ public class User implements Serializable {
 	@Basic(optional = false)
 	private String hashedPassword;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.ALL)
 	private ShoppingList shoppingList;
 
 	// NEEDED BY JPA
@@ -80,7 +80,7 @@ public class User implements Serializable {
 	}
 
 	public ShoppingList getShoppingList() {
-		return new ShoppingList(shoppingList);
+		return shoppingList;
 	}
 
 	public void setShoppingList(ShoppingList shoppingList) {
