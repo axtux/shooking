@@ -3,6 +3,7 @@ package be.ac.ulb.infof307.g10.db;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
+import be.ac.ulb.infof307.g10.models.ShoppingList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class Data {
 				p.setDescription(s.getName());
 				p.setPrice(p.getPrice()+10*i);
 				// add product to shop with random quantity
-				s.addProduct(p, ThreadLocalRandom.current().nextInt(100));
+				s.getStock().addProduct(p, ThreadLocalRandom.current().nextInt(100));
 				Database.insert(p);
 			}
 			i++;
@@ -40,10 +41,11 @@ public class Data {
 	public static List<Shop> getShops() {
 		ArrayList<Shop> list = new ArrayList<>();
 
-		list.add(new Shop("Aldi", 0.0, 0.0));
-		list.add(new Shop("Colruyt", 0.0, 0.0));
-		list.add(new Shop("Carrefour", 0.0, 0.0));
-		list.add(new Shop("Delhaize", 0.0, 0.0));
+		// TODO rename method ?
+		list.add(Shop.create("Aldi", 0.0, 0.0));
+		list.add(Shop.create("Colruyt", 0.0, 0.0));
+		list.add(Shop.create("Carrefour", 0.0, 0.0));
+		list.add(Shop.create("Delhaize", 0.0, 0.0));
 		
 		return list;
 	}
@@ -59,6 +61,19 @@ public class Data {
 		list.add(new Recipe("Pancake tombé dans la neige avant le 31 Décembre", 1));
 		
 		return list;
+	}
+	
+	/**
+	 * Get stock with random quantity for each product
+	 * @param max Maximum quantity per product.
+	 * @return Stock
+	 */
+	public static ShoppingList getStock(int max) {
+		ShoppingList s = new ShoppingList();
+		for(Product p: getProducts()) {
+			s.addProduct(p, ThreadLocalRandom.current().nextInt(max+1));
+		}
+		return s;
 	}
 	
 	public static List<Product> getProducts() {

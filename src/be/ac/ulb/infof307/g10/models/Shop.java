@@ -1,15 +1,22 @@
 package be.ac.ulb.infof307.g10.models;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.RollbackException;
+
+import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingUserException;
 
 @Entity
-@NamedQueries({
-        @NamedQuery(name = "Shop.findAll", query = "SELECT s FROM Shop s")
-})
-public class Shop implements Serializable {
+public class Shop extends ModelObject {
 
 	private static final long serialVersionUID = -0L;
 	@Id
@@ -17,124 +24,137 @@ public class Shop implements Serializable {
 	@Basic(optional = false)
 	private Integer id;
 
-    @Column(unique = true)
-	public String name;
-    
-    private String[] schedule;
-    
-    private double latitude;
-    private double longitude;
-    	// TODO
-    	// maybe change to GMapsFX.LatLong object when import in project
-    
-	@ElementCollection(fetch = FetchType.EAGER)
-	Map<Product,Integer> stock = new HashMap<>();
+	@Column(unique = true)
+	private String name;
+	private String[] schedule;
+	private double latitude;
+	private double longitude;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	private ShoppingList stock;
 
 	// NEEDED BY JPA
-	public Shop(){
+	private Shop() {}
+
+	/**
+	 * Create shop
+	 * @param name Shop name
+	 * @param schedule Weekly schedule. Length must be 7.
+	 * @param latitude Position latitude
+	 * @param longitude Position longitude
+	 * @param stock Shop stock
+	 */
+	public Shop(String name, double latitude, double longitude, String [] schedule, ShoppingList stock) {
+		this.name = name;
+		if (schedule.length != 7) {
+			throw new IllegalArgumentException("schedule length must be 7");
+		}
+		this.schedule = schedule;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.stock = stock;
 	}
 
-    public Shop(String name, double latitude, double longitude) {
-    	this(name, new HashMap<>(), latitude, longitude);
-    }
+	public Integer getId() {
+		return id;
+	}
 
-    public Shop(String name, Map<Product, Integer> stock, double latitude, double longitude) {
-        this.name = name;
-        this.stock = new HashMap<>(stock);
-        this.schedule = new String[7];
-        this.schedule[0] = "CLOSED";
-        this.schedule[1] = "CLOSED";
-        this.schedule[2] = "CLOSED";
-        this.schedule[3] = "CLOSED";
-        this.schedule[4] = "CLOSED";
-        this.schedule[5] = "CLOSED";
-        this.schedule[6] = "CLOSED";
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void addProduct(Product p, int quantity){
-	    stock.put(p, quantity);
-    }
+	/**
+	 * Return the opening time, in String format, of the chosen day.
+	 * @param day 0 for Monday, 1 for Tuesday, ..., and 6 for Sunday (0 <= day < 7)
+	 * @return The opening time in String format, or an empty String
+	 */
+	public String getSchedule(int day) throws IndexOutOfBoundsException {
+		return this.schedule[day];
+	}
 
-    public void updateStock(Product p , int q){
-        stock.put(p, q);
-    }
+	public double getLatitude() {
+		return this.latitude;
+	}
 
-    public int getQuantity(Product p){
-	    return stock.get(p);
-    }
+	public double getLongitude() {
+		return this.longitude;
+	}
 
+	public ShoppingList getStock() {
+		return stock;
+	}
+	
+	public void setStock(ShoppingList stock) {
+		this.stock = stock;
+	}
 
-    @Override
-    public String toString() {
-        return "Shop{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", stock=" + stock +
-                '}';
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Shop s = (Shop) o;
+		return id.equals(s.id)
+			&& name.equals(s.name)
+			&& Arrays.equals(schedule, s.schedule)
+			&& latitude == s.latitude
+			&& longitude == s.longitude
+			&& stock.equals(s.stock)
+			;
+	}
+	
+	// static methods
+	/**
+	 * Create shop into database with default schedule and empty stock
+	 * @param name Shop name
+	 * @param schedule Weekly schedule. Length must be 7.
+	 * @param latitude Position latitude
+	 * @param longitude Position longitude
+	 * @param stock Shop stock
+	 * @return Created shop
+	 */
+	public static Shop create(String name, double latitude, double longitude) {
+		return create(name, latitude, longitude, null);
+	}
+	/**
+	 * Create shop into database with empty stock
+	 * @param name Shop name
+	 * @param schedule Weekly schedule. Length must be 7.
+	 * @param latitude Position latitude
+	 * @param longitude Position longitude
+	 * @param stock Shop stock
+	 * @return Created shop
+	 */
+	public static Shop create(String name, double latitude, double longitude, String [] schedule) {
+		return create(name, latitude, longitude, schedule, new ShoppingList());
+	}
+	/**
+	 * Create shop into database
+	 * @param name Shop name
+	 * @param schedule Weekly schedule. Length must be 7.
+	 * @param latitude Position latitude
+	 * @param longitude Position longitude
+	 * @param stock Shop stock
+	 * @return Created shop
+	 */
+	public static Shop create(String name, double latitude, double longitude, String [] schedule, ShoppingList stock) {
+		if (schedule == null) {
+			schedule = defaultSchedule();
+		}
+		try {
+			Shop s = new Shop(name, latitude, longitude, schedule, stock);
+			Database.insert(s);
+			return s;
+		} catch (RollbackException e) {
+			throw new ExistingUserException(e);
+		}
+	}
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Map<Product, Integer> getStock() {
-        return stock;
-    }
-
-    public void setStock(Map<Product, Integer> stock) {
-        this.stock = stock;
-    }
-
-    /**
-     * Return the opening time, in String format, of the chosen day.
-     * 0 for Monday to 6 for Sunday.
-     * Return an empty String if the number of the day was incorrect.
-     * Throw an IndexOutOfBoundsException if the day number is incorrect.
-     * 
-     * @param day	The day represent with an Integer (0 to 6 for Monday to Sunday)
-     * @return		The opening time in String format, or an empty String
-     */
-    public String getSchedule(int day) throws IndexOutOfBoundsException {
-    	return this.schedule[day];
-    }
-    
-    /**
-     * Change the opening time of the day number "day".
-     * 0 for Monday to 6 for Sunday.
-     * Throw an IndexOutOfBoundsException if the day number is incorrect.
-     * 
-     * @param day			The day represent with an Integer (0 to 6 for Monday to Sunday)
-     * @param newSchedule	The new opening time for this day
-     */
-    public void setSchedule(int day, String newSchedule) throws IndexOutOfBoundsException {
-        this.schedule[day] = newSchedule;
-    }
-    
-    public double getLatitude() {
-    	return this.latitude;
-    }
-    
-    public double getLongitude() {
-    	return this.longitude;
-    }
-    
-    public void setPosition(double latitude, double longitude) {
-    	this.latitude = latitude;
-    	this.longitude = longitude;
-    }
-
+	public static String[] defaultSchedule() {
+		String[] s = new String[7];
+		for(int i = 0; i < s.length; i++) {
+			s[i] = "CLOSED";
+		}
+		return s;
+	}
 }

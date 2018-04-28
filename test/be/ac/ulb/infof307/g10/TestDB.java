@@ -74,9 +74,9 @@ public class TestDB {
 
     @Test
     public void test_0080_CreateShop(){
-        Shop s = new Shop("#DB Delhaize", 0.0, 0.0);
-        s.addProduct(Database.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"), 10);
-        s.addProduct(Database.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"), 10);
+        Shop s = Shop.create("#DB Delhaize", 0.0, 0.0);
+        s.getStock().addProduct(Database.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"), 10);
+        s.getStock().addProduct(Database.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"), 10);
         Database.insert(s);
     }
 
@@ -91,9 +91,9 @@ public class TestDB {
 
         Arrays.asList(shop.getStock());
         Product p = Database.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold");
-        int quantity = shop.getStock().get(Database.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"));
+        int quantity = shop.getStock().getQuantity(p);
 
-        shop.updateStock(p, quantity -3 );
+        shop.getStock().setProduct(p, quantity -3 );
         Database.update(shop);
 
         ////////////////////////

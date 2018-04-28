@@ -22,10 +22,10 @@ public class Research {
     }
 
 
-    public List<Shop> getStoreWithProduct(Object product){
+    public List<Shop> getStoreWithProduct(Product product){
         List<Shop> sl = new ArrayList<>();
         for (Shop s : Database.getAllShops()) {
-            if (s.getStock().containsKey(product)){
+            if (s.getStock().getQuantity(product) > 0){
                 sl.add(s);
             }
 

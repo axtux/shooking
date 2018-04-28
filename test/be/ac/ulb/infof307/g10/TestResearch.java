@@ -7,8 +7,6 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.*;
-
 /**
  * Research Tests
  * @author Benjamin Nicodeme
@@ -17,29 +15,20 @@ import java.util.*;
 
 public class TestResearch {
 
-    private static ArrayList <Object> l;
-    private static Object p;
-
     @BeforeClass
     public static void setUp() throws Exception {
-        l = new ArrayList<>();
-        p = new Object();
-
         Database.insert(new Product("#Research 6 Apples", "Pink ladies",100, 200, 300, 400, 300));
         Database.insert(new Product("#Research 6 Apples", "Jonagold",100, 200, 300, 400, 320));
 
-        Shop s = new Shop("#Research Delhaize", 0.0, 0.0);
-        s.addProduct(Database.getProductFromNameAndDesc("#Research 6 Apples", "Pink ladies"), 100);
-        s.addProduct(Database.getProductFromNameAndDesc("#Research 6 Apples", "Jonagold"), 20);
-        Database.insert(s);
+        Shop s = Shop.create("#Research Delhaize", 0.0, 0.0);
+        s.getStock().addProduct(Database.getProductFromNameAndDesc("#Research 6 Apples", "Pink ladies"), 100);
+        s.getStock().addProduct(Database.getProductFromNameAndDesc("#Research 6 Apples", "Jonagold"), 20);
 
-        s = new Shop("#Research Carrefour", 0.0, 0.0);
-        s.addProduct(Database.getProductFromNameAndDesc("#Research 6 Apples", "Pink ladies"), 10);
-        Database.insert(s);
+        s = Shop.create("#Research Carrefour", 0.0, 0.0);
+        s.getStock().addProduct(Database.getProductFromNameAndDesc("#Research 6 Apples", "Pink ladies"), 10);
 
-        s = new Shop("#Research Colruyt", 0.0, 0.0);
-        s.addProduct(Database.getProductFromNameAndDesc("#Research 6 Apples", "Jonagold"), 300);
-        Database.insert(s);
+        s = Shop.create("#Research Colruyt", 0.0, 0.0);
+        s.getStock().addProduct(Database.getProductFromNameAndDesc("#Research 6 Apples", "Jonagold"), 300);
 
     }
 
