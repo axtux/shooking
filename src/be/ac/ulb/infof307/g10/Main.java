@@ -64,9 +64,8 @@ public class Main extends Application {
 		List<String> buttons = Arrays.asList("logout","shoppingList","map");
 		page.disableButtons(buttons);
 
-		page.setTitle("Create your Account");
-		stage.setTitle("Account");
-
+		page.setTitle("Create your Account"); //title of the page
+		update();
 	}
 	public void goToRecipe() {
 		stage.setTitle("Recipe");
@@ -75,21 +74,23 @@ public class Main extends Application {
 	}
 	public void goToShoppingList() {
 		GeneralView page = new GeneralView(stage, "ShoppingList", "Menu");
-		List<String> buttons = Arrays.asList("logout","goTo");
+		List<String> buttons = Arrays.asList("shoppingList");
 		page.disableButtons(buttons);
 
-		page.setTitle("Login Page");
+		page.setTitle("Shopping List");
+		update();
 
 	}
 
 
 
 	public void goToMap(){
-		//TODO checker si pas fxml GeneralView page = new GeneralView(stage, "Login", "Menu");
-		List<String> buttons = Arrays.asList("logout","goTo");
-		//page.disableButtons(buttons);
 
-		//page.setTitle("Login Page");
+		GeneralView page = new GeneralView(stage, "Map", "Menu");
+		List<String> buttons = Arrays.asList("logout","goTo");
+		page.disableButtons(buttons);
+
+		page.setTitle("Login Page");
 
 	}
 

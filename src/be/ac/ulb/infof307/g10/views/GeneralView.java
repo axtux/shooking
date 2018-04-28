@@ -41,9 +41,12 @@ public class GeneralView extends Parent {
 
         //creation of the scene and configuration
         Scene scene = new Scene(borderPane);
+        stage.setTitle("Account"); //title of the window
         stage.setScene(scene);
         stage.show();
-        update();
+    }
+
+    public GeneralView(Stage stage, MapRendering mapRendering, String menu) {
     }
 
     /**
@@ -98,4 +101,5 @@ public class GeneralView extends Parent {
         Label title = (Label) hboxLabel.getChildren().get(0); //the title label
         title.setText(t);
     }
+    
 }
