@@ -3,7 +3,6 @@ package be.ac.ulb.infof307.g10.db;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
-import be.ac.ulb.infof307.g10.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,27 +29,12 @@ public class Data {
 			Database.insert(s);
 		}
 
-		// insert users
-		for(User u: getUsers()) {
-			Database.insert(u);
-		}
-		
 		// insert recipes
 		for(Recipe r: getRecipes()) {
 			Database.insert(r);
 		}
 
 		Database.setAutoCommit(true);
-	}
-	
-	public static List<User> getUsers() {
-		ArrayList<User> list = new ArrayList<>();
-
-		list.add(new User("test", "test"));
-		list.add(new User("User1", "User1"));
-		list.add(new User("User2", "User2"));
-
-		return list;
 	}
 	
 	public static List<Shop> getShops() {

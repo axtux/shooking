@@ -42,23 +42,6 @@ public class TestDB {
         Data.fillDB();
     }
 
-
-    @Test
-    public void test_0010_InsertUser() {
-        Database.insert(new User("#DB lala", "#DB lala", null));
-    }
-
-    @Test(expected = RollbackException.class)
-    public void test_0011_InsertUser_uniqueConstraintExecptionExpected() {
-        Database.insert(new User("#DB lala", "#DB lala", null));
-    }
-
-    @Test
-    public void test_0020_GetUser(){
-        Assert.assertNotEquals(null, Database.getUser("#DB lala"));
-    }
-
-
     @Test(expected = NoResultException.class)
     public void test_0050_GetUser_noResultExceptionExpected(){
         Assert.assertNotEquals(null, Database.getUser("fzvsvsfvsfvsf"));
@@ -122,24 +105,12 @@ public class TestDB {
     }
 
 
-
     @Test
     public void test_0110_CreateList(){
         ShoppingList l = new ShoppingList();
         l.addProduct(Database.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"), 1);
         l.addProduct(Database.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"), 2);
         Database.insert(l);
-        Database.getUser("#DB lala").setShoppingList(l);
-    }
-
-//    @Test
-//    public void test_0989_DeleteList(){
-//        DatabaseFacade.deleteList(DatabaseFacade.getUser("#DB lala").getShoppingList());
-//    }
-
-    @Test
-    public void test_0990_DeleteUser(){
-        Database.delete((Database.getUser("#DB lala")));
     }
 
     @Test(expected = NoResultException.class)

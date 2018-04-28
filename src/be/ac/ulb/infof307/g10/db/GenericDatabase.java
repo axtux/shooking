@@ -27,7 +27,6 @@ public class GenericDatabase {
 	
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
-	private static EntityTransaction et;
 	private static boolean autoCommit = true;
 
 	/**
@@ -49,10 +48,7 @@ public class GenericDatabase {
 	 * @return EntityTransaction
 	 */
 	private static EntityTransaction getET() {
-		if (et == null) {
-			et = getEM().getTransaction();
-		}
-		return et;
+		return getEM().getTransaction();
 	}
 
 	/**
@@ -222,5 +218,21 @@ public class GenericDatabase {
 		begin();
 		getEM().detach(o);
 		commit();
+	}
+	
+	/**
+	 * Refresh object from database.
+	 * @param o Object to refresh
+	 */
+	public static void refresh(Object o) {
+		begin();
+		getEM().refresh(o);
+		commit();
+	}
+	
+	public static void close() {
+		if (emf != null && emf.isOpen()) {
+			emf.close();
+		}
 	}
 }
