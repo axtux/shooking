@@ -2,11 +2,12 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
     <persistence-unit name="GL10PU" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+        <class>be.ac.ulb.infof307.g10.models.ModelObject</class>
         <class>be.ac.ulb.infof307.g10.models.ShoppingList</class>
         <class>be.ac.ulb.infof307.g10.models.Product</class>
         <class>be.ac.ulb.infof307.g10.models.Shop</class>
         <class>be.ac.ulb.infof307.g10.models.User</class>
-	<class>be.ac.ulb.infof307.g10.models.Recipe</class>
+        <class>be.ac.ulb.infof307.g10.models.Recipe</class>
 
         <properties>
             <property name="javax.persistence.jdbc.url" value="jdbc:sqlite:database.db"/>

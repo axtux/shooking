@@ -1,14 +1,8 @@
 package be.ac.ulb.infof307.g10.models;
 
-import java.util.Arrays;
-
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.RollbackException;
 
@@ -19,10 +13,6 @@ import be.ac.ulb.infof307.g10.models.exceptions.ExistingUserException;
 public class Shop extends ModelObject {
 
 	private static final long serialVersionUID = -0L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Basic(optional = false)
-	private Integer id;
 
 	@Column(unique = true)
 	private String name;
@@ -33,7 +23,7 @@ public class Shop extends ModelObject {
 	@OneToOne(cascade = CascadeType.ALL)
 	private ShoppingList stock;
 
-	// NEEDED BY JPA
+	@SuppressWarnings("unused") // NEEDED BY JPA
 	private Shop() {}
 
 	/**
@@ -53,10 +43,6 @@ public class Shop extends ModelObject {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.stock = stock;
-	}
-
-	public Integer getId() {
-		return id;
 	}
 
 	public String getName() {
@@ -88,21 +74,6 @@ public class Shop extends ModelObject {
 		this.stock = stock;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		Shop s = (Shop) o;
-		return id.equals(s.id)
-			&& name.equals(s.name)
-			&& Arrays.equals(schedule, s.schedule)
-			&& latitude == s.latitude
-			&& longitude == s.longitude
-			&& stock.equals(s.stock)
-			;
-	}
-	
 	// static methods
 	/**
 	 * Create shop into database with default schedule and empty stock

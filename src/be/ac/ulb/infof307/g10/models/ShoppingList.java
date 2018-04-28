@@ -7,17 +7,12 @@ import java.util.Set;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Entity
 public class ShoppingList extends ModelObject {
 
 	private static final long serialVersionUID = -0L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	Map<Product, Integer> productsAndQuantity;
 
@@ -54,10 +49,6 @@ public class ShoppingList extends ModelObject {
 		return productsAndQuantity.size();
 	}
 
-	public Long getId() {
-		return id;
-	}
-
 	public Set<Product> getProducts() {
 		return productsAndQuantity.keySet();
 	}
@@ -73,12 +64,5 @@ public class ShoppingList extends ModelObject {
 	private static Map<Product, Integer> copyMap(Map<Product, Integer> map) {
 		return new HashMap<Product, Integer>(map);
 	}
-	
-	public boolean equals(Object o) {
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		ShoppingList osl = (ShoppingList) o;
-		return productsAndQuantity.equals(osl.productsAndQuantity);
-	}
+
 }

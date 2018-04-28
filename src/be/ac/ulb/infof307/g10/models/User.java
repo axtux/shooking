@@ -4,9 +4,6 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.NoResultException;
 import javax.persistence.OneToOne;
 import javax.persistence.RollbackException;
@@ -25,10 +22,6 @@ import be.ac.ulb.infof307.g10.utils.Hash;
 public class User extends ModelObject {
 
 	private static final long serialVersionUID = -0L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Basic(optional = false)
-	private Integer id;
 
 	@Column(unique = true)
 	@Basic(optional = false)
@@ -47,10 +40,6 @@ public class User extends ModelObject {
 		this.username = username;
 		setPassword(password);
 		this.shoppingList = new ShoppingList();
-	}
-
-	public Integer getId() {
-		return id;
 	}
 
 	public String getUsername() {
