@@ -34,9 +34,7 @@ public class Data {
 
 		// insert products
 		for(Product p: products) {
-			System.out.println("inserting "+p);
 			p.save();
-			System.out.println("inserted "+p);
 		}
 
 		int i = 0;

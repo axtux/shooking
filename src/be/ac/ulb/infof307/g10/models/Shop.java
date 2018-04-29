@@ -54,7 +54,7 @@ public class Shop extends ModelObject {
 
 	/**
 	 * Return the opening time, in String format, of the chosen day.
-	 * @param day 0 for Monday, 1 for Tuesday, ..., and 6 for Sunday (0 <= day < 7)
+	 * @param day 0 for Monday, 1 for Tuesday, ..., and 6 for Sunday
 	 * @return The opening time in String format, or an empty String
 	 */
 	public String getSchedule(int day) throws IndexOutOfBoundsException {
@@ -81,10 +81,8 @@ public class Shop extends ModelObject {
 	/**
 	 * Create shop into database with default schedule and empty stock
 	 * @param name Shop name
-	 * @param schedule Weekly schedule. Length must be 7.
 	 * @param latitude Position latitude
 	 * @param longitude Position longitude
-	 * @param stock Shop stock
 	 * @return Created shop
 	 */
 	public static Shop create(String name, double latitude, double longitude) {
@@ -93,10 +91,10 @@ public class Shop extends ModelObject {
 	/**
 	 * Create shop into database with empty stock
 	 * @param name Shop name
-	 * @param schedule Weekly schedule. Length must be 7.
 	 * @param latitude Position latitude
 	 * @param longitude Position longitude
-	 * @param stock Shop stock
+	 * @param schedule Weekly schedule. Length must be 7.
+	 * 0 for Monday, 1 for Tuesday, ..., and 6 for Sunday
 	 * @return Created shop
 	 */
 	public static Shop create(String name, double latitude, double longitude, String [] schedule) {
@@ -105,10 +103,11 @@ public class Shop extends ModelObject {
 	/**
 	 * Create shop into database
 	 * @param name Shop name
-	 * @param schedule Weekly schedule. Length must be 7.
 	 * @param latitude Position latitude
 	 * @param longitude Position longitude
+	 * @param schedule Weekly schedule. Length must be 7.
 	 * @param stock Shop stock
+	 * 0 for Monday, 1 for Tuesday, ..., and 6 for Sunday
 	 * @return Created shop
 	 */
 	public static Shop create(String name, double latitude, double longitude, String [] schedule, Stock stock) {
