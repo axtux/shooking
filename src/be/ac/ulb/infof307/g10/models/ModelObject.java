@@ -5,7 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.EqualsExclude;
@@ -14,7 +15,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import be.ac.ulb.infof307.g10.db.Database;
 
 @Entity
-@MappedSuperclass
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class ModelObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;
