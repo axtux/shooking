@@ -6,9 +6,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.models.exceptions.ExistingUserException;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.models.exceptions.NonExistingUserException;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 public class TestUser {
 
@@ -36,7 +36,7 @@ public class TestUser {
 		Assert.assertNotNull(u);
 	}
 
-	@Test(expected = ExistingUserException.class)
+	@Test(expected = ExistingException.class)
 	public void signupExistingUserExceptionTest() {
 		User.signup("test", "test");
 		User.signup("test", "test");
@@ -55,7 +55,7 @@ public class TestUser {
 		User.login("test", "badPassword");
 	}
 	
-	@Test(expected = NonExistingUserException.class)
+	@Test(expected = NonExistingException.class)
 	public void loginNonExistingUserExceptionTest() {
 		User.login("badUser", "anyPassword");
 	}

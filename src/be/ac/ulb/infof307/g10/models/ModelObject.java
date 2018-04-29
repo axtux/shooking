@@ -10,6 +10,8 @@ import javax.persistence.InheritanceType;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.EqualsExclude;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.HashCodeExclude;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import be.ac.ulb.infof307.g10.db.Database;
@@ -23,6 +25,7 @@ public class ModelObject implements Serializable {
 	@Id
 	@GeneratedValue
 	@EqualsExclude
+	@HashCodeExclude
 	public Long id;
 
 	public Long getId() {
@@ -30,7 +33,11 @@ public class ModelObject implements Serializable {
 	}
 
 	public void save() {
-		Database.update(this);
+		Database.save(this);
+	}
+
+	public void delete() {
+		Database.delete(this);
 	}
 
 	public String toString() {
@@ -39,6 +46,10 @@ public class ModelObject implements Serializable {
 
 	public boolean Equals(Object o) {
 		return EqualsBuilder.reflectionEquals(this, o);
+	}
+
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
 }

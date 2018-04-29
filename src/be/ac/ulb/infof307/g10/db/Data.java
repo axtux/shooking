@@ -50,7 +50,7 @@ public class Data {
 			}
 			s.setStock(st);
 			i++;
-			Database.insert(s);
+			Database.update(s);
 		}
 
 		// insert recipes

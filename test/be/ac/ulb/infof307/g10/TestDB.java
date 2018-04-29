@@ -6,6 +6,7 @@ import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -13,7 +14,6 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import javax.persistence.NoResultException;
-import javax.persistence.RollbackException;
 
 import static org.junit.Assert.*;
 
@@ -21,7 +21,7 @@ import java.util.Arrays;
 
 /**
  * The tests have to be executed in a certain order, so they are sorted by name and executed by name ascending
- * Some tests of this class do not have asserts beacause an exception make the test fail when it has to
+ * Some tests of this class do not have asserts because an exception make the test fail when it has to
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestDB {
@@ -52,7 +52,7 @@ public class TestDB {
         Database.insert(new Product("#DB 6 Apples", 6, "unit"));
     }
 
-    @Test(expected = RollbackException.class)
+    @Test(expected = ExistingException.class)
     public void test_0060_CreateProduct_uniqueConstraintExecptionExpected(){
         Database.insert(new Product("#DB 6 Apples", 6, "unit"));
     }
@@ -73,7 +73,7 @@ public class TestDB {
     public void test_0080_CreateShop(){
         Shop s = Shop.create("#DB Delhaize", 0.0, 0.0);
         s.getStock().addProduct(Database.getProduct("#DB 6 Apples"), 10);
-        Database.insert(s);
+        Database.update(s);
     }
 
     @Test

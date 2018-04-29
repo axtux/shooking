@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.RollbackException;
 
 import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.models.exceptions.ExistingUserException;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 
 @Entity
 public class Shop extends ModelObject {
@@ -120,7 +120,7 @@ public class Shop extends ModelObject {
 			Database.insert(s);
 			return s;
 		} catch (RollbackException e) {
-			throw new ExistingUserException(e);
+			throw new ExistingException(e);
 		}
 	}
 

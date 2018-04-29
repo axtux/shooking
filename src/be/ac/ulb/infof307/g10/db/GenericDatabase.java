@@ -13,6 +13,10 @@ import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 import javax.persistence.metamodel.ManagedType;
 
+import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
+
 /**
  * Persistence database to manage Objects persistence.
  * This database is generic (as its name suggest), and is working without knowing object type.
@@ -55,12 +59,12 @@ public class GenericDatabase {
 	 * Get managed classes by this database
 	 * @return Array of simpleName of the managed classes
 	 */
-	public static Class[] getManagedClasses() {
+	public static Class<?>[] getManagedClasses() {
 		// get managed types from metamodel
 		Set<ManagedType<?>> mt = getEM().getMetamodel().getManagedTypes();
 		
 		int size = mt.size();
-		Class[] arr = new Class[size];
+		Class<?>[] arr = new Class[size];
 		
 		for(ManagedType<?> t: mt) {
 			size--;
@@ -148,7 +152,7 @@ public class GenericDatabase {
 	 * Delete all objects of class type from database
 	 * @param type Type of objects to delete
 	 */
-	public static void deleteAll(Class type) {
+	public static <T> void deleteAll(Class<T> type) {
 		begin();
 		getEM().createQuery("delete from "+type.getSimpleName()+" o").executeUpdate();
 		commit();
@@ -162,7 +166,7 @@ public class GenericDatabase {
 		getEM().clear();
 		// start batch operations
 		setAutoCommit(false);
-		for(Class c: getManagedClasses()) {
+		for(Class<?> c: getManagedClasses()) {
 			deleteAll(c);
 		}
 		// end batch operations
@@ -170,7 +174,7 @@ public class GenericDatabase {
 	}
 
 	public static boolean isEmpty() {
-		for(Class c: getManagedClasses()) {
+		for(Class<?> c: getManagedClasses()) {
 			if (!getAll(c).isEmpty()) {
 				return false;
 			}
@@ -183,20 +187,45 @@ public class GenericDatabase {
 	 * unless you call the {@link #detach(Object)} method.
 	 * @param o Object to insert
 	 */
-	public static void insert(Object o) throws RollbackException {
-		begin();
-		getEM().persist(o);
-		commit();
+	public static void insert(Object o) throws ExistingException {
+		try {
+			begin();
+			getEM().persist(o);
+			commit();
+		} catch(RollbackException e) {
+			throw new ExistingException(e);
+		}
+		detach(o);
 	}
 
 	/**
 	 * Update detached object into database.
 	 * @param o Object to update
 	 */
-	public static void update(Object o) throws RollbackException {
-		begin();
-		getEM().merge(o);
-		commit();
+	public static void update(Object o) throws NonExistingException {
+		try {
+			begin();
+			getEM().merge(o);
+			commit();
+		} catch (RollbackException e) {
+			throw new NonExistingException(e);
+		}
+		detach(o);
+	}
+	/**
+	 * Save object into database.
+	 * @param o Object to save
+	 */
+	public static void save(Object o) {
+		try {
+			insert(o);
+		} catch (ExistingException ee) {
+			try {
+				update(o);
+			} catch (NonExistingException nee) {
+				throw new DatabaseException(nee);
+			}
+		}
 	}
 
 	/**

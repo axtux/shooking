@@ -2,7 +2,7 @@ package be.ac.ulb.infof307.g10;
 
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.User;
-import be.ac.ulb.infof307.g10.models.exceptions.NonExistingUserException;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.views.IntCreateAcount;
 import be.ac.ulb.infof307.g10.views.LoginPage;
 import be.ac.ulb.infof307.g10.views.MapRendering;
@@ -42,7 +42,7 @@ public class Main extends Application {
 		try {
 			this.user = User.login("test", "test");
 			System.out.println("user test logged in");
-		} catch(NonExistingUserException e) {
+		} catch(NonExistingException e) {
 			this.user = User.signup("test", "test");
 			System.out.println("user test signed up");
 		}

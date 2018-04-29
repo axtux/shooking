@@ -2,7 +2,7 @@ package be.ac.ulb.infof307.g10.views;
 
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.User;
-import be.ac.ulb.infof307.g10.models.exceptions.ExistingUserException;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -83,7 +83,7 @@ public class IntCreateAcount {
 	                	User user = User.signup(log, pwd);
 	                	errorLabel.setText("");
 	                }
-	                catch(ExistingUserException e){
+	                catch(ExistingException e){
 	                	System.out.println("User Already exist");
 	                	errorLabel.setText("This user name is already chosen");
 	                }
