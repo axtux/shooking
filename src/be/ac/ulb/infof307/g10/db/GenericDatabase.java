@@ -152,7 +152,7 @@ public class GenericDatabase {
 	 * Delete all objects of class type from database
 	 * @param type Type of objects to delete
 	 */
-	public static <T> void deleteAll(Class<T> type) {
+	public static void deleteAll(Class<?> type) {
 		begin();
 		getEM().createQuery("delete from "+type.getSimpleName()+" o").executeUpdate();
 		commit();

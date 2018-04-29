@@ -23,35 +23,36 @@ public class TestGenericDatabase {
 		GenericDatabase.empty();
 	}
 
-	@Test
-	public void saveGetOne() {
+	public static Product initProduct() {
 		Product p = new Product("Pasta", 500, "g");
 		GenericDatabase.save(p);
 		GenericDatabase.close();
+		return p;
+	}
+
+	public static List<Product> initList() {
+		Product p = initProduct();
+		List<Product> pl = GenericDatabase.getAll(Product.class);
+		Assert.assertEquals(1, pl.size());
+		Assert.assertEquals(p, pl.get(0));
+		return pl;
+	}
+
+	@Test
+	public void saveGetOne() {
+		Product p = initProduct();
 		Product r = GenericDatabase.getOne(Product.class, "SELECT r FROM Product r WHERE r.name LIKE ?1", p.getName());
-		// TODO make equals working
-		//Assert.assertEquals(p, r);
+		Assert.assertEquals(p, r);
 	}
 
 	@Test
 	public void saveGetAll() {
-		Product p = new Product("Pasta", 500, "g");
-		GenericDatabase.save(p);
-		GenericDatabase.close();
-		List<Product> pl = GenericDatabase.getAll(Product.class);
-		Assert.assertEquals(1, pl.size());
-		// TODO make equals working
-		//Assert.assertEquals(p, pl.get(0));
+		initList();
 	}
 
 	@Test
 	public void delete() {
-		Product p = new Product("Pasta", 500, "g");
-		GenericDatabase.save(p);
-		GenericDatabase.close();
-		List<Product> pl = GenericDatabase.getAll(Product.class);
-		Assert.assertEquals(1, pl.size());
-		//Assert.assertEquals(p, pl.get(0));
+		List<Product> pl = initList();
 		Database.delete(pl.get(0));
 		Database.close();
 		pl = GenericDatabase.getAll(Product.class);
@@ -60,12 +61,7 @@ public class TestGenericDatabase {
 
 	@Test
 	public void deleteAll() {
-		Product p = new Product("Pasta", 500, "g");
-		GenericDatabase.save(p);
-		GenericDatabase.close();
-		List<Product> pl = GenericDatabase.getAll(Product.class);
-		Assert.assertEquals(1, pl.size());
-		//Assert.assertEquals(p, pl.get(0));
+		List<Product> pl = initList();
 		Database.deleteAll(Product.class);
 		Database.close();
 		pl = GenericDatabase.getAll(Product.class);
@@ -74,12 +70,7 @@ public class TestGenericDatabase {
 
 	@Test
 	public void empty() {
-		Product p = new Product("Pasta", 500, "g");
-		GenericDatabase.save(p);
-		GenericDatabase.close();
-		List<Product> pl = GenericDatabase.getAll(Product.class);
-		Assert.assertEquals(1, pl.size());
-		//Assert.assertEquals(p, pl.get(0));
+		List<Product> pl = initList();
 		Database.empty();
 		Database.close();
 		pl = GenericDatabase.getAll(Product.class);

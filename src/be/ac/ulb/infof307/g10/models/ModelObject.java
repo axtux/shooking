@@ -40,14 +40,17 @@ public class ModelObject implements Serializable {
 		Database.delete(this);
 	}
 
+	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
 	}
 
-	public boolean Equals(Object o) {
+	@Override
+	public boolean equals(Object o) {
 		return EqualsBuilder.reflectionEquals(this, o);
 	}
 
+	@Override
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
