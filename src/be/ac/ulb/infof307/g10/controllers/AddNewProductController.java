@@ -29,11 +29,13 @@ public class AddNewProductController {
 
 	public void submit(ActionEvent actionEvent) {
 		String productName = newProductName.getText();
-		String productCalories = newProductCalories.getText();
-		// TODO change to size and IntField
-		Product p = new Product(productName, Integer.parseInt(productCalories), "");
+		// TODO change to size/unitSize with IntField/TextField
+		String productCalories = newProductCalories.getText(); // as size
+		String productSugar = newProductSugar.getText(); // as unit size
+		Product p = new Product(productName, Integer.parseInt(productCalories), productSugar);
 		p.save();
 		Main.getInstance().closeDialog();
+		// TODO update selection box
 	}
 
 }
