@@ -81,7 +81,7 @@ public class GenericDatabase {
 	public static void setAutoCommit(boolean autoCommit) {
 		GenericDatabase.autoCommit = autoCommit;
 		if(autoCommit) {
-			// commit after staring auto commit
+			// commit after starting auto commit
 			getET().commit();
 		} else {
 			// begin transaction before
