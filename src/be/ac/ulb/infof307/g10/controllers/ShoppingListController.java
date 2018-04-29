@@ -21,13 +21,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
 /**
@@ -54,7 +49,7 @@ public class ShoppingListController implements Initializable {
 	@FXML
 	private Button amountDownBT;
 	@FXML
-	private ComboBox productsListCombo;
+	private ComboBox<String> productsListCombo;
 	
 
 	@FXML
@@ -164,23 +159,7 @@ public class ShoppingListController implements Initializable {
 
 	@FXML
 	private void createNewProduct(ActionEvent event) throws IOException {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("AddNewProduct.fxml"));
-			DialogPane page = loader.load();
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Create new product");
-			dialogStage.initModality(Modality.APPLICATION_MODAL);
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-
-
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
-		} catch (IOException e) {
-			// Exception gets thrown if the fxml file could not be loaded
-			e.printStackTrace();
-
-		}
+		Main.getInstance().showDialog("AddNewProduct", "Create new product");
 	}
 	public void submitNewProduct(ActionEvent actionEvent) {
 		System.out.println("create product");
@@ -190,24 +169,7 @@ public class ShoppingListController implements Initializable {
 	
 	
 	public void researchProduct(ActionEvent actionEvent) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("ResearchDialog.fxml"));
-			DialogPane page = loader.load();
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Research product");
-			dialogStage.initModality(Modality.APPLICATION_MODAL);
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
-
-
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
-		} catch (IOException e) {
-			// Exception gets thrown if the fxml file could not be loaded
-			e.printStackTrace();
-
-		}
-
+		Main.getInstance().showDialog("ResearchDialog", "Research product");
 	}
 
 

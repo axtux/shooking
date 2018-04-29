@@ -1,5 +1,6 @@
 package be.ac.ulb.infof307.g10.controllers;
 
+import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Product;
 
 import javafx.event.ActionEvent;
@@ -30,7 +31,9 @@ public class AddNewProductController {
 		String productName = newProductName.getText();
 		String productCalories = newProductCalories.getText();
 		// TODO change to size and IntField
-		new Product(productName, Integer.parseInt(productCalories), "").save();
+		Product p = new Product(productName, Integer.parseInt(productCalories), "");
+		p.save();
+		Main.getInstance().closeDialog();
 	}
 
 }
