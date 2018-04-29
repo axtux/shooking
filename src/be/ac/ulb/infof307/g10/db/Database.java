@@ -37,7 +37,7 @@ public class Database extends GenericDatabase {
 	}
 	
 	public static List<Shop> getAllShops() {
-		return getAll(Shop.class, "SELECT s FROM Shop s");
+		return getAll(Shop.class);
 	}
 	
 	public static Recipe getRecipe(String name) throws NoResultException {
@@ -45,6 +45,6 @@ public class Database extends GenericDatabase {
 	}
 	
 	public static List<Recipe> getAllRecipes() {
-		return getAll(Recipe.class, "SELECT b FROM Recipe b");
+		return getAll(Recipe.class);
 	}
 }
