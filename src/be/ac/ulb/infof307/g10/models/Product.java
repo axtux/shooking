@@ -44,4 +44,8 @@ public class Product extends ModelObject {
 		return size+sizeUnit;
 	}
 
+	public String getFullName() {
+		return name+" ("+size+sizeUnit+")";
+	}
+
 }

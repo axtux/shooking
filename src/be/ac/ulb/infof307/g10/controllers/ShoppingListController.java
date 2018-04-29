@@ -3,7 +3,6 @@ package be.ac.ulb.infof307.g10.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
@@ -24,6 +23,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 /**
  *
@@ -49,7 +49,7 @@ public class ShoppingListController implements Initializable {
 	@FXML
 	private Button amountDownBT;
 	@FXML
-	private ComboBox<String> productsListCombo;
+	private ComboBox<Product> productsListCombo;
 	
 
 	@FXML
@@ -78,7 +78,7 @@ public class ShoppingListController implements Initializable {
 	private void add(ActionEvent event) {
 		// add product
 		//FIXME
-		Product p = new Product(productsListCombo.getSelectionModel().getSelectedItem().toString(), 0, "");
+		Product p = productsListCombo.getSelectionModel().getSelectedItem();
 		products.put(p, amountTF.getInt());
 		// select it
 		for (int i = 0; i < items.size(); i++) {
@@ -139,6 +139,7 @@ public class ShoppingListController implements Initializable {
 			editBT.setDisable(false);
 			removeBT.setDisable(false);
 			amountTF.setText(selected.getValue().toString());
+			productsListCombo.getSelectionModel().select(selected.getKey());
 		} else {
 			selected = null;
 			editBT.setDisable(true);
@@ -147,6 +148,8 @@ public class ShoppingListController implements Initializable {
 	}
 	
 	private void updateInterface() {
+		productsListCombo.getItems().clear();
+		productsListCombo.getItems().addAll(Database.getAllProducts());
 		items = FXCollections.observableArrayList(products.entrySet());
 		// sort by product description (case insensitive)
 		items.sort(new Comparator<Entry<Product, Integer>>() {
@@ -161,12 +164,6 @@ public class ShoppingListController implements Initializable {
 	private void createNewProduct(ActionEvent event) throws IOException {
 		Main.getInstance().showDialog("AddNewProduct", "Create new product");
 	}
-	public void submitNewProduct(ActionEvent actionEvent) {
-		System.out.println("create product");
-	}
-
-		
-	
 	
 	public void researchProduct(ActionEvent actionEvent) {
 		Main.getInstance().showDialog("ResearchDialog", "Research product");
@@ -199,13 +196,14 @@ public class ShoppingListController implements Initializable {
 			}
 		});
 		// add available products in the select list
-		List<Product> allProducts = Database.getAllProducts();
-		for(int i=0; i < allProducts.size(); i++){
-			if(!productsListCombo.getItems().contains(allProducts.get(i).getName())){
-				productsListCombo.getItems().add(allProducts.get(i).getName());
+		productsListCombo.setConverter(new StringConverter<Product>() {
+			@Override
+			public String toString(Product p) {
+				return p.getFullName();
 			}
-		}
-		
+			@Override
+			public Product fromString(String string) { return null; }
+		});
 		// add listener to call selected method
 		selection = table.getSelectionModel().getSelectedItems();
 		selection.addListener(new ListChangeListener<Map.Entry<Product, Integer>>() {
@@ -214,7 +212,7 @@ public class ShoppingListController implements Initializable {
 			}
 		});
 		updateSelected();
-		
+		updateInterface();
 		amountTF.setSigned(false);
 	}
 
