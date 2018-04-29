@@ -49,12 +49,12 @@ public class TestDB {
 
     @Test
     public void test_0060_CreateProduct(){
-        Database.insert(new Product("#DB 6 Apples", "Pink ladies",100));
+        Database.insert(new Product("#DB 6 Apples", 6, "unit"));
     }
 
     @Test(expected = RollbackException.class)
     public void test_0060_CreateProduct_uniqueConstraintExecptionExpected(){
-        Database.insert(new Product("#DB 6 Apples", "Pink ladies",100));
+        Database.insert(new Product("#DB 6 Apples", 6, "unit"));
     }
 
     @Test

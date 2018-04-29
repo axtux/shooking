@@ -10,6 +10,24 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Data {
+	/**
+	 * Random integer
+	 * @param max Max value (excluded)
+	 * @return Random integer
+	 */
+	public static int random(int max) {
+		return random(0, max);
+	}
+	/**
+	 * Random integer
+	 * @param max Max value (excluded)
+	 * @param min Min value (included)
+	 * @return Random integer
+	 */
+	public static int random(int min, int max) {
+		return ThreadLocalRandom.current().nextInt(min, max);
+	}
+	
 	public static void fillDB() {
 		List<Shop> shops = getShops();
 		List<Product> products = getProducts();
@@ -28,7 +46,7 @@ public class Data {
 			// low cost first
 			st = new Stock();
 			for(Product p: products) {
-				st.addProduct(p, ThreadLocalRandom.current().nextInt(100), 10*i + p.getPrice());
+				st.addProduct(p, random(100), 10*i+random(200, 300));
 			}
 			s.setStock(st);
 			i++;
@@ -71,9 +89,11 @@ public class Data {
 	public static List<Product> getProducts() {
 		ArrayList<Product> list = new ArrayList<>();
 
-		list.add(new Product("Bread", "", 100, 200));
-		list.add(new Product("Banana", "", 1, 20));
-		list.add(new Product("Tomato", "", 1, 30));
+		list.add(new Product("Pasta", 500, "g"));
+		list.add(new Product("Rice", 500, "g"));
+		list.add(new Product("Bread", 1, "unit"));
+		list.add(new Product("Banana", 1, "unit"));
+		list.add(new Product("Tomato", 1, "unit"));
 
 		return list;
 	}

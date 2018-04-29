@@ -135,7 +135,7 @@ public class RecipeController implements Initializable {
     void add(ActionEvent event) {
     	// add ingredient
     			//FIXME
-    			Product p = new Product(ingredientTF.getText(), "", 1);
+    			Product p = new Product(ingredientTF.getText(), 1, "");
     			products.put(p, amountIngredientTF.getInt());
     					// select it
     			for (int i = 0; i < items.size(); i++) {

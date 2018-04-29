@@ -10,47 +10,38 @@ public class Product extends ModelObject {
 
 	@Column(unique = true)
 	private String name;
-	private String description;
 	private int size;
-	private int price;
+	private String sizeUnit;
 
 	@SuppressWarnings("unused") // NEEDED BY JPA
 	private Product() {}
 
-	public Product(String name, String description, int size) {
-		this(name, description, size, 0);
-	}
-
-	public Product(String name, String description, int size, int price) {
-		if (name == null || description == null) {
+	public Product(String name, int size, String sizeUnit) {
+		if (name == null || sizeUnit == null) {
 			throw new NullPointerException();
 		}
 		if(size < 0) {
 			throw new IllegalArgumentException("size must be > 0");
 		}
-		if(price < 0) {
-			throw new IllegalArgumentException("price must be > 0");
-		}
 		this.name = name;
-		this.description = description;
 		this.size = size;
-		this.price = price;
+		this.sizeUnit = sizeUnit;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
 	public Integer getSize() {
 		return size;
 	}
 
-	public Integer getPrice() {
-		return price;
+	public String getSizeUnit() {
+		return sizeUnit;
+	}
+
+	public String getStringSize() {
+		return size+sizeUnit;
 	}
 
 }

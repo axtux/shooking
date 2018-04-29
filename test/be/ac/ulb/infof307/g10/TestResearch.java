@@ -17,8 +17,8 @@ public class TestResearch {
 
     @BeforeClass
     public static void setUp() throws Exception {
-        Database.insert(new Product("#Research 6 Apples (Pink ladies)", "",100));
-        Database.insert(new Product("#Research 6 Apples (Jonagold)", "",100));
+        Database.insert(new Product("#Research 6 Apples (Pink ladies)", 1, "unit"));
+        Database.insert(new Product("#Research 6 Apples (Jonagold)", 1, "unit"));
 
         Shop s = Shop.create("#Research Delhaize", 0.0, 0.0);
         s.getStock().addProduct(Database.getProduct("#Research 6 Apples (Pink ladies)"), 100);

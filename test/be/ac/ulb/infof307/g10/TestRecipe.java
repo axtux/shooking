@@ -62,7 +62,7 @@ public class TestRecipe {
 	@Test
 	public void test_006_addIngredient(){
 		Recipe r = new Recipe("test");
-		Product p = new Product("Farine d'avoine", "Delhaize", 353);
+		Product p = new Product("Farine d'avoine", 500, "g");
 		r.addIngredient(p, 2);
 		assertTrue(r.getAllIngredients().size()==1);
 	}
@@ -70,7 +70,7 @@ public class TestRecipe {
 	@Test
 	public void test_007_getAllIngredients(){
 		Recipe r = new Recipe("test");
-		Product p = new Product("Farine d'avoine", "Delhaize", 353);
+		Product p = new Product("Farine d'avoine", 500, "g");
 		r.addIngredient(p, 2);
 		Map<Product,Float> map = r.getAllIngredients();
 		//Normal behavior
@@ -83,7 +83,7 @@ public class TestRecipe {
 	@Test
 	public void test_008_removeIngredient(){
 		Recipe r = new Recipe("test");
-		Product p = new Product("Farine d'avoine", "Delhaize", 353);
+		Product p = new Product("Farine d'avoine", 500, "g");
 		r.addIngredient(p, 2);
 		assertFalse(r.getAllIngredients().isEmpty());
 		r.removeIngredient(p);
