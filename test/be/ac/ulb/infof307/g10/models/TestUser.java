@@ -64,8 +64,8 @@ public class TestUser {
 		User u = User.signup("test", "test");
 		ShoppingList sl = u.getShoppingList();
 		
-		Product p1 = new Product("test1", "test1", 0, 0, 0, 0, 0);
-		Product p2 = new Product("test2", "test2", 0, 0, 0, 0, 0);
+		Product p1 = new Product("test1", "test1", 1);
+		Product p2 = new Product("test2", "test2", 2);
 		// products have to be in database
 		Database.insert(p1);
 		Database.insert(p2);

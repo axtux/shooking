@@ -1,28 +1,19 @@
 package be.ac.ulb.infof307.g10.models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.persistence.FetchType;
 
 @Entity
-@NamedQueries({
-        @NamedQuery(name = "Recipe.findAll", query = "SELECT l FROM Recipe l")
-})
-public class Recipe implements Serializable {
+public class Recipe extends ModelObject {
 	
 	private static final long serialVersionUID = -0L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	
+
 	/**
 	 * Name of the recipe
 	 */
@@ -36,17 +27,17 @@ public class Recipe implements Serializable {
 	/**
 	 * Mapping between products and quantities of it
 	 */
+	@ElementCollection(fetch = FetchType.EAGER)
 	private Map<Product,Float> ingredients ;
 	
 	/**
 	 * List of different steps of the recipe
 	 */
-	private ArrayList<String> steps;
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<String> steps;
 	
-	/**
-	 * Constructor needed by JPA
-	 */
-	public Recipe(){
+	@SuppressWarnings("unused") // NEEDED BY JPA
+	private Recipe(){
 		this("");
 	}
 	
@@ -85,6 +76,9 @@ public class Recipe implements Serializable {
 	 * @param steps		ArrayList of String represent the steps for the Recipe
 	 */
 	public Recipe(String name, int servings, Map<Product, Float> ingredients, ArrayList<String> steps) {
+		if (name == null || ingredients == null || steps == null) {
+			throw new NullPointerException();
+		}
 		this.setName(name);
 		this.servings = servings;
 		this.ingredients = ingredients;
@@ -100,26 +94,20 @@ public class Recipe implements Serializable {
 	}
 	
 	/**
-	 * Return a copy of the ingredients and quantities map
-	 * @return a deep copy of the ingredients and quantities map
+	 * Get ingredients
+	 * @return Map of each ingredients to its quantity
 	 */
-	public HashMap<Product,Float> getAllIngredients(){
-		//copying of the map
-		HashMap<Product,Float> copy = new HashMap<>();
-		for (Map.Entry<Product, Float> entry : ingredients.entrySet())
-	    {
-	       copy.put(entry.getKey().clone(), entry.getValue());
-	    }
-	    return copy;
+	public Map<Product,Float> getAllIngredients(){
+		return new HashMap<Product,Float>(ingredients);
 	}
 
 	
 	/**
-	 * Return all the steps
-	 * @return An ArrayList containing all the steps
+	 * Get steps
+	 * @return List of steps
 	 */
-	public ArrayList<String> getAllSteps(){
-		return (ArrayList<String>)steps.clone();
+	public List<String> getAllSteps(){
+		return new ArrayList<String>(steps);
 	}
 	
 	/**
@@ -136,7 +124,7 @@ public class Recipe implements Serializable {
 	 * @param index	index of the step
 	 * @param s	the new i th step
 	 */
-	public void modifyStep(int index, String s) throws IndexOutOfBoundsException {
+	public void setStep(int index, String s) throws IndexOutOfBoundsException {
 		steps.set(index, s);
 	}
 	
@@ -174,7 +162,8 @@ public class Recipe implements Serializable {
 	 * @param quantity The quantity of the product needed in the recipe
 	 */
 	public void addIngredient(Product product , float quantity){
-		ingredients.put(product, quantity);
+		float before = ingredients.getOrDefault(product, (float) 0);
+		ingredients.put(product, before+quantity);
 	}
 	
 	/**
@@ -187,6 +176,13 @@ public class Recipe implements Serializable {
 
 	public int getServings(){
 		return this.servings;
+	}
+	
+	public void setServings(int servings){
+		for(Product p: ingredients.keySet()) {
+			ingredients.put(p, ingredients.get(p)*servings/this.servings);
+		}
+		this.servings = servings;
 	}
 
 }

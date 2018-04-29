@@ -1,6 +1,5 @@
 package be.ac.ulb.infof307.g10.models;
 
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,10 +23,8 @@ public class User extends ModelObject {
 	private static final long serialVersionUID = -0L;
 
 	@Column(unique = true)
-	@Basic(optional = false)
 	private String username;
 
-	@Basic(optional = false)
 	private String hashedPassword;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -37,6 +34,9 @@ public class User extends ModelObject {
 	private User() {}
 
 	private User(String username, String password) {
+		if (username == null || password == null) {
+			throw new NullPointerException();
+		}
 		this.username = username;
 		setPassword(password);
 		this.shoppingList = new ShoppingList();

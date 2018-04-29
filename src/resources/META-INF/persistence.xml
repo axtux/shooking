@@ -4,6 +4,7 @@
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <class>be.ac.ulb.infof307.g10.models.ModelObject</class>
         <class>be.ac.ulb.infof307.g10.models.ShoppingList</class>
+        <class>be.ac.ulb.infof307.g10.models.Stock</class>
         <class>be.ac.ulb.infof307.g10.models.Product</class>
         <class>be.ac.ulb.infof307.g10.models.Shop</class>
         <class>be.ac.ulb.infof307.g10.models.User</class>

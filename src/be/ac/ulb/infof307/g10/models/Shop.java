@@ -21,7 +21,7 @@ public class Shop extends ModelObject {
 	private double longitude;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	private ShoppingList stock;
+	private Stock stock;
 
 	@SuppressWarnings("unused") // NEEDED BY JPA
 	private Shop() {}
@@ -34,7 +34,7 @@ public class Shop extends ModelObject {
 	 * @param longitude Position longitude
 	 * @param stock Shop stock
 	 */
-	public Shop(String name, double latitude, double longitude, String [] schedule, ShoppingList stock) {
+	public Shop(String name, double latitude, double longitude, String [] schedule, Stock stock) {
 		this.name = name;
 		if (schedule.length != 7) {
 			throw new IllegalArgumentException("schedule length must be 7");
@@ -66,11 +66,11 @@ public class Shop extends ModelObject {
 		return this.longitude;
 	}
 
-	public ShoppingList getStock() {
+	public Stock getStock() {
 		return stock;
 	}
 	
-	public void setStock(ShoppingList stock) {
+	public void setStock(Stock stock) {
 		this.stock = stock;
 	}
 
@@ -97,7 +97,7 @@ public class Shop extends ModelObject {
 	 * @return Created shop
 	 */
 	public static Shop create(String name, double latitude, double longitude, String [] schedule) {
-		return create(name, latitude, longitude, schedule, new ShoppingList());
+		return create(name, latitude, longitude, schedule, new Stock());
 	}
 	/**
 	 * Create shop into database
@@ -108,7 +108,7 @@ public class Shop extends ModelObject {
 	 * @param stock Shop stock
 	 * @return Created shop
 	 */
-	public static Shop create(String name, double latitude, double longitude, String [] schedule, ShoppingList stock) {
+	public static Shop create(String name, double latitude, double longitude, String [] schedule, Stock stock) {
 		if (schedule == null) {
 			schedule = defaultSchedule();
 		}

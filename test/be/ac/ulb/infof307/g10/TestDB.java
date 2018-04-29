@@ -6,7 +6,6 @@ import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
-import be.ac.ulb.infof307.g10.models.User;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -50,33 +49,30 @@ public class TestDB {
 
     @Test
     public void test_0060_CreateProduct(){
-        Database.insert(new Product("#DB 6 Apples", "Pink ladies",100, 200, 300, 400, 300));
-        Database.insert(new Product("#DB 6 Apples", "Jonagold",100, 200, 300, 400, 320));
+        Database.insert(new Product("#DB 6 Apples", "Pink ladies",100));
     }
 
     @Test(expected = RollbackException.class)
     public void test_0060_CreateProduct_uniqueConstraintExecptionExpected(){
-        Database.insert(new Product("#DB 6 Apples", "Pink ladies",100, 200, 300, 400, 300));
-        Database.insert(new Product("#DB 6 Apples", "Jonagold",100, 200, 300, 400, 320));
+        Database.insert(new Product("#DB 6 Apples", "Pink ladies",100));
     }
 
     @Test
     public void test_0070_GetProduct(){
-        Database.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies");
+        Database.getProduct("#DB 6 Apples");
     }
 
 
     @Test
     public void test_0072_GetProducts(){
-        Database.getProducts("#DB 6 Apples");
+        Database.getAllProducts();
     }
 
 
     @Test
     public void test_0080_CreateShop(){
         Shop s = Shop.create("#DB Delhaize", 0.0, 0.0);
-        s.getStock().addProduct(Database.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"), 10);
-        s.getStock().addProduct(Database.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"), 10);
+        s.getStock().addProduct(Database.getProduct("#DB 6 Apples"), 10);
         Database.insert(s);
     }
 
@@ -90,7 +86,7 @@ public class TestDB {
         Shop shop = Database.getShop("#DB Delhaize");
 
         Arrays.asList(shop.getStock());
-        Product p = Database.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold");
+        Product p = Database.getProduct("#DB 6 Apples");
         int quantity = shop.getStock().getQuantity(p);
 
         shop.getStock().setProduct(p, quantity -3 );
@@ -98,8 +94,8 @@ public class TestDB {
 
         ////////////////////////
 
-        Shop shopCheck = Database.getShop("#DB Delhaize");
-        Product pCheck = Database.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold");
+        Database.getShop("#DB Delhaize");
+        Database.getProduct("#DB 6 Apples");
 
         //shopCheck.getQuantity(pCheck);;
     }
@@ -108,8 +104,8 @@ public class TestDB {
     @Test
     public void test_0110_CreateList(){
         ShoppingList l = new ShoppingList();
-        l.addProduct(Database.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"), 1);
-        l.addProduct(Database.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"), 2);
+        l.addProduct(Database.getProduct("#DB 6 Apples"), 1);
+        l.addProduct(Database.getProduct("#DB 6 Apples"), 2);
         Database.insert(l);
     }
 
@@ -121,8 +117,7 @@ public class TestDB {
 
     @Test
     public void test_0994_DeleteProduct(){
-        Database.delete(Database.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"));
-        Database.delete(Database.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"));
+        Database.delete(Database.getProduct("#DB 6 Apples"));
     }
 
 

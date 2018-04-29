@@ -23,14 +23,9 @@ public class Database extends GenericDatabase {
 	public static User getUser(String username) throws NoResultException {
 		return getOne(User.class, "SELECT b from User b where b.username LIKE ?1", username);
 	}
-	
-	public static Product getProductFromNameAndDesc(String name, String description) throws NoResultException{
-		return getOne(Product.class, "SELECT b FROM Product b WHERE b.name LIKE ?1 AND b.description LIKE ?2",
-				name, description);
-	}
-	
-	public static List<Product> getProducts(String name) {
-		return getAll(Product.class, "SELECT b FROM Product b WHERE b.name LIKE ?1", name);
+
+	public static Product getProduct(String name) {
+		return getOne(Product.class, "SELECT b FROM Product b WHERE b.name LIKE ?1", name);
 	}
 	
 	public static List<Product> getAllProducts() {

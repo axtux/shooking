@@ -49,20 +49,20 @@ public class ShoppingList extends ModelObject {
 		return productsAndQuantity.size();
 	}
 
+	public void clear() {
+		productsAndQuantity.clear();
+	}
+
 	public Set<Product> getProducts() {
 		return productsAndQuantity.keySet();
 	}
 
 	public Map<Product, Integer> getProductsAndQuantity() {
-		return copyMap(productsAndQuantity);
+		return new HashMap<Product, Integer>(productsAndQuantity);
 	}
 
 	public void setProductsAndQuantity(Map<Product, Integer> productsAndQuantity) {
-		this.productsAndQuantity = copyMap(productsAndQuantity);
-	}
-
-	private static Map<Product, Integer> copyMap(Map<Product, Integer> map) {
-		return new HashMap<Product, Integer>(map);
+		this.productsAndQuantity = new HashMap<Product, Integer>(productsAndQuantity);
 	}
 
 }

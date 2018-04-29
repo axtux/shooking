@@ -51,7 +51,7 @@ public class ResearchPage {
             public void handle(ActionEvent event) {
             	//"Login" Textfield creation
 
-                List<Product> pl = Database.getProducts(textFieldProd.getText());
+                List<Product> pl = Database.getAllProducts();
                 Research r = new Research();
                 List<Shop> sl = r.getStoreWithProducts(pl);
                 for (Shop s: sl) {
