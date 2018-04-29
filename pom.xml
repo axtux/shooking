@@ -50,11 +50,8 @@
                     <reportOutputDirectory>./doc</reportOutputDirectory>
                     <destDir>.</destDir>
                     <links>
-                        <link>https://docs.oracle.com/javase/8/docs/api/</link>
                         <link>https://docs.oracle.com/javase/8/javafx/api/</link>
                         <link>https://www.eclipse.org/eclipselink/api/2.6/</link>
-                        <link>https://www.javadoc.io/doc/org.xerial/sqlite-jdbc/3.21.0.1/</link>
-                        <link>https://junit.org/junit4/javadoc/latest/</link>
                         <link>http://rterp.github.io/GMapsFX/apidocs/</link>
                         <link>https://commons.apache.org/proper/commons-lang/javadocs/api-3.7/</link>
                     </links>
