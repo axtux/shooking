@@ -35,7 +35,7 @@ public class Data {
 		// insert products
 		for(Product p: products) {
 			System.out.println("inserting "+p);
-			Database.insert(p);
+			p.save();
 			System.out.println("inserted "+p);
 		}
 
@@ -50,12 +50,12 @@ public class Data {
 			}
 			s.setStock(st);
 			i++;
-			Database.update(s);
+			s.save();
 		}
 
 		// insert recipes
 		for(Recipe r: getRecipes()) {
-			Database.insert(r);
+			r.save();
 		}
 
 		//Database.setAutoCommit(true);

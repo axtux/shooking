@@ -187,7 +187,7 @@ public class GenericDatabase {
 	 * unless you call the {@link #detach(Object)} method.
 	 * @param o Object to insert
 	 */
-	public static void insert(Object o) throws ExistingException {
+	private static void insert(Object o) throws ExistingException {
 		try {
 			begin();
 			getEM().persist(o);
@@ -195,14 +195,13 @@ public class GenericDatabase {
 		} catch(RollbackException e) {
 			throw new ExistingException(e);
 		}
-		detach(o);
 	}
 
 	/**
 	 * Update detached object into database.
 	 * @param o Object to update
 	 */
-	public static void update(Object o) throws NonExistingException {
+	private static void update(Object o) throws NonExistingException {
 		try {
 			begin();
 			getEM().merge(o);
@@ -210,7 +209,6 @@ public class GenericDatabase {
 		} catch (RollbackException e) {
 			throw new NonExistingException(e);
 		}
-		detach(o);
 	}
 	/**
 	 * Save object into database.
@@ -226,6 +224,7 @@ public class GenericDatabase {
 				throw new DatabaseException(nee);
 			}
 		}
+		detach(o);
 	}
 
 	/**
@@ -243,22 +242,12 @@ public class GenericDatabase {
 	 * unless you use {@link #update(Object)} method.
 	 * @param o Object to detach
 	 */
-	public static void detach(Object o) {
+	private static void detach(Object o) {
 		begin();
 		getEM().detach(o);
 		commit();
 	}
-	
-	/**
-	 * Refresh object from database.
-	 * @param o Object to refresh
-	 */
-	public static void refresh(Object o) {
-		begin();
-		getEM().refresh(o);
-		commit();
-	}
-	
+
 	public static void close() {
 		if (emf != null && emf.isOpen()) {
 			emf.close();

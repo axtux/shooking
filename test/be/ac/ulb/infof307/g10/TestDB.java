@@ -6,7 +6,6 @@ import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
-import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -49,12 +48,7 @@ public class TestDB {
 
     @Test
     public void test_0060_CreateProduct(){
-        Database.insert(new Product("#DB 6 Apples", 6, "unit"));
-    }
-
-    @Test(expected = ExistingException.class)
-    public void test_0060_CreateProduct_uniqueConstraintExecptionExpected(){
-        Database.insert(new Product("#DB 6 Apples", 6, "unit"));
+    	new Product("#DB 6 Apples", 6, "unit").save();
     }
 
     @Test
@@ -73,7 +67,7 @@ public class TestDB {
     public void test_0080_CreateShop(){
         Shop s = Shop.create("#DB Delhaize", 0.0, 0.0);
         s.getStock().addProduct(Database.getProduct("#DB 6 Apples"), 10);
-        Database.update(s);
+        s.save();
     }
 
     @Test
@@ -90,7 +84,7 @@ public class TestDB {
         int quantity = shop.getStock().getQuantity(p);
 
         shop.getStock().setProduct(p, quantity -3 );
-        Database.update(shop);
+        shop.save();
 
         ////////////////////////
 
@@ -106,7 +100,7 @@ public class TestDB {
         ShoppingList l = new ShoppingList();
         l.addProduct(Database.getProduct("#DB 6 Apples"), 1);
         l.addProduct(Database.getProduct("#DB 6 Apples"), 2);
-        Database.insert(l);
+        l.save();
     }
 
     @Test(expected = NoResultException.class)
@@ -129,23 +123,22 @@ public class TestDB {
     @Test
     public void test_1000_CreateRecipe() {
     	Recipe r = new Recipe("#test new recette", 1);
-    	Database.insert(r);
-    	
+    	r.save();
     }
     
     @Test
     public void test_1001_ModifyRecipe() {
     	Recipe r = new Recipe("#test modify recipe", 1);
-    	Database.insert(r);
+    	r.save();
     	r.setName("#test new name");
     	r.addStep("#test step 1");
-    	Database.update(r);
+    	r.save();
     	assertNotNull(Database.getRecipe("#test new name"));
     }
     
     @Test(expected = NoResultException.class)
     public void test_1002_DeleteRecipe() {
-    	Database.insert(new Recipe("#test Delete Recipe", 1));
+    	new Recipe("#test Delete Recipe", 1).save();
     	Recipe r = Database.getRecipe("#test Delete Recipe");
     	Database.delete(r);
     	Database.getRecipe("#test Delete Recipe"); // throw an exception

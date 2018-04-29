@@ -117,7 +117,7 @@ public class Shop extends ModelObject {
 		}
 		try {
 			Shop s = new Shop(name, latitude, longitude, schedule, stock);
-			Database.insert(s);
+			s.save();
 			return s;
 		} catch (RollbackException e) {
 			throw new ExistingException(e);

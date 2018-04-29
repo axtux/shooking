@@ -67,8 +67,8 @@ public class TestUser {
 		Product p1 = new Product("test1", 1, "unit");
 		Product p2 = new Product("test2", 2, "unit");
 		// products have to be in database
-		Database.insert(p1);
-		Database.insert(p2);
+		p1.save();
+		p2.save();
 		
 		sl.setProduct(p1, 42);
 		sl.setProduct(p2, 13);
