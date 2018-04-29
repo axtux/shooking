@@ -47,7 +47,7 @@ public class Stock extends ShoppingList {
 	}
 
 	public void removeProduct(Product p) {
-		productsAndQuantity.remove(p);
+		super.removeProduct(p);
 		productsAndPrice.remove(p);
 	}
 

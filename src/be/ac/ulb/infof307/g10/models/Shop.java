@@ -1,5 +1,8 @@
 package be.ac.ulb.infof307.g10.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -127,5 +130,37 @@ public class Shop extends ModelObject {
 			s[i] = "CLOSED";
 		}
 		return s;
+	}
+
+	/**
+	 * Get shops that contains at least all products.
+	 * @param products Products
+	 * @return List of Shop
+	 */
+	public static List<Shop> getWithProducts(List<Product> products) {
+		List<Shop> shops = new ArrayList<>();
+		for(Shop s: Database.getAll(Shop.class)) {
+			for(Product p: products) {
+				if(s.getStock().getQuantity(p) > 0) {
+					shops.add(s);
+				}
+			}
+		}
+		return shops;
+	}
+
+	/**
+	 * Get shops that contains product.
+	 * @param product Product
+	 * @return List of Shop
+	 */
+	public static List<Shop> getWithProduct(Product product) {
+		List<Shop> shops = new ArrayList<>();
+		for(Shop s: Database.getAll(Shop.class)) {
+			if(s.getStock().getQuantity(product) > 0) {
+				shops.add(s);
+			}
+		}
+		return shops;
 	}
 }

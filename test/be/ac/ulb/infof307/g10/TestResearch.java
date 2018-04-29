@@ -1,8 +1,10 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.models.Research;
 import be.ac.ulb.infof307.g10.models.*;
 import be.ac.ulb.infof307.g10.db.Database;
+
+import java.util.List;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,14 +37,14 @@ public class TestResearch {
 
     @Test
     public void test_0001_GetStoresWithProducts() {
-        Research r = new Research();
-        r.getStoreWithProducts(Database.getAllProducts());
+    	List<Product> products = Database.getAllProducts();
+    	Shop.getWithProducts(products);
     }
 
     @Test
     public void test_0002_GetStoresWithProduct() {
-        Research r = new Research();
-        r.getStoreWithProduct(Database.getProduct("#Research 6 Apples (Pink ladies)"));
+    	Product p = Database.getProduct("#Research 6 Apples (Pink ladies)");
+    	Shop.getWithProduct(p);
     }
 
     @AfterClass

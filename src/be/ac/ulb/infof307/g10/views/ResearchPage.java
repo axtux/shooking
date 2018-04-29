@@ -3,8 +3,6 @@
  */
 package be.ac.ulb.infof307.g10.views;
 
-
-import be.ac.ulb.infof307.g10.models.Research;
 import be.ac.ulb.infof307.g10.models.*;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Product;
@@ -52,8 +50,7 @@ public class ResearchPage {
             	//"Login" Textfield creation
 
                 List<Product> pl = Database.getAllProducts();
-                Research r = new Research();
-                List<Shop> sl = r.getStoreWithProducts(pl);
+                List<Shop> sl = Shop.getWithProducts(pl);
                 for (Shop s: sl) {
                     storesArea.setText(storesArea.getText() + s.getName() +"\n");
                 }
