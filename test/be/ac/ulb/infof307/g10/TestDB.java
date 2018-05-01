@@ -6,7 +6,6 @@ import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
-import be.ac.ulb.infof307.g10.models.User;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -14,7 +13,6 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import javax.persistence.NoResultException;
-import javax.persistence.RollbackException;
 
 import static org.junit.Assert.*;
 
@@ -22,7 +20,7 @@ import java.util.Arrays;
 
 /**
  * The tests have to be executed in a certain order, so they are sorted by name and executed by name ascending
- * Some tests of this class do not have asserts beacause an exception make the test fail when it has to
+ * Some tests of this class do not have asserts because an exception make the test fail when it has to
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class TestDB {
@@ -50,34 +48,26 @@ public class TestDB {
 
     @Test
     public void test_0060_CreateProduct(){
-        Database.insert(new Product("#DB 6 Apples", "Pink ladies",100, 200, 300, 400, 300));
-        Database.insert(new Product("#DB 6 Apples", "Jonagold",100, 200, 300, 400, 320));
-    }
-
-    @Test(expected = RollbackException.class)
-    public void test_0060_CreateProduct_uniqueConstraintExecptionExpected(){
-        Database.insert(new Product("#DB 6 Apples", "Pink ladies",100, 200, 300, 400, 300));
-        Database.insert(new Product("#DB 6 Apples", "Jonagold",100, 200, 300, 400, 320));
+    	new Product("#DB 6 Apples", 6, "unit").save();
     }
 
     @Test
     public void test_0070_GetProduct(){
-        Database.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies");
+        Database.getProduct("#DB 6 Apples");
     }
 
 
     @Test
     public void test_0072_GetProducts(){
-        Database.getProducts("#DB 6 Apples");
+        Database.getAllProducts();
     }
 
 
     @Test
     public void test_0080_CreateShop(){
-        Shop s = new Shop("#DB Delhaize", 0.0, 0.0);
-        s.addProduct(Database.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"), 10);
-        s.addProduct(Database.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"), 10);
-        Database.insert(s);
+        Shop s = Shop.create("#DB Delhaize", 0.0, 0.0);
+        s.getStock().addProduct(Database.getProduct("#DB 6 Apples"), 10);
+        s.save();
     }
 
     @Test
@@ -90,16 +80,16 @@ public class TestDB {
         Shop shop = Database.getShop("#DB Delhaize");
 
         Arrays.asList(shop.getStock());
-        Product p = Database.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold");
-        int quantity = shop.getStock().get(Database.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"));
+        Product p = Database.getProduct("#DB 6 Apples");
+        int quantity = shop.getStock().getQuantity(p);
 
-        shop.updateStock(p, quantity -3 );
-        Database.update(shop);
+        shop.getStock().setProduct(p, quantity -3 );
+        shop.save();
 
         ////////////////////////
 
-        Shop shopCheck = Database.getShop("#DB Delhaize");
-        Product pCheck = Database.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold");
+        Database.getShop("#DB Delhaize");
+        Database.getProduct("#DB 6 Apples");
 
         //shopCheck.getQuantity(pCheck);;
     }
@@ -108,9 +98,9 @@ public class TestDB {
     @Test
     public void test_0110_CreateList(){
         ShoppingList l = new ShoppingList();
-        l.addProduct(Database.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"), 1);
-        l.addProduct(Database.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"), 2);
-        Database.insert(l);
+        l.addProduct(Database.getProduct("#DB 6 Apples"), 1);
+        l.addProduct(Database.getProduct("#DB 6 Apples"), 2);
+        l.save();
     }
 
     @Test(expected = NoResultException.class)
@@ -121,8 +111,7 @@ public class TestDB {
 
     @Test
     public void test_0994_DeleteProduct(){
-        Database.delete(Database.getProductFromNameAndDesc("#DB 6 Apples", "Pink ladies"));
-        Database.delete(Database.getProductFromNameAndDesc("#DB 6 Apples", "Jonagold"));
+        Database.delete(Database.getProduct("#DB 6 Apples"));
     }
 
 
@@ -134,23 +123,22 @@ public class TestDB {
     @Test
     public void test_1000_CreateRecipe() {
     	Recipe r = new Recipe("#test new recette", 1);
-    	Database.insert(r);
-    	
+    	r.save();
     }
     
     @Test
     public void test_1001_ModifyRecipe() {
     	Recipe r = new Recipe("#test modify recipe", 1);
-    	Database.insert(r);
+    	r.save();
     	r.setName("#test new name");
     	r.addStep("#test step 1");
-    	Database.update(r);
+    	r.save();
     	assertNotNull(Database.getRecipe("#test new name"));
     }
     
     @Test(expected = NoResultException.class)
     public void test_1002_DeleteRecipe() {
-    	Database.insert(new Recipe("#test Delete Recipe", 1));
+    	new Recipe("#test Delete Recipe", 1).save();
     	Recipe r = Database.getRecipe("#test Delete Recipe");
     	Database.delete(r);
     	Database.getRecipe("#test Delete Recipe"); // throw an exception

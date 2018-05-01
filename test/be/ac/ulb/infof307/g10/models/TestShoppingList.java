@@ -21,8 +21,8 @@ public class TestShoppingList {
 	
 	@Test
 	public void setTest() {
-		Product p1 = new Product("test1", "test1", 0, 0, 0, 0, 0);
-		Product p2 = new Product("test2", "test2", 0, 0, 0, 0, 0);
+		Product p1 = new Product("test1", 1, "unit");
+		Product p2 = new Product("test2", 2, "unit");
 		sl.setProduct(p1, 1);
 		sl.setProduct(p2, 2);
 		Assert.assertEquals(1, sl.getQuantity(p1));
@@ -32,7 +32,7 @@ public class TestShoppingList {
 	
 	@Test
 	public void addTest() {
-		Product p1 = new Product("test1", "test1", 0, 0, 0, 0, 0);
+		Product p1 = new Product("test1", 1, "unit");
 		sl.addProduct(p1, 1);
 		sl.addProduct(p1, 1);
 		sl.addProduct(p1, 1);
@@ -42,8 +42,8 @@ public class TestShoppingList {
 	
 	@Test
 	public void removeTest() {
-		Product p1 = new Product("test1", "test1", 0, 0, 0, 0, 0);
-		Product p2 = new Product("test2", "test2", 0, 0, 0, 0, 0);
+		Product p1 = new Product("test1", 1, "unit");
+		Product p2 = new Product("test2", 2, "unit");
 		sl.setProduct(p1, 1);
 		sl.setProduct(p2, 2);
 		sl.removeProduct(p1);
@@ -54,8 +54,8 @@ public class TestShoppingList {
 	
 	@Test
 	public void getProductsTest() {
-		Product p1 = new Product("test1", "test1", 0, 0, 0, 0, 0);
-		Product p2 = new Product("test2", "test2", 0, 0, 0, 0, 0);
+		Product p1 = new Product("test1", 1, "unit");
+		Product p2 = new Product("test2", 2, "unit");
 		sl.setProduct(p1, 1);
 		sl.setProduct(p2, 2);
 		Set<Product> set = sl.getProducts();
@@ -66,8 +66,8 @@ public class TestShoppingList {
 	
 	@Test
 	public void copyTest() {
-		Product p1 = new Product("test1", "test1", 0, 0, 0, 0, 0);
-		Product p2 = new Product("test2", "test2", 0, 0, 0, 0, 0);
+		Product p1 = new Product("test1", 1, "unit");
+		Product p2 = new Product("test2", 2, "unit");
 		sl.setProduct(p1, 1);
 		sl.setProduct(p2, 2);
 		

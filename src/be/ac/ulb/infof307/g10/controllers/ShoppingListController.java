@@ -79,7 +79,7 @@ public class ShoppingListController implements Initializable {
 	private void add(ActionEvent event) {
 		// add product
 		//FIXME
-		Product p = new Product(productTF.getText(), "", 0, 0, 0, 0, 0);
+		Product p = new Product(productTF.getText(), 0, "");
 		products.put(p, amountTF.getInt());
 		// select it
 		for (int i = 0; i < items.size(); i++) {
@@ -188,9 +188,9 @@ public class ShoppingListController implements Initializable {
 			}
 		});
 		// TODO get actual data
-		products.put(new Product("Oeufs", "" , 0, 0, 0, 0, 0), 1);
-		products.put(new Product("Pâtes", "", 0, 0, 0, 0, 0), 500);
-		products.put(new Product("Bière", "", 0, 0, 0, 0, 0), 42);
+		products.put(new Product("Oeufs", 0, ""), 1);
+		products.put(new Product("Pâtes", 0, ""), 500);
+		products.put(new Product("Bière", 0, ""), 42);
 		
 		// add listener to call selected method
 		selection = table.getSelectionModel().getSelectedItems();

@@ -1,20 +1,15 @@
 package be.ac.ulb.infof307.g10.models;
 
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.NoResultException;
 import javax.persistence.OneToOne;
-import javax.persistence.RollbackException;
 
 import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.models.exceptions.ExistingUserException;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.models.exceptions.NonExistingUserException;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.utils.Hash;
 
 /**
@@ -25,16 +20,10 @@ import be.ac.ulb.infof307.g10.utils.Hash;
 public class User extends ModelObject {
 
 	private static final long serialVersionUID = -0L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Basic(optional = false)
-	private Integer id;
 
 	@Column(unique = true)
-	@Basic(optional = false)
 	private String username;
 
-	@Basic(optional = false)
 	private String hashedPassword;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -44,13 +33,12 @@ public class User extends ModelObject {
 	private User() {}
 
 	private User(String username, String password) {
+		if (username == null || password == null) {
+			throw new NullPointerException();
+		}
 		this.username = username;
 		setPassword(password);
 		this.shoppingList = new ShoppingList();
-	}
-
-	public Integer getId() {
-		return id;
 	}
 
 	public String getUsername() {
@@ -75,7 +63,7 @@ public class User extends ModelObject {
 	
 	// static methods
 	public static User login(String username, String password)
-		throws IncorrectPasswordException, NonExistingUserException {
+		throws IncorrectPasswordException, NonExistingException {
 		try {
 			User u = Database.getUser(username);
 			if (u.isPassword(password)) {
@@ -83,18 +71,18 @@ public class User extends ModelObject {
 			}
 			throw new IncorrectPasswordException();
 		} catch(NoResultException e) {
-			throw new NonExistingUserException(e);
+			throw new NonExistingException(e);
 		}
 	}
 	
-	public static User signup(String username, String password)
-		throws ExistingUserException {
+	public static User signup(String username, String password) throws ExistingException {
 		try {
+			Database.getUser(username);
+			throw new ExistingException();
+		} catch(NoResultException e) {
 			User u = new User(username, password);
-			Database.insert(u);
+			u.save();
 			return u;
-		} catch (RollbackException e) {
-			throw new ExistingUserException(e);
 		}
 	}
 }

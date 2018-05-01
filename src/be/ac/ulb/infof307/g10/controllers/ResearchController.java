@@ -1,9 +1,7 @@
 package be.ac.ulb.infof307.g10.controllers;
 
 import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.models.Research;
 import be.ac.ulb.infof307.g10.models.Shop;
-import be.ac.ulb.infof307.g10.models.Product;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,10 +22,9 @@ public class ResearchController {
 	private Button researchBT;
 
 	public void research(ActionEvent actionEvent) {
-		Research r = new Research();
 		shopTA.setText("");
 
-		List<Shop> shopList = r.getStoreWithProducts(Database.getProducts(productTF.getText()));
+		List<Shop> shopList = Shop.getWithProduct(Database.getProduct(productTF.getText()));
 		String shopNames = "";
 		for (Shop s : shopList) {
 			shopNames += s.getName() + "\n";
@@ -38,12 +35,6 @@ public class ResearchController {
 	public void researchProducts(ActionEvent actionEvent) {
 		shopTA.setText("");
 
-		List<Product> productsList = Database.getProducts(productTF.getText());
-
-		String productsNames = "";
-		for (Product s : productsList) {
-			productsNames += s.getName() + "\n";
-		}
-		shopTA.setText(productsNames);
+		shopTA.setText(productTF.getText());
 	}
 }

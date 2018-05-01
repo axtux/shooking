@@ -16,7 +16,6 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
-import javafx.collections.ListChangeListener.Change;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -125,9 +124,7 @@ public class RecipeController implements Initializable {
 	private ObservableList<Entry<Product, Integer>> selection;
 	
 	private ObservableMap<Product, Integer> steps;
-	private ObservableList<Map.Entry<Product, Integer>> itemsStep;
 	private Entry<Product, Integer> selectedStep;
-	private ObservableList<Entry<Product, Integer>> selectionStep;
 	
 	
  
@@ -138,7 +135,7 @@ public class RecipeController implements Initializable {
     void add(ActionEvent event) {
     	// add ingredient
     			//FIXME
-    			Product p = new Product(ingredientTF.getText(), "", 0, 0, 0, 0, 0);
+    			Product p = new Product(ingredientTF.getText(), 1, "");
     			products.put(p, amountIngredientTF.getInt());
     					// select it
     			for (int i = 0; i < items.size(); i++) {
@@ -342,7 +339,6 @@ public void initialize(URL url, ResourceBundle rb) {
 
 
 public void researchProduct(ActionEvent actionEvent) {
-	ResearchController rc = new ResearchController();
 	try {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/ResearchDialog.fxml"));
 		DialogPane page = (DialogPane) loader.load();

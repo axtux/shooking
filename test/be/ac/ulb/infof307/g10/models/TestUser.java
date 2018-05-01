@@ -6,9 +6,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.models.exceptions.ExistingUserException;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.models.exceptions.NonExistingUserException;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 public class TestUser {
 
@@ -36,7 +36,7 @@ public class TestUser {
 		Assert.assertNotNull(u);
 	}
 
-	@Test(expected = ExistingUserException.class)
+	@Test(expected = ExistingException.class)
 	public void signupExistingUserExceptionTest() {
 		User.signup("test", "test");
 		User.signup("test", "test");
@@ -55,7 +55,7 @@ public class TestUser {
 		User.login("test", "badPassword");
 	}
 	
-	@Test(expected = NonExistingUserException.class)
+	@Test(expected = NonExistingException.class)
 	public void loginNonExistingUserExceptionTest() {
 		User.login("badUser", "anyPassword");
 	}
@@ -63,12 +63,12 @@ public class TestUser {
 	public static User userWithShoppingList() {
 		User u = User.signup("test", "test");
 		ShoppingList sl = u.getShoppingList();
-		
-		Product p1 = new Product("test1", "test1", 0, 0, 0, 0, 0);
-		Product p2 = new Product("test2", "test2", 0, 0, 0, 0, 0);
+
+		Product p1 = new Product("test1", 1, "unit");
+		Product p2 = new Product("test2", 2, "unit");
 		// products have to be in database
-		Database.insert(p1);
-		Database.insert(p2);
+		p1.save();
+		p2.save();
 		
 		sl.setProduct(p1, 42);
 		sl.setProduct(p2, 13);
