@@ -25,6 +25,10 @@ public class CreateAccountController extends MainController {
     @FXML
     Label errorLabel; //text field to show if the creation of the account is not possible
 
+    /**
+     * This method is used to check the information entered in the view to create the new user
+     * Some error could be shown to the user in the corresponding view
+     */
     @FXML
     public void submit(ActionEvent event){
         //field login recovered

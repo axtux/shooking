@@ -12,6 +12,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * This class is the main controller, it implements all the methods used in the different page of the application.
+ * The redirection to the over pages are implemented here
+ */
 public class MainController implements Initializable {
 
 

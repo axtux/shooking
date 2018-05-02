@@ -210,12 +210,6 @@ public class RecipeController implements Initializable {
 		
     }
 
-    @FXML
-    void logout(ActionEvent event) {
-    	// go to the login page
-    			Main.getInstance().goToLogin();
-    			
-    }
 
     @FXML
     void remove(ActionEvent event) {

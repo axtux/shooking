@@ -50,7 +50,7 @@ public class GeneralView extends Parent {
      * This function is used to load the corresponding Parent class of the fxml representing a view
      * @param name The String name of the fxml file located in the ressource package
      *             You should not put the .fxml extension, only the name
-     * @return a Parent node corresponding to the root node of the view
+     * @return A Parent node corresponding to the root node of the view
      */
     private Parent loadFXML(String name) {
         try {
@@ -71,7 +71,7 @@ public class GeneralView extends Parent {
     /**
      * This method is used to disable the buttons not wanted in the general menu (see Menu fxml)
      * It really depends of the structure of the menu, if the menu view is modified, this function may not work anymore
-     * @param btns a list of String representing the id of the buttons we want to disable
+     * @param btns A list of String representing the id of the buttons we want to disable
      */
     public void disableButtons(List<String> btns ) {
 

@@ -25,6 +25,10 @@ public class LoginController extends MainController{
     @FXML
     Label printLabel; //text field to show if the login of the account is not possible, or if the connection succeed
 
+    /**
+     * This method is used to check the information of the user in the database and connect the user to the application
+     * Some error could be shown to the user in the corresponding view
+     */
     @FXML
     public void submit(){
         String log = loginField.getText();
