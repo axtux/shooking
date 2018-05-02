@@ -78,7 +78,6 @@ public class TestUser extends DatabaseTest{
 		Database.close();
 		
 		User o = Database.getUser("test");
-		System.out.println(o);
 		Assert.assertEquals(2, o.getShoppingList().size());
 	}
 	
@@ -89,7 +88,6 @@ public class TestUser extends DatabaseTest{
 		Database.close();
 		
 		User o = Database.getUser("test");
-		System.out.println(o);
 		Assert.assertEquals(2, o.getShoppingList().size());
 	}
 }
