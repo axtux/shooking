@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.FlushModeType;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
@@ -43,6 +44,8 @@ public class GenericDatabase {
 		}
 		if (em == null || !em.isOpen()) {
 			em = emf.createEntityManager();
+			// flush at commit
+			em.setFlushMode(FlushModeType.COMMIT);
 		}
 		return em;
 	}
@@ -162,6 +165,10 @@ public class GenericDatabase {
 	 * Delete all objects from database
 	 */
 	public static void empty() {
+		// disable FK constraints
+		begin();
+		getEM().createNativeQuery("SET FOREIGN_KEY_CHECKS=0").executeUpdate();
+		commit();
 		// clear links between objects and database
 		getEM().clear();
 		// start batch operations
@@ -171,6 +178,10 @@ public class GenericDatabase {
 		}
 		// end batch operations
 		setAutoCommit(true);
+		// enable FK constraints
+		begin();
+		getEM().createNativeQuery("SET FOREIGN_KEY_CHECKS=1").executeUpdate();
+		commit();
 	}
 
 	public static boolean isEmpty() {

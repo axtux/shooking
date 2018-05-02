@@ -49,6 +49,7 @@ public class TestDB {
     @Test
     public void test_0060_CreateProduct(){
     	new Product("#DB 6 Apples", 6, "unit").save();
+    	new Product("#DB 7 Apples", 6, "unit").save();
     }
 
     @Test
@@ -108,10 +109,9 @@ public class TestDB {
         Database.delete((Database.getUser("#DB lala")));
     }
 
-
     @Test
     public void test_0994_DeleteProduct(){
-        Database.delete(Database.getProduct("#DB 6 Apples"));
+    	Database.delete(Database.getProduct("#DB 7 Apples"));
     }
 
 
