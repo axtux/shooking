@@ -12,39 +12,41 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.ac.ulb.infof307.g10.controllers.RecipeController">
+<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.ac.ulb.infof307.g10.controllers.RecipeController">
   <children>
-    <SplitPane dividerPositions="0.6616541353383458" focusTraversable="true" layoutX="48.0" prefHeight="500.0" prefWidth="848.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+    <SplitPane dividerPositions="0.6616541353383458" focusTraversable="true" layoutX="48.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="848.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <items>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="499.0" prefWidth="361.9998779296875">
+        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="499.0" prefWidth="361.9998779296875">
           <children>
-            <TableView fx:id="table" layoutY="11.0" prefHeight="239.0" prefWidth="525.0" AnchorPane.bottomAnchor="348.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="11.0">
+            <TableView fx:id="table" layoutY="11.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="239.0" prefWidth="525.0" AnchorPane.bottomAnchor="348.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="11.0">
               <columns>
                 <TableColumn fx:id="ingredientCL" prefWidth="170.0000139474869" text="Ingredient" />
                 <TableColumn fx:id="amountIngredientCL" prefWidth="352.22218322753906" text="Amount" />
               </columns>
             </TableView>
-                  <TableView fx:id="stateTable" layoutX="-2.0" layoutY="263.0" prefHeight="272.0" prefWidth="525.0">
+                  <TableView fx:id="stateTable" layoutX="-2.0" layoutY="286.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="249.0" prefWidth="525.0" AnchorPane.bottomAnchor="63.0" AnchorPane.leftAnchor="-2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="286.0">
                      <columns>
-                        <TableColumn fx:id="recipeStepCL" prefWidth="520.8888516426086" text="Recipe steps" />
+                        <TableColumn fx:id="recipeStepCL" minWidth="-Infinity" prefWidth="520.8888516426086" text="Recipe steps" />
                      </columns>
                   </TableView>
-                  <Button fx:id="createRecipeBT" layoutX="213.0" layoutY="547.0" mnemonicParsing="false" onAction="#CreateRecipe" prefHeight="31.0" prefWidth="128.0" text="Create Recipe">
+                  <Button fx:id="createRecipeBT" layoutX="213.0" layoutY="557.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#CreateRecipe" prefHeight="31.0" prefWidth="128.0" text="Create Recipe" AnchorPane.bottomAnchor="9.666666666666629" AnchorPane.leftAnchor="213.0" AnchorPane.rightAnchor="184.33333333333337" AnchorPane.topAnchor="557.0">
                      <font>
                         <Font name="System Bold Italic" size="15.0" fx:id="x131" />
                      </font>
                   </Button>
+                  <Separator layoutX="-1.0" layoutY="259.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="16.0" prefWidth="525.0" AnchorPane.bottomAnchor="323.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="259.0" />
+                  <Separator layoutY="535.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="16.0" prefWidth="525.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="535.0" />
           </children>
         </AnchorPane>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="498.0" prefWidth="414.0">
+        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="498.0" prefWidth="414.0">
           <children>
-            <Label layoutX="14.0" layoutY="21.0" text="Ingredient">
+            <Label layoutX="14.0" layoutY="21.0" minHeight="-Infinity" minWidth="-Infinity" text="Ingredient">
               <font>
                 <Font name="System Bold Italic" size="15.0" fx:id="x1" />
               </font>
             </Label>
             <Label font="$x1" layoutX="14.0" layoutY="71.0" text="Amount:" />
-            <TextField fx:id="ingredientTF" layoutX="14.0" layoutY="45.0" prefHeight="26.0" prefWidth="239.0" promptText="Ex Banane" />
+            <TextField fx:id="ingredientTF" layoutX="14.0" layoutY="45.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="239.0" promptText="Ex Banane" />
             <IntField fx:id="amountIngredientTF" layoutX="13.0" layoutY="95.0" prefHeight="16.0" prefWidth="87.0" promptText="Grams" />
             <Label font="$x1" layoutX="13.0" layoutY="121.0" text="People" />
             <IntField fx:id="peopleTF" layoutX="13.0" layoutY="141.0" prefHeight="6.0" prefWidth="100.0" promptText="Amount" />
@@ -86,7 +88,7 @@
                         <Font name="System Bold Italic" size="15.0" fx:id="x16" />
                      </font>
                   </Button>
-                  <Separator layoutX="8.0" layoutY="269.0" prefHeight="3.0" prefWidth="247.0" />
+                  <Separator layoutX="8.0" layoutY="269.0" prefHeight="3.0" prefWidth="247.0" AnchorPane.bottomAnchor="325.6666666666667" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="11.999999999999972" AnchorPane.topAnchor="269.0" />
                   <Separator layoutX="14.0" layoutY="509.0" prefHeight="3.0" prefWidth="247.0" />
                   <Label layoutX="21.0" layoutY="278.0" text="Step">
                      <font>
