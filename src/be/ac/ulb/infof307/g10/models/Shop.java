@@ -1,5 +1,6 @@
 package be.ac.ulb.infof307.g10.models;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +60,21 @@ public class Shop extends ModelObject {
 	 */
 	public String getSchedule(int day) throws IndexOutOfBoundsException {
 		return this.schedule[day];
+	}
+
+	/**
+	 * Get shop informations
+	 * @return Name and schedule, in String format for all days
+	 */
+	public String getInfos() {
+		String ret = getName()+"\n";
+		int day = 1;
+
+		for (String s : this.schedule) {
+			ret += DayOfWeek.of(day).name() + ": " + s+"\n";
+			day++;
+		}
+		return ret;
 	}
 
 	public double getLatitude() {
