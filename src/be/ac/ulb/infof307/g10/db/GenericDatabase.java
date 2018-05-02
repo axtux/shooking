@@ -1,6 +1,8 @@
 package be.ac.ulb.infof307.g10.db;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
@@ -33,14 +35,32 @@ public class GenericDatabase {
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
 	private static boolean autoCommit = true;
+	private static Map<String, String> properties;
+
+	/**
+	 * Set property to overwrite any value from persistence.xml
+	 * @param name Name of property
+	 * @param value Value
+	 */
+	public static void setProp(String name, String value) {
+		if (properties == null) {
+			properties = new HashMap<>();
+		}
+		properties.put(name, value);
+		// force reopening at next use
+		close();
+	}
 
 	/**
 	 * Return the EntityManager
 	 * @return EntityManager
 	 */
 	private static EntityManager getEM() {
+		if (properties == null) {
+			properties = new HashMap<>();
+		}
 		if (emf == null || !emf.isOpen()) {
-			emf = Persistence.createEntityManagerFactory(NAME);
+			emf = Persistence.createEntityManagerFactory(NAME, properties);
 		}
 		if (em == null || !em.isOpen()) {
 			em = emf.createEntityManager();

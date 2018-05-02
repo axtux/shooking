@@ -2,6 +2,7 @@ package be.ac.ulb.infof307.g10;
 
 import be.ac.ulb.infof307.g10.db.Data;
 import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.db.DatabaseTest;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
@@ -27,6 +28,7 @@ public class TestDB {
 
     @BeforeClass
     public static void createDB (){
+        DatabaseTest.beforeClass();
         Database.empty();
     }
 

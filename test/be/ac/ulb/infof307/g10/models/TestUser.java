@@ -1,26 +1,15 @@
 package be.ac.ulb.infof307.g10.models;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.db.DatabaseTest;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
-public class TestUser {
-
-	@BeforeClass
-	public static void beforeClass() {
-		Database.empty();
-	}
-
-	@After
-	public void after() {
-		Database.empty();
-	}
+public class TestUser extends DatabaseTest{
 
 	@Test
 	public void signupTest() {

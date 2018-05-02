@@ -4,8 +4,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.db.DatabaseTest;
 
-public class TestShop {
+public class TestShop extends DatabaseTest {
 
 	// TODO add more tests
 	@Test
