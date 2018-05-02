@@ -24,7 +24,7 @@ public class IntField extends TextField {
 		// check each change
 		textProperty().addListener(new ChangeListener<String>() {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if(newValue.equals("") || valid(newValue)) {
+				if(zeroValue(newValue) || valid(newValue)) {
 					return;
 				}
 				setText(oldValue);
@@ -34,7 +34,7 @@ public class IntField extends TextField {
 	
 	public int getInt() {
 		String text = getText();
-		if (text.equals("")) {
+		if (zeroValue(text)) {
 			return 0;
 		}
 		return Integer.parseInt(text);
@@ -47,7 +47,14 @@ public class IntField extends TextField {
 		setText(Integer.toString(i));
 	}
 	
+	private boolean zeroValue(String s) {
+		return (signed && s.equals("-")) || s.equals("");
+	}
+	
 	private boolean valid(String s) {
+		if(s.startsWith("+")) {
+			return false;
+		}
 		try {
 			if (signed) {
 				Integer.parseInt(s);
