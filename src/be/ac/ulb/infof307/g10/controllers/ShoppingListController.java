@@ -18,10 +18,8 @@ import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Modality;
@@ -48,10 +46,10 @@ public class ShoppingListController extends MainController {
 	@FXML
 	private TextField productTF;
 	@FXML
-	private TextField amountTF;
+	private IntField amountTF;
 
 	@FXML
-	private Label errorLabel;
+    private Label errorLabel;
 
 	@FXML
 	private TableView<Map.Entry<Product, Integer>> table;
@@ -78,7 +76,7 @@ public class ShoppingListController extends MainController {
 		// add product
 		//FIXME
 		Product p = new Product(productTF.getText(), "", 0, 0, 0, 0, 0);
-		products.put(p, getInt());
+		products.put(p, amountTF.getInt());
 		// select it
 		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i).getKey() == p) {
@@ -106,30 +104,15 @@ public class ShoppingListController extends MainController {
 
 	@FXML
 	void amountUp(ActionEvent event) {
-		setInt(getInt()+1);
+		amountTF.setInt(amountTF.getInt()+1);
 	}
 
 	@FXML
 	void amountDown(ActionEvent event) {
-		setInt(getInt()-1);
+		amountTF.setInt(amountTF.getInt()-1);
 	}
 
-	@FXML
-	private void verifyInt(){
-		if(!amountTF.getText().matches("[0-9]+")) { //if it is not only a number we set the text to nothing
-			amountTF.setText("");
-			errorLabel.setText("amount must be a number");
-		}
-	}
 
-	private void setInt(int i){
-		verifyInt();
-		amountTF.setText(String.valueOf(i));
-	}
-
-	private int getInt(){
-		return Integer.parseInt(amountTF.getText());
-	}
 
 	/**
 	 * Update the information for the view when the user select a cell of the table products
@@ -202,8 +185,7 @@ public class ShoppingListController extends MainController {
 		});
 		updateSelected();
 		
-		//amountTF.setSigned(false);
-		//amountTF.addEventFilter(); TODO check ici comment ajoute un event/listener sur le amount pour lancer verifyInt
+		amountTF.setSigned(false);
 	}
 
 	public void researchProduct(ActionEvent actionEvent) {
