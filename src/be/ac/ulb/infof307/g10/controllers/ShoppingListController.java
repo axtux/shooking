@@ -163,6 +163,7 @@ public class ShoppingListController implements Initializable {
 	@FXML
 	private void createNewProduct(ActionEvent event) throws IOException {
 		Main.getInstance().showDialog("CreateProduct", "Create product");
+		updateInterface();
 	}
 	
 	public void researchProduct(ActionEvent actionEvent) {

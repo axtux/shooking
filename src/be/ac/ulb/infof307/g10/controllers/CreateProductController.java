@@ -27,7 +27,6 @@ public class CreateProductController {
 		Product p = new Product(name.getText(), size.getInt(), unit.getText());
 		p.save();
 		Main.getInstance().closeDialog();
-		// TODO update selection box
 	}
 
 }

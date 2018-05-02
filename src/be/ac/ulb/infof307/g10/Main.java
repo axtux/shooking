@@ -118,8 +118,7 @@ public class Main extends Application {
 		dialog.setTitle(title);
 		dialog.initModality(Modality.APPLICATION_MODAL);
 		dialog.setScene(scene);
-		dialog.show();
-		dialog.centerOnScreen();
+		dialog.showAndWait();
 	}
 	
 	public void closeDialog() {
