@@ -11,6 +11,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -28,6 +29,7 @@ public class Main extends Application {
 	}
 	
 	private Stage stage;
+	private Stage dialog;
 	private User user;
 
 	@Override
@@ -94,17 +96,33 @@ public class Main extends Application {
 		update();
 	}
 
-	private void loadFXML(String name) {
+	private Scene getFXMLScene(String name) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/FXML/"+name+".fxml"));
-			Scene scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-
+			Parent parent = FXMLLoader.load(getClass().getResource("/FXML/"+name+".fxml"));
+			return new Scene(parent);
 		} catch (IOException e) {
-			// never happens as resource in packed with application
-			e.printStackTrace();
+			// never happens as resources are packed within application
+			throw new RuntimeException(e);
 		}
+	}
+
+	private void loadFXML(String name) {
+		Scene scene = getFXMLScene(name);
+		stage.setScene(scene);
+		stage.show();
+	}
+
+	public void showDialog(String name, String title) {
+		Scene scene = getFXMLScene(name);
+		dialog = new Stage();
+		dialog.setTitle(title);
+		dialog.initModality(Modality.APPLICATION_MODAL);
+		dialog.setScene(scene);
+		dialog.showAndWait();
+	}
+	
+	public void closeDialog() {
+		dialog.close();
 	}
 	
 	private void update() {
