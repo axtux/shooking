@@ -57,13 +57,17 @@ public class Main extends Application {
 	}
 
 	public void goToCreateAccount() {
-		GeneralView page = new GeneralView(stage, "CreateAccount", "Menu");
 
-		List<String> buttons = Arrays.asList("logout","shoppingList","map");
-		page.disableButtons(buttons);
-
-		page.setTitle("Create your Account"); //title of the page
+        stage.setTitle("Creation account");
+        loadFXML("CreateAccount");
 		update();
+
+        GeneralView page = new GeneralView(stage, "CreateAccount", "Menu");
+        List<String> buttons = Arrays.asList("map","shoppingList");
+        page.disableButtons(buttons);
+
+        page.setTitle("Create your account");
+        update();
 	}
 	public void goToRecipe() {
 		stage.setTitle("Recipe");
@@ -85,10 +89,10 @@ public class Main extends Application {
 	public void goToMap(){
 
 		GeneralView page = new GeneralView(stage, "Map", "Menu");
-		List<String> buttons = Arrays.asList("logout","goTo");
+		List<String> buttons = Arrays.asList("map");
 		page.disableButtons(buttons);
 
-		page.setTitle("Login Page");
+		page.setTitle("Shopping Map");
 
 	}
 

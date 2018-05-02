@@ -1,11 +1,16 @@
 package be.ac.ulb.infof307.g10.controllers;
 
 import com.lynden.gmapsfx.ClusteredGoogleMapView;
-import com.lynden.gmapsfx.GoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
-import com.lynden.gmapsfx.javascript.object.*;
+import com.lynden.gmapsfx.javascript.object.Marker;
+import com.lynden.gmapsfx.javascript.object.MapOptions;
+import com.lynden.gmapsfx.javascript.object.ClusteredGoogleMap;
+import com.lynden.gmapsfx.javascript.object.InfoWindow;
+import com.lynden.gmapsfx.javascript.object.LatLong;
+import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
+import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 import com.lynden.gmapsfx.service.geocoding.GeocodingService;
 import javafx.fxml.FXML;
 
@@ -29,7 +34,7 @@ public class MapController extends MainController implements MapComponentInitial
         mapView.addMapInializedListener(this);
     }
 
-    @FXML
+    @Override
     public void mapInitialized() {
         // Set the initial properties of the map.
         MapOptions mapOptions = new MapOptions();

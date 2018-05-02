@@ -46,9 +46,6 @@ public class GeneralView extends Parent {
         stage.show();
     }
 
-    public GeneralView(Stage stage, MapRendering mapRendering, String menu) {
-    }
-
     /**
      * This function is used to load the corresponding Parent class of the fxml representing a view
      * @param name The String name of the fxml file located in the ressource package
