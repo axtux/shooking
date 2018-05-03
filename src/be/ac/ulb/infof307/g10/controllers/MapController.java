@@ -79,8 +79,8 @@ public class MapController extends MainController implements MapComponentInitial
 	@FXML
 	public void createShop(GMapMouseEvent event) {
 		latLong = event.getLatLong();
-		Main.getInstance().showDialog("ShopCreation", "Shop creation");
 		System.out.println("TODO create shop");
+		Main.getInstance().showDialog("CreateShop", "Create shop");
 		//addShopToMap(s);
 	}
 

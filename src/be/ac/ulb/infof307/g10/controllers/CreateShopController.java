@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import com.lynden.gmapsfx.javascript.object.LatLong;
 
+import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.Stock;
 import javafx.event.ActionEvent;
@@ -78,6 +79,7 @@ public class CreateShopController {
     	LatLong latLong = MapController.latLong;
     	Shop shop = new Shop(name.getText(),latLong.getLatitude(), latLong.getLongitude(),makeSchedule(), new Stock());
     	shop.save();
+		Main.getInstance().closeDialog();
     }
 /**
     @FXML
