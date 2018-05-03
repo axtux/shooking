@@ -12,6 +12,7 @@ import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
+import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Shop;
 import javafx.fxml.FXML;
@@ -33,6 +34,11 @@ public class MapController extends MainController implements MapComponentInitial
     ClusteredGoogleMap map;
     @FXML
     InfoWindow popup;
+    
+    /**
+     * Last LatLong clicked (Tmp)
+     */
+    static LatLong latLong;
 
 
     @Override
@@ -65,12 +71,15 @@ public class MapController extends MainController implements MapComponentInitial
 		// Add a marker to the map on right click
 		map.addMouseEventHandler(UIEventType.rightclick, (GMapMouseEvent event) -> {
 			createShop(event);
+			System.out.println("TODO 1 create shop");
+
 		});
     }
 
 	@FXML
 	public void createShop(GMapMouseEvent event) {
-		LatLong latLong = event.getLatLong();
+		latLong = event.getLatLong();
+		Main.getInstance().showDialog("ShopCreation", "Shop creation");
 		System.out.println("TODO create shop");
 		//addShopToMap(s);
 	}
