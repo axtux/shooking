@@ -59,9 +59,8 @@ public class Main extends Application {
 	}
 
 	public void goToCreateAccount() {
-        GeneralView page = new GeneralView(stage, "CreateAccount", "Menu");
-        page.disableButtons(Arrays.asList("map","shoppingList","recipe"));
-        page.setTitle("Create your account");
+        stage.setTitle("Account creation");
+        loadFXML("CreateAccount");
         update();
 	}
 	public void goToRecipe() {
