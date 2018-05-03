@@ -20,6 +20,7 @@ import javafx.fxml.FXML;
 import netscape.javascript.JSObject;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -45,6 +46,8 @@ public class MapController extends MainController implements MapComponentInitial
     public void initialize(URL location, ResourceBundle resources) {
         mapView.addMapInializedListener(this);
     }
+    
+    public ArrayList<Marker> markers;
 
     @Override
     public void mapInitialized() {
@@ -63,10 +66,9 @@ public class MapController extends MainController implements MapComponentInitial
 
         map = mapView.createMap(mapOptions);
         popup = new InfoWindow();
+        markers=new ArrayList<Marker>();
 
-		for(Shop s: Database.getAllShops()) {
-			addShopToMap(s);
-		}
+		updateInterface();
 
 		// Add a marker to the map on right click
 		map.addMouseEventHandler(UIEventType.rightclick, (GMapMouseEvent event) -> {
@@ -81,7 +83,7 @@ public class MapController extends MainController implements MapComponentInitial
 		latLong = event.getLatLong();
 		System.out.println("TODO create shop");
 		Main.getInstance().showDialog("CreateShop", "Create shop");
-		//addShopToMap(s);
+		updateInterface();
 	}
 
 	private void addShopToMap(Shop s) {
@@ -89,11 +91,19 @@ public class MapController extends MainController implements MapComponentInitial
 		MarkerOptions markerOptions = new MarkerOptions();
 		markerOptions.position(latLong).visible(Boolean.TRUE).title(s.getInfos());
 		Marker marker = new Marker(markerOptions);
+		markers.add(marker);
 		map.addClusterableMarker(marker);
-		
 		map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
 			popup.setContent(marker.getTitle().replace("\n", "<br>"));
 			popup.open(map, marker);
 		});
+	}
+	private void updateInterface(){
+		for(Marker m:markers ){
+			map.removeClusterableMarker(m);
+		}
+		for(Shop s: Database.getAllShops()) {
+			addShopToMap(s);
+		}
 	}
 }

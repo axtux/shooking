@@ -64,8 +64,9 @@ public class CreateShopController {
     	String[] schedule = new String[7];
     	TextField[] textFields=getTextFields();
     	for(int i=0;i<7;i++){
-    		if(textFields[i].getText().equals("Schedule")){
+    		if(textFields[i].getText().equals("")){
     			schedule[i]="Unknown";
+    			System.out.println(schedule[i]);
     		}
     		else{
     			schedule[i]=textFields[i].getText();
