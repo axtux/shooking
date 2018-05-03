@@ -11,7 +11,9 @@ import com.lynden.gmapsfx.javascript.object.InfoWindow;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
-import com.lynden.gmapsfx.service.geocoding.GeocodingService;
+
+import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.models.Shop;
 import javafx.fxml.FXML;
 
 import netscape.javascript.JSObject;
@@ -52,30 +54,33 @@ public class MapController extends MainController implements MapComponentInitial
         map = mapView.createMap(mapOptions);
         popup = new InfoWindow();
 
-        // Add a marker to the map on right clic
-        map.addMouseEventHandler(UIEventType.rightclick, (GMapMouseEvent event) -> {
-            markerHandler(event);
-        });
+		for(Shop s: Database.getAllShops()) {
+			addShopToMap(s);
+		}
 
+		// Add a marker to the map on right click
+		map.addMouseEventHandler(UIEventType.rightclick, (GMapMouseEvent event) -> {
+			createShop(event);
+		});
     }
 
-    @FXML
-    public void markerHandler(GMapMouseEvent event) {
-        LatLong latLong = event.getLatLong();
-        MarkerOptions markerOptions = new MarkerOptions();
+	@FXML
+	public void createShop(GMapMouseEvent event) {
+		LatLong latLong = event.getLatLong();
+		System.out.println("TODO create shop");
+		//addShopToMap(s);
+	}
 
-        markerOptions.position(latLong).visible(Boolean.TRUE).title("My Marker");
-
-        Marker marker = new Marker(markerOptions);// need to be save on the database
-        map.addClusterableMarker(marker);
-
-        // popup
-        popup.setContent("Hello world");
-        popup.open(map, marker);
-        map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
-            popup.open(map, marker);
-        });
-    }
-
-
+	private void addShopToMap(Shop s) {
+		LatLong latLong = new LatLong(s.getLatitude(), s.getLongitude());
+		MarkerOptions markerOptions = new MarkerOptions();
+		markerOptions.position(latLong).visible(Boolean.TRUE).title(s.getInfos());
+		Marker marker = new Marker(markerOptions);
+		map.addClusterableMarker(marker);
+		
+		map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
+			popup.setContent(marker.getTitle().replace("\n", "<br>"));
+			popup.open(map, marker);
+		});
+	}
 }

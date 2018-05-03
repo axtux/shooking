@@ -63,10 +63,10 @@ public class Data {
 		ArrayList<Shop> list = new ArrayList<>();
 
 		// TODO rename method ?
-		list.add(Shop.create("Aldi", 0.0, 0.0));
-		list.add(Shop.create("Colruyt", 0.0, 0.0));
-		list.add(Shop.create("Carrefour", 0.0, 0.0));
-		list.add(Shop.create("Delhaize", 0.0, 0.0));
+		list.add(Shop.create("Aldi", 50.828488, 4.362717));
+		list.add(Shop.create("Colruyt", 50.867831, 4.403058));
+		list.add(Shop.create("Carrefour", 50.859922, 4.342290));
+		list.add(Shop.create("Delhaize", 50.845075, 4.389325));
 		
 		return list;
 	}
