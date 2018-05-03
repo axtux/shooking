@@ -5,4 +5,4 @@
 /dist/
 /doc/
 .*
-database.db
+*.db

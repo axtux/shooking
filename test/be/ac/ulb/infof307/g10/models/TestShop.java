@@ -3,13 +3,17 @@ package be.ac.ulb.infof307.g10.models;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TestShop {
+import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
+
+public class TestShop extends AbstractTestDatabase {
 
 	// TODO add more tests
 	@Test
-	public void create() {
+	public void createDelete() {
 		Shop shop = Shop.create("test1", 0, 0);
 		Assert.assertNotNull(shop);
+		Database.deleteAll(Shop.class);
 	}
 	
 }

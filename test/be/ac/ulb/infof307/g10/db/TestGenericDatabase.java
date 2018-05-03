@@ -2,26 +2,14 @@ package be.ac.ulb.infof307.g10.db;
 
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 
-public class TestGenericDatabase {
-
-	@BeforeClass
-	public static void beforeClass() {
-		GenericDatabase.empty();
-	}
-
-	@After
-	public void after() {
-		GenericDatabase.empty();
-	}
+public class TestGenericDatabase extends AbstractTestDatabase {
 
 	public static Product initProduct() {
 		Product p = new Product("Pasta", 500, "g");

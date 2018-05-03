@@ -2,6 +2,7 @@ package be.ac.ulb.infof307.g10;
 
 import be.ac.ulb.infof307.g10.db.Data;
 import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
@@ -27,6 +28,7 @@ public class TestDB {
 
     @BeforeClass
     public static void createDB (){
+        AbstractTestDatabase.beforeClass();
         Database.empty();
     }
 
@@ -49,6 +51,7 @@ public class TestDB {
     @Test
     public void test_0060_CreateProduct(){
     	new Product("#DB 6 Apples", 6, "unit").save();
+    	new Product("#DB 7 Apples", 6, "unit").save();
     }
 
     @Test
@@ -108,10 +111,9 @@ public class TestDB {
         Database.delete((Database.getUser("#DB lala")));
     }
 
-
     @Test
     public void test_0994_DeleteProduct(){
-        Database.delete(Database.getProduct("#DB 6 Apples"));
+    	Database.delete(Database.getProduct("#DB 7 Apples"));
     }
 
 

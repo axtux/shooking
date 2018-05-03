@@ -1,11 +1,14 @@
 package be.ac.ulb.infof307.g10.db;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
+import javax.persistence.FlushModeType;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.Persistence;
@@ -32,17 +35,37 @@ public class GenericDatabase {
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
 	private static boolean autoCommit = true;
+	private static Map<String, String> properties;
+
+	/**
+	 * Set property to overwrite any value from persistence.xml
+	 * @param name Name of property
+	 * @param value Value
+	 */
+	public static void setProp(String name, String value) {
+		if (properties == null) {
+			properties = new HashMap<>();
+		}
+		properties.put(name, value);
+		// force reopening at next use
+		close();
+	}
 
 	/**
 	 * Return the EntityManager
 	 * @return EntityManager
 	 */
 	private static EntityManager getEM() {
+		if (properties == null) {
+			properties = new HashMap<>();
+		}
 		if (emf == null || !emf.isOpen()) {
-			emf = Persistence.createEntityManagerFactory(NAME);
+			emf = Persistence.createEntityManagerFactory(NAME, properties);
 		}
 		if (em == null || !em.isOpen()) {
 			em = emf.createEntityManager();
+			// flush at commit
+			em.setFlushMode(FlushModeType.COMMIT);
 		}
 		return em;
 	}
@@ -162,6 +185,10 @@ public class GenericDatabase {
 	 * Delete all objects from database
 	 */
 	public static void empty() {
+		// disable FK constraints
+		begin();
+		getEM().createNativeQuery("SET FOREIGN_KEY_CHECKS=0").executeUpdate();
+		commit();
 		// clear links between objects and database
 		getEM().clear();
 		// start batch operations
@@ -171,6 +198,10 @@ public class GenericDatabase {
 		}
 		// end batch operations
 		setAutoCommit(true);
+		// enable FK constraints
+		begin();
+		getEM().createNativeQuery("SET FOREIGN_KEY_CHECKS=1").executeUpdate();
+		commit();
 	}
 
 	public static boolean isEmpty() {
