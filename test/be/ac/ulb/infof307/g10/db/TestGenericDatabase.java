@@ -9,7 +9,7 @@ import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 
-public class TestGenericDatabase extends DatabaseTest {
+public class TestGenericDatabase extends AbstractTestDatabase {
 
 	public static Product initProduct() {
 		Product p = new Product("Pasta", 500, "g");

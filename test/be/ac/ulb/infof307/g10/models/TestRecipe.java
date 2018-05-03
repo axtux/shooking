@@ -8,11 +8,11 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import be.ac.ulb.infof307.g10.db.DatabaseTest;
+import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 
-public class TestRecipe extends DatabaseTest {
+public class TestRecipe extends AbstractTestDatabase {
 
 	@Test
 	public void test_001_addStep() {

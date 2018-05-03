@@ -8,7 +8,7 @@ import org.junit.BeforeClass;
  * A test database will be used to avoid messing with production database.
  * This test database is cleaned before each test to avoid conflict between tests.
  */
-public abstract class DatabaseTest {
+public abstract class AbstractTestDatabase {
 
 	@BeforeClass
 	public static void beforeClass() {

@@ -2,7 +2,7 @@ package be.ac.ulb.infof307.g10;
 
 import be.ac.ulb.infof307.g10.models.*;
 import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.db.DatabaseTest;
+import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class TestResearch {
 
     @BeforeClass
     public static void setUp() throws Exception {
-    	DatabaseTest.beforeClass();
+    	AbstractTestDatabase.beforeClass();
     	Database.empty();
         new Product("#Research 6 Apples (Pink ladies)", 1, "unit").save();
         new Product("#Research 6 Apples (Jonagold)", 1, "unit").save();
