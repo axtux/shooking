@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class Main extends Application {
 	/*
@@ -43,6 +42,9 @@ public class Main extends Application {
 	public static void main(String[] args) {
 		launch(args);
 	}
+
+	//TODO avoir une liste des pages possible ici et faire des sublist dans les méthode pour récupérer ce qu'on veut
+	// ceci permettrait de pas se tromper facilement dans l'écrite des boutons à disable
 	
 	public void goToLogin() {
 		stage.setTitle("Login Page");
@@ -57,42 +59,31 @@ public class Main extends Application {
 	}
 
 	public void goToCreateAccount() {
-
         GeneralView page = new GeneralView(stage, "CreateAccount", "Menu");
-        List<String> buttons = Arrays.asList("map","shoppingList");
-        page.disableButtons(buttons);
-
+        page.disableButtons(Arrays.asList("map","shoppingList","recipe"));
         page.setTitle("Create your account");
         update();
 	}
 	public void goToRecipe() {
 		GeneralView page = new GeneralView(stage, "Recipe", "Menu");
-		List<String> buttons = Arrays.asList("recipe");
-		page.disableButtons(buttons);
-
+		page.disableButtons(Arrays.asList("recipe"));
 		page.setTitle("Recipes");
 		update();
 	}
 	public void goToShoppingList() {
 		GeneralView page = new GeneralView(stage, "ShoppingList", "Menu");
-		List<String> buttons = Arrays.asList("shoppingList");
-		page.disableButtons(buttons);
-
+		page.disableButtons(Arrays.asList("shoppingList"));
 		page.setTitle("Shopping List");
 		update();
-
 	}
 
 
 
 	public void goToMap(){
-
 		GeneralView page = new GeneralView(stage, "Map", "Menu");
-		List<String> buttons = Arrays.asList("map");
-		page.disableButtons(buttons);
-
+		page.disableButtons(Arrays.asList("map"));
 		page.setTitle("Shopping Map");
-
+		update();
 	}
 
 	public void exit(){
@@ -108,8 +99,7 @@ public class Main extends Application {
 			stage.setScene(scene);
 			stage.show();
 
-		} catch (IOException e) {
-			// never happens as resource in packed with application
+		} catch (IOException e) { // never happens as resource in packed with application
 			e.printStackTrace();
 		}
 	}
