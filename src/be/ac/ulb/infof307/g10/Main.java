@@ -2,7 +2,6 @@ package be.ac.ulb.infof307.g10;
 
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.User;
-import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.views.GeneralView;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -82,13 +81,11 @@ public class Main extends Application {
 	public void goToRecipe() {
 		GeneralView page = new GeneralView(stage, "Recipe", "Menu");
 		page.disableButtons(Arrays.asList("recipe"));
-		page.setTitle("Recipes");
 		update();
 	}
 	public void goToShoppingList() {
 		GeneralView page = new GeneralView(stage, "ShoppingList", "Menu");
 		page.disableButtons(Arrays.asList("shoppingList"));
-		page.setTitle("Shopping List");
 		update();
 	}
 
@@ -97,7 +94,6 @@ public class Main extends Application {
 	public void goToMap(){
 		GeneralView page = new GeneralView(stage, "Map", "Menu");
 		page.disableButtons(Arrays.asList("map"));
-		page.setTitle("Shopping Map");
 		update();
 	}
 

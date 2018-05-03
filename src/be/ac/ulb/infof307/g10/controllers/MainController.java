@@ -34,6 +34,7 @@ public class MainController implements Initializable {
     public void goToRecipe() {
         Main.getInstance().goToRecipe();
     }
+    
     public void goToShoppingList() {
         Main.getInstance().goToShoppingList();
 

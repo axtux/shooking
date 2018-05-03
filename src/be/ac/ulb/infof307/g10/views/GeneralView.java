@@ -38,7 +38,7 @@ public class GeneralView extends Parent {
 
         //creation of the scene and configuration
         Scene scene = new Scene(borderPane);
-        stage.setTitle("Account"); //title of the window
+        stage.setTitle(String.valueOf(centerPage.split(" "))); //title of the window
         stage.setScene(scene);
         stage.show();
     }
@@ -71,29 +71,14 @@ public class GeneralView extends Parent {
      * @param btns A list of String representing the id of the buttons we want to disable
      */
     public void disableButtons(List<String> btns ) {
-
-        VBox vbox = (VBox) menu.getChildren().get(0);
-        HBox menuBar = (HBox) vbox.getChildren().get(0); //the hbox with buttons (it seems in the view like a menubar) is the first children
+        
+        HBox menuBar = (HBox) menu.getChildren().get(0); //the hbox with buttons (it seems in the view like a menubar) is the first children
 
         for (Node btn : menuBar.getChildren()) { //we check the corresponding buttons in the hbox
             if(btns.contains(btn.getId()))
                 btn.setDisable(true);//disable the button
         }
 
-    }
-
-    /**
-     * This method is to change the title of the menu (see fxml)
-     * It really depends of the structure of the menu, if the menu view is modified, this function may not work anymore
-     * @param t String representing the new title of the page
-     */
-    public void setTitle(String t) {
-
-        VBox vbox = (VBox) menu.getChildren().get(0);
-        HBox hboxLabel = (HBox) vbox.getChildren().get(1); //the hbox containing the title label is the second children
-
-        Label title = (Label) hboxLabel.getChildren().get(0); //the title label
-        title.setText(t);
     }
     
 }

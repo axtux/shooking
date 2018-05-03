@@ -29,20 +29,16 @@ public class LoginController extends MainController{
     @FXML
     public void submit(){
         String log = loginField.getText();
-        //Capture of the "password" field
         String pwd = pwdField.getText();
-        System.out.println(pwd);
+        
         try{
             printLabel.setText("Connection ...");
             User user = User.login(log, pwd);
             Main.getInstance().goToShoppingList();
-        }
-        catch(IncorrectPasswordException e){
-            System.out.println("Bad Password");
+        } catch(IncorrectPasswordException e){
             printLabel.setText("Incorrect Password");
         } catch(NonExistingException e) {
             printLabel.setText("This user does not exist");
         }
     }
-
 }

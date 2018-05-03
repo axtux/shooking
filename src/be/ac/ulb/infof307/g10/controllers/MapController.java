@@ -21,6 +21,10 @@ import netscape.javascript.JSObject;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class of the Google Map view
+ * It configure the map and manage the markers on this map
+ */
 public class MapController extends MainController implements MapComponentInitializedListener {
 
     @FXML
