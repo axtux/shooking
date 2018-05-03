@@ -15,13 +15,16 @@ import javafx.scene.control.TextField;
 public class CreateAccountController extends MainController {
 
     @FXML
-    TextField textFieldLog; //login field
+    TextField textFieldLog;
     @FXML
-    PasswordField pwdField; //password input field
+    PasswordField pwdField;
     @FXML
-    PasswordField pwdField2; //password verification field
-    @FXML
-    Label errorLabel; //text field to show if the creation of the account is not possible
+    PasswordField pwdField2;
+	/**
+	 * Text field to show if the creation of the account is not possible
+	 */
+	@FXML
+    Label errorLabel;
 
     /**
      * This method is used to check the information entered in the view to create the new user
@@ -37,6 +40,7 @@ public class CreateAccountController extends MainController {
         if (pwd.equals(pwd2)) {
             try{
                 User user = User.signup(log, pwd);
+                //TODO user will be sent to the Main controller to load the next page
                 errorLabel.setText("User created successfully");
                 goToShoppingList();
 
