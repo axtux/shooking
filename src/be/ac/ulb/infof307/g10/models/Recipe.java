@@ -100,7 +100,6 @@ public class Recipe extends ModelObject {
 	public Map<Product,Float> getAllIngredients(){
 		return new HashMap<Product,Float>(ingredients);
 	}
-
 	
 	/**
 	 * Get steps
@@ -156,6 +155,13 @@ public class Recipe extends ModelObject {
 	}
 	
 	/**
+	 * Delete all steps
+	 */
+	public void clearSteps() {
+		steps = new ArrayList<>();
+	}
+	
+	/**
 	 * Add an ingredient in the ingredients list.
 	 * If the product is already present, the older quantity is erased by the new one
 	 * @param product The new product
@@ -172,6 +178,13 @@ public class Recipe extends ModelObject {
 	 */
 	public void removeIngredient(Product p){
 		ingredients.remove(p);
+	}
+
+	/**
+	 * Delete all ingredients
+	 */
+	public void clearIngredients() {
+		this.ingredients = new HashMap<>();
 	}
 
 	public int getServings(){
