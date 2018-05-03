@@ -12,7 +12,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-
+/**
+ * Controller for the CreateShop view
+ * @author pierre
+ *
+ */
 public class CreateShopController {
 
     @FXML
@@ -48,6 +52,10 @@ public class CreateShopController {
     @FXML
     private Button creation;
     
+    /**
+     * Construct an array with the schedule text fields
+     * @return an array with the 7 schedule text fields
+     */
     private TextField[] getTextFields(){
     	TextField[] textFields = new TextField[7];
     	textFields[0]= monday;
@@ -60,10 +68,15 @@ public class CreateShopController {
     	return textFields;
     }
     
+    /**
+     * Construct the schedule array containing the opening hours
+     * @return the schedule array containing the opening hours
+     */
     private String[] makeSchedule(){
     	String[] schedule = new String[7];
     	TextField[] textFields=getTextFields();
     	for(int i=0;i<7;i++){
+    		//The user does not have to know all the schedule
     		if(textFields[i].getText().equals("")){
     			schedule[i]="Unknown";
     			System.out.println(schedule[i]);
@@ -75,6 +88,10 @@ public class CreateShopController {
     	return schedule;
     }
 
+    /**
+     * Creation of the Shop in the database
+     * @param event the clic on the button
+     */
     @FXML
     void create(ActionEvent event) {
     	LatLong latLong = MapController.latLong;
@@ -82,19 +99,6 @@ public class CreateShopController {
     	shop.save();
 		Main.getInstance().closeDialog();
     }
-/**
-    @FXML
-    void initialize() {
-        assert name != null : "fx:id=\"name\" was not injected: check your FXML file 'ShopCreation.fxml'.";
-        assert monday != null : "fx:id=\"monday\" was not injected: check your FXML file 'ShopCreation.fxml'.";
-        assert tuesday != null : "fx:id=\"tuesday\" was not injected: check your FXML file 'ShopCreation.fxml'.";
-        assert wedsnday != null : "fx:id=\"wedsnday\" was not injected: check your FXML file 'ShopCreation.fxml'.";
-        assert thursday != null : "fx:id=\"thursday\" was not injected: check your FXML file 'ShopCreation.fxml'.";
-        assert friday != null : "fx:id=\"friday\" was not injected: check your FXML file 'ShopCreation.fxml'.";
-        assert saturday != null : "fx:id=\"saturday\" was not injected: check your FXML file 'ShopCreation.fxml'.";
-        assert sunday != null : "fx:id=\"sunday\" was not injected: check your FXML file 'ShopCreation.fxml'.";
-        assert creation != null : "fx:id=\"creation\" was not injected: check your FXML file 'ShopCreation.fxml'.";
 
-    }**/
 }
 

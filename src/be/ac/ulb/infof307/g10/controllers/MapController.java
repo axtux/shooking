@@ -37,7 +37,7 @@ public class MapController extends MainController implements MapComponentInitial
     InfoWindow popup;
     
     /**
-     * Last LatLong clicked (Tmp)
+     * Last LatLong clicked (Waiting for a smarter solution)
      */
     static LatLong latLong;
 
@@ -47,8 +47,14 @@ public class MapController extends MainController implements MapComponentInitial
         mapView.addMapInializedListener(this);
     }
     
+    /**
+     * An arrayList containing all the markers on the map
+     */
     public ArrayList<Marker> markers;
 
+    /**
+     * Initialization of the map
+     */
     @Override
     public void mapInitialized() {
         // Set the initial properties of the map.
@@ -78,6 +84,10 @@ public class MapController extends MainController implements MapComponentInitial
 		});
     }
 
+    /**
+     * Launching of the popup for the creation of a shop
+     * @param event the right clic on the map
+     */
 	@FXML
 	public void createShop(GMapMouseEvent event) {
 		latLong = event.getLatLong();
@@ -86,6 +96,10 @@ public class MapController extends MainController implements MapComponentInitial
 		updateInterface();
 	}
 
+	/**
+	 * Adding a shop add a marker on the map
+	 * @param s the shop to add
+	 */
 	private void addShopToMap(Shop s) {
 		LatLong latLong = new LatLong(s.getLatitude(), s.getLongitude());
 		MarkerOptions markerOptions = new MarkerOptions();
@@ -98,6 +112,10 @@ public class MapController extends MainController implements MapComponentInitial
 			popup.open(map, marker);
 		});
 	}
+	/**
+	 * Update of the interface
+	 * removing of all the markers then query the database to obtain all the shops and render them
+	 */
 	private void updateInterface(){
 		for(Marker m:markers ){
 			map.removeClusterableMarker(m);
