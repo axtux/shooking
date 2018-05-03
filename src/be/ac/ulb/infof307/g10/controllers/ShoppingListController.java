@@ -200,7 +200,6 @@ public class ShoppingListController extends MainController {
 		});
 		updateSelected();
 		updateInterface();
-		amountTF.setSigned(false);
 	}
 
 
