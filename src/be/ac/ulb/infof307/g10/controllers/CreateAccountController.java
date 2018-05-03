@@ -29,31 +29,23 @@ public class CreateAccountController extends MainController {
      */
     @FXML
     public void submit(ActionEvent event){
-        //field login recovered
-
+    	
         String log = textFieldLog.getText();
-        //password field recovered
-
         String pwd = pwdField.getText();
-        System.out.println(pwd);
-
         String pwd2 = pwdField2.getText();
-        System.out.println(pwd2);
 
         if (pwd.equals(pwd2)) {
             try{
                 User user = User.signup(log, pwd);
-                //print it is ok
                 errorLabel.setText("User created successfully");
-                goToLogin();
+                goToShoppingList();
 
             }
             catch(ExistingException e){
-                System.out.println("User Already exist");
-                errorLabel.setText("This user name is already chosen");
+                errorLabel.setText("This user name already exists");
             }
         } else {
-            errorLabel.setText("The two Password are not the same");
+            errorLabel.setText("The two Passwords are different");
         }
     }
 }
