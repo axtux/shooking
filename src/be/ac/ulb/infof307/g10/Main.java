@@ -38,24 +38,14 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage){
 		this.stage = stage;
-		/* TODO remove for release
-		try {
-			this.user = User.login("test", "test");
-			System.out.println("user test logged in");
-		} catch(NonExistingException e) {
-			this.user = User.signup("test", "test");
-			System.out.println("user test signed up");
-		}
-		goToShoppingList();
-		//*/goToLogin();
+		goToLogin();
 	}
 	
 	public static void main(String[] args) {
 		launch(args);
 	}
-
-	//TODO avoir une liste des pages possible ici et faire des sublist dans les méthode pour récupérer ce qu'on veut
-	// ceci permettrait de pas se tromper facilement dans l'écrite des boutons à disable
+	
+	//TODO have a list of pages id to permit the programmer to check rapidly the different id
 	
 	public User getUser() {
 		return user;
@@ -83,13 +73,12 @@ public class Main extends Application {
 		page.disableButtons(Arrays.asList("recipe"));
 		update();
 	}
+	
 	public void goToShoppingList() {
 		GeneralView page = new GeneralView(stage, "ShoppingList", "Menu");
 		page.disableButtons(Arrays.asList("shoppingList"));
 		update();
 	}
-
-
 
 	public void goToMap(){
 		GeneralView page = new GeneralView(stage, "Map", "Menu");
