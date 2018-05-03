@@ -31,6 +31,8 @@ Le projet peut être importé dans Eclipse en tant que projet Maven. Attention, 
 
 Les commandes ci-dessous sont disponibles sur Windows, MacOS et Linux.
 
+Si vous êtes sur Windows, assurez-vous d'avoir ajouté Maven dans votre environnement https://crunchify.com/how-to-setupinstall-maven-classpath-variable-on-windows-7/
+
 ### Compilation
 ```
 make jar

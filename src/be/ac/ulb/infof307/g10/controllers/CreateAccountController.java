@@ -1,9 +1,7 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import be.ac.ulb.infof307.g10.Main;
-import be.ac.ulb.infof307.g10.models.Connector;
 import be.ac.ulb.infof307.g10.models.User;
-import be.ac.ulb.infof307.g10.models.exceptions.UserAlreadyExistException;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -44,14 +42,13 @@ public class CreateAccountController extends MainController {
 
         if (pwd.equals(pwd2)) {
             try{
-                Connector conn = new Connector();
-                User user = conn.createUser(log, pwd);
+                User user = User.signup(log, pwd);
                 //print it is ok
                 errorLabel.setText("User created successfully");
                 goToLogin();
 
             }
-            catch(UserAlreadyExistException e){
+            catch(ExistingException e){
                 System.out.println("User Already exist");
                 errorLabel.setText("This user name is already chosen");
             }

@@ -1,16 +1,18 @@
 package be.ac.ulb.infof307.g10;
 
-import java.io.IOException;
-
-import be.ac.ulb.infof307.g10.views.*;
-import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.models.User;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
+import be.ac.ulb.infof307.g10.views.GeneralView;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class Main extends Application {
@@ -26,17 +28,27 @@ public class Main extends Application {
 	}
 	
 	private Stage stage;
+	private Stage dialog;
+	private User user;
 
-    @Override
-    public void init() throws Exception {
-        super.init();
-        DatabaseFacade.initDB();
-    }
+	@Override
+	public void init() {
+		Database.init();
+	}
 
-    @Override
+	@Override
 	public void start(Stage stage){
 		this.stage = stage;
-		goToLogin();
+		/* TODO remove for release
+		try {
+			this.user = User.login("test", "test");
+			System.out.println("user test logged in");
+		} catch(NonExistingException e) {
+			this.user = User.signup("test", "test");
+			System.out.println("user test signed up");
+		}
+		goToShoppingList();
+		//*/goToLogin();
 	}
 	
 	public static void main(String[] args) {
@@ -45,6 +57,10 @@ public class Main extends Application {
 
 	//TODO avoir une liste des pages possible ici et faire des sublist dans les méthode pour récupérer ce qu'on veut
 	// ceci permettrait de pas se tromper facilement dans l'écrite des boutons à disable
+	
+	public User getUser() {
+		return user;
+	}
 	
 	public void goToLogin() {
 		stage.setTitle("Login Page");
@@ -89,20 +105,35 @@ public class Main extends Application {
 		Platform.exit();
 	}
 
-	private void loadFXML(String name) {
+	private Scene getFXMLScene(String name) {
 		try {
-
-			Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(name+".fxml"));
-
-			Scene scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-
-		} catch (IOException e) { // never happens as resource in packed with application
-			e.printStackTrace();
+			Parent parent = FXMLLoader.load(getClass().getResource("/FXML/"+name+".fxml"));
+			return new Scene(parent);
+		} catch (IOException e) {
+			// never happens as resources are packed within application
+			throw new RuntimeException(e);
 		}
 	}
 
+	private void loadFXML(String name) {
+		Scene scene = getFXMLScene(name);
+		stage.setScene(scene);
+		stage.show();
+	}
+
+	public void showDialog(String name, String title) {
+		Scene scene = getFXMLScene(name);
+		dialog = new Stage();
+		dialog.setTitle(title);
+		dialog.initModality(Modality.APPLICATION_MODAL);
+		dialog.setScene(scene);
+		dialog.showAndWait();
+	}
+	
+	public void closeDialog() {
+		dialog.close();
+	}
+	
 	private void update() {
 		stage.centerOnScreen();
 	}

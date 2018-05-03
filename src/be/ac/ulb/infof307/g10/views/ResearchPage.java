@@ -3,10 +3,8 @@
  */
 package be.ac.ulb.infof307.g10.views;
 
-
-import be.ac.ulb.infof307.g10.models.Research;
 import be.ac.ulb.infof307.g10.models.*;
-import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Product;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -51,9 +49,8 @@ public class ResearchPage {
             public void handle(ActionEvent event) {
             	//"Login" Textfield creation
 
-                List<Product> pl = DatabaseFacade.getProducts(textFieldProd.getText());
-                Research r = new Research();
-                List<Shop> sl = r.getStoreWithProducts(pl);
+                List<Product> pl = Database.getAllProducts();
+                List<Shop> sl = Shop.getWithProducts(pl);
                 for (Shop s: sl) {
                     storesArea.setText(storesArea.getText() + s.getName() +"\n");
                 }

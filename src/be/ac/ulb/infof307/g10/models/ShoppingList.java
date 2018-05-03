@@ -1,67 +1,68 @@
 package be.ac.ulb.infof307.g10.models;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 
 @Entity
-@NamedQueries({
-        @NamedQuery(name = "ShoppingList.findAll", query = "SELECT l FROM ShoppingList l")
-})
-public class ShoppingList implements Serializable {
-
+public class ShoppingList extends ModelObject {
 
 	private static final long serialVersionUID = -0L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	private Integer amountTotal = 0;
-    @ElementCollection(fetch = FetchType.EAGER)
-    Map<Product,Integer> productsAndAssociatedQuantity ;//= new HashMap<>();
 
+	@ElementCollection(fetch = FetchType.EAGER)
+	Map<Product, Integer> productsAndQuantity;
 
+	// NEEDED BY JPA
+	public ShoppingList() {
+		productsAndQuantity = new HashMap<>();
+	}
 
-    // NEEDED BY JPA
-    public ShoppingList(){
-        productsAndAssociatedQuantity = new HashMap<>();
-    }
+	/**
+	 * Copy ShoppingList
+	 * @param sl Shopping list to copy
+	 */
+	public ShoppingList(ShoppingList sl) {
+		setProductsAndQuantity(sl.productsAndQuantity);
+	}
 
-    public void addProduct(Product p, int quantity){
-        productsAndAssociatedQuantity.put(p, quantity);
-        amountTotal += p.getPrice()*quantity;
-    }
+	public void setProduct(Product p, int quantity) {
+		productsAndQuantity.put(p, quantity);
+	}
 
-    @Override
-    public String toString() {
-        return "ShoppingList{" +
-                "id=" + id +
-                ", amountTotal=" + amountTotal +
-                ", productsAndAssociatedQuantity=" + productsAndAssociatedQuantity +
-                '}';
-    }
+	public void addProduct(Product p, int quantity) {
+		setProduct(p, quantity+getQuantity(p));
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void removeProduct(Product p) {
+		productsAndQuantity.remove(p);
+	}
+	
+	public int getQuantity(Product p) {
+		return productsAndQuantity.getOrDefault(p, 0);
+	}
+	
+	public int size() {
+		return productsAndQuantity.size();
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void clear() {
+		productsAndQuantity.clear();
+	}
 
-    public Integer getAmountTotal() {
-        return amountTotal;
-    }
+	public Set<Product> getProducts() {
+		return productsAndQuantity.keySet();
+	}
 
-    public void setAmountTotal(Integer amountTotal) {
-        this.amountTotal = amountTotal;
-    }
+	public Map<Product, Integer> getProductsAndQuantity() {
+		return new HashMap<>(productsAndQuantity);
+	}
 
-    public Map<Product, Integer> getProductsAndAssociatedQuantity() {
-        return productsAndAssociatedQuantity;
-    }
+	public void setProductsAndQuantity(Map<Product, Integer> productsAndQuantity) {
+		this.productsAndQuantity = new HashMap<>(productsAndQuantity);
+	}
 
-    public void setAllProductsAndQuantity(Map<Product, Integer> productsAndAssociatedQuantity) {
-        this.productsAndAssociatedQuantity = productsAndAssociatedQuantity;
-    }
 }

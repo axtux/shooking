@@ -55,7 +55,7 @@ public class GeneralView extends Parent {
     private Parent loadFXML(String name) {
         try {
 
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(name+".fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/FXML/"+name+".fxml"));
             return root;
 
         } catch (IOException e) { // never happens as resource in packed with application

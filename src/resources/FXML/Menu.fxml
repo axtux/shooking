@@ -19,7 +19,7 @@
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@pictures/trolley.png" />
+                              <Image url="/pictures/trolley.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -28,7 +28,7 @@
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@pictures/map.png" />
+                              <Image url="/pictures/map.png" />
                            </image>
                         </ImageView>
                      </graphic>

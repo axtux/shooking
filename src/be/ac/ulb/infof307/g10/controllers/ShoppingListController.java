@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
 import be.ac.ulb.infof307.g10.Main;
+import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,13 +20,13 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.util.Callback;
-
+import javafx.util.StringConverter;
 
 public class ShoppingListController extends MainController {
 	@FXML
@@ -42,9 +43,10 @@ public class ShoppingListController extends MainController {
 	private Button amountUpBT;
 	@FXML
 	private Button amountDownBT;
-
 	@FXML
-	private TextField productTF;
+	private ComboBox<Product> productsListCombo;
+	
+
 	@FXML
 	private IntField amountTF;
 
@@ -67,15 +69,14 @@ public class ShoppingListController extends MainController {
 	private void clear(ActionEvent event) {
 		table.getSelectionModel().clearSelection();
 		// in case selection is not update, clear fields
-		productTF.clear();
 		amountTF.clear();
-	}
+	}	
 
 	@FXML
 	private void add(ActionEvent event) {
 		// add product
 		//FIXME
-		Product p = new Product(productTF.getText(), "", 0, 0, 0, 0, 0);
+		Product p = productsListCombo.getSelectionModel().getSelectedItem();
 		products.put(p, amountTF.getInt());
 		// select it
 		for (int i = 0; i < items.size(); i++) {
@@ -123,8 +124,8 @@ public class ShoppingListController extends MainController {
 			selected = selection.get(0);
 			editBT.setDisable(false);
 			removeBT.setDisable(false);
-			productTF.setText(selected.getKey().getName());
 			amountTF.setText(selected.getValue().toString());
+			productsListCombo.getSelectionModel().select(selected.getKey());
 		} else { //no product selected
 			selected = null;
 			editBT.setDisable(true);
@@ -133,6 +134,8 @@ public class ShoppingListController extends MainController {
 	}
 	
 	private void updateInterface() {
+		productsListCombo.getItems().clear();
+		productsListCombo.getItems().addAll(Database.getAllProducts());
 		items = FXCollections.observableArrayList(products.entrySet());
 		// sort by product description (case insensitive)
 		items.sort(new Comparator<Entry<Product, Integer>>() {
@@ -142,8 +145,16 @@ public class ShoppingListController extends MainController {
 		});
 		table.setItems(items);
 	}
-	
 
+	@FXML
+	private void createNewProduct(ActionEvent event) throws IOException {
+		Main.getInstance().showDialog("CreateProduct", "Create product");
+		updateInterface();
+	}
+	
+	public void researchProduct(ActionEvent actionEvent) {
+		Main.getInstance().showDialog("ResearchDialog", "Research product");
+	}
 
 
 	public void initialize(URL url, ResourceBundle rb) {
@@ -171,11 +182,15 @@ public class ShoppingListController extends MainController {
 				updateInterface();
 			}
 		});
-		// TODO get actual data
-		products.put(new Product("Oeufs", "" , 0, 0, 0, 0, 0), 1);
-		products.put(new Product("Pâtes", "", 0, 0, 0, 0, 0), 500);
-		products.put(new Product("Bière", "", 0, 0, 0, 0, 0), 42);
-		
+		// add available products in the select list
+		productsListCombo.setConverter(new StringConverter<Product>() {
+			@Override
+			public String toString(Product p) {
+				return p.getFullName();
+			}
+			@Override
+			public Product fromString(String string) { return null; }
+		});
 		// add listener to call selected method
 		selection = table.getSelectionModel().getSelectedItems();
 		selection.addListener(new ListChangeListener<Map.Entry<Product, Integer>>() {
@@ -184,28 +199,9 @@ public class ShoppingListController extends MainController {
 			}
 		});
 		updateSelected();
-		
+		updateInterface();
 		amountTF.setSigned(false);
 	}
 
-	public void researchProduct(ActionEvent actionEvent) {
-		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("researchDialog.fxml"));
-			DialogPane page = loader.load();
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Research product");
-			dialogStage.initModality(Modality.APPLICATION_MODAL);
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
 
-
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
-		} catch (IOException e) {
-			// Exception gets thrown if the fxml file could not be loaded
-			e.printStackTrace();
-
-		}
-
-	}
 }

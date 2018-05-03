@@ -1,6 +1,5 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Comparator;
 import java.util.Map;
@@ -16,20 +15,14 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
-import javafx.collections.ListChangeListener.Change;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Font;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class RecipeController implements Initializable {
@@ -125,9 +118,7 @@ public class RecipeController implements Initializable {
 	private ObservableList<Entry<Product, Integer>> selection;
 	
 	private ObservableMap<Product, Integer> steps;
-	private ObservableList<Map.Entry<Product, Integer>> itemsStep;
 	private Entry<Product, Integer> selectedStep;
-	private ObservableList<Entry<Product, Integer>> selectionStep;
 	
 	
  
@@ -138,7 +129,7 @@ public class RecipeController implements Initializable {
     void add(ActionEvent event) {
     	// add ingredient
     			//FIXME
-    			Product p = new Product(ingredientTF.getText(), "", 0, 0, 0, 0, 0);
+    			Product p = new Product(ingredientTF.getText(), 1, "");
     			products.put(p, amountIngredientTF.getInt());
     					// select it
     			for (int i = 0; i < items.size(); i++) {
@@ -330,24 +321,6 @@ public void initialize(URL url, ResourceBundle rb) {
 
 
 public void researchProduct(ActionEvent actionEvent) {
-	ResearchController rc = new ResearchController();
-	try {
-		FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("researchDialog.fxml"));
-		DialogPane page = (DialogPane) loader.load();
-		Stage dialogStage = new Stage();
-		dialogStage.setTitle("Research product");
-		dialogStage.initModality(Modality.APPLICATION_MODAL);
-		Scene scene = new Scene(page);
-		dialogStage.setScene(scene);
-
-
-		// Show the dialog and wait until the user closes it
-		dialogStage.showAndWait();
-	} catch (IOException e) {
-		// Exception gets thrown if the fxml file could not be loaded
-		e.printStackTrace();
-
-	}
-
+	Main.getInstance().showDialog("ResearchDialog", "Research product");
 }
 }

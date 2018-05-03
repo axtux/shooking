@@ -1,94 +1,88 @@
 package be.ac.ulb.infof307.g10.models;
 
-import be.ac.ulb.infof307.g10.db.DatabaseFacade;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.NoResultException;
+import javax.persistence.OneToOne;
+
+import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
+import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.utils.Hash;
 
-import javax.persistence.*;
-import java.io.Serializable;
-
+/**
+ * Manage user, password and shopping list.
+ * Use static methods to get instance.
+ */
 @Entity
-public class User implements Serializable {
+public class User extends ModelObject {
 
-    private static final long serialVersionUID = -0L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Basic(optional = false)
-	private Integer id;
+	private static final long serialVersionUID = -0L;
 
 	@Column(unique = true)
-	@Basic(optional = false)
 	private String username;
 
-    @Basic(optional = false)
-	private String password;
+	private String hashedPassword;
 
-	@OneToOne
-    private ShoppingList shoppingList;
+	@OneToOne(cascade = CascadeType.ALL)
+	private ShoppingList shoppingList;
 
-	//NEEDED BY JPA
-	public User(){
+	// NEEDED BY JPA
+	private User() {}
+
+	private User(String username, String password) {
+		if (username == null || password == null) {
+			throw new NullPointerException();
+		}
+		this.username = username;
+		setPassword(password);
+		this.shoppingList = new ShoppingList();
 	}
 
-    public User(String username, String password, ShoppingList userShoppingList) {
-        this.username = username;
-        this.password = Hash.sha256(password);
-        this.shoppingList = userShoppingList;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public User(String username, String password) {
-        this.username = username;
-        this.password = Hash.sha256(password);
-    }
+	public String getHashedPassword() {
+		return hashedPassword;
+	}
 
+	public void setPassword(String password) {
+		this.hashedPassword = Hash.sha256(password);
+	}
 
-    public User(User user) {
-        this.id = user.id;
-        this.username = user.username;
-        this.password = user.password;
-        this.shoppingList = user.shoppingList;
-    }
+	public boolean isPassword(String password) {
+		return Hash.sha256(password).equals(hashedPassword);
+	}
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", userList=" + shoppingList +
-                '}';
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public ShoppingList getShoppingList() {
-        return shoppingList;
-    }
-
-    public void setShoppingList(ShoppingList shoppingList) {
-        this.shoppingList = shoppingList;
-        DatabaseFacade.update(this);
-    }
+	public ShoppingList getShoppingList() {
+		return shoppingList;
+	}
+	
+	// static methods
+	public static User login(String username, String password)
+		throws IncorrectPasswordException, NonExistingException {
+		try {
+			User u = Database.getUser(username);
+			if (u.isPassword(password)) {
+				return u;
+			}
+			throw new IncorrectPasswordException();
+		} catch(NoResultException e) {
+			throw new NonExistingException(e);
+		}
+	}
+	
+	public static User signup(String username, String password) throws ExistingException {
+		try {
+			Database.getUser(username);
+			throw new ExistingException();
+		} catch(NoResultException e) {
+			User u = new User(username, password);
+			u.save();
+			return u;
+		}
+	}
 }
-

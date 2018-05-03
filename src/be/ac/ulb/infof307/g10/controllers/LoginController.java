@@ -1,20 +1,13 @@
 package be.ac.ulb.infof307.g10.controllers;
 
 import be.ac.ulb.infof307.g10.Main;
-import be.ac.ulb.infof307.g10.models.Connector;
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.models.exceptions.UserDoesNotExistException;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-
-import javafx.scene.Parent;
-import javafx.scene.layout.AnchorPane;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class LoginController extends MainController{
 
@@ -36,15 +29,14 @@ public class LoginController extends MainController{
         String pwd = pwdField.getText();
         System.out.println(pwd);
         try{
-            Connector conn = new Connector();
-            User user = conn.openSession(log, pwd);
+            User user = User.login(log, pwd);
             printLabel.setText("Connection ...");
             Main.getInstance().goToShoppingList();
         }
         catch(IncorrectPasswordException e){
             System.out.println("Bad Password");
             printLabel.setText("Incorrect Password !");
-        } catch(UserDoesNotExistException e) {
+        } catch(NonExistingException e) {
             printLabel.setText("This user don't exist !");
         }
     }
