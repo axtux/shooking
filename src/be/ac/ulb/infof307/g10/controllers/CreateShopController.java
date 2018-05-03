@@ -2,6 +2,11 @@ package be.ac.ulb.infof307.g10.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import com.lynden.gmapsfx.javascript.object.LatLong;
+
+import be.ac.ulb.infof307.g10.models.Shop;
+import be.ac.ulb.infof307.g10.models.Stock;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -41,12 +46,40 @@ public class CreateShopController {
 
     @FXML
     private Button creation;
+    
+    private TextField[] getTextFields(){
+    	TextField[] textFields = new TextField[7];
+    	textFields[0]= monday;
+    	textFields[1]= tuesday;
+    	textFields[2]= wedsnday;
+    	textFields[3]= thursday;
+    	textFields[4]= friday;
+    	textFields[5]= saturday;
+    	textFields[6]= sunday;
+    	return textFields;
+    }
+    
+    private String[] makeSchedule(){
+    	String[] schedule = new String[7];
+    	TextField[] textFields=getTextFields();
+    	for(int i=0;i<7;i++){
+    		if(textFields[i].getText().equals("Schedule")){
+    			schedule[i]="Unknown";
+    		}
+    		else{
+    			schedule[i]=textFields[i].getText();
+    		}
+    	}
+    	return schedule;
+    }
 
     @FXML
     void create(ActionEvent event) {
-    	
+    	LatLong latLong = MapController.latLong;
+    	Shop shop = new Shop(name.getText(),latLong.getLatitude(), latLong.getLongitude(),makeSchedule(), new Stock());
+    	shop.save();
     }
-
+/**
     @FXML
     void initialize() {
         assert name != null : "fx:id=\"name\" was not injected: check your FXML file 'ShopCreation.fxml'.";
@@ -59,6 +92,6 @@ public class CreateShopController {
         assert sunday != null : "fx:id=\"sunday\" was not injected: check your FXML file 'ShopCreation.fxml'.";
         assert creation != null : "fx:id=\"creation\" was not injected: check your FXML file 'ShopCreation.fxml'.";
 
-    }
+    }**/
 }
 
