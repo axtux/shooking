@@ -39,6 +39,7 @@ public class MapController extends MainController implements MapComponentInitial
     /**
      * Last LatLong clicked (Waiting for a smarter solution)
      */
+    //TODO Make it smarter
     static LatLong latLong;
 
 
@@ -47,10 +48,6 @@ public class MapController extends MainController implements MapComponentInitial
         mapView.addMapInializedListener(this);
     }
     
-    /**
-     * An arrayList containing all the markers on the map
-     */
-    public ArrayList<Marker> markers;
 
     /**
      * Initialization of the map
@@ -72,15 +69,12 @@ public class MapController extends MainController implements MapComponentInitial
 
         map = mapView.createMap(mapOptions);
         popup = new InfoWindow();
-        markers=new ArrayList<Marker>();
 
 		updateInterface();
 
 		// Add a marker to the map on right click
 		map.addMouseEventHandler(UIEventType.rightclick, (GMapMouseEvent event) -> {
 			createShop(event);
-			System.out.println("TODO 1 create shop");
-
 		});
     }
 
@@ -91,7 +85,6 @@ public class MapController extends MainController implements MapComponentInitial
 	@FXML
 	public void createShop(GMapMouseEvent event) {
 		latLong = event.getLatLong();
-		System.out.println("TODO create shop");
 		Main.getInstance().showDialog("CreateShop", "Create shop");
 		updateInterface();
 	}
@@ -105,7 +98,6 @@ public class MapController extends MainController implements MapComponentInitial
 		MarkerOptions markerOptions = new MarkerOptions();
 		markerOptions.position(latLong).visible(Boolean.TRUE).title(s.getInfos());
 		Marker marker = new Marker(markerOptions);
-		markers.add(marker);
 		map.addClusterableMarker(marker);
 		map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
 			popup.setContent(marker.getTitle().replace("\n", "<br>"));
@@ -117,9 +109,7 @@ public class MapController extends MainController implements MapComponentInitial
 	 * removing of all the markers then query the database to obtain all the shops and render them
 	 */
 	private void updateInterface(){
-		for(Marker m:markers ){
-			map.removeClusterableMarker(m);
-		}
+		map.getMarkerClusterer().clearMarkers();
 		for(Shop s: Database.getAllShops()) {
 			addShopToMap(s);
 		}

@@ -79,7 +79,6 @@ public class CreateShopController {
     		//The user does not have to know all the schedule
     		if(textFields[i].getText().equals("")){
     			schedule[i]="Unknown";
-    			System.out.println(schedule[i]);
     		}
     		else{
     			schedule[i]=textFields[i].getText();
