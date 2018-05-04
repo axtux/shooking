@@ -44,12 +44,11 @@ public class CreateAccountController extends MainController {
                 errorLabel.setText("User created successfully");
                 goToShoppingList();
 
-            }
-            catch(ExistingException e){
+            } catch(ExistingException e){
                 errorLabel.setText("This user name already exists");
             }
         } else {
-            errorLabel.setText("The two Passwords are different");
+            errorLabel.setText("Passwords do not match");
         }
     }
 }

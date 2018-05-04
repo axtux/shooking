@@ -47,7 +47,8 @@ public class ShoppingListController extends MainController {
 	private IntField amountTF;
 
 	@FXML
-    private Label errorLabel;//todo : use this label to print the actions processed or the error
+	private Label status;
+	//TODO use this label to print the actions processed or the error
 
 	@FXML
 	private TableView<Map.Entry<Product, Integer>> table;

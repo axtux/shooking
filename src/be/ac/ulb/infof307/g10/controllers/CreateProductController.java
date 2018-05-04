@@ -1,11 +1,9 @@
 package be.ac.ulb.infof307.g10.controllers;
 
 import be.ac.ulb.infof307.g10.Main;
-import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.views.IntField;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;

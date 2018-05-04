@@ -4,11 +4,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -38,7 +36,7 @@ public class GeneralView extends Parent {
 
         //creation of the scene and configuration
         Scene scene = new Scene(borderPane);
-        stage.setTitle(String.valueOf(centerPage.split(" "))); //title of the window
+        stage.setTitle("Shooking (shopping and cooking)"); //title of the window
         stage.setScene(scene);
         stage.show();
     }
@@ -59,10 +57,6 @@ public class GeneralView extends Parent {
             e.printStackTrace();
         }
         return null;//should never return this
-    }
-
-    private void update() {
-        stage.centerOnScreen();
     }
 
     /**
