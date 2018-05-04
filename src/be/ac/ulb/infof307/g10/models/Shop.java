@@ -1,8 +1,10 @@
 package be.ac.ulb.infof307.g10.models;
 
 import java.time.DayOfWeek;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -67,11 +69,11 @@ public class Shop extends ModelObject {
 	 * @return Name and schedule, in String format for all days
 	 */
 	public String getInfos() {
-		String ret = getName()+"\n";
+		String ret = getName()+"\n\n";
 		int day = 1;
 
 		for (String s : this.schedule) {
-			ret += DayOfWeek.of(day).name() + ": " + s+"\n";
+			ret += DayOfWeek.of(day).getDisplayName(TextStyle.FULL, Locale.ENGLISH) + ": " + s+"\n";
 			day++;
 		}
 		return ret;

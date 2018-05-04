@@ -57,7 +57,7 @@ public class Main extends Application {
 	}
 
 	public void goToLogin() {
-		stage.setTitle("Login Page");
+		stage.setTitle("Login");
 		loadFXML("Login");
 		update();
 	}
