@@ -50,7 +50,12 @@ public class Main extends Application {
 	public User getUser() {
 		return user;
 	}
-	
+
+	public void setUser(User user) {
+		this.user = user;
+		goToShoppingList();
+	}
+
 	public void goToLogin() {
 		stage.setTitle("Login Page");
 		loadFXML("Login");

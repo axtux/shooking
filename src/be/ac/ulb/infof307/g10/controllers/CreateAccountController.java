@@ -1,5 +1,6 @@
 package be.ac.ulb.infof307.g10.controllers;
 
+import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import javafx.event.ActionEvent;
@@ -39,11 +40,9 @@ public class CreateAccountController extends MainController {
 
         if (pwd.equals(pwd2)) {
             try{
+                errorLabel.setText("User creation...");
                 User user = User.signup(log, pwd);
-                //TODO user will be sent to the Main controller to load the next page
-                errorLabel.setText("User created successfully");
-                goToShoppingList();
-
+                Main.getInstance().setUser(user);
             } catch(ExistingException e){
                 errorLabel.setText("This user name already exists");
             }
