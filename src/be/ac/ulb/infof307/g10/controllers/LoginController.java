@@ -34,7 +34,7 @@ public class LoginController extends MainController{
         try{
             printLabel.setText("Connection ...");
             User user = User.login(log, pwd);
-            Main.getInstance().goToShoppingList();
+            Main.getInstance().setUser(user);
         } catch(IncorrectPasswordException e){
             printLabel.setText("Incorrect Password");
         } catch(NonExistingException e) {

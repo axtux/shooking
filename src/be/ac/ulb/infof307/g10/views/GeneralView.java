@@ -43,7 +43,7 @@ public class GeneralView extends Parent {
 
     /**
      * This function is used to load the corresponding Parent class of the fxml representing a view
-     * @param name The String name of the fxml file located in the ressource package
+     * @param name The String name of the fxml file located in the resource package
      *             You should not put the .fxml extension, only the name
      * @return A Parent node corresponding to the root node of the view
      */
