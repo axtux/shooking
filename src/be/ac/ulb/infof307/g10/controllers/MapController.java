@@ -54,28 +54,38 @@ public class MapController extends MainController implements MapComponentInitial
      */
     @Override
     public void mapInitialized() {
-        // Set the initial properties of the map.
-        MapOptions mapOptions = new MapOptions();
-        LatLong latLong = new LatLong((double) 50.8504500, (double) 4.3487800);
-        mapOptions.center(latLong)
-                .mapType(MapTypeIdEnum.ROADMAP)
-                .overviewMapControl(false)
-                .panControl(false)
-                .rotateControl(false)
-                .scaleControl(false)
-                .streetViewControl(false)
-                .zoomControl(false)
-                .zoom(12);
+        try {
+			// Set the initial properties of the map.
+			MapOptions mapOptions = new MapOptions();
+			LatLong latLong = new LatLong((double) 50.8504500, (double) 4.3487800);
+			mapOptions.center(latLong)
+			        .mapType(MapTypeIdEnum.ROADMAP)
+			        .overviewMapControl(false)
+			        .panControl(false)
+			        .rotateControl(false)
+			        .scaleControl(false)
+			        .streetViewControl(false)
+			        .zoomControl(false)
+			        .zoom(12);
 
-        map = mapView.createMap(mapOptions);
-        popup = new InfoWindow();
+			map = mapView.createMap(mapOptions);
+			popup = new InfoWindow();
 
-		updateInterface();
+			updateInterface();
 
-		// Add a marker to the map on right click
-		map.addMouseEventHandler(UIEventType.rightclick, (GMapMouseEvent event) -> {
-			createShop(event);
-		});
+			// Add a marker to the map on right click
+			map.addMouseEventHandler(UIEventType.rightclick, (GMapMouseEvent event) -> {
+				try {
+					createShop(event);
+				} catch (Exception e) {
+					//Exceptions are silented by GMapsFX
+					e.printStackTrace();
+				}
+			});
+		} catch (Exception e) {
+			//Exceptions are silented by GMapsFX
+			e.printStackTrace();
+		}
     }
 
     /**
