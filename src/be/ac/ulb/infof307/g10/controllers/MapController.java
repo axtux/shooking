@@ -20,7 +20,6 @@ import javafx.fxml.FXML;
 import netscape.javascript.JSObject;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 /**
@@ -54,6 +53,7 @@ public class MapController extends MainController implements MapComponentInitial
      */
     @Override
     public void mapInitialized() {
+		// needed to debug Exception, see https://gitlab.com/INFOF307-1718/Groupe10/issues/23
         try {
 			// Set the initial properties of the map.
 			MapOptions mapOptions = new MapOptions();
@@ -75,15 +75,14 @@ public class MapController extends MainController implements MapComponentInitial
 
 			// Add a marker to the map on right click
 			map.addMouseEventHandler(UIEventType.rightclick, (GMapMouseEvent event) -> {
+				// needed to debug Exception, see https://gitlab.com/INFOF307-1718/Groupe10/issues/23
 				try {
 					createShop(event);
 				} catch (Exception e) {
-					//Exceptions are silented by GMapsFX
 					e.printStackTrace();
 				}
 			});
 		} catch (Exception e) {
-			//Exceptions are silented by GMapsFX
 			e.printStackTrace();
 		}
     }
