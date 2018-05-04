@@ -28,41 +28,45 @@ import javafx.scene.control.TableView;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
+/**
+ * Controller Class of the shopping list (ShoppingList)
+ *
+ */
 public class ShoppingListController extends MainController {
-	@FXML
-	private Button clearBT;
-	@FXML
-	private Button addBT;
+
 	@FXML
 	private Button editBT;
+	
 	@FXML
 	private Button removeBT;
-	@FXML
-	private Button newBT;
-	@FXML
-	private Button amountUpBT;
-	@FXML
-	private Button amountDownBT;
+	
 	@FXML
 	private ComboBox<Product> productsListCombo;
 	
-
 	@FXML
 	private IntField amountTF;
 
 	@FXML
-    private Label errorLabel;
+	private Label status;
+	//TODO use this label to print the actions processed or the error
 
 	@FXML
 	private TableView<Map.Entry<Product, Integer>> table;
+	
 	@FXML
 	private TableColumn<Map.Entry<Product, Integer>, String> productCL;
+	
 	@FXML
 	private TableColumn<Map.Entry<Product, Integer>, String> amountCL;
 
+	
+	
 	private ObservableMap<Product, Integer> products;
+	
 	private ObservableList<Map.Entry<Product, Integer>> items;
+	
 	private Entry<Product, Integer> selected;
+	
 	private ObservableList<Entry<Product, Integer>> selection;
 
 	@FXML
@@ -112,8 +116,6 @@ public class ShoppingListController extends MainController {
 	void amountDown(ActionEvent event) {
 		amountTF.setInt(amountTF.getInt()-1);
 	}
-
-
 
 	/**
 	 * Update the information for the view when the user select a cell of the table products
@@ -167,6 +169,7 @@ public class ShoppingListController extends MainController {
 				return new SimpleStringProperty(p.getValue().getKey().getName());
 			}
 		});
+		
 		amountCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<Product, Integer>, String>, ObservableValue<String>>() {
 			@Override
 			public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<Product, Integer>, String> p) {
@@ -182,6 +185,7 @@ public class ShoppingListController extends MainController {
 				updateInterface();
 			}
 		});
+		
 		// add available products in the select list
 		productsListCombo.setConverter(new StringConverter<Product>() {
 			@Override
@@ -191,6 +195,7 @@ public class ShoppingListController extends MainController {
 			@Override
 			public Product fromString(String string) { return null; }
 		});
+		
 		// add listener to call selected method
 		selection = table.getSelectionModel().getSelectedItems();
 		selection.addListener(new ListChangeListener<Map.Entry<Product, Integer>>() {
@@ -198,9 +203,8 @@ public class ShoppingListController extends MainController {
 				updateSelected();
 			}
 		});
+		
 		updateSelected();
 		updateInterface();
 	}
-
-
 }

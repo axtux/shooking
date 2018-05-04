@@ -15,13 +15,16 @@ import javafx.scene.control.TextField;
 public class CreateAccountController extends MainController {
 
     @FXML
-    TextField textFieldLog; //login field
+    TextField textFieldLog;
     @FXML
-    PasswordField pwdField; //password input field
+    PasswordField pwdField;
     @FXML
-    PasswordField pwdField2; //password verification field
-    @FXML
-    Label errorLabel; //text field to show if the creation of the account is not possible
+    PasswordField pwdField2;
+	/**
+	 * Text field to show if the creation of the account is not possible
+	 */
+	@FXML
+    Label errorLabel;
 
     /**
      * This method is used to check the information entered in the view to create the new user
@@ -29,31 +32,23 @@ public class CreateAccountController extends MainController {
      */
     @FXML
     public void submit(ActionEvent event){
-        //field login recovered
-
+    	
         String log = textFieldLog.getText();
-        //password field recovered
-
         String pwd = pwdField.getText();
-        System.out.println(pwd);
-
         String pwd2 = pwdField2.getText();
-        System.out.println(pwd2);
 
         if (pwd.equals(pwd2)) {
             try{
                 User user = User.signup(log, pwd);
-                //print it is ok
+                //TODO user will be sent to the Main controller to load the next page
                 errorLabel.setText("User created successfully");
-                goToLogin();
+                goToShoppingList();
 
-            }
-            catch(ExistingException e){
-                System.out.println("User Already exist");
-                errorLabel.setText("This user name is already chosen");
+            } catch(ExistingException e){
+                errorLabel.setText("This user name already exists");
             }
         } else {
-            errorLabel.setText("The two Password are not the same");
+            errorLabel.setText("Passwords do not match");
         }
     }
 }

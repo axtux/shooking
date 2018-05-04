@@ -2,7 +2,6 @@ package be.ac.ulb.infof307.g10;
 
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.User;
-import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.views.GeneralView;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -39,24 +38,14 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage){
 		this.stage = stage;
-		/* TODO remove for release
-		try {
-			this.user = User.login("test", "test");
-			System.out.println("user test logged in");
-		} catch(NonExistingException e) {
-			this.user = User.signup("test", "test");
-			System.out.println("user test signed up");
-		}
-		goToShoppingList();
-		//*/goToLogin();
+		goToLogin();
 	}
 	
 	public static void main(String[] args) {
 		launch(args);
 	}
-
-	//TODO avoir une liste des pages possible ici et faire des sublist dans les méthode pour récupérer ce qu'on veut
-	// ceci permettrait de pas se tromper facilement dans l'écrite des boutons à disable
+	
+	//TODO have a list of pages id to permit the programmer to check rapidly the different id
 	
 	public User getUser() {
 		return user;
@@ -82,22 +71,18 @@ public class Main extends Application {
 	public void goToRecipe() {
 		GeneralView page = new GeneralView(stage, "Recipe", "Menu");
 		page.disableButtons(Arrays.asList("recipe"));
-		page.setTitle("Recipes");
 		update();
 	}
+	
 	public void goToShoppingList() {
 		GeneralView page = new GeneralView(stage, "ShoppingList", "Menu");
 		page.disableButtons(Arrays.asList("shoppingList"));
-		page.setTitle("Shopping List");
 		update();
 	}
-
-
 
 	public void goToMap(){
 		GeneralView page = new GeneralView(stage, "Map", "Menu");
 		page.disableButtons(Arrays.asList("map"));
-		page.setTitle("Shopping Map");
 		update();
 	}
 

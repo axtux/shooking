@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class TermsOfUseController implements Initializable  {
+	
 	@FXML
 	private TextArea text;
 	@FXML
