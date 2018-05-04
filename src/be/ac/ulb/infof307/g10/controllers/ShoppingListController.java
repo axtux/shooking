@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
+import javax.swing.JOptionPane;// delete 
+
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Product;
@@ -49,6 +51,12 @@ public class ShoppingListController extends MainController {
 	@FXML
 	private Label status;
 	//TODO use this label to print the actions processed or the error
+	
+	// SAVE TOTAL SHOPPING LIST
+	@FXML
+	private Label totaLabel;
+	//TODO
+	
 
 	@FXML
 	private TableView<Map.Entry<Product, Integer>> table;
@@ -58,6 +66,8 @@ public class ShoppingListController extends MainController {
 	
 	@FXML
 	private TableColumn<Map.Entry<Product, Integer>, String> amountCL;
+	@FXML
+	private TableColumn<Map.Entry<Product, Integer>, String> priceCL; // PRICE COLUMN TO BE IMPLEMENTED 
 
 	
 	
@@ -154,9 +164,18 @@ public class ShoppingListController extends MainController {
 		updateInterface();
 	}
 	
+	// THIS IS THE  BUTTON OF THE METHOD  OF THE  RESEARCH SHOPS IN ORDER TO BE IMPLEMENTED  
+	
 	public void researchProduct(ActionEvent actionEvent) {
 		Main.getInstance().showDialog("ResearchDialog", "Research product");
 	}
+
+	// THIS IS THE  BUTTON OF THE METHOD  OF THE  SAVE LIST IN ORDER TO BE IMPLEMENTED  
+	
+		public void saveList(ActionEvent actionEvent) {
+			JOptionPane.showMessageDialog(null,"THIS IS THE  BUTTON OF THE METHOD  OF THE  SAVE LIST IN ORDER TO BE IMPLEMENTED"); 
+		}
+
 
 
 	public void initialize(URL url, ResourceBundle rb) {
