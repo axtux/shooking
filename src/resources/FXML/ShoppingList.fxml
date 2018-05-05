@@ -77,7 +77,7 @@
                         <Font name="System Bold Italic" size="15.0" fx:id="x12" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="ShopListCombo" layoutX="17.0" layoutY="130.0" prefHeight="27.0" prefWidth="234.0" />
+                  <ComboBox fx:id="shopsCombo" layoutX="17.0" layoutY="130.0" prefHeight="27.0" prefWidth="234.0" />
           </children>
         </AnchorPane>
       </items>
