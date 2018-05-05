@@ -24,6 +24,18 @@ public class Stock extends ShoppingList {
 	public int getPrice(Product p) {
 		return productsAndPrice.getOrDefault(p, 0);
 	}
+	/**
+	 * Get price of Product p adapted to quantity
+	 * @param p Product
+	 * @param quantity Quantity
+	 * @return Price adapted to quantity or 0 if not enough quantity of Product
+	 */
+	public int getPrice(Product p, int quantity) {
+		if (quantity > getQuantity(p)) {
+			return 0;
+		}
+		return getPrice(p)*quantity;
+	}
 
 	public void setPrice(Product p, int price) {
 		setProduct(p, getQuantity(p), price);
