@@ -91,5 +91,27 @@ public class TestRecipe extends AbstractTestDatabase {
 		assertTrue(r.getAllIngredients().isEmpty());
 	}
 	
-
+	@Test
+	public void test_009_moveUpStep() {
+		Recipe r = new Recipe("moveUpStep");
+		String step1 = "step1";
+		String step2 = "step2";
+		r.addStep(step1);
+		r.addStep(step2);
+		r.moveUpStep(1);
+		assertEquals(r.getStep(0),step2);
+		assertEquals(r.getStep(1),step1);
+	}
+	
+	@Test
+	public void test_010_moveDownStep() {
+		Recipe r = new Recipe("moveUpStep");
+		String step1 = "step1";
+		String step2 = "step2";
+		r.addStep(step1);
+		r.addStep(step2);
+		r.moveDownStep(0);
+		assertEquals(r.getStep(0),step2);
+		assertEquals(r.getStep(1),step1);
+	}
 }

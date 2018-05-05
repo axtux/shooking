@@ -16,15 +16,13 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.ac.ulb.infof307.g10.controllers.RecipeController">
-
+<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="be.ac.ulb.infof307.g10.controllers.RecipeController">
   <children>
     <SplitPane dividerPositions="0.6616541353383458" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="848.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <items>
         <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="499.0" prefWidth="361.9998779296875">
           <children>
-            <TableView id="table" fx:id="ingredientsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="239.0" prefWidth="525.0" AnchorPane.bottomAnchor="348.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="11.0">
+            <TableView id="table" fx:id="ingredientsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="202.0" prefWidth="525.0" AnchorPane.bottomAnchor="348.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="48.0">
               <columns>
                 <TableColumn prefWidth="170.0000139474869" text="Ingredient" fx:id="ingredientCL" />
                 <TableColumn prefWidth="352.22218322753906" text="Amount" fx:id="amountIngredientCL" />
@@ -44,6 +42,8 @@
             <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="16.0" prefWidth="525.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="535.0" />
             <Button id="createRecipeBT" fx:id="newRecipeBT" font="$x131" layoutX="37.0" layoutY="557.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#CreateRecipe" prefHeight="31.0" prefWidth="128.0" text="New Recipe" />
             <Button fx:id="deleteRecipeBT" font="$x131" layoutX="360.0" layoutY="557.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#DeleteRecipe" prefHeight="31.0" prefWidth="128.0" text="Delete Recipe" />
+            <TextField fx:id="recipeNameTF" layoutX="14.0" layoutY="14.0" prefWidth="230.0" />
+            <Button fx:id="recipeNameBT" font="$x131" layoutX="260.0" layoutY="13.0" mnemonicParsing="false" onAction="#editRecipeName" text="Save" />
           </children>
         </AnchorPane>
         <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="498.0" prefWidth="414.0">
@@ -66,7 +66,7 @@
             <Separator prefHeight="3.0" prefWidth="247.0" AnchorPane.bottomAnchor="293.67" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="301.0" />
             <Separator layoutX="14.0" layoutY="539.0" prefHeight="3.0" prefWidth="247.0" />
             <Label font="$x131" layoutX="21.0" layoutY="310.0" text="Step" />
-            <TextField fx:id="stepTF" layoutX="10.0" layoutY="333.0" prefHeight="126.0" prefWidth="250.0" promptText="   Enter each step to prepare the recipe" />
+            <TextField fx:id="stepTF" layoutX="46.0" layoutY="333.0" prefHeight="126.0" prefWidth="214.0" promptText="   Enter each step to prepare the recipe" />
             <ComboBox id="recipeListCombo" fx:id="recipesListCombo" layoutX="18.0" layoutY="37.0" onAction="#recipeComboChanged" prefHeight="26.0" prefWidth="230.0">
               <items>
                 <FXCollections fx:factory="observableArrayList">
@@ -86,6 +86,8 @@
                 </FXCollections>
               </items>
             </ComboBox>
+            <Button id="upStep" fx:id="moveUpStepBT" font="$x131" layoutX="3.0" layoutY="349.0" mnemonicParsing="false" onAction="#moveUpStep" prefHeight="41.0" prefWidth="44.0" text="&lt;" textAlignment="RIGHT" />
+            <Button id="moveDownStep" fx:id="moveDownStepBT" font="$x131" layoutX="3.0" layoutY="403.0" mnemonicParsing="false" onAction="#moveDownStep" prefHeight="41.0" prefWidth="44.0" text="&gt;" textAlignment="CENTER" />
           </children>
         </AnchorPane>
       </items>
