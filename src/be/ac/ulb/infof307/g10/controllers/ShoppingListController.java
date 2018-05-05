@@ -167,7 +167,7 @@ public class ShoppingListController extends MainController {
 		for(Product p: sl.getProducts()) {
 			price = selectedShop.getStock().getPrice(p, sl.getQuantity(p));
 			if (price == 0) {
-				totalLabel.setText("not available");
+				totalLabel.setText("unavailable");
 				return;
 			}
 			total += price;
@@ -209,7 +209,7 @@ public class ShoppingListController extends MainController {
 				}
 				int price = selectedShop.getStock().getPrice(p.getValue(), sl.getQuantity(p.getValue()));
 				if (price == 0) {
-					return new SimpleStringProperty("not available");
+					return new SimpleStringProperty("unavailable");
 				}
 				return new SimpleStringProperty(Price.toString(price));
 			}
