@@ -219,6 +219,9 @@ public class ShoppingListController extends MainController {
 		productsListCombo.setConverter(new StringConverter<Product>() {
 			@Override
 			public String toString(Product p) {
+				if(p==null) {
+					return "";
+				}
 				return p.getFullName();
 			}
 			@Override
