@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;// delete
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Product;
+import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -27,6 +28,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
@@ -44,6 +46,9 @@ public class ShoppingListController extends MainController {
 	
 	@FXML
 	private ComboBox<Product> productsListCombo;
+	
+	@FXML
+	private ComboBox<Shop> ShopListCombo;
 	
 	@FXML
 	private IntField amountTF;
@@ -69,13 +74,14 @@ public class ShoppingListController extends MainController {
 	@FXML
 	private TableColumn<Map.Entry<Product, Integer>, String> priceCL; // PRICE COLUMN TO BE IMPLEMENTED 
 
-	
+	private int total=0;
 	
 	private ObservableMap<Product, Integer> products;
 	
 	private ObservableList<Map.Entry<Product, Integer>> items;
 	
 	private Entry<Product, Integer> selected;
+
 	
 	private ObservableList<Entry<Product, Integer>> selection;
 
@@ -91,11 +97,14 @@ public class ShoppingListController extends MainController {
 		// add product
 		//FIXME
 		Product p = productsListCombo.getSelectionModel().getSelectedItem();
+		
 		products.put(p, amountTF.getInt());
 		// select it
 		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i).getKey() == p) {
 				table.getSelectionModel().select(i);
+				total=total+amountTF.getInt();
+				totaLabel.setText(Integer.toString(total)+" Eur" );
 			}
 		}
 	}
@@ -134,10 +143,12 @@ public class ShoppingListController extends MainController {
 		int size = selection.size();
 		if (size == 1) {
 			selected = selection.get(0);
+			
 			editBT.setDisable(false);
 			removeBT.setDisable(false);
 			amountTF.setText(selected.getValue().toString());
 			productsListCombo.getSelectionModel().select(selected.getKey());
+			//ShopListCombo.getSelectionModel().select(selected1.getKey());
 		} else { //no product selected
 			selected = null;
 			editBT.setDisable(true);
@@ -148,6 +159,11 @@ public class ShoppingListController extends MainController {
 	private void updateInterface() {
 		productsListCombo.getItems().clear();
 		productsListCombo.getItems().addAll(Database.getAllProducts());
+		
+		
+		ShopListCombo.getItems().clear();
+		ShopListCombo.getItems().addAll(Database.getAllShops());
+		
 		items = FXCollections.observableArrayList(products.entrySet());
 		// sort by product description (case insensitive)
 		items.sort(new Comparator<Entry<Product, Integer>>() {
@@ -214,6 +230,20 @@ public class ShoppingListController extends MainController {
 			@Override
 			public Product fromString(String string) { return null; }
 		});
+		
+		
+		// add available Shops in the select list
+				ShopListCombo.setConverter(new StringConverter<Shop>() {
+					@Override
+					public String toString(Shop s) {
+						return s.getName();
+					}
+					@Override
+					public Shop fromString(String string) { return null; }
+					
+				});
+		
+		
 		
 		// add listener to call selected method
 		selection = table.getSelectionModel().getSelectedItems();

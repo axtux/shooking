@@ -29,12 +29,12 @@
         </AnchorPane>
         <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" SplitPane.resizableWithParent="false">
           <children>
-            <Label layoutX="16.0" layoutY="69.0" text="Product:">
+            <Label layoutX="16.0" layoutY="56.0" text="Product:">
               <font>
                 <Font name="System Bold Italic" size="15.0" fx:id="x1" />
               </font>
             </Label>
-            <Label font="$x1" layoutX="16.0" layoutY="152.0" text="Amount:" />
+            <Label font="$x1" layoutX="16.0" layoutY="155.0" text="Amount:" />
             
             
             <IntField fx:id="amountTF" layoutX="15.0" layoutY="176.0" prefHeight="16.0" prefWidth="87.0" />
@@ -42,16 +42,19 @@
             <Button fx:id="addBT" font="$x1" layoutX="18.0" layoutY="225.0" mnemonicParsing="false" onAction="#add" prefHeight="26.0" prefWidth="234.0" text="Add" />
             <Button fx:id="editBT" font="$x1" layoutX="18.0" layoutY="261.0" mnemonicParsing="false" onAction="#edit" prefHeight="26.0" prefWidth="234.0" text="Edit" />
             <Button fx:id="removeBT" font="$x1" layoutX="18.0" layoutY="298.0" mnemonicParsing="false" onAction="#remove" prefHeight="26.0" prefWidth="234.0" text="Remove" />
-                  <Button fx:id="amountUpBT" layoutX="122.0" layoutY="175.0" mnemonicParsing="false" onAction="#amountUp" prefHeight="19.0" prefWidth="27.0" text="+" />
-                  <Button fx:id="amountDownBT" layoutX="156.0" layoutY="175.0" mnemonicParsing="false" onAction="#amountDown" prefHeight="19.0" prefWidth="27.0" text="-" />
-                  <ComboBox fx:id="productsListCombo" layoutX="16.0" layoutY="88.0" prefHeight="27.0" prefWidth="234.0" />
-                  <ComboBox layoutX="16.0" layoutY="40.0" prefHeight="27.0" prefWidth="234.0" />
-                  <Label layoutX="16.0" layoutY="17.0" text="List:">
+                  <Button fx:id="amountUpBT" layoutX="114.0" layoutY="175.0" mnemonicParsing="false" onAction="#amountUp" prefHeight="19.0" prefWidth="27.0" text="+" />
+                  <Button fx:id="amountDownBT" layoutX="143.0" layoutY="175.0" mnemonicParsing="false" onAction="#amountDown" prefHeight="19.0" prefWidth="27.0" text="-" />
+                  <ComboBox fx:id="productsListCombo" layoutX="16.0" layoutY="80.0" prefHeight="27.0" prefWidth="234.0" />
+                  <ComboBox layoutX="16.0" layoutY="25.0" prefHeight="27.0" prefWidth="234.0" />
+                  <Label layoutX="16.0" layoutY="2.0" text="List:">
                      <font>
                         <Font name="System Bold Italic" size="15.0" fx:id="x13" />
                      </font>
                   </Label>
-                  <Button fx:id="createNewProductBtn" font="$x1" layoutX="16.0" layoutY="123.0" mnemonicParsing="false" onAction="#createNewProduct" prefHeight="26.0" prefWidth="234.0" text="Create New Product" />
+                  <Button fx:id="createNewProductBtn" layoutX="175.0" layoutY="171.0" mnemonicParsing="false" onAction="#createNewProduct" prefHeight="31.0" prefWidth="83.0" text="NewProduct">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font></Button>
                   <Button fx:id="researchBT" layoutX="17.0" layoutY="371.0" mnemonicParsing="false" onAction="#researchProduct" prefHeight="29.0" prefWidth="234.0" text="Research Shops">
                      <font>
                         <Font name="System Bold Italic" size="15.0" fx:id="x11" />
@@ -68,7 +71,13 @@
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="totaLabel" layoutX="89.0" layoutY="457.0" prefHeight="17.0" prefWidth="137.0" text="To put valor in this label" />
+                  <Label fx:id="totaLabel" layoutX="89.0" layoutY="457.0" prefHeight="17.0" prefWidth="137.0" text="0 Eur" />
+                  <Label layoutX="17.0" layoutY="108.0" text="Shop">
+                     <font>
+                        <Font name="System Bold Italic" size="15.0" fx:id="x12" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="ShopListCombo" layoutX="17.0" layoutY="130.0" prefHeight="27.0" prefWidth="234.0" />
           </children>
         </AnchorPane>
       </items>
