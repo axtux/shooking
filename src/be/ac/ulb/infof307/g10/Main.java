@@ -38,7 +38,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage){
 		this.stage = stage;
-		goToLogin();
+		goToShoppingList();
 	}
 	
 	public static void main(String[] args) {
