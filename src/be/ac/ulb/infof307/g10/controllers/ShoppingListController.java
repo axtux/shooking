@@ -2,8 +2,6 @@ package be.ac.ulb.infof307.g10.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
 import be.ac.ulb.infof307.g10.Main;
@@ -14,15 +12,13 @@ import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
@@ -58,28 +54,19 @@ public class ShoppingListController extends MainController {
 	private Label totaLabel;
 	//TODO
 	
-
 	@FXML
-	private TableView<Map.Entry<Product, Integer>> table;
-	
-	@FXML
-	private TableColumn<Map.Entry<Product, Integer>, String> productCL;
+	private TableView<Product> table;
 	
 	@FXML
-	private TableColumn<Map.Entry<Product, Integer>, String> amountCL;
+	private TableColumn<Product, String> productCL;
+	
 	@FXML
-	private TableColumn<Map.Entry<Product, Integer>, String> priceCL;
-
-	private int total=0;
+	private TableColumn<Product, String> amountCL;
 	
-	private ObservableMap<Product, Integer> products;
+	@FXML
+	private TableColumn<Product, String> priceCL;
 	
-	private ObservableList<Map.Entry<Product, Integer>> items;
-	
-	private Entry<Product, Integer> selected;
-
-	
-	private ObservableList<Entry<Product, Integer>> selection;
+	private Product selected;
 	
 	private ShoppingList sl;
 
@@ -106,7 +93,7 @@ public class ShoppingListController extends MainController {
 		if (selected == null) {
 			return;
 		}
-		sl.removeProduct(selected.getKey());
+		sl.removeProduct(selected);
 		add(null);
 	}
 
@@ -115,7 +102,7 @@ public class ShoppingListController extends MainController {
 		if (selected == null) {
 			return;
 		}
-		sl.removeProduct(selected.getKey());
+		sl.removeProduct(selected);
 		changed();
 	}
 
@@ -133,17 +120,13 @@ public class ShoppingListController extends MainController {
 	 * Update the information for the view when the user select a cell of the table products
 	 */
 	private void updateSelected() {
-		int size = selection.size();
-		if (size == 1) {
-			selected = selection.get(0);
-			
+		selected = table.getSelectionModel().getSelectedItem();
+		if (selected != null) {
 			editBT.setDisable(false);
 			removeBT.setDisable(false);
-			amountTF.setText(selected.getValue().toString());
-			productsListCombo.getSelectionModel().select(selected.getKey());
-			//ShopListCombo.getSelectionModel().select(selected1.getKey());
+			amountTF.setInt(sl.getQuantity(selected));
+			productsListCombo.getSelectionModel().select(selected);
 		} else { //no product selected
-			selected = null;
 			editBT.setDisable(true);
 			removeBT.setDisable(true);
 		}
@@ -153,12 +136,11 @@ public class ShoppingListController extends MainController {
 		productsListCombo.getItems().clear();
 		productsListCombo.getItems().addAll(Database.getAllProducts());
 		
-		
 		shopsCombo.getItems().clear();
 		shopsCombo.getItems().addAll(Database.getAllShops());
 		
-		items = FXCollections.observableArrayList(sl.getProductsAndQuantity().entrySet());
-		table.setItems(items);
+		table.getItems().clear();
+		table.getItems().addAll(sl.getProductsAndQuantity().keySet());
 	}
 
 	@FXML
@@ -178,19 +160,20 @@ public class ShoppingListController extends MainController {
 	public void initialize(URL url, ResourceBundle rb) {
 		sl = Main.getInstance().getUser().getShoppingList();
 		
-		productCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<Product, Integer>, String>, ObservableValue<String>>() {
+		productCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product, String>, ObservableValue<String>>() {
 			@Override
-			public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<Product, Integer>, String> p) {
+			public ObservableValue<String> call(TableColumn.CellDataFeatures<Product, String> p) {
 				// this callback returns property for just one cell
-				return new SimpleStringProperty(p.getValue().getKey().getName());
+				return new SimpleStringProperty(p.getValue().getName());
 			}
 		});
 		
-		amountCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<Product, Integer>, String>, ObservableValue<String>>() {
+		amountCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product, String>, ObservableValue<String>>() {
 			@Override
-			public ObservableValue<String> call(TableColumn.CellDataFeatures<Map.Entry<Product, Integer>, String> p) {
+			public ObservableValue<String> call(TableColumn.CellDataFeatures<Product, String> p) {
 				// this callback returns property for just one cell
-				return new SimpleStringProperty(p.getValue().getValue().toString());
+				int quantity = sl.getQuantity(p.getValue());
+				return new SimpleStringProperty(Integer.toString(quantity));
 			}
 		});
 		
@@ -215,9 +198,9 @@ public class ShoppingListController extends MainController {
 		});
 		
 		// add listener to call selected method
-		selection = table.getSelectionModel().getSelectedItems();
-		selection.addListener(new ListChangeListener<Map.Entry<Product, Integer>>() {
-			public void onChanged(Change<? extends Entry<Product, Integer>> c) {
+		table.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+		table.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<Product>() {
+			public void onChanged(Change<? extends Product> c) {
 				updateSelected();
 			}
 		});
