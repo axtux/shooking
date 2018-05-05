@@ -103,7 +103,7 @@ public class ShoppingListController extends MainController {
 		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i).getKey() == p) {
 				table.getSelectionModel().select(i);
-				total=total+amountTF.getInt();
+				total=total+amountTF.getInt();//total will be the variable that will stock the total price of the shopping list
 				totaLabel.setText(Integer.toString(total)+" Eur" );
 			}
 		}
