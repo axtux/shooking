@@ -2,7 +2,6 @@ package be.ac.ulb.infof307.g10.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Comparator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
@@ -11,12 +10,12 @@ import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Shop;
+import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
@@ -81,29 +80,25 @@ public class ShoppingListController extends MainController {
 
 	
 	private ObservableList<Entry<Product, Integer>> selection;
+	
+	private ShoppingList sl;
+
+	private void changed() {
+		sl.save();
+		updateInterface();
+	}
 
 	@FXML
 	private void clear(ActionEvent event) {
-		table.getSelectionModel().clearSelection();
-		// in case selection is not update, clear fields
-		amountTF.clear();
+		sl.clear();
+		changed();
 	}	
 
 	@FXML
 	private void add(ActionEvent event) {
-		// add product
-		//FIXME
 		Product p = productsListCombo.getSelectionModel().getSelectedItem();
-		
-		products.put(p, amountTF.getInt());
-		// select it
-		for (int i = 0; i < items.size(); i++) {
-			if (items.get(i).getKey() == p) {
-				table.getSelectionModel().select(i);
-				total=total+amountTF.getInt();//total will be the variable that will stock the total price of the shopping list
-				totaLabel.setText(Integer.toString(total)+" Eur" );
-			}
-		}
+		sl.addProduct(p, amountTF.getInt());
+		changed();
 	}
 
 	@FXML
@@ -111,7 +106,7 @@ public class ShoppingListController extends MainController {
 		if (selected == null) {
 			return;
 		}
-		products.remove(selected.getKey());
+		sl.removeProduct(selected.getKey());
 		add(null);
 	}
 
@@ -120,7 +115,8 @@ public class ShoppingListController extends MainController {
 		if (selected == null) {
 			return;
 		}
-		products.remove(selected.getKey());
+		sl.removeProduct(selected.getKey());
+		changed();
 	}
 
 	@FXML
@@ -161,13 +157,7 @@ public class ShoppingListController extends MainController {
 		shopsCombo.getItems().clear();
 		shopsCombo.getItems().addAll(Database.getAllShops());
 		
-		items = FXCollections.observableArrayList(products.entrySet());
-		// sort by product description (case insensitive)
-		items.sort(new Comparator<Entry<Product, Integer>>() {
-			public int compare(Entry<Product, Integer> o1, Entry<Product, Integer> o2) {
-				return o1.getKey().getName().toLowerCase().compareTo(o2.getKey().getName().toLowerCase());
-			}
-		});
+		items = FXCollections.observableArrayList(sl.getProductsAndQuantity().entrySet());
 		table.setItems(items);
 	}
 
@@ -186,7 +176,7 @@ public class ShoppingListController extends MainController {
 	}
 
 	public void initialize(URL url, ResourceBundle rb) {
-		products = FXCollections.observableHashMap();
+		sl = Main.getInstance().getUser().getShoppingList();
 		
 		productCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Map.Entry<Product, Integer>, String>, ObservableValue<String>>() {
 			@Override
@@ -204,15 +194,7 @@ public class ShoppingListController extends MainController {
 			}
 		});
 		
-		// update items on products update
-		products.addListener(new MapChangeListener<Product, Integer>() {
-			@Override
-			public void onChanged(Change<? extends Product, ? extends Integer> change) {
-				updateInterface();
-			}
-		});
-		
-		// add available products in the select list
+		// convert Product to string
 		productsListCombo.setConverter(new StringConverter<Product>() {
 			@Override
 			public String toString(Product p) {
@@ -222,19 +204,15 @@ public class ShoppingListController extends MainController {
 			public Product fromString(String string) { return null; }
 		});
 		
-		
-		// add available Shops in the select list
-				shopsCombo.setConverter(new StringConverter<Shop>() {
-					@Override
-					public String toString(Shop s) {
-						return s.getName();
-					}
-					@Override
-					public Shop fromString(String string) { return null; }
-					
-				});
-		
-		
+		// convert Shop to string
+		shopsCombo.setConverter(new StringConverter<Shop>() {
+			@Override
+			public String toString(Shop s) {
+				return s.getName();
+			}
+			@Override
+			public Shop fromString(String string) { return null; }
+		});
 		
 		// add listener to call selected method
 		selection = table.getSelectionModel().getSelectedItems();
