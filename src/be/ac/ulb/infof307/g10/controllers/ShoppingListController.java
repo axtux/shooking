@@ -6,10 +6,10 @@ import java.util.ResourceBundle;
 
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.models.Price;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
-import be.ac.ulb.infof307.g10.models.Stock;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -52,7 +52,6 @@ public class ShoppingListController extends MainController {
 	
 	@FXML
 	private Label totalLabel;
-	//TODO
 	
 	@FXML
 	private TableView<Product> table;
@@ -141,25 +140,6 @@ public class ShoppingListController extends MainController {
 		updateTable();
 	}
 	
-	private int getPrice(Product p) {
-		// TODO this should be done in model
-		int quantity = sl.getQuantity(p);
-		Stock s = selectedShop.getStock();
-		if (quantity > s.getQuantity(p)) {
-			return 0;
-		}
-		return s.getPrice(p)*quantity;
-	}
-	
-	private String priceToString(int price) {
-		// TODO should be done in model
-		String cents = Integer.toString(price%100);
-		if (cents.length() == 1) {
-			cents = "0"+cents;
-		}
-		return Integer.toString(price/100)+","+cents+"€";
-	}
-	
 	private void updateProducts() {
 		productsListCombo.getItems().clear();
 		productsListCombo.getItems().addAll(Database.getAllProducts());
@@ -185,13 +165,14 @@ public class ShoppingListController extends MainController {
 		int total = 0;
 		int price;
 		for(Product p: sl.getProducts()) {
-			price = getPrice(p);
+			price = selectedShop.getStock().getPrice(p, sl.getQuantity(p));
 			if (price == 0) {
 				totalLabel.setText("not available");
+				return;
 			}
 			total += price;
 		}
-		totalLabel.setText(priceToString(total));
+		totalLabel.setText(Price.toString(total));
 	}
 
 	@FXML
@@ -226,8 +207,11 @@ public class ShoppingListController extends MainController {
 				if (selectedShop == null) {
 					return new SimpleStringProperty("-");
 				}
-				int price = getPrice(p.getValue());
-				return new SimpleStringProperty(priceToString(price));
+				int price = selectedShop.getStock().getPrice(p.getValue(), sl.getQuantity(p.getValue()));
+				if (price == 0) {
+					return new SimpleStringProperty("not available");
+				}
+				return new SimpleStringProperty(Price.toString(price));
 			}
 		});
 		
