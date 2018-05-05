@@ -100,7 +100,6 @@ public class Recipe extends ModelObject {
 	public Map<Product,Float> getAllIngredients(){
 		return new HashMap<Product,Float>(ingredients);
 	}
-
 	
 	/**
 	 * Get steps
@@ -142,9 +141,30 @@ public class Recipe extends ModelObject {
 	 * @param indexInit The initial index of the step to move
 	 * @param indexFinal The new index of the step to move
 	 */
-	public void moveStep(int indexInit , int indexFinal)throws IndexOutOfBoundsException{
-		String step = steps.remove(indexInit);
-		steps.add(indexFinal, step);
+	public void moveStep(int indexInit , int indexFinal) throws IndexOutOfBoundsException{
+		if (indexInit >= 0 && indexInit < steps.size() && indexFinal >= 0 && indexFinal < steps.size()) {
+			String step = steps.remove(indexInit);
+			steps.add(indexFinal, step);
+		}
+		else {
+			throw new IndexOutOfBoundsException();
+		}
+	}
+	
+	/**
+	 * Move up the index th step
+	 * @param index	Initial index of the step to move
+	 */
+	public void moveUpStep(int index) throws IndexOutOfBoundsException {
+		moveStep(index, index-1);
+	}
+	
+	/**
+	 * Move down the index th step
+	 * @param index	Initial index of the step to move
+	 */
+	public void moveDownStep(int index) throws IndexOutOfBoundsException {
+		moveStep(index, index+1);
 	}
 	
 	/**
@@ -153,6 +173,13 @@ public class Recipe extends ModelObject {
 	 */
 	public void removeStep(int index) throws IndexOutOfBoundsException {
 		steps.remove(index);
+	}
+	
+	/**
+	 * Delete all steps
+	 */
+	public void clearSteps() {
+		this.steps.clear();
 	}
 	
 	/**
@@ -167,11 +194,29 @@ public class Recipe extends ModelObject {
 	}
 	
 	/**
+	 * Modify the quantity of the selected product
+	 * @param product	The product already in the ingredients list
+	 * @param quantity	The new quantity of the product
+	 */
+	public void setIngredientQuantity(Product product, float quantity) {
+		if (ingredients.containsKey(product)){
+			ingredients.put(product, quantity);
+		}
+	}
+	
+	/**
 	 * Remove the ingredient p if present
 	 * @param p the ingredient to remove
 	 */
 	public void removeIngredient(Product p){
 		ingredients.remove(p);
+	}
+
+	/**
+	 * Delete all ingredients
+	 */
+	public void clearIngredients() {
+		this.ingredients.clear();
 	}
 
 	public int getServings(){
