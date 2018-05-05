@@ -16,7 +16,7 @@ public class IntField extends TextField {
 	}
 
 	public IntField() {
-		this(true);
+		this(false);
 	}
 	
 	public IntField(boolean signed) {
