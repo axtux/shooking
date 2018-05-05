@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
-import javax.swing.JOptionPane;// delete 
-
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Product;
@@ -28,7 +26,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
@@ -48,7 +45,7 @@ public class ShoppingListController extends MainController {
 	private ComboBox<Product> productsListCombo;
 	
 	@FXML
-	private ComboBox<Shop> ShopListCombo;
+	private ComboBox<Shop> shopsCombo;
 	
 	@FXML
 	private IntField amountTF;
@@ -72,7 +69,7 @@ public class ShoppingListController extends MainController {
 	@FXML
 	private TableColumn<Map.Entry<Product, Integer>, String> amountCL;
 	@FXML
-	private TableColumn<Map.Entry<Product, Integer>, String> priceCL; // PRICE COLUMN TO BE IMPLEMENTED 
+	private TableColumn<Map.Entry<Product, Integer>, String> priceCL;
 
 	private int total=0;
 	
@@ -161,8 +158,8 @@ public class ShoppingListController extends MainController {
 		productsListCombo.getItems().addAll(Database.getAllProducts());
 		
 		
-		ShopListCombo.getItems().clear();
-		ShopListCombo.getItems().addAll(Database.getAllShops());
+		shopsCombo.getItems().clear();
+		shopsCombo.getItems().addAll(Database.getAllShops());
 		
 		items = FXCollections.observableArrayList(products.entrySet());
 		// sort by product description (case insensitive)
@@ -180,19 +177,13 @@ public class ShoppingListController extends MainController {
 		updateInterface();
 	}
 	
-	// THIS IS THE  BUTTON OF THE METHOD  OF THE  RESEARCH SHOPS IN ORDER TO BE IMPLEMENTED  
-	
 	public void researchProduct(ActionEvent actionEvent) {
-		Main.getInstance().showDialog("ResearchDialog", "Research product");
+		// TODO research
 	}
 
-	// THIS IS THE  BUTTON OF THE METHOD  OF THE  SAVE LIST IN ORDER TO BE IMPLEMENTED  
-	
-		public void saveList(ActionEvent actionEvent) {
-			JOptionPane.showMessageDialog(null,"THIS IS THE  BUTTON OF THE METHOD  OF THE  SAVE LIST IN ORDER TO BE IMPLEMENTED"); 
-		}
-
-
+	public void saveList(ActionEvent actionEvent) {
+		// TODO save
+	}
 
 	public void initialize(URL url, ResourceBundle rb) {
 		products = FXCollections.observableHashMap();
@@ -233,7 +224,7 @@ public class ShoppingListController extends MainController {
 		
 		
 		// add available Shops in the select list
-				ShopListCombo.setConverter(new StringConverter<Shop>() {
+				shopsCombo.setConverter(new StringConverter<Shop>() {
 					@Override
 					public String toString(Shop s) {
 						return s.getName();
