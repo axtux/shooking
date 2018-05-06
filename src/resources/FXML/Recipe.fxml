@@ -33,15 +33,14 @@
                 <TableColumn minWidth="0.0" prefWidth="520.8888516426086" text="Recipe steps" fx:id="recipeStepCL" />
               </columns>
             </TableView>
-            <Button fx:id="saveRecipeBT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#SaveRecipe" prefHeight="31.0" prefWidth="128.0" text="Save Recipe" AnchorPane.bottomAnchor="9.67" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="196.33" AnchorPane.topAnchor="557.0">
+            <Button fx:id="saveRecipeBT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#saveRecipe" prefHeight="31.0" prefWidth="128.0" text="Save Recipe" AnchorPane.bottomAnchor="9.67" AnchorPane.leftAnchor="201.0" AnchorPane.rightAnchor="196.33" AnchorPane.topAnchor="557.0">
               <font>
                 <Font name="System Bold Italic" size="15.0" fx:id="x131" />
               </font>
             </Button>
             <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="16.0" prefWidth="525.0" AnchorPane.bottomAnchor="323.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="259.0" />
             <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="16.0" prefWidth="525.0" AnchorPane.bottomAnchor="47.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="535.0" />
-            <Button id="createRecipeBT" fx:id="newRecipeBT" font="$x131" layoutX="37.0" layoutY="557.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#CreateRecipe" prefHeight="31.0" prefWidth="128.0" text="New Recipe" />
-            <Button fx:id="deleteRecipeBT" font="$x131" layoutX="360.0" layoutY="557.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#DeleteRecipe" prefHeight="31.0" prefWidth="128.0" text="Delete Recipe" />
+            <Button id="createRecipeBT" fx:id="newRecipeBT" font="$x131" layoutX="37.0" layoutY="557.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createRecipe" prefHeight="31.0" prefWidth="128.0" text="New Recipe" />
             <TextField fx:id="recipeNameTF" layoutX="14.0" layoutY="14.0" prefWidth="230.0" />
             <Button fx:id="recipeNameBT" font="$x131" layoutX="260.0" layoutY="13.0" mnemonicParsing="false" onAction="#editRecipeName" text="Save" />
           </children>

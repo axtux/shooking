@@ -1,9 +1,6 @@
 package be.ac.ulb.infof307.g10.controllers;
 
 import java.net.URL;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import java.util.ResourceBundle;
 
@@ -13,6 +10,7 @@ import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
 import javafx.event.ActionEvent;
@@ -59,8 +57,6 @@ public class RecipeController implements Initializable {
 	@FXML
 	private Button saveRecipeBT;
 	@FXML
-	private Button deleteRecipeBT;
-	@FXML
 	private Button addStepBT;
 	@FXML
 	private Button editStepBT;
@@ -75,25 +71,20 @@ public class RecipeController implements Initializable {
 	@FXML
 	private Button recipeNameBT;
 	@FXML
-	private TableView<Map.Entry<Product, Integer>> ingredientsTable;
+	private TableView<Product> ingredientsTable;
 	@FXML
-	private TableColumn<Map.Entry<Product, Integer>, String> ingredientCL;
+	private TableColumn<Product, String> ingredientCL;
 	@FXML
-	private TableColumn<Map.Entry<Product, Integer>, String> amountIngredientCL;
+	private TableColumn<Product, String> amountIngredientCL;
 	@FXML
 	private TableView<String> stepsTable;
 	@FXML
 	private TableColumn<String, String> recipeStepCL;
 	
-	private ObservableMap<Product, Integer> products;
 	private ObservableList<String> steps;
-	private ObservableList<Map.Entry<Product, Integer>> productsContent;
 	
-	private Entry<Product, Integer> selectedProduct;
-	private ObservableList<Entry<Product, Integer>> selectionProducts;
-
+	private Product selectedProduct;
 	private String selectedStep;
-	private ObservableList<String> selectionSteps;
 	
 	private Recipe actualRecipe;
 	private Product actualProduct;
@@ -130,14 +121,15 @@ public class RecipeController implements Initializable {
 		actualRecipe.addIngredient(p, quantity);
 		updateTable();
 	}
-	
+
 	@FXML
-	void editIngredient() {
+	void editIngredient(ActionEvent event) {
+		// TODO trouble if selectedProduct has changed
 		if (selectedProduct == null) {
 			return;
 		}
 		int quantity = amountIngredientTF.getInt();
-		actualRecipe.setIngredientQuantity(selectedProduct.getKey(), quantity);
+		actualRecipe.setIngredientQuantity(selectedProduct, quantity);
 		updateTable();
 	}
 	
@@ -146,7 +138,7 @@ public class RecipeController implements Initializable {
 		if (selectedProduct == null) {
 			return;
 		}
-		actualRecipe.removeIngredient(selectedProduct.getKey());
+		actualRecipe.removeIngredient(selectedProduct);
 		updateTable();
 
 	}
@@ -174,6 +166,7 @@ public class RecipeController implements Initializable {
 		if (selectedStep == null) {
 			return;
 		}
+		// TODO why not setStep(String, String) ?
 		actualRecipe.setStep(steps.indexOf(selectedStep), stepTF.getText());
 		updateTable();
 	}
@@ -183,6 +176,7 @@ public class RecipeController implements Initializable {
 		if (selectedStep == null) {
 			return;
 		}
+		// TODO why not removeStep(String, String) ?
 		actualRecipe.removeStep(steps.indexOf(selectedStep));
 		updateTable();
 	}
@@ -197,49 +191,34 @@ public class RecipeController implements Initializable {
 
 	@FXML
 	void moveUpStep() {
-		try {
-			actualRecipe.moveUpStep(steps.indexOf(selectedStep));
-		} catch (IndexOutOfBoundsException e){
-			
-		}
+		// TODO why not moveUpStep(String) ?
+		actualRecipe.moveUpStep(steps.indexOf(selectedStep));
 		updateTable();
 	}
 	
 	@FXML
 	void moveDownStep() {
-		try {
-			actualRecipe.moveDownStep(steps.indexOf(selectedStep));
-		} catch (IndexOutOfBoundsException e) {
-			
-		}
+		// TODO why not moveDownStep(String) ?
+		actualRecipe.moveDownStep(steps.indexOf(selectedStep));
 		updateTable();
 	}
 
 	@FXML
 	void CreateRecipe() {
 		Main.getInstance().showDialog("CreateRecipe", "Create recipe");
-		recipesListCombo.getItems().clear();
-		recipesListCombo.getItems().addAll(Database.getAllRecipes());
+		updateRecipes();
 	}
 	
 	@FXML
-	void SaveRecipe() {
+	void saveRecipe() {
+		// TODO autosave ?
 		actualRecipe.save();
-	}
-	
-	@FXML
-	void DeleteRecipe() {
-		// TODO Not yet implement. Recipe.delete() is not acceptable for the DB
-		actualRecipe.delete();
-		recipesListCombo.getItems().remove(actualRecipe);
-		actualRecipe = null;
-		updateSelectedRecipe();
 	}
 	
 	@FXML
 	void editRecipeName() {
 		actualRecipe.setName(recipeNameTF.getText());
-		updateInterface();
+		updateTable();
 	}
 
 	@FXML
@@ -247,16 +226,14 @@ public class RecipeController implements Initializable {
 	 * Select a cell of the table products
 	 * Update the status of the corresponding buttons when a product is selected (not disable)
 	 */
-	private void updateSelectedIngredient() {
-		int selectionProducstSize = selectionProducts.size();
-		if (selectionProducstSize == 1) {
-			selectedProduct = selectionProducts.get(0);
+	private void updateSelectedIngredient(Product newValue) {
+		selectedProduct = newValue;
+		if (selectedProduct != null) {
 			editIngredientBT.setDisable(false);
 			removeIngredientBT.setDisable(false);
-			amountIngredientTF.setText(selectedProduct.getValue().toString());
-			productsListCombo.getSelectionModel().select(selectedProduct.getKey());;
+			amountIngredientTF.setInt(actualRecipe.getQuantity(selectedProduct));
+			productsListCombo.getSelectionModel().select(selectedProduct);;
 		} else {
-			selectedProduct = null;
 			editIngredientBT.setDisable(true);
 			removeIngredientBT.setDisable(true);
 		}
@@ -266,28 +243,23 @@ public class RecipeController implements Initializable {
 	/**
 	 * Select a cell of the table Step, update the corresponding fields, and enable/disable some buttons on the view
 	 */
-	private void updateSelectedStep() {
-		int size = selectionSteps.size();
-		if (size == 1) {
-			selectedStep = selectionSteps.get(0);
+
+	private void updateSelectedStep(String newValue) {
+		selectedStep = newValue;
+		if (selectedStep != null) {
 			editStepBT.setDisable(false);
 			removeStepBT.setDisable(false);
-			moveUpStepBT.setDisable(false);
-			moveDownStepBT.setDisable(false);
-			if (selectedStep.equals(steps.get(0))) {
-				moveUpStepBT.setDisable(true);
-			}
-			if (selectedStep.equals(steps.get(steps.size()-1))){
-				moveDownStepBT.setDisable(true);
-			}
+			boolean first = selectedStep.equals(steps.get(0));
+			moveUpStepBT.setDisable(first);
+			boolean last = selectedStep.equals(steps.get(steps.size()-1));
+			moveDownStepBT.setDisable(last);
 			stepTF.setText(selectedStep);
 		} else {
-			selectedStep = null;
 			editStepBT.setDisable(true);
 			removeStepBT.setDisable(true);
 			moveUpStepBT.setDisable(true);
 			moveDownStepBT.setDisable(true);
-			stepTF.setText("");
+			stepTF.clear();
 		}
 	}
 	
@@ -298,7 +270,7 @@ public class RecipeController implements Initializable {
 		amountIngredientTF.clear();
 		stepTF.clear();
 		steps.clear();
-		products.clear();
+		// TODO call other selected methods
 		if (actualRecipe == null) {
 			addIngredientBT.setDisable(true);
 			removeIngredientBT.setDisable(true);
@@ -309,7 +281,6 @@ public class RecipeController implements Initializable {
 			editStepBT.setDisable(true);
 			clearStepBT.setDisable(true);
 			saveRecipeBT.setDisable(true);
-			deleteRecipeBT.setDisable(true);
 			recipeNameBT.setDisable(true);
 			moveUpStepBT.setDisable(true);
 			moveDownStepBT.setDisable(true);
@@ -328,9 +299,6 @@ public class RecipeController implements Initializable {
 			peopleTF.setInt(actualRecipe.getServings());
 			recipeNameTF.setText(actualRecipe.getName());
 			steps.addAll(actualRecipe.getAllSteps());
-			actualRecipe.getAllIngredients().forEach((ingredient, quantity)
-					->products.put(ingredient, Math.round(quantity)));
-			
 			addIngredientBT.setDisable(true);
 			removeIngredientBT.setDisable(true);
 			clearIngredientsBT.setDisable(false);
@@ -340,7 +308,6 @@ public class RecipeController implements Initializable {
 			editStepBT.setDisable(true);
 			clearStepBT.setDisable(false);
 			saveRecipeBT.setDisable(false);
-			deleteRecipeBT.setDisable(true);
 			recipeNameBT.setDisable(false);
 			moveUpStepBT.setDisable(true);
 			moveDownStepBT.setDisable(true);
@@ -352,7 +319,7 @@ public class RecipeController implements Initializable {
 			amountDownBT.setDisable(true);
 			recipeNameTF.setDisable(false);
 		}
-		updateInterface();
+		updateTable();
 	}
 	
 	@FXML
@@ -380,84 +347,62 @@ public class RecipeController implements Initializable {
 	 * Update the table view of the recipe
 	 */
 	private void updateTable() {
-		if (steps != null) {
-			steps.clear();
-		}
-		else {
-			steps = FXCollections.observableArrayList();
-		}
-		if (products != null) {
-			products.clear();
-		}
-		else {
-			products = FXCollections.observableHashMap();
-		}
 		if (actualRecipe != null) {
+			steps.clear();
 			steps.addAll(actualRecipe.getAllSteps());
-			actualRecipe.getAllIngredients().forEach((ingredient, quantity)
-					->products.put(ingredient, Math.round(quantity)));
+			ingredientsTable.getItems().clear();
+			ObservableList<Product> ingredients = FXCollections.observableArrayList(actualRecipe.getAllIngredients().keySet());
+			ingredientsTable.setItems(ingredients);
+			stepsTable.setItems(steps);
 		}
-		updateInterface();
 	}
 	
-	//TODO add doc for this method
-	private void updateInterface() {
-		productsContent = FXCollections.observableArrayList(products.entrySet());
-		productsContent.sort(new Comparator<Entry<Product, Integer>>() {
-			public int compare(Entry<Product, Integer> o1, Entry<Product, Integer> o2) {
-				return o1.getKey().getName().toLowerCase().compareTo(o2.getKey().getName().toLowerCase());
-			}
-		});
-		ingredientsTable.setItems(productsContent);
-		stepsTable.setItems(steps);
+	public void updateRecipes() {
+		recipesListCombo.getItems().clear();
+		recipesListCombo.getItems().addAll(Database.getAllRecipes());
 	}
-
+	
 	public void initialize(URL url, ResourceBundle rb) {
 		productsListCombo.getItems().clear();
 		productsListCombo.getItems().addAll(Database.getAllProducts());
-		recipesListCombo.getItems().clear();
-		recipesListCombo.getItems().addAll(Database.getAllRecipes());
-		products = FXCollections.observableHashMap();
+		updateRecipes();
 		steps = FXCollections.observableArrayList();
-		ingredientCL.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Map.Entry<Product, Integer>, String>, ObservableValue<String>>() {
-					@Override
-					public ObservableValue<String> call(
-							TableColumn.CellDataFeatures<Map.Entry<Product, Integer>, String> p) {
-						// this callback returns property for just one cell
-						return new SimpleStringProperty(p.getValue().getKey().getName());
-					}
-				});
-		amountIngredientCL.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<Map.Entry<Product, Integer>, String>, ObservableValue<String>>() {
-					@Override
-					public ObservableValue<String> call(
-							TableColumn.CellDataFeatures<Map.Entry<Product, Integer>, String> p) {
-						// this callback returns property for just one cell
-						return new SimpleStringProperty(p.getValue().getValue().toString());
-					}
-				});
-		recipeStepCL.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<String, String>, ObservableValue<String>>() {
-					@Override
-					public ObservableValue<String> call(
-							TableColumn.CellDataFeatures<String, String> p) {
-						return new SimpleStringProperty(p.getValue());
-					}
-				});
+		ingredientCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(TableColumn.CellDataFeatures<Product, String> p) {
+				// this callback returns property for just one cell
+				return new SimpleStringProperty(p.getValue().getName());
+			}
+		});
+		amountIngredientCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(TableColumn.CellDataFeatures<Product, String> p) {
+				// this callback returns property for just one cell
+				Integer amount = actualRecipe.getQuantity(p.getValue());
+				return new SimpleStringProperty(amount.toString());
+			}
+		});
+		recipeStepCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(
+					TableColumn.CellDataFeatures<String, String> p) {
+				return new SimpleStringProperty(p.getValue());
+			}
+		});
 
-		selectionProducts = ingredientsTable.getSelectionModel().getSelectedItems();
-		selectionProducts.addListener(new ListChangeListener<Map.Entry<Product, Integer>>() {
-			public void onChanged(Change<? extends Entry<Product, Integer>> c) {
-				updateSelectedIngredient();
+		ingredientsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
+			@Override
+			public void changed(ObservableValue<? extends Product> observable, Product oldValue, Product newValue) {
+				updateSelectedIngredient(newValue);
 			}
 		});
-		selectionSteps = stepsTable.getSelectionModel().getSelectedItems();
-		selectionSteps.addListener(new ListChangeListener<String>() {
-			public void onChanged(Change<? extends String> c) {
-				updateSelectedStep();
+		stepsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				updateSelectedStep(newValue);
 			}
 		});
+		
 		// add available recipes in the select list
 		recipesListCombo.setConverter(new StringConverter<Recipe>() {
 			@Override
@@ -477,7 +422,7 @@ public class RecipeController implements Initializable {
 			public Product fromString(String string) { return null; }
 		});
 
-		updateInterface();
+		updateTable();
 		updateSelectedRecipe();
 		amountIngredientTF.setSigned(false);
 

@@ -93,6 +93,9 @@ public class Recipe extends ModelObject {
 		this.name = name;
 	}
 	
+	public int getQuantity(Product ingredient) {
+		return Math.round(ingredients.getOrDefault(ingredient, (float) 0));
+	}
 	/**
 	 * Get ingredients
 	 * @return Map of each ingredients to its quantity
