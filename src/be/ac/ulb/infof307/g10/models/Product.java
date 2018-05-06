@@ -3,6 +3,9 @@ package be.ac.ulb.infof307.g10.models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+/**
+ * Class representing a product. It is defined by a name (string), a size (positive int) and a unit (string) related to the size.
+ */
 @Entity
 public class Product extends ModelObject {
 
@@ -17,12 +20,14 @@ public class Product extends ModelObject {
 	private Product() {}
 
 	public Product(String name, int size, String sizeUnit) {
-		if (name == null || sizeUnit == null) {
-			throw new NullPointerException();
-		}
-		if(size < 0) {
+		
+		if (name == null || sizeUnit == null)
+			throw new NullPointerException("The name and the sizeUnit must not be null");
+		if (name.equals("") || sizeUnit.equals(""))//we don't allow empty Strings
+			throw new IllegalArgumentException("The fields should not be empty");
+		if(size < 0)
 			throw new IllegalArgumentException("size must be > 0");
-		}
+		
 		this.name = name;
 		this.size = size;
 		this.sizeUnit = sizeUnit;
