@@ -8,10 +8,9 @@ import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
+import be.ac.ulb.infof307.g10.utils.GetterConverter;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -20,8 +19,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.util.Callback;
-import javafx.util.StringConverter;
 
 /**
  * Controller class of the Recipe view.
@@ -318,53 +315,30 @@ public class RecipeController implements Initializable {
 		productsListCombo.getItems().addAll(Database.getAllProducts());
 		updateRecipes();
 		
-		amountIngredientCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product, String>, ObservableValue<String>>() {
-			@Override
-			public ObservableValue<String> call(TableColumn.CellDataFeatures<Product, String> p) {
-				// this callback returns property for just one cell
-				Integer amount = actualRecipe.getQuantity(p.getValue());
-				return new SimpleStringProperty(amount.toString());
-			}
-		});
-		recipeStepCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String, String>, ObservableValue<String>>() {
-			@Override
-			public ObservableValue<String> call(
-					TableColumn.CellDataFeatures<String, String> p) {
-				return new SimpleStringProperty(p.getValue());
-			}
-		});
-
-		ingredientsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
-			@Override
-			public void changed(ObservableValue<? extends Product> observable, Product oldValue, Product newValue) {
-				updateSelectedIngredient(newValue);
-			}
-		});
-		stepsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				updateSelectedStep(newValue);
-			}
+		ingredientCL.setCellValueFactory(data -> {
+			return new SimpleStringProperty(data.getValue().getName());
 		});
 		
-		// add available recipes in the select list
-		recipesListCombo.setConverter(new StringConverter<Recipe>() {
-			@Override
-			public String toString(Recipe r) {
-				return r.getName();
-			}
-			@Override
-			public Recipe fromString(String string) { return null; }
+		amountIngredientCL.setCellValueFactory(data -> {
+			int amount = actualRecipe.getQuantity(data.getValue());
+			return new SimpleStringProperty(Integer.toString(amount));
 		});
-		// add available products in the select list
-		productsListCombo.setConverter(new StringConverter<Product>() {
-			@Override
-			public String toString(Product p) {
-				return p.getFullName();
-			}
-			@Override
-			public Product fromString(String string) { return null; }
+		
+		recipeStepCL.setCellValueFactory(data -> {
+			return new SimpleStringProperty(data.getValue());
 		});
+
+		ingredientsTable.getSelectionModel().selectedItemProperty().addListener(
+			(observable, oldValue, newValue) -> updateSelectedIngredient(newValue)
+		);
+		stepsTable.getSelectionModel().selectedItemProperty().addListener(
+			(observable, oldValue, newValue) -> updateSelectedStep(newValue)
+		);
+		
+		// use Recipe name
+		recipesListCombo.setConverter(GetterConverter.create(Recipe.class, "name"));
+		// use Product full name
+		productsListCombo.setConverter(GetterConverter.create(Product.class, "fullName"));
 
 		// load data and disable unavailable inputs
 		peopleTF.setDisable(true);
