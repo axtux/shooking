@@ -31,7 +31,7 @@ public class ResearchController  {
 		
 		shopTA.setText(shopNames);
 	}
-
+	//TODO is this method used ?
 	public void researchProducts() {
 		shopTA.setText("");
 		shopTA.setText(productTF.getText());
