@@ -267,7 +267,6 @@ public class RecipeController implements Initializable {
 	 * Select a cell of the table Step, update the corresponding fields, and enable/disable some buttons on the view
 	 */
 	private void updateSelectedStep() {
-		System.out.println("updateSelectedStep");
 		int size = selectionSteps.size();
 		if (size == 1) {
 			selectedStep = selectionSteps.get(0);
@@ -296,7 +295,6 @@ public class RecipeController implements Initializable {
 	 * Select a recipe, update the corresponding fields, and enable/disable some buttons on the view
 	 */
 	private void updateSelectedRecipe() {
-		System.out.println("updateSelectedRecipe");
 		amountIngredientTF.clear();
 		stepTF.clear();
 		steps.clear();

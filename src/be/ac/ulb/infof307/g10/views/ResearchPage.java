@@ -36,10 +36,8 @@ public class ResearchPage {
         TextField textFieldProd = new TextField();
         textFieldProd.setPrefSize(300, 20);
         textFieldProd.setPromptText("Product name");
-
-
+        
         TextArea storesArea = new TextArea();
-
 
         //"Research" button creation
         Button btnResearch = new Button();
