@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -14,6 +13,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
+/**
+ * Controller class of the Terms of use view
+ */
 public class TermsOfUseController implements Initializable  {
 	
 	@FXML
@@ -22,15 +24,13 @@ public class TermsOfUseController implements Initializable  {
 	private Button button;
 
 	@FXML
-	void agree(MouseEvent event) {
+	void agree() {
 		button.setDisable(true);
-		System.out.println("agreed");
 		Main.getInstance().goToCreateAccount();
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		System.out.println("initialization");
 		InputStream in = getClass().getResourceAsStream("/terms_of_use.txt");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		String content = reader.lines().collect(Collectors.joining());

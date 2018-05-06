@@ -14,7 +14,6 @@ import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -27,7 +26,7 @@ import javafx.util.StringConverter;
 
 /**
  * Controller Class of the shopping list (ShoppingList)
- *
+ * It is used to update the information in the different fields and
  */
 public class ShoppingListController extends MainController {
 
@@ -76,13 +75,13 @@ public class ShoppingListController extends MainController {
 	}
 
 	@FXML
-	private void clear(ActionEvent event) {
+	private void clear() {
 		sl.clear();
 		changed();
 	}	
 
 	@FXML
-	private void add(ActionEvent event) {
+	private void add() {
 		Product p = productsListCombo.getValue();
 		sl.addProduct(p, amountTF.getInt());
 		changed();
@@ -90,16 +89,16 @@ public class ShoppingListController extends MainController {
 	}
 
 	@FXML
-	private void edit(ActionEvent event) {
+	private void edit() {
 		if (selected == null) {
 			return;
 		}
 		sl.removeProduct(selected);
-		add(null);
+		add();
 	}
 
 	@FXML
-	private void remove(ActionEvent event) {
+	private void remove() {
 		if (selected == null) {
 			return;
 		}
@@ -108,12 +107,12 @@ public class ShoppingListController extends MainController {
 	}
 
 	@FXML
-	void amountUp(ActionEvent event) {
+	void amountUp() {
 		amountTF.setInt(amountTF.getInt()+1);
 	}
 
 	@FXML
-	void amountDown(ActionEvent event) {
+	void amountDown() {
 		amountTF.setInt(amountTF.getInt()-1);
 	}
 
@@ -176,7 +175,7 @@ public class ShoppingListController extends MainController {
 	}
 
 	@FXML
-	private void createNewProduct(ActionEvent event) throws IOException {
+	private void createNewProduct() throws IOException {
 		Main.getInstance().showDialog("CreateProduct", "Create product");
 		updateProducts();
 	}

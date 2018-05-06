@@ -26,7 +26,10 @@ import javafx.scene.control.TextField;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
-
+/**
+ * Controller class of the Recipe view.
+ * It is used to manage the different action on a recipe such as adding one, editing one, adding a new step in it, ...
+ */
 public class RecipeController implements Initializable {
 
 	@FXML
@@ -53,8 +56,6 @@ public class RecipeController implements Initializable {
 	private Button amountUpBT;
 	@FXML
 	private Button amountDownBT;
-	@FXML
-	private Button newRecipeBT;
 	@FXML
 	private Button saveRecipeBT;
 	@FXML
@@ -98,29 +99,29 @@ public class RecipeController implements Initializable {
 	private Product actualProduct;
 
 	@FXML
-	void recipeComboChanged(ActionEvent event) {
+	void recipeComboChanged() {
 		actualRecipe = recipesListCombo.getSelectionModel().getSelectedItem();
 		updateSelectedRecipe();
 	}
 	
 	@FXML
-	void productComboChanged(ActionEvent event) {
+	void productComboChanged() {
 		actualProduct = productsListCombo.getSelectionModel().getSelectedItem();
 		updateSelectedProduct();
 	}
 	
 	@FXML
-	void amountDown(ActionEvent event) {
+	void amountDown() {
 		amountIngredientTF.setInt(amountIngredientTF.getInt() - 1);
 	}
 
 	@FXML
-	void amountUp(ActionEvent event) {
+	void amountUp() {
 		amountIngredientTF.setInt(amountIngredientTF.getInt() + 1);
 	}
 
 	@FXML
-	void addIngredient(ActionEvent event) {
+	void addIngredient() {
 		if (productsListCombo.getSelectionModel().isEmpty()) {
 			return;
 		}
@@ -129,10 +130,9 @@ public class RecipeController implements Initializable {
 		actualRecipe.addIngredient(p, quantity);
 		updateTable();
 	}
-
-	// Edit ingredient
+	
 	@FXML
-	void editIngredient(ActionEvent event) {
+	void editIngredient() {
 		if (selectedProduct == null) {
 			return;
 		}
@@ -142,7 +142,7 @@ public class RecipeController implements Initializable {
 	}
 	
 	@FXML
-	void removeIngredient(ActionEvent event) {
+	void removeIngredient() {
 		if (selectedProduct == null) {
 			return;
 		}
@@ -152,14 +152,14 @@ public class RecipeController implements Initializable {
 	}
 
 	@FXML
-	void clearIngredients(ActionEvent event) {
+	void clearIngredients() {
 		actualRecipe.clearIngredients();
 		amountIngredientTF.clear();
 		updateTable();
 	}
 
 	@FXML
-	void addStep(ActionEvent event) {
+	void addStep() {
 		if (stepTF.equals("")) {
 			return;
 		}
@@ -170,7 +170,7 @@ public class RecipeController implements Initializable {
 	}
 
 	@FXML
-	void editStep(ActionEvent event) {
+	void editStep() {
 		if (selectedStep == null) {
 			return;
 		}
@@ -179,7 +179,7 @@ public class RecipeController implements Initializable {
 	}
 
 	@FXML
-	void removeStep(ActionEvent event) {
+	void removeStep() {
 		if (selectedStep == null) {
 			return;
 		}
@@ -188,7 +188,7 @@ public class RecipeController implements Initializable {
 	}
 
 	@FXML
-	void clearStep(ActionEvent event) {
+	void clearStep() {
 		stepsTable.getSelectionModel().clearSelection();
 		stepTF.clear();
 		actualRecipe.clearSteps();
@@ -196,7 +196,7 @@ public class RecipeController implements Initializable {
 	}
 
 	@FXML
-	void moveUpStep(ActionEvent event) {
+	void moveUpStep() {
 		try {
 			actualRecipe.moveUpStep(steps.indexOf(selectedStep));
 		} catch (IndexOutOfBoundsException e){
@@ -206,7 +206,7 @@ public class RecipeController implements Initializable {
 	}
 	
 	@FXML
-	void moveDownStep(ActionEvent event) {
+	void moveDownStep() {
 		try {
 			actualRecipe.moveDownStep(steps.indexOf(selectedStep));
 		} catch (IndexOutOfBoundsException e) {
@@ -216,19 +216,19 @@ public class RecipeController implements Initializable {
 	}
 
 	@FXML
-	void CreateRecipe(ActionEvent event) {
+	void CreateRecipe() {
 		Main.getInstance().showDialog("CreateRecipe", "Create recipe");
 		recipesListCombo.getItems().clear();
 		recipesListCombo.getItems().addAll(Database.getAllRecipes());
 	}
 	
 	@FXML
-	void SaveRecipe(ActionEvent event) {
+	void SaveRecipe() {
 		actualRecipe.save();
 	}
 	
 	@FXML
-	void DeleteRecipe(ActionEvent event) {
+	void DeleteRecipe() {
 		// TODO Not yet implement. Recipe.delete() is not acceptable for the DB
 		actualRecipe.delete();
 		recipesListCombo.getItems().remove(actualRecipe);
@@ -237,7 +237,7 @@ public class RecipeController implements Initializable {
 	}
 	
 	@FXML
-	void editRecipeName(ActionEvent event) {
+	void editRecipeName() {
 		actualRecipe.setName(recipeNameTF.getText());
 		updateInterface();
 	}
@@ -264,7 +264,7 @@ public class RecipeController implements Initializable {
 
 	@FXML
 	/**
-	 * Select a cell of the table Step
+	 * Select a cell of the table Step, update the corresponding fields, and enable/disable some buttons on the view
 	 */
 	private void updateSelectedStep() {
 		System.out.println("updateSelectedStep");
@@ -292,6 +292,9 @@ public class RecipeController implements Initializable {
 		}
 	}
 	
+	/**
+	 * Select a recipe, update the corresponding fields, and enable/disable some buttons on the view
+	 */
 	private void updateSelectedRecipe() {
 		System.out.println("updateSelectedRecipe");
 		amountIngredientTF.clear();
@@ -353,7 +356,11 @@ public class RecipeController implements Initializable {
 		}
 		updateInterface();
 	}
-
+	
+	@FXML
+	/**
+	 * Select a ingredient and enable/disable some buttons on the view
+	 */
 	private void updateSelectedProduct() {
 		if (actualProduct == null) {
 			addIngredientBT.setDisable(true);
@@ -368,7 +375,12 @@ public class RecipeController implements Initializable {
 			amountIngredientTF.setDisable(false);
 		}
 	}
+	//TODO change this method to updateSelectedIngredient ( it is more appropriate)
 	
+	@FXML
+	/**
+	 * Update the table view of the recipe
+	 */
 	private void updateTable() {
 		if (steps != null) {
 			steps.clear();
@@ -386,11 +398,11 @@ public class RecipeController implements Initializable {
 			steps.addAll(actualRecipe.getAllSteps());
 			actualRecipe.getAllIngredients().forEach((ingredient, quantity)
 					->products.put(ingredient, Math.round(quantity)));
-			
 		}
 		updateInterface();
 	}
 	
+	//TODO add doc for this method
 	private void updateInterface() {
 		productsContent = FXCollections.observableArrayList(products.entrySet());
 		productsContent.sort(new Comparator<Entry<Product, Integer>>() {
@@ -473,7 +485,7 @@ public class RecipeController implements Initializable {
 
 	}
 
-	public void researchProduct(ActionEvent actionEvent) {
+	public void researchProduct() {
 		Main.getInstance().showDialog("ResearchDialog", "Research product");
 	}
 }
