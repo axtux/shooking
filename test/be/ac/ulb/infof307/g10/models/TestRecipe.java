@@ -98,7 +98,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		String step2 = "step2";
 		r.addStep(step1);
 		r.addStep(step2);
-		r.moveUpStep(1);
+		r.moveUpStep(step2);
 		assertEquals(r.getStep(0),step2);
 		assertEquals(r.getStep(1),step1);
 	}
@@ -110,7 +110,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		String step2 = "step2";
 		r.addStep(step1);
 		r.addStep(step2);
-		r.moveDownStep(0);
+		r.moveDownStep(step1);
 		assertEquals(r.getStep(0),step2);
 		assertEquals(r.getStep(1),step1);
 	}
