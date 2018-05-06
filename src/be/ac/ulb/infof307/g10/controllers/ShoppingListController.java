@@ -68,7 +68,7 @@ public class ShoppingListController extends MainController {
 	private Product selected;
 	private Shop selectedShop;
 	
-	private ShoppingList sl;
+	static ShoppingList sl;
 
 	private void changed() {
 		sl.save();
@@ -138,6 +138,10 @@ public class ShoppingListController extends MainController {
 	private void shopSelected(Shop newValue) {
 		selectedShop = newValue;
 		updateTable();
+	}
+	
+	public static ShoppingList getShoppingList(){
+		return sl;
 	}
 	
 	private void updateProducts() {
