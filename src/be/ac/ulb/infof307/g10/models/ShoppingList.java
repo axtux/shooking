@@ -64,5 +64,6 @@ public class ShoppingList extends ModelObject {
 	public void setProductsAndQuantity(Map<Product, Integer> productsAndQuantity) {
 		this.productsAndQuantity = new HashMap<>(productsAndQuantity);
 	}
+	
 
 }

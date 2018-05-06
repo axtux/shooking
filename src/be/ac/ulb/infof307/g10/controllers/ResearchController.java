@@ -20,64 +20,50 @@ import java.util.Set;
 /**
  * Controller Class of the research product view (Research)
  */
-public class ResearchController  {
-	
+public class ResearchController {
+
 	@FXML
 	private TextField productTF;
-	
-	private double priceForShoppingList;
 
 	@FXML
 	private TextArea shopTA;
 
+	private void displayShopPrice(List<Shop> shopWithAllArticles, ArrayList priceForShoppingListAllShops) {
+		String shopNamesAndPrice = "";
+		for (int i = 0; i < shopWithAllArticles.size(); ++i) {
+			shopNamesAndPrice += shopWithAllArticles.get(i).getName() + "    "
+					+ String.valueOf(priceForShoppingListAllShops.get(i)) + " EUR \n";
+		}
+		shopTA.setText(shopNamesAndPrice);
+	}
+	
+	//find the stores with all articles in stock and compute the price for the shopping list
 	public void research(ActionEvent actionEvent) {
-		double total=0.0;
+		double totalPrice = 0.0;
 		List<Shop> shopWithAllArticles = new ArrayList<Shop>();
 		ArrayList priceForShoppingListAllShops = new ArrayList();
+		
 		ShoppingList sl = ShoppingListController.getShoppingList();
-		
 		Set<Product> products = sl.getProductsAndQuantity().keySet();
+		
 		List<Shop> shopList = Database.getAllShops();
+		
 		for (Shop s : shopList) {
-			total =0.0;
+			totalPrice = 0.0;
 			Set<Product> productInAShop = s.getStock().getProducts();
-			if(!Collections.disjoint(productInAShop, products)) {
+			if (!Collections.disjoint(productInAShop, products)) { // check that the products in shopping list are in
+																	// the stock of a shop
 				shopWithAllArticles.add(s);
-				 for (Map.Entry<Product, Integer> entry : sl.getProductsAndQuantity().entrySet()) {
-					 
-					 System.out.print(s.getStock().getPrice(entry.getKey())+ "\n");
-					 
-						total += (((s.getStock().getPrice(entry.getKey()))* entry.getValue()));//prix product * quantity
-					 //action.accept(entry.getKey(), entry.getValue());
-							
+				for (Map.Entry<Product, Integer> entry : sl.getProductsAndQuantity().entrySet()) {
+					// System.out.print(s.getStock().getPrice(entry.getKey())+ "\n");
+					totalPrice += (((s.getStock().getPrice(entry.getKey())) * entry.getValue()));// product price *	quantity																								// quantity
 				}
-				
-				 priceForShoppingListAllShops.add(total);
+				priceForShoppingListAllShops.add(totalPrice);
 			}
-			
-					
-			     }
-			 
-		
-		String shopNames = "";
-		for (int i =0 ; i< shopWithAllArticles.size(); ++i) {
-			shopNames += shopWithAllArticles.get(i).getName() + String.valueOf(priceForShoppingListAllShops.get(i))+"\n";
 		}
-		shopTA.setText(shopNames);
+		displayShopPrice(shopWithAllArticles, priceForShoppingListAllShops);
 	}
-		
-		
-		
-		/*shopTA.setText("");
 
-		List<Shop> shopList = Shop.getWithProduct(Database.getProduct(productTF.getText()));
-		String shopNames = "";
-		for (Shop s : shopList) {
-			shopNames += s.getName() + "\n";
-		}
-		shopTA.setText(shopNames);
-	*/
-	
 	public void researchProducts(ActionEvent actionEvent) {
 		shopTA.setText("");
 		shopTA.setText(productTF.getText());
