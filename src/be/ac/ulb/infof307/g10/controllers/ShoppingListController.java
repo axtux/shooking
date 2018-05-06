@@ -160,6 +160,13 @@ public class ShoppingListController extends MainController {
 		updateTotal();
 	}
 	
+	@FXML
+	private void shearchShop() {
+		Main.getInstance().showDialog("ResearchDialog", "Research product");
+	}
+	
+	
+	
 	private void updateTotal() {
 		if (selectedShop == null) {
 			totalLabel.setText("-");
