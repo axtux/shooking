@@ -90,29 +90,29 @@ public class RecipeController implements Initializable {
 	private Product actualProduct;
 
 	@FXML
-	void recipeComboChanged() {
+	private void recipeComboChanged() {
 		actualRecipe = recipesListCombo.getSelectionModel().getSelectedItem();
 		updateSelectedRecipe();
 	}
 	
 	@FXML
-	void productComboChanged() {
+	private void productComboChanged() {
 		actualProduct = productsListCombo.getSelectionModel().getSelectedItem();
 		updateSelectedProduct();
 	}
 	
 	@FXML
-	void amountDown() {
+	private void amountDown() {
 		amountIngredientTF.setInt(amountIngredientTF.getInt() - 1);
 	}
 
 	@FXML
-	void amountUp() {
+	private void amountUp() {
 		amountIngredientTF.setInt(amountIngredientTF.getInt() + 1);
 	}
 
 	@FXML
-	void addIngredient() {
+	private void addIngredient() {
 		if (productsListCombo.getSelectionModel().isEmpty()) {
 			return;
 		}
@@ -120,21 +120,20 @@ public class RecipeController implements Initializable {
 		int quantity = amountIngredientTF.getInt();
 		actualRecipe.addIngredient(p, quantity);
 		updateTable();
+		ingredientsTable.getSelectionModel().select(p);
 	}
 
 	@FXML
-	void editIngredient(ActionEvent event) {
-		// TODO trouble if selectedProduct has changed
+	private void editIngredient() {
 		if (selectedProduct == null) {
 			return;
 		}
-		int quantity = amountIngredientTF.getInt();
-		actualRecipe.setIngredientQuantity(selectedProduct, quantity);
-		updateTable();
+		actualRecipe.removeIngredient(selectedProduct);
+		addIngredient();
 	}
 	
 	@FXML
-	void removeIngredient() {
+	private void removeIngredient() {
 		if (selectedProduct == null) {
 			return;
 		}
@@ -144,14 +143,14 @@ public class RecipeController implements Initializable {
 	}
 
 	@FXML
-	void clearIngredients() {
+	private void clearIngredients() {
 		actualRecipe.clearIngredients();
 		amountIngredientTF.clear();
 		updateTable();
 	}
 
 	@FXML
-	void addStep() {
+	private void addStep() {
 		if (stepTF.equals("")) {
 			return;
 		}
@@ -159,20 +158,23 @@ public class RecipeController implements Initializable {
 		stepTF.clear();
 		actualRecipe.addStep(step);
 		updateTable();
+		stepsTable.getSelectionModel().select(step);
 	}
 
 	@FXML
-	void editStep() {
+	private void editStep() {
 		if (selectedStep == null) {
 			return;
 		}
 		// TODO why not setStep(String, String) ?
-		actualRecipe.setStep(steps.indexOf(selectedStep), stepTF.getText());
+		String step = stepTF.getText();
+		actualRecipe.setStep(steps.indexOf(selectedStep), step);
 		updateTable();
+		stepsTable.getSelectionModel().select(step);
 	}
 
 	@FXML
-	void removeStep() {
+	private void removeStep(ActionEvent event) {
 		if (selectedStep == null) {
 			return;
 		}
@@ -182,7 +184,7 @@ public class RecipeController implements Initializable {
 	}
 
 	@FXML
-	void clearStep() {
+	private void clearStep() {
 		stepsTable.getSelectionModel().clearSelection();
 		stepTF.clear();
 		actualRecipe.clearSteps();
@@ -190,33 +192,33 @@ public class RecipeController implements Initializable {
 	}
 
 	@FXML
-	void moveUpStep() {
+	private void moveUpStep() {
 		// TODO why not moveUpStep(String) ?
 		actualRecipe.moveUpStep(steps.indexOf(selectedStep));
 		updateTable();
 	}
 	
 	@FXML
-	void moveDownStep() {
+	private void moveDownStep() {
 		// TODO why not moveDownStep(String) ?
 		actualRecipe.moveDownStep(steps.indexOf(selectedStep));
 		updateTable();
 	}
 
 	@FXML
-	void CreateRecipe() {
+	private void createRecipe() {
 		Main.getInstance().showDialog("CreateRecipe", "Create recipe");
 		updateRecipes();
 	}
 	
 	@FXML
-	void saveRecipe() {
+	private void saveRecipe() {
 		// TODO autosave ?
 		actualRecipe.save();
 	}
 	
 	@FXML
-	void editRecipeName() {
+	private void editRecipeName() {
 		actualRecipe.setName(recipeNameTF.getText());
 		updateTable();
 	}
@@ -228,14 +230,15 @@ public class RecipeController implements Initializable {
 	 */
 	private void updateSelectedIngredient(Product newValue) {
 		selectedProduct = newValue;
-		if (selectedProduct != null) {
-			editIngredientBT.setDisable(false);
-			removeIngredientBT.setDisable(false);
+		boolean empty = selectedProduct == null;
+		editIngredientBT.setDisable(empty);
+		removeIngredientBT.setDisable(empty);
+		if (!empty) {
 			amountIngredientTF.setInt(actualRecipe.getQuantity(selectedProduct));
 			productsListCombo.getSelectionModel().select(selectedProduct);;
 		} else {
-			editIngredientBT.setDisable(true);
-			removeIngredientBT.setDisable(true);
+			amountIngredientTF.clear();
+			productsListCombo.getSelectionModel().clearSelection();
 		}
 	}
 
@@ -246,17 +249,16 @@ public class RecipeController implements Initializable {
 
 	private void updateSelectedStep(String newValue) {
 		selectedStep = newValue;
-		if (selectedStep != null) {
-			editStepBT.setDisable(false);
-			removeStepBT.setDisable(false);
+		boolean empty = selectedStep == null;
+		editStepBT.setDisable(empty);
+		removeStepBT.setDisable(empty);
+		if (!empty) {
 			boolean first = selectedStep.equals(steps.get(0));
 			moveUpStepBT.setDisable(first);
 			boolean last = selectedStep.equals(steps.get(steps.size()-1));
 			moveDownStepBT.setDisable(last);
 			stepTF.setText(selectedStep);
 		} else {
-			editStepBT.setDisable(true);
-			removeStepBT.setDisable(true);
 			moveUpStepBT.setDisable(true);
 			moveDownStepBT.setDisable(true);
 			stepTF.clear();
@@ -267,57 +269,18 @@ public class RecipeController implements Initializable {
 	 * Select a recipe, update the corresponding fields, and enable/disable some buttons on the view
 	 */
 	private void updateSelectedRecipe() {
-		amountIngredientTF.clear();
-		stepTF.clear();
-		steps.clear();
-		// TODO call other selected methods
-		if (actualRecipe == null) {
-			addIngredientBT.setDisable(true);
-			removeIngredientBT.setDisable(true);
-			clearIngredientsBT.setDisable(true);
-			editIngredientBT.setDisable(true);
-			removeStepBT.setDisable(true);
-			addStepBT.setDisable(true);
-			editStepBT.setDisable(true);
-			clearStepBT.setDisable(true);
-			saveRecipeBT.setDisable(true);
-			recipeNameBT.setDisable(true);
-			moveUpStepBT.setDisable(true);
-			moveDownStepBT.setDisable(true);
-			productsListCombo.setDisable(true);
-			amountIngredientTF.setDisable(true);
-			stepTF.setDisable(true);
-			peopleTF.setDisable(true);
-			amountUpBT.setDisable(true);
-			amountDownBT.setDisable(true);
-			recipeNameTF.setDisable(true);
-			if (ingredientsTable.getItems() != null) {
-				ingredientsTable.getItems().clear();
-			}
-		}
-		else {
+		productsListCombo.getSelectionModel().clearSelection();
+		boolean empty = actualRecipe == null;
+		saveRecipeBT.setDisable(empty);
+		recipeNameBT.setDisable(empty);
+		recipeNameTF.setDisable(empty);
+		productsListCombo.setDisable(empty);
+		stepTF.setDisable(empty);
+		addStepBT.setDisable(empty);
+		clearIngredientsBT.setDisable(empty);
+		clearStepBT.setDisable(empty);
+		if (!empty) {
 			peopleTF.setInt(actualRecipe.getServings());
-			recipeNameTF.setText(actualRecipe.getName());
-			steps.addAll(actualRecipe.getAllSteps());
-			addIngredientBT.setDisable(true);
-			removeIngredientBT.setDisable(true);
-			clearIngredientsBT.setDisable(false);
-			editIngredientBT.setDisable(true);
-			removeStepBT.setDisable(true);
-			addStepBT.setDisable(false);
-			editStepBT.setDisable(true);
-			clearStepBT.setDisable(false);
-			saveRecipeBT.setDisable(false);
-			recipeNameBT.setDisable(false);
-			moveUpStepBT.setDisable(true);
-			moveDownStepBT.setDisable(true);
-			productsListCombo.setDisable(false);
-			amountIngredientTF.setDisable(true);
-			stepTF.setDisable(false);
-			peopleTF.setDisable(true);
-			amountUpBT.setDisable(true);
-			amountDownBT.setDisable(true);
-			recipeNameTF.setDisable(false);
 		}
 		updateTable();
 	}
@@ -327,18 +290,11 @@ public class RecipeController implements Initializable {
 	 * Select a ingredient and enable/disable some buttons on the view
 	 */
 	private void updateSelectedProduct() {
-		if (actualProduct == null) {
-			addIngredientBT.setDisable(true);
-			amountUpBT.setDisable(true);
-			amountDownBT.setDisable(true);
-			amountIngredientTF.setDisable(true);
-		}
-		else {
-			addIngredientBT.setDisable(false);
-			amountUpBT.setDisable(false);
-			amountDownBT.setDisable(false);
-			amountIngredientTF.setDisable(false);
-		}
+		boolean empty = actualProduct == null;
+		addIngredientBT.setDisable(empty);
+		amountUpBT.setDisable(empty);
+		amountDownBT.setDisable(empty);
+		amountIngredientTF.setDisable(empty);
 	}
 	//TODO change this method to updateSelectedIngredient ( it is more appropriate)
 	
@@ -347,17 +303,19 @@ public class RecipeController implements Initializable {
 	 * Update the table view of the recipe
 	 */
 	private void updateTable() {
+		recipeNameTF.clear();
+		ingredientsTable.getItems().clear();
+		stepsTable.getItems().clear();
 		if (actualRecipe != null) {
+			recipeNameTF.setText(actualRecipe.getName());
+			ingredientsTable.getItems().addAll(actualRecipe.getAllIngredients().keySet());
 			steps.clear();
 			steps.addAll(actualRecipe.getAllSteps());
-			ingredientsTable.getItems().clear();
-			ObservableList<Product> ingredients = FXCollections.observableArrayList(actualRecipe.getAllIngredients().keySet());
-			ingredientsTable.setItems(ingredients);
 			stepsTable.setItems(steps);
 		}
 	}
 	
-	public void updateRecipes() {
+	private void updateRecipes() {
 		recipesListCombo.getItems().clear();
 		recipesListCombo.getItems().addAll(Database.getAllRecipes());
 	}
@@ -366,6 +324,7 @@ public class RecipeController implements Initializable {
 		productsListCombo.getItems().clear();
 		productsListCombo.getItems().addAll(Database.getAllProducts());
 		updateRecipes();
+		// TODO remove steps (duplicate of model)
 		steps = FXCollections.observableArrayList();
 		ingredientCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product, String>, ObservableValue<String>>() {
 			@Override
@@ -422,13 +381,12 @@ public class RecipeController implements Initializable {
 			public Product fromString(String string) { return null; }
 		});
 
+		// load data and disable unavailable inputs
+		peopleTF.setDisable(true);
 		updateTable();
+		updateSelectedProduct();
+		updateSelectedIngredient(null);
+		updateSelectedStep(null);
 		updateSelectedRecipe();
-		amountIngredientTF.setSigned(false);
-
-	}
-
-	public void researchProduct() {
-		Main.getInstance().showDialog("ResearchDialog", "Research product");
 	}
 }
