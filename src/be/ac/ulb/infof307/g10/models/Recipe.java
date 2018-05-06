@@ -217,8 +217,8 @@ public class Recipe extends ModelObject {
 	 * @param step	The step to test
 	 * @return	true is the step is the last (false otherwise)
 	 */
-	public boolean isLast(String set) {
-		int index = steps.indexOf(steps);
+	public boolean isLast(String step) {
+		int index = steps.indexOf(step);
 		return index == steps.size()-1;
 	}
 	
