@@ -12,7 +12,6 @@ import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -80,8 +79,6 @@ public class RecipeController implements Initializable {
 	private TableView<String> stepsTable;
 	@FXML
 	private TableColumn<String, String> recipeStepCL;
-	
-	private ObservableList<String> steps;
 	
 	private Product selectedProduct;
 	private String selectedStep;
@@ -166,9 +163,8 @@ public class RecipeController implements Initializable {
 		if (selectedStep == null) {
 			return;
 		}
-		// TODO why not setStep(String, String) ?
 		String step = stepTF.getText();
-		actualRecipe.setStep(steps.indexOf(selectedStep), step);
+		actualRecipe.setStep(selectedStep, step);
 		updateTable();
 		stepsTable.getSelectionModel().select(step);
 	}
@@ -178,8 +174,7 @@ public class RecipeController implements Initializable {
 		if (selectedStep == null) {
 			return;
 		}
-		// TODO why not removeStep(String, String) ?
-		actualRecipe.removeStep(steps.indexOf(selectedStep));
+		actualRecipe.removeStep(selectedStep);
 		updateTable();
 	}
 
@@ -193,16 +188,18 @@ public class RecipeController implements Initializable {
 
 	@FXML
 	private void moveUpStep() {
-		// TODO why not moveUpStep(String) ?
-		actualRecipe.moveUpStep(steps.indexOf(selectedStep));
+		String s = selectedStep;
+		actualRecipe.moveUpStep(s);
 		updateTable();
+		stepsTable.getSelectionModel().select(s);
 	}
 	
 	@FXML
 	private void moveDownStep() {
-		// TODO why not moveDownStep(String) ?
-		actualRecipe.moveDownStep(steps.indexOf(selectedStep));
+		String s = selectedStep;
+		actualRecipe.moveDownStep(s);
 		updateTable();
+		stepsTable.getSelectionModel().select(s);
 	}
 
 	@FXML
@@ -253,10 +250,8 @@ public class RecipeController implements Initializable {
 		editStepBT.setDisable(empty);
 		removeStepBT.setDisable(empty);
 		if (!empty) {
-			boolean first = selectedStep.equals(steps.get(0));
-			moveUpStepBT.setDisable(first);
-			boolean last = selectedStep.equals(steps.get(steps.size()-1));
-			moveDownStepBT.setDisable(last);
+			moveUpStepBT.setDisable(actualRecipe.isFirst(selectedStep));
+			moveDownStepBT.setDisable(actualRecipe.isLast(selectedStep));
 			stepTF.setText(selectedStep);
 		} else {
 			moveUpStepBT.setDisable(true);
@@ -309,9 +304,7 @@ public class RecipeController implements Initializable {
 		if (actualRecipe != null) {
 			recipeNameTF.setText(actualRecipe.getName());
 			ingredientsTable.getItems().addAll(actualRecipe.getAllIngredients().keySet());
-			steps.clear();
-			steps.addAll(actualRecipe.getAllSteps());
-			stepsTable.setItems(steps);
+			stepsTable.getItems().addAll(actualRecipe.getAllSteps());
 		}
 	}
 	
@@ -324,15 +317,7 @@ public class RecipeController implements Initializable {
 		productsListCombo.getItems().clear();
 		productsListCombo.getItems().addAll(Database.getAllProducts());
 		updateRecipes();
-		// TODO remove steps (duplicate of model)
-		steps = FXCollections.observableArrayList();
-		ingredientCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product, String>, ObservableValue<String>>() {
-			@Override
-			public ObservableValue<String> call(TableColumn.CellDataFeatures<Product, String> p) {
-				// this callback returns property for just one cell
-				return new SimpleStringProperty(p.getValue().getName());
-			}
-		});
+		
 		amountIngredientCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product, String>, ObservableValue<String>>() {
 			@Override
 			public ObservableValue<String> call(TableColumn.CellDataFeatures<Product, String> p) {
