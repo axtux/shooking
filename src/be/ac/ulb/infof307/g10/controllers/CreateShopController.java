@@ -69,18 +69,14 @@ public class CreateShopController {
     }
     
     /**
-     * Construct the schedule array containing the opening hours
-     * @return the schedule array containing the opening hours
+     * Construct the schedule of the shop
      */
-    private String[] makeSchedule(){
-    	String[] schedule = new String[7];
+    private String[] createSchedule(){	
     	TextField[] textFields=getTextFields();
+    	String[] schedule = Shop.defaultSchedule();
     	for(int i=0;i<7;i++){
     		//The user does not have to know all the schedule
-    		if(textFields[i].getText().equals("")){
-    			schedule[i]="Unknown";
-    		}
-    		else{
+    		if(!textFields[i].getText().equals("")){
     			schedule[i]=textFields[i].getText();
     		}
     	}
@@ -94,8 +90,7 @@ public class CreateShopController {
     @FXML
     void create(ActionEvent event) {
     	LatLong latLong = MapController.latLong;
-    	Shop shop = new Shop(name.getText(),latLong.getLatitude(), latLong.getLongitude(),makeSchedule(), new Stock());
-    	shop.save();
+    	Shop shop = Shop.create(name.getText(),latLong.getLatitude(), latLong.getLongitude(),createSchedule());
 		Main.getInstance().closeDialog();
     }
 
