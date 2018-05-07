@@ -1,9 +1,5 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Price;
@@ -174,12 +170,12 @@ public class ShoppingListController {
 	}
 
 	@FXML
-	private void createNewProduct() throws IOException {
+	private void createNewProduct() {
 		Main.getInstance().showDialog("CreateProduct", "Create product");
 		updateProducts();
 	}
 
-	public void initialize(URL url, ResourceBundle rb) {
+	public void initialize() {
 		sl = Main.getInstance().getUser().getShoppingList();
 		
 		productCL.setCellValueFactory(data -> {
