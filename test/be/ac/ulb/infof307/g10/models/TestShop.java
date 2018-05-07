@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -18,15 +19,15 @@ import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 
 public class TestShop extends AbstractTestDatabase {
 
-	public List<Product> pList;
-	public Product p1;
-	public Product p2;
-	public Product p3;
-	@Before
-	public void creation() {
+	static private List<Product> pList;
+	static private Product p1;
+	static private Product p2;
+	static private Product p3;
+	@BeforeClass
+	public static void beforeClass() {
 		Stock stock = new Stock();
-		pList = new ArrayList<>();
 		String[] schedule = {"","","","","","",""};
+		pList = new ArrayList<>();
 		p1 = new Product("#test product 1", 1, "g");
 		p2 = new Product("#test product 2", 1, "g");
 		p3 = new Product("#test product 3", 1, "g");
@@ -59,26 +60,5 @@ public class TestShop extends AbstractTestDatabase {
 		String[] testingSchedule = {"1","2","3","4","5","6","7"};
 		Shop shop = Shop.create("#test getSchedule", 0.,0., testingSchedule);
 		assertEquals(shop.getSchedule(0), "1");
-	}
-	
-	@Test
-	public void test_004_getWithProducts() {
-		List<Product> badList1 = new ArrayList<>();
-		List<Product> badList2 = new ArrayList<>();
-			//badList1 have only product not in shop stock
-		badList1.add(new Product("#test bad product 1", 1, "g"));
-			//badList2 have some product in shop stock and some product not in shop stock
-		badList2.add(p1);
-		badList2.add(new Product("#test bad product 1", 1, "g"));
-		assertTrue(Shop.getWithProducts(badList1).isEmpty());
-		//assertTrue(Shop.getWithProducts(badList2).isEmpty());
-		assertFalse(Shop.getWithProducts(pList).isEmpty());
-	}
-	
-	@Test
-	public void test_005_getWithProduct() {
-		Product p = new Product("#test Bad product", 1, "g");
-		assertFalse(Shop.getWithProduct(p1).isEmpty());
-		assertTrue(Shop.getWithProduct(p).isEmpty());
 	}
 }
