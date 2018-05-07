@@ -36,8 +36,8 @@ public class Recipe extends ModelObject {
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> steps;
 	
-	@SuppressWarnings("unused") // NEEDED BY JPA
-	private Recipe(){
+	
+	protected Recipe(){ // Needed by JPA
 	}
 	
 	/**

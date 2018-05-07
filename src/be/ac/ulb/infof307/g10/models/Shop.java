@@ -36,8 +36,7 @@ public class Shop extends ModelObject {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Stock stock;
 
-	// NEEDED BY JPA
-	private Shop() {}
+	protected Shop() {} // Needed by JPA
 
 	/**
 	 * Create shop

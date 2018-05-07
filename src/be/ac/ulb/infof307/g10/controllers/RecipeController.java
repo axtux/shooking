@@ -152,7 +152,7 @@ public class RecipeController extends AbstractProductController {
 
 	@FXML
 	private void createRecipe() {
-		Main.getInstance().showDialog("CreateRecipe", "Create recipe");
+		Main.getInstance().showCreateRecipeDialog();
 		updateRecipes();
 	}
 	

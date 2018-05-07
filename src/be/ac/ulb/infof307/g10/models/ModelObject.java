@@ -27,6 +27,8 @@ public class ModelObject implements Serializable {
 	@EqualsExclude
 	@HashCodeExclude
 	public Long id;
+	
+	protected ModelObject() {} // Needed by JPA
 
 	public Long getId() {
 		return id;

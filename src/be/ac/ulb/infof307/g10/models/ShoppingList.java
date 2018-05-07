@@ -16,8 +16,7 @@ public class ShoppingList extends ModelObject {
 	@ElementCollection(fetch = FetchType.EAGER)
 	Map<Product, Integer> productsAndQuantity;
 
-	// NEEDED BY JPA
-	public ShoppingList() {
+	public ShoppingList() {  // Needed by JPA
 		productsAndQuantity = new HashMap<>();
 	}
 
