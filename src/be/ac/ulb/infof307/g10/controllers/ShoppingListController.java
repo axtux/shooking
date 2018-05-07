@@ -68,7 +68,7 @@ public class ShoppingListController extends MainController {
 	private Product selected;
 	private Shop selectedShop;
 	
-	static ShoppingList sl;
+	private ShoppingList sl;
 
 	private void changed() {
 		sl.save();
@@ -140,10 +140,6 @@ public class ShoppingListController extends MainController {
 		updateTable();
 	}
 	
-	public static ShoppingList getShoppingList(){
-		return sl;
-	}
-	
 	private void updateProducts() {
 		productsListCombo.getItems().clear();
 		productsListCombo.getItems().addAll(Database.getAllProducts());
@@ -161,11 +157,10 @@ public class ShoppingListController extends MainController {
 	}
 	
 	@FXML
-	private void shearchShop() {
-		Main.getInstance().showDialog("ResearchDialog", "Research product");
+	private void researchShop() {
+		ResearchShopController.ssl = sl;
+		Main.getInstance().showDialog("ResearchShop", "Research shop");
 	}
-	
-	
 	
 	private void updateTotal() {
 		if (selectedShop == null) {
