@@ -71,8 +71,8 @@ public class CreateShopController {
     	try {
     		Shop.create(name.getText(), position.getLatitude(), position.getLongitude(),createSchedule());
 			Main.getInstance().closeDialog();
-		} catch (DatabaseException e){ //should never happen because it is not possible in the view
-    		printLabel.setText("The store already exists");
+		} catch (DatabaseException e){
+    		printLabel.setText("Database error");
 		} catch (IllegalArgumentException e){
     		printLabel.setText(e.getMessage());
 		}
