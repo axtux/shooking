@@ -93,6 +93,9 @@ public class Recipe extends ModelObject {
 		this.name = name;
 	}
 	
+	public int getQuantity(Product ingredient) {
+		return Math.round(ingredients.getOrDefault(ingredient, (float) 0));
+	}
 	/**
 	 * Get ingredients
 	 * @return Map of each ingredients to its quantity
@@ -128,6 +131,16 @@ public class Recipe extends ModelObject {
 	}
 	
 	/**
+	 * Replace the oldStep by newStep
+	 * @param oldStep	Actual step to change
+	 * @param newStep	New step
+	 */
+	public void setStep(String oldStep, String newStep) {
+		int index = steps.indexOf(oldStep);
+		setStep(index, newStep);
+	}
+	
+	/**
 	 * Add a step at the end of the recipe
 	 * @param step the new last step
 	 */
@@ -153,17 +166,19 @@ public class Recipe extends ModelObject {
 	
 	/**
 	 * Move up the index th step
-	 * @param index	Initial index of the step to move
+	 * @param step	Initial step to move up
 	 */
-	public void moveUpStep(int index) throws IndexOutOfBoundsException {
+	public void moveUpStep(String step) throws IndexOutOfBoundsException {
+		int index = steps.indexOf(step);
 		moveStep(index, index-1);
 	}
 	
 	/**
 	 * Move down the index th step
-	 * @param index	Initial index of the step to move
+	 * @param step	Initial step to move up
 	 */
-	public void moveDownStep(int index) throws IndexOutOfBoundsException {
+	public void moveDownStep(String step) throws IndexOutOfBoundsException {
+		int index = steps.indexOf(step);
 		moveStep(index, index+1);
 	}
 	
@@ -175,11 +190,36 @@ public class Recipe extends ModelObject {
 		steps.remove(index);
 	}
 	
+	public void removeStep(String step) {
+		int index = steps.indexOf(step);
+		removeStep(index);
+	}
+	
 	/**
 	 * Delete all steps
 	 */
 	public void clearSteps() {
 		this.steps.clear();
+	}
+	
+	/**
+	 * Return true if the step is the first in the steps list
+	 * @param step	The step to test
+	 * @return	true is the step is the first (false otherwise)
+	 */
+	public boolean isFirst(String step) {
+		int index = steps.indexOf(step);
+		return index == 0;
+	}
+	
+	/**
+	 * Return true if the step is the last in the steps list
+	 * @param step	The step to test
+	 * @return	true is the step is the last (false otherwise)
+	 */
+	public boolean isLast(String step) {
+		int index = steps.indexOf(step);
+		return index == steps.size()-1;
 	}
 	
 	/**
@@ -221,13 +261,6 @@ public class Recipe extends ModelObject {
 
 	public int getServings(){
 		return this.servings;
-	}
-	
-	public void setServings(int servings){
-		for(Product p: ingredients.keySet()) {
-			ingredients.put(p, ingredients.get(p)*servings/this.servings);
-		}
-		this.servings = servings;
 	}
 
 }

@@ -98,7 +98,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		String step2 = "step2";
 		r.addStep(step1);
 		r.addStep(step2);
-		r.moveUpStep(1);
+		r.moveUpStep(step2);
 		assertEquals(r.getStep(0),step2);
 		assertEquals(r.getStep(1),step1);
 	}
@@ -110,8 +110,45 @@ public class TestRecipe extends AbstractTestDatabase {
 		String step2 = "step2";
 		r.addStep(step1);
 		r.addStep(step2);
-		r.moveDownStep(0);
+		r.moveDownStep(step1);
 		assertEquals(r.getStep(0),step2);
 		assertEquals(r.getStep(1),step1);
+	}
+	
+	@Test
+	public void test_011_setStep() {
+		Recipe r = new Recipe("setStep");
+		r.addStep("old step");
+		r.setStep("old step", "new Step");
+		assertEquals(r.getStep(0), "new Step");
+	}
+	
+	@Test
+	public void test_012_removeStep() {
+		Recipe r = new Recipe("removeStep");
+		String step = "step to remove";
+		r.addStep(step);
+		r.removeStep(step);
+		assertTrue(r.getAllSteps().isEmpty());
+	}
+	
+	@Test
+	public void test_013_isFirst() {
+		Recipe r = new Recipe("isFirst");
+		r.addStep("first step");
+		r.addStep("middle step");
+		r.addStep("last step");
+		assertTrue(r.isFirst("first step"));
+		assertFalse(r.isFirst("middle step"));
+	}
+	
+	@Test
+	public void test_014_isLast() {
+		Recipe r = new Recipe("isLast");
+		r.addStep("first step");
+		r.addStep("middle step");
+		r.addStep("last step");
+		assertTrue(r.isLast("last step"));
+		assertFalse(r.isLast("middle step"));
 	}
 }
