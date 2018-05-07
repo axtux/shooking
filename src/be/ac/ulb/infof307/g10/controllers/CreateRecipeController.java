@@ -31,12 +31,13 @@ public class CreateRecipeController {
 	 * The button is disable during the creation
 	 */
 	public void create() {
-		button.setText("Creating...");
+		printLabel.setText("Creating...");
 		button.setDisable(true);
 		
 		try {
 			Recipe r = new Recipe(name.getText(), serving.getInt());
 			r.save();
+			Main.getInstance().closeDialog();
 		}catch (NullPointerException e){
 			printLabel.setText(e.getMessage());
 		}catch (DatabaseException e){
@@ -44,8 +45,7 @@ public class CreateRecipeController {
 		}catch (IllegalArgumentException e){
 			printLabel.setText(e.getMessage());
 		}
-		
-		Main.getInstance().closeDialog();
+		button.setDisable(false);
 	}
 
 }

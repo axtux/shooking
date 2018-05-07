@@ -38,7 +38,6 @@ public class Recipe extends ModelObject {
 	
 	@SuppressWarnings("unused") // NEEDED BY JPA
 	private Recipe(){
-		this("");
 	}
 	
 	/**
