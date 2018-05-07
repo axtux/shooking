@@ -16,6 +16,7 @@ import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 import javax.persistence.metamodel.ManagedType;
 
+import be.ac.ulb.infof307.g10.models.ModelObject;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
@@ -245,15 +246,15 @@ public class GenericDatabase {
 	 * Save object into database.
 	 * @param o Object to save
 	 */
-	public static void save(Object o) {
+	public static void save(ModelObject o) {
 		try {
-			insert(o);
-		} catch (ExistingException ee) {
-			try {
+			if(o.getId() == null) {
+				insert(o);
+			} else {
 				update(o);
-			} catch (NonExistingException nee) {
-				throw new DatabaseException(nee);
 			}
+		} catch (ExistingException | NonExistingException e) {
+			throw new DatabaseException(e);
 		}
 		detach(o);
 	}
