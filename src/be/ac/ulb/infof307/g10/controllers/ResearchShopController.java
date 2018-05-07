@@ -34,6 +34,7 @@ public class ResearchShopController {
 			for(Product p: sl.getProducts()) {
 				price = s.getStock().getPrice(p, sl.getQuantity(p));
 				if (price == 0) {
+					total=0;
 					break;
 				}
 				total += price;
