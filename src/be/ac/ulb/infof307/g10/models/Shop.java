@@ -6,25 +6,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Entity;
+import javax.persistence.UniqueConstraint;
+import javax.persistence.CascadeType;
 import javax.persistence.RollbackException;
 
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 
+/**
+ * Class representing a shop. It is defined by a name, a stock, a schedule, a latitude and a longitude.
+ * His primary keys in the db are the name, the longitude and the latitude. It defines when a shop is unique.
+ */
 @Entity
+@Table(uniqueConstraints={
+		@UniqueConstraint(columnNames = {"longitude","latitude"})
+})
 public class Shop extends ModelObject {
 
 	private static final long serialVersionUID = -0L;
 
-	@Column(unique = true)
 	private String name;
-	private String[] schedule;
 	private double latitude;
 	private double longitude;
+	private String[] schedule;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Stock stock;
@@ -42,9 +49,13 @@ public class Shop extends ModelObject {
 	 */
 	private Shop(String name, double latitude, double longitude, String [] schedule, Stock stock) {
 		this.name = name;
+		
 		if (schedule.length != 7) {
 			throw new IllegalArgumentException("schedule length must be 7");
+		} else if (name.equals("")) {
+			throw new IllegalArgumentException("the name must not be empty");
 		}
+		
 		this.schedule = schedule;
 		this.latitude = latitude;
 		this.longitude = longitude;

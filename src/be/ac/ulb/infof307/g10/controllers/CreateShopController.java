@@ -1,10 +1,12 @@
 package be.ac.ulb.infof307.g10.controllers;
 
+import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Shop;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
@@ -29,6 +31,9 @@ public class CreateShopController {
     private TextField saturday;
     @FXML
     private TextField sunday;
+    @FXML
+	private Label printLabel;
+    
     private TextField[] schedule;
     
     public static LatLong sposition;
@@ -63,9 +68,14 @@ public class CreateShopController {
      */
     @FXML
     void create() {
-    	Shop.create(name.getText(), position.getLatitude(), position.getLongitude(),createSchedule());
-		Main.getInstance().closeDialog();
-		//TODO create an error label in the view and print an error message when the store already exists
+    	try {
+    		Shop.create(name.getText(), position.getLatitude(), position.getLongitude(),createSchedule());
+			Main.getInstance().closeDialog();
+		} catch (DatabaseException e){ //should never happen because it is not possible in the view
+    		printLabel.setText("The store already exists");
+		} catch (IllegalArgumentException e){
+    		printLabel.setText(e.getMessage());
+		}
     }
 
 }
