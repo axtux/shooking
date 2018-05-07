@@ -319,11 +319,11 @@ public class RecipeController implements Initializable {
 		addStepBT.disableProperty().bind(notSelected);
 		clearStepBT.disableProperty().bind(notSelected);
 
-		notSelected = ingredientsTable.getSelectionModel().selectedItemProperty().isNotNull();
+		notSelected = ingredientsTable.getSelectionModel().selectedItemProperty().isNull();
 		editIngredientBT.disableProperty().bind(notSelected);
 		removeIngredientBT.disableProperty().bind(notSelected);
 		
-		notSelected = stepsTable.getSelectionModel().selectedItemProperty().isNotNull();
+		notSelected = stepsTable.getSelectionModel().selectedItemProperty().isNull();
 		editStepBT.disableProperty().bind(notSelected);
 		removeStepBT.disableProperty().bind(notSelected);
 		
