@@ -110,8 +110,7 @@ public class ShoppingListController extends AbstractProductController {
 	
 	@FXML
 	private void researchShop() {
-		ResearchShopController.ssl = sl;
-		Main.getInstance().showDialog("ResearchShop", "Research shop");
+		Main.getInstance().showCreateRecipeDialog(sl);
 	}
 	
 	private void updateTotal() {
@@ -135,7 +134,7 @@ public class ShoppingListController extends AbstractProductController {
 
 	@FXML
 	private void productsNew() {
-		Main.getInstance().showDialog("CreateProduct", "Create product");
+		Main.getInstance().showCreateProductDialog();
 		updateProducts();
 	}
 
