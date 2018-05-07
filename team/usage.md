@@ -1,6 +1,6 @@
 # Utilisation
 ## Story 1 
-- [x] L'utilisateur doit pouvoir créer et modifier􏰃 une liste de courses comportant des produits disponibles dans une base de données générique. 
+- [x] L'utilisateur doit pouvoir créer et modifier une liste de courses comportant des produits disponibles dans une base de données générique. 
 ![Alt text](Screenshots/1-1.png)
 
 - [x] Pour chaque produit apparaissant dans la liste, il faut pouvoir indiquer le nombre ou la quantité désirée de ce produit. La quantité doit pouvoir être encodée manuellement ou se faire à l'aide de boutons "+" et "-". 
@@ -21,19 +21,19 @@
 - [ ] <del> Étant donné une recette, l'utilisateur doit pouvoir générer de manière automatique la liste de courses associée. </del>
 
 
-- [ ] <del> De plus, le logiciel doit permettre d'adapter la recette pour un nombre de personne di􏰂érent de celui indiqué dans la recette originale. </del>
+- [ ] <del> De plus, le logiciel doit permettre d'adapter la recette pour un nombre de personne différent de celui indiqué dans la recette originale. </del>
 
 ## Story 7
 - [x] En démarrant le programme, un visiteur peut créer un nouveau compte. 
 ![Alt text](Screenshots/7-1.png)
 
-- [x] Pour ce faire, le visiteur doit tout d'abord accepter les conditions du service dé􏰃nies par l'administrateur du système.
+- [x] Pour ce faire, le visiteur doit tout d'abord accepter les conditions du service définies par l'administrateur du système.
 ![Alt text](Screenshots/7-2.png)
 
-- [x] Par la suite, le visiteur indique ses informations personnelles (par exemple nom d'utilisateur et mot de passe souhaité) et valide. Ces données devront être stockés de manière sécurisé (par example, après chi􏰂rement) dans le système.
+- [x] Par la suite, le visiteur indique ses informations personnelles (par exemple nom d'utilisateur et mot de passe souhaité) et valide. Ces données devront être stockés de manière sécurisé (par example, après chiffrement) dans le système.
 ![Alt text](Screenshots/7-3.png)
 
-- [x] L'interface graphique du programme devra ouv􏰂rir la possibilité de se déconnecter du système à tout moment.
+- [x] L'interface graphique du programme devra offrir la possibilité de se déconnecter du système à tout moment.
 ![Alt text](Screenshots/7-4.png)
 
 
@@ -41,7 +41,7 @@
 - [x] En démarrant le programme, un visiteur/utilisateur se trouve en face d'une carte faisant référence à une aire urbaine générique. En plus des éléments statiques (bâtiments, routes, parcs, ...), la carte contiendra des épingles pour signaler la présence de magasins. 
 ![Alt text](Screenshots/8-1.png)
 
-- [x] L'utilisateur aura la possibilité de sélectionner ces épingles pour a􏰄cher le nom du magasin ainsi que ses horaires d'ouverture. 
+- [x] L'utilisateur aura la possibilité de sélectionner ces épingles pour afficher le nom du magasin ainsi que ses horaires d'ouverture. 
 ![Alt text](Screenshots/8-2.png)
 
 - [x] Le visiteur/utilisateur peut indiquer la présence d'un nouveau magasin à travers la méthode point-and-clic sur la carte. Durant la signalisation d'un magasin, l'utilisateur peut aussi changer les informations qui y sont associés. 
