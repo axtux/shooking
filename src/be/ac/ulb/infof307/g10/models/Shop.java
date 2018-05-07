@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import javax.persistence.Column;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Entity;
@@ -28,13 +27,10 @@ import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 public class Shop extends ModelObject {
 
 	private static final long serialVersionUID = -0L;
-	
-	@Column(name="latitude")
-	private double latitude;
-	@Column(name="longitude")
-	private double longitude;
-	
+
 	private String name;
+	private double latitude;
+	private double longitude;
 	private String[] schedule;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -54,10 +50,11 @@ public class Shop extends ModelObject {
 	private Shop(String name, double latitude, double longitude, String [] schedule, Stock stock) {
 		this.name = name;
 		
-		if (schedule.length != 7)
+		if (schedule.length != 7) {
 			throw new IllegalArgumentException("schedule length must be 7");
-		if (name.equals(""))
+		} else if (name.equals("")) {
 			throw new IllegalArgumentException("the name must not be empty");
+		}
 		
 		this.schedule = schedule;
 		this.latitude = latitude;
