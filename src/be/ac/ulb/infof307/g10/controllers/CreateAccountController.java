@@ -3,7 +3,6 @@ package be.ac.ulb.infof307.g10.controllers;
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -32,7 +31,7 @@ public class CreateAccountController extends MainController {
      * Some error could be shown to the user in the corresponding view
      */
     @FXML
-    public void submit(ActionEvent event){
+    public void submit(){
     	
         String log = textFieldLog.getText();
         String pwd = pwdField.getText();

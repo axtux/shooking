@@ -12,6 +12,7 @@ public class GetterConverter<T> extends StringConverter<T> {
 	/**
 	 * Use this method to get a String converter which toString method will invoke the getParameter
 	 * on objects of class type.
+	 * @param <T> Type of class to convert
 	 * @param type Type of class to convert
 	 * @param parameter Parameter to be get
 	 * @return StringConverter
