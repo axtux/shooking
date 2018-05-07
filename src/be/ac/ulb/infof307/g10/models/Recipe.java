@@ -36,8 +36,8 @@ public class Recipe extends ModelObject {
 	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> steps;
 	
+	
 	protected Recipe(){ // Needed by JPA
-		this("");
 	}
 	
 	/**
@@ -76,7 +76,13 @@ public class Recipe extends ModelObject {
 	 */
 	public Recipe(String name, int servings, Map<Product, Float> ingredients, ArrayList<String> steps) {
 		if (name == null || ingredients == null || steps == null) {
-			throw new NullPointerException();
+			throw new NullPointerException("one parameter is null");
+		}
+		if (name.equals("")){
+			throw new IllegalArgumentException("The name must not be empty");
+		}
+		if(servings<=0){
+			throw new IllegalArgumentException("The servings must be > 0");
 		}
 		this.setName(name);
 		this.servings = servings;
