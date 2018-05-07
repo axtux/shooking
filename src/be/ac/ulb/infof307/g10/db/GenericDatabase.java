@@ -246,7 +246,7 @@ public class GenericDatabase {
 	 * Save object into database.
 	 * @param o Object to save
 	 */
-	public static void save(ModelObject o) {
+	public static void save(ModelObject o) throws DatabaseException {
 		try {
 			if(o.getId() == null) {
 				insert(o);
