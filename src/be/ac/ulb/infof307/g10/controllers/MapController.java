@@ -1,6 +1,8 @@
 package be.ac.ulb.infof307.g10.controllers;
 
 import java.lang.Thread.UncaughtExceptionHandler;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import com.lynden.gmapsfx.ClusteredGoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
@@ -24,8 +26,7 @@ import netscape.javascript.JSObject;
  * Controller class of the Google Map view
  * It configure the map and manage the markers on this map
  */
-@SuppressWarnings("restriction")
-public class MapController implements MapComponentInitializedListener, UncaughtExceptionHandler {
+public class MapController extends MainController implements MapComponentInitializedListener, UncaughtExceptionHandler {
 
     @FXML
     ClusteredGoogleMapView mapView;
@@ -40,9 +41,11 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
     //TODO Make it smarter
     static LatLong latLong;
 
-    public void initialize() {
-	Thread.setDefaultUncaughtExceptionHandler(this);
-        mapView.addMapInializedListener(this);
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+		Thread.setDefaultUncaughtExceptionHandler(this);
+    	mapView.addMapInializedListener(this);
     }
 
 	@Override

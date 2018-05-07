@@ -20,11 +20,13 @@ import java.util.List;
  */
 public class GeneralView extends Parent {
 
+    private Stage stage;
     protected Parent centerPage;
     protected AnchorPane menu;
 
     public GeneralView(Stage stage, String centerPage, String menu){
 
+        this.stage=stage;
         this.centerPage= loadFXML(centerPage);
         this.menu=(AnchorPane) loadFXML(menu);
 

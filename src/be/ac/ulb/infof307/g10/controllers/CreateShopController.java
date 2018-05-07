@@ -1,10 +1,15 @@
 package be.ac.ulb.infof307.g10.controllers;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import com.lynden.gmapsfx.javascript.object.LatLong;
 
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Shop;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 /**
@@ -17,35 +22,55 @@ public class CreateShopController {
 
     @FXML
     private TextField monday; //these are the schedules corresponding to each day
+
     @FXML
     private TextField tuesday;
+
     @FXML
     private TextField wedsnday;
+
     @FXML
     private TextField thursday;
+
     @FXML
     private TextField friday;
+
     @FXML
     private TextField saturday;
+
     @FXML
     private TextField sunday;
-    private TextField[] schedule;
 
-    public void initialize() {
-    	schedule = new TextField[]{monday, tuesday, wedsnday, thursday, friday, saturday, sunday};
+    
+    /**
+     * Construct an array with the schedule text fields
+     * @return an array with the 7 schedule text fields
+     */
+    private TextField[] getTextFields(){
+    	TextField[] textFields = new TextField[7];
+    	textFields[0]= monday;
+    	textFields[1]= tuesday;
+    	textFields[2]= wedsnday;
+    	textFields[3]= thursday;
+    	textFields[4]= friday;
+    	textFields[5]= saturday;
+    	textFields[6]= sunday;
+    	return textFields;
     }
+    
     /**
      * Construct the schedule of the shop
      */
-    private String[] createSchedule(){
-    	String[] defaultSchedule = Shop.defaultSchedule();
+    private String[] createSchedule(){	
+    	TextField[] textFields=getTextFields();
+    	String[] schedule = Shop.defaultSchedule();
     	for(int i=0;i<7;i++){
     		//The user does not have to know all the schedule
-    		if(!schedule[i].getText().isEmpty()){
-    			defaultSchedule[i]=schedule[i].getText();
+    		if(!textFields[i].getText().equals("")){
+    			schedule[i]=textFields[i].getText();
     		}
     	}
-    	return defaultSchedule;
+    	return schedule;
     }
 
     /**

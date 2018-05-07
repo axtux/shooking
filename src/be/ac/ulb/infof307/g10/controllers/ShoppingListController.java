@@ -10,7 +10,6 @@ import be.ac.ulb.infof307.g10.models.Price;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
-import be.ac.ulb.infof307.g10.utils.GetterConverter;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -22,12 +21,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 /**
  * Controller Class of the shopping list (ShoppingList)
  * It is used to update the information in the different fields and
  */
-public class ShoppingListController {
+public class ShoppingListController extends MainController {
 
 	@FXML
 	private Button editBT;
@@ -182,30 +183,56 @@ public class ShoppingListController {
 	public void initialize(URL url, ResourceBundle rb) {
 		sl = Main.getInstance().getUser().getShoppingList();
 		
-		productCL.setCellValueFactory(data -> {
-			return new SimpleStringProperty(data.getValue().getName());
+		productCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(TableColumn.CellDataFeatures<Product, String> p) {
+				// this callback returns property for just one cell
+				return new SimpleStringProperty(p.getValue().getName());
+			}
 		});
 		
-		amountCL.setCellValueFactory(data -> {
-			int quantity = sl.getQuantity(data.getValue());
-			return new SimpleStringProperty(Integer.toString(quantity));
+		amountCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(TableColumn.CellDataFeatures<Product, String> p) {
+				// this callback returns property for just one cell
+				int quantity = sl.getQuantity(p.getValue());
+				return new SimpleStringProperty(Integer.toString(quantity));
+			}
 		});
 		
-		priceCL.setCellValueFactory(data -> {
-			if (selectedShop == null) {
-				return new SimpleStringProperty("-");
+		priceCL.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Product, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(TableColumn.CellDataFeatures<Product, String> p) {
+				if (selectedShop == null) {
+					return new SimpleStringProperty("-");
+				}
+				int price = selectedShop.getStock().getPrice(p.getValue(), sl.getQuantity(p.getValue()));
+				if (price == 0) {
+					return new SimpleStringProperty("unavailable");
+				}
+				return new SimpleStringProperty(Price.toString(price));
 			}
-			int price = selectedShop.getStock().getPrice(data.getValue(), sl.getQuantity(data.getValue()));
-			if (price == 0) {
-				return new SimpleStringProperty("unavailable");
-			}
-			return new SimpleStringProperty(Price.toString(price));
 		});
 		
 		// convert Product to string
-		productsListCombo.setConverter(GetterConverter.create(Product.class, "fullName"));
+		productsListCombo.setConverter(new StringConverter<Product>() {
+			@Override
+			public String toString(Product p) {
+				return p.getFullName();
+			}
+			@Override
+			public Product fromString(String string) { return null; }
+		});
+		
 		// convert Shop to string
-		shopsCombo.setConverter(GetterConverter.create(Shop.class, "name"));
+		shopsCombo.setConverter(new StringConverter<Shop>() {
+			@Override
+			public String toString(Shop s) {
+				return s.getName();
+			}
+			@Override
+			public Shop fromString(String string) { return null; }
+		});
 		
 		// add listener to call selected method
 		table.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
