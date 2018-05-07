@@ -16,8 +16,7 @@ public class Product extends ModelObject {
 	private int size;
 	private String sizeUnit;
 
-	@SuppressWarnings("unused") // NEEDED BY JPA
-	private Product() {}
+	protected Product() {} // Needed by JPA
 
 	public Product(String name, int size, String sizeUnit) {
 		

@@ -29,8 +29,7 @@ public class User extends ModelObject {
 	@OneToOne(cascade = CascadeType.ALL)
 	private ShoppingList shoppingList;
 
-	// NEEDED BY JPA
-	private User() {}
+	protected User() {} // Needed by JPA
 
 	private User(String username, String password) {
 		if (username == null || password == null) {

@@ -42,7 +42,7 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 	@Override
 	public void uncaughtException(Thread t, Throwable e) {
 		if(e.getClass().getName() == "netscape.javascript.JSException") {
-			Main.getInstance().showDialog("MapError", "Error");
+			Main.getInstance().showMapErrorDialog();
 		} else {
 			throw new RuntimeException(e);
 		}
@@ -92,8 +92,7 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
      */
 	@FXML
 	public void createShop(GMapMouseEvent event) {
-		CreateShopController.sposition = event.getLatLong();
-		Main.getInstance().showDialog("CreateShop", "Create shop");
+		Main.getInstance().showCreateShopDialog(event.getLatLong());
 		updateInterface();
 	}
 

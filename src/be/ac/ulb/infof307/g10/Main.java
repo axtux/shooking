@@ -1,6 +1,9 @@
 package be.ac.ulb.infof307.g10;
 
+import be.ac.ulb.infof307.g10.controllers.CreateShopController;
+import be.ac.ulb.infof307.g10.controllers.ResearchShopController;
 import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.views.GeneralView;
 import javafx.application.Application;
@@ -13,6 +16,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Arrays;
+
+import com.lynden.gmapsfx.javascript.object.LatLong;
 
 public class Main extends Application {
 	/*
@@ -88,6 +93,28 @@ public class Main extends Application {
 		page.disableButtons(Arrays.asList("map"));
 		update();
 	}
+	
+	public void showMapErrorDialog() {
+		showDialog("MapError", "Error");
+	}
+	
+	public void showCreateShopDialog(LatLong position) {
+		CreateShopController.sposition = position;
+		showDialog("CreateShop", "Create shop");
+	}
+	
+	public void showCreateRecipeDialog() {
+		showDialog("CreateRecipe", "Create recipe");
+	}
+	
+	public void showCreateRecipeDialog(ShoppingList sl) {
+		ResearchShopController.ssl = sl;
+		showDialog("ResearchShop", "Research shop");
+	}
+	
+	public void showCreateProductDialog() {
+		showDialog("CreateProduct", "Create product");
+	}
 
 	public void exit(){
 		Platform.exit();
@@ -109,7 +136,7 @@ public class Main extends Application {
 		stage.show();
 	}
 
-	public void showDialog(String name, String title) {
+	private void showDialog(String name, String title) {
 		Scene scene = getFXMLScene(name);
 		dialog = new Stage();
 		dialog.setTitle(title);
