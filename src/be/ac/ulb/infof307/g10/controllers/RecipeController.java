@@ -1,9 +1,5 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import java.net.URL;
-
-import java.util.ResourceBundle;
-
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Product;
@@ -14,7 +10,6 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -25,7 +20,7 @@ import javafx.scene.control.TextField;
  * Controller class of the Recipe view.
  * It is used to manage the different action on a recipe such as adding one, editing one, adding a new step in it, ...
  */
-public class RecipeController implements Initializable {
+public class RecipeController {
 
 	@FXML
 	private ComboBox<Product> productsListCombo;
@@ -274,7 +269,7 @@ public class RecipeController implements Initializable {
 		recipesListCombo.getItems().addAll(Database.getAllRecipes());
 	}
 	
-	public void initialize(URL url, ResourceBundle rb) {
+	public void initialize() {
 		productsListCombo.getItems().clear();
 		productsListCombo.getItems().addAll(Database.getAllProducts());
 		updateRecipes();
