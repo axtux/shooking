@@ -51,7 +51,7 @@ public class Shop extends ModelObject {
 		
 		if (schedule.length != 7) {
 			throw new IllegalArgumentException("schedule length must be 7");
-		} else if (name.equals("")) {
+		} else if (name.trim().equals("")) {
 			throw new IllegalArgumentException("the name must not be empty");
 		}
 		

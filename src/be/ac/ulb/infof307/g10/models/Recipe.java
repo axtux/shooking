@@ -78,7 +78,7 @@ public class Recipe extends ModelObject {
 		if (name == null || ingredients == null || steps == null) {
 			throw new NullPointerException("one parameter is null");
 		}
-		if (name.equals("")){
+		if (name.trim().equals("")){
 			throw new IllegalArgumentException("The name must not be empty");
 		}
 		if(servings<=0){
