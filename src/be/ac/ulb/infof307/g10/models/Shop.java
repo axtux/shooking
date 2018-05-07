@@ -48,9 +48,12 @@ public class Shop extends ModelObject {
 	 */
 	private Shop(String name, double latitude, double longitude, String [] schedule, Stock stock) {
 		this.name = name;
-		if (schedule.length != 7) {
+		
+		if (schedule.length != 7)
 			throw new IllegalArgumentException("schedule length must be 7");
-		}
+		if (name.equals(""))
+			throw new IllegalArgumentException("the name must not be empty");
+		
 		this.schedule = schedule;
 		this.latitude = latitude;
 		this.longitude = longitude;

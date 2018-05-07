@@ -73,6 +73,8 @@ public class CreateShopController {
 			Main.getInstance().closeDialog();
 		} catch (DatabaseException e){ //should never happen because it is not possible in the view
     		printLabel.setText("The store already exists");
+		} catch (IllegalArgumentException e){
+    		printLabel.setText(e.getMessage());
 		}
     }
 
