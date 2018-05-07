@@ -155,6 +155,12 @@ public class ShoppingListController extends MainController {
 		updateTotal();
 	}
 	
+	@FXML
+	private void researchShop() {
+		ResearchShopController.ssl = sl;
+		Main.getInstance().showDialog("ResearchShop", "Research shop");
+	}
+	
 	private void updateTotal() {
 		if (selectedShop == null) {
 			totalLabel.setText("-");
@@ -218,6 +224,9 @@ public class ShoppingListController extends MainController {
 		productsListCombo.setConverter(new StringConverter<Product>() {
 			@Override
 			public String toString(Product p) {
+				if(p==null) {
+					return "";
+				}
 				return p.getFullName();
 			}
 			@Override
