@@ -1,8 +1,6 @@
 package be.ac.ulb.infof307.g10.controllers;
 
 import java.lang.Thread.UncaughtExceptionHandler;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 import com.lynden.gmapsfx.ClusteredGoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
