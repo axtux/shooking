@@ -14,15 +14,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <SplitPane dividerPositions="0.7003329633740288" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="658.0" prefWidth="903.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.ac.ulb.infof307.g10.controllers.RecipeController">
 <items>
       <SplitPane dividerPositions="0.5" orientation="VERTICAL">
          <items>
-      <TableView id="table" fx:id="ingredientsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0">
+      <TableView id="table" fx:id="productsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0">
         <columns>
-          <TableColumn fx:id="ingredientCL" maxWidth="1.7976931348623157E308" prefWidth="250.0" text="Ingredient" />
-          <TableColumn fx:id="amountIngredientCL" maxWidth="1.7976931348623157E308" prefWidth="250.0" text="Amount" />
+          <TableColumn fx:id="productsNameColumn" maxWidth="1.7976931348623157E308" prefWidth="250.0" text="Ingredient" />
+          <TableColumn fx:id="productsAmountColumn" maxWidth="1.7976931348623157E308" prefWidth="250.0" text="Amount" />
         </columns>
       </TableView>
       <TableView id="stateTable" fx:id="stepsTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="50.0">
@@ -44,35 +43,35 @@
                   <Font name="System Bold Italic" size="15.0" fx:id="x1313" />
                </font>
             </Label>
-      <IntField fx:id="amountIngredientTF" layoutX="44.0" layoutY="215.0" prefHeight="16.0" prefWidth="87.0" />
+      <IntField fx:id="productsAmountField" layoutX="44.0" layoutY="215.0" prefHeight="16.0" prefWidth="87.0" />
       <Label layoutX="167.0" layoutY="195.0" text="Servings:">
                <font>
                   <Font name="System Bold Italic" size="15.0" fx:id="x1314" />
                </font>
             </Label>
       <IntField fx:id="peopleTF" layoutX="174.0" layoutY="215.0" prefHeight="26.0" prefWidth="73.0" />
-      <Button fx:id="clearIngredientsBT" layoutX="143.0" layoutY="292.0" mnemonicParsing="false" onAction="#clearIngredients" prefHeight="31.0" prefWidth="108.0" text="Clear">
+      <Button fx:id="productsClearButton" layoutX="143.0" layoutY="292.0" mnemonicParsing="false" onAction="#productsClear" prefHeight="31.0" prefWidth="108.0" text="Clear">
                <font>
                   <Font name="System Bold Italic" size="15.0" fx:id="x1315" />
                </font>
             </Button>
-      <Button id="addIngredientT" fx:id="addIngredientBT" layoutX="18.0" layoutY="251.0" mnemonicParsing="false" onAction="#addIngredient" prefHeight="31.0" prefWidth="108.0" text="Add">
+      <Button id="addIngredientT" fx:id="productsAddButton" layoutX="18.0" layoutY="251.0" mnemonicParsing="false" onAction="#productsAdd" prefHeight="31.0" prefWidth="108.0" text="Add">
                <font>
                   <Font name="System Bold Italic" size="15.0" fx:id="x1316" />
                </font>
             </Button>
-      <Button fx:id="editIngredientBT" layoutX="143.0" layoutY="251.0" mnemonicParsing="false" onAction="#editIngredient" prefHeight="31.0" prefWidth="108.0" text="Edit">
+      <Button fx:id="productsEditButton" layoutX="143.0" layoutY="251.0" mnemonicParsing="false" onAction="#productsEdit" prefHeight="31.0" prefWidth="108.0" text="Edit">
                <font>
                   <Font name="System Bold Italic" size="15.0" fx:id="x1317" />
                </font>
             </Button>
-      <Button fx:id="removeIngredientBT" layoutX="18.0" layoutY="292.0" mnemonicParsing="false" onAction="#removeIngredient" prefHeight="31.0" prefWidth="108.0" text="Remove">
+      <Button fx:id="productsRemoveButton" layoutX="18.0" layoutY="292.0" mnemonicParsing="false" onAction="#productsRemove" prefHeight="31.0" prefWidth="108.0" text="Remove">
                <font>
                   <Font name="System Bold Italic" size="15.0" fx:id="x1318" />
                </font>
             </Button>
-      <Button fx:id="amountUpBT" layoutX="130.0" layoutY="215.0" mnemonicParsing="false" onAction="#amountUp" prefHeight="19.0" prefWidth="27.0" text="+" />
-      <Button fx:id="amountDownBT" layoutX="19.0" layoutY="215.0" mnemonicParsing="false" onAction="#amountDown" prefHeight="19.0" prefWidth="27.0" text="-" />
+      <Button fx:id="productsAmountUpButton" layoutX="130.0" layoutY="215.0" mnemonicParsing="false" onAction="#productsAmountUp" prefHeight="19.0" prefWidth="27.0" text="+" />
+      <Button fx:id="productsAmountDownButton" layoutX="19.0" layoutY="215.0" mnemonicParsing="false" onAction="#productsAmountDown" prefHeight="19.0" prefWidth="27.0" text="-" />
       <Button fx:id="addStepBT" layoutX="19.0" layoutY="452.0" mnemonicParsing="false" onAction="#addStep" prefHeight="31.0" prefWidth="108.0" text="Add">
                <font>
                   <Font name="System Bold Italic" size="15.0" fx:id="x1319" />
@@ -113,7 +112,7 @@
                   <Font name="System Bold Italic" size="15.0" fx:id="x1324" />
                </font>
             </Label>
-      <ComboBox id="recipeListCombo" fx:id="productsListCombo" layoutX="18.0" layoutY="167.0" prefHeight="26.0" prefWidth="230.0">
+      <ComboBox id="recipeListCombo" fx:id="productsCombo" layoutX="18.0" layoutY="167.0" prefHeight="26.0" prefWidth="230.0">
         <items>
           <FXCollections fx:factory="observableArrayList">
             <String fx:value="Item 1" />
