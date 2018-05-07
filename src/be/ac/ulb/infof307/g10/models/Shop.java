@@ -29,7 +29,7 @@ public class Shop extends ModelObject {
 	@OneToOne(cascade = CascadeType.ALL)
 	private Stock stock;
 
-	@SuppressWarnings("unused") // NEEDED BY JPA
+	// NEEDED BY JPA
 	private Shop() {}
 
 	/**
