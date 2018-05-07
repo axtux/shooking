@@ -27,11 +27,11 @@
    </padding>
   <children>
     <Label text="Name" />
-    <TextField fx:id="name" prefHeight="27.0" prefWidth="150.0" promptText="ex : banana bio" GridPane.columnIndex="1" />
+    <TextField fx:id="name" prefHeight="27.0" prefWidth="150.0" promptText="Banana" GridPane.columnIndex="1" />
     <Label text="Size" GridPane.rowIndex="1" />
     <Label text="Unit" GridPane.rowIndex="2" />
-    <IntField fx:id="size" prefHeight="27.0" prefWidth="150.0" promptText="ex : 42" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-    <TextField fx:id="unit" prefHeight="27.0" prefWidth="150.0" promptText="ex : gr" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+    <IntField fx:id="size" prefHeight="27.0" prefWidth="150.0" promptText="42" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+    <TextField fx:id="unit" prefHeight="27.0" prefWidth="150.0" promptText="g" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Label fx:id="printLabel" maxHeight="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
          <font>
             <Font size="14.0" />
