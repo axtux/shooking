@@ -139,6 +139,7 @@ public class ShoppingListController extends AbstractProductController {
 		updateProducts();
 	}
 
+	@Override
 	public void initialize() {
 		super.initialize();
 		sl = Main.getInstance().getUser().getShoppingList();
