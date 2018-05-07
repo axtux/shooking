@@ -6,6 +6,7 @@ Sur cette carte, le logiciel permettra d'ajouter des nouvelles informations ou d
 la réputation des informations existantes.
 
 # Utilisation
+L'utilisation complète et détailée se trouve [ici](team/usage.md) 
 
 ## Prérequis
 - Java 1.8+
