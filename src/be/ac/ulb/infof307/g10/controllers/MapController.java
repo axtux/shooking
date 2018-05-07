@@ -34,12 +34,6 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
     @FXML
     InfoWindow popup;
     
-    /**
-     * Last LatLong clicked (Waiting for a smarter solution)
-     */
-    //TODO Make it smarter
-    static LatLong latLong;
-
     public void initialize() {
 	Thread.setDefaultUncaughtExceptionHandler(this);
         mapView.addMapInializedListener(this);
@@ -98,7 +92,7 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
      */
 	@FXML
 	public void createShop(GMapMouseEvent event) {
-		latLong = event.getLatLong();
+		CreateShopController.sposition = event.getLatLong();
 		Main.getInstance().showDialog("CreateShop", "Create shop");
 		updateInterface();
 	}

@@ -30,6 +30,16 @@ public class CreateShopController {
     @FXML
     private TextField sunday;
     private TextField[] schedule;
+    
+    public static LatLong sposition;
+    private LatLong position;
+
+    public CreateShopController() {
+    	this.position = sposition;
+    	if(position == null) {
+    		throw new NullPointerException("position must not be null");
+    	}
+    }
 
     public void initialize() {
     	schedule = new TextField[]{monday, tuesday, wedsnday, thursday, friday, saturday, sunday};
@@ -53,8 +63,7 @@ public class CreateShopController {
      */
     @FXML
     void create() {
-    	LatLong latLong = MapController.latLong;
-    	Shop.create(name.getText(),latLong.getLatitude(), latLong.getLongitude(),createSchedule());
+    	Shop.create(name.getText(), position.getLatitude(), position.getLongitude(),createSchedule());
 		Main.getInstance().closeDialog();
 		//TODO create an error label in the view and print an error message when the store already exists
     }
