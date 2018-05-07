@@ -150,6 +150,12 @@ public class ShoppingListController {
 		updateTotal();
 	}
 	
+	@FXML
+	private void researchShop() {
+		ResearchShopController.ssl = sl;
+		Main.getInstance().showDialog("ResearchShop", "Research shop");
+	}
+	
 	private void updateTotal() {
 		if (selectedShop == null) {
 			totalLabel.setText("-");
