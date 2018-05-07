@@ -20,10 +20,8 @@ import javafx.scene.control.TextField;
  * Controller class of the Recipe view.
  * It is used to manage the different action on a recipe such as adding one, editing one, adding a new step in it, ...
  */
-public class RecipeController {
+public class RecipeController extends AbstractProductController {
 
-	@FXML
-	private ComboBox<Product> productsListCombo;
 	@FXML
 	private ComboBox<Recipe> recipesListCombo;
 	@FXML

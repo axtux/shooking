@@ -23,16 +23,13 @@ import javafx.scene.control.TableView;
  * Controller Class of the shopping list (ShoppingList)
  * It is used to update the information in the different fields and
  */
-public class ShoppingListController {
+public class ShoppingListController extends AbstractProductController {
 
 	@FXML
 	private Button editBT;
 	
 	@FXML
 	private Button removeBT;
-	
-	@FXML
-	private ComboBox<Product> productsListCombo;
 	
 	@FXML
 	private ComboBox<Shop> shopsCombo;
