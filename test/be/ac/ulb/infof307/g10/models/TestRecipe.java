@@ -3,11 +3,13 @@ package be.ac.ulb.infof307.g10.models;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
@@ -16,192 +18,145 @@ import be.ac.ulb.infof307.g10.models.Recipe;
 
 public class TestRecipe extends AbstractTestDatabase {
 
+	private Recipe r;
+	private Product p1;
+	private Product p2;
+	@Before
+	public void before() {
+		r = new Recipe("Testing recipe");
+		r.addStep("testing step 1");
+		r.addStep("testing step 2");
+		r.addStep("testing step 3");
+		p1 = new Product("testing product 1", 1, "g");
+		p2 = new Product("testing product 2", 1, "g");
+		r.addIngredient(p1, (float) 1.);
+		r.addIngredient(p2, (float) 1.);
+	}
 	@Test
 	public void test_001_addStep() {
-		Recipe r = new Recipe("test");
-		String step1 = "Ajouter les oeufs";
-		r.addStep(step1);
-		assertTrue(r.getAllSteps().size()==1);
+		r.addStep("testing step 4");
+		assertTrue(r.getAllSteps().size()==4);
 	}
 	
 	@Test
 	public void test_002_getAllSteps(){
-		Recipe r = new Recipe("test");
-		String step = "Ajouter les oeufs";
-		r.addStep(step);
 		List<String> steps = r.getAllSteps();
-		assertEquals(steps.get(0),step);
+		assertEquals(steps.get(0), "testing step 1");
+		assertEquals(steps.get(1), "testing step 2");
+		assertEquals(steps.get(2), "testing step 3");
 	}
 	
 	@Test
 	public void test_003_moveStep(){
-		Recipe r = new Recipe("test");
-		String step1 = "Ajouter les oeufs";
-		r.addStep(step1);
-		String step2 = "Battre les oeufs";
-		r.addStep(step2);
 		r.moveStep(0,1);
-		assertEquals(r.getStep(0),step2);
-		assertEquals(r.getStep(1),step1);
+		assertEquals(r.getStep(0), "testing step 2");
+		assertEquals(r.getStep(1), "testing step 1");
 	}
 	@Test(expected = IndexOutOfBoundsException.class)
 	public void test_004_moveStepException(){
-		Recipe r = new Recipe("test");
-		String step1 = "Ajouter les oeufs";
-		r.addStep(step1);
-		String step2 = "Battre les oeufs";
-		r.addStep(step2);
 		r.moveStep(0,5);
 	}
 
 	@Test
 	public void test_005_moveUpStep() {
-		Recipe r = new Recipe("moveUpStep");
-		String step1 = "step1";
-		String step2 = "step2";
-		r.addStep(step1);
-		r.addStep(step2);
-		r.moveUpStep(step2);
-		assertEquals(r.getStep(0),step2);
-		assertEquals(r.getStep(1),step1);
+		r.moveUpStep("testing step 2");
+		assertEquals(r.getStep(0), "testing step 2");
+		assertEquals(r.getStep(1), "testing step 1");
 	}
 	
 	@Test
 	public void test_006_moveDownStep() {
-		Recipe r = new Recipe("moveUpStep");
-		String step1 = "step1";
-		String step2 = "step2";
-		r.addStep(step1);
-		r.addStep(step2);
-		r.moveDownStep(step1);
-		assertEquals(r.getStep(0),step2);
-		assertEquals(r.getStep(1),step1);
-	}
-		
-	@Test
-	public void test_007_removeStep(){
-		Recipe r = new Recipe("test");
-		String step1 = "Ajouter les oeufs";
-		r.addStep(step1);
-		r.removeStep(0);
-		assertTrue(r.getAllSteps().isEmpty());
+		r.moveDownStep("testing step 2");
+		assertEquals(r.getStep(1), "testing step 3");
+		assertEquals(r.getStep(2), "testing step 2");
 	}
 
 	@Test
-	public void test_008_setStep() {
-		Recipe r = new Recipe("setStep");
-		r.addStep("old step");
-		r.setStep(0, "new step");
-		assertEquals(r.getStep(0), "new step");
+	public void test_007_setStep() {
+		r.setStep(0, "set step");
+		assertEquals(r.getStep(0), "set step");
 	}
 	
 	@Test
-	public void test_009_setStep() {
-		Recipe r = new Recipe("setStep");
-		r.addStep("old step");
-		r.setStep("old step", "new Step");
-		assertEquals(r.getStep(0), "new Step");
+	public void test_008_setStep() {
+		r.setStep("testing step 1", "set step");
+		assertEquals(r.getStep(0), "set step");
+	}
+	
+	@Test
+	public void test_009_removeStep() {
+		r.removeStep(0);
+		r.removeStep(0);
+		r.removeStep(0);
+		assertTrue(r.getAllSteps().isEmpty());
 	}
 	
 	@Test
 	public void test_010_removeStep() {
-		Recipe r = new Recipe("removeStep");
-		String step = "step to remove";
-		r.addStep(step);
-		r.removeStep(0);
+		r.removeStep("testing step 1");
+		r.removeStep("testing step 2");
+		r.removeStep("testing step 3");
 		assertTrue(r.getAllSteps().isEmpty());
 	}
 	
 	@Test
-	public void test_011_removeStep() {
-		Recipe r = new Recipe("removeStep");
-		String step = "step to remove";
-		r.addStep(step);
-		r.removeStep(step);
-		assertTrue(r.getAllSteps().isEmpty());
-	}
-	
-	@Test
-	public void test_012_clearSteps() {
-		Recipe r = new Recipe("clearSteps");
-		r.addStep("testing step");
+	public void test_011_clearSteps() {
 		r.clearSteps();
 		assertTrue(r.getAllSteps().isEmpty());
 	}
 	
 	@Test
-	public void test_013_isFirst() {
-		Recipe r = new Recipe("isFirst");
-		r.addStep("first step");
-		r.addStep("middle step");
-		r.addStep("last step");
-		assertTrue(r.isFirst("first step"));
-		assertFalse(r.isFirst("middle step"));
+	public void test_012_isFirst() {
+		assertTrue(r.isFirst("testing step 1"));
+		assertFalse(r.isFirst("testing step 2"));
+		assertFalse(r.isFirst("testing step 3"));
 	}
 	
 	@Test
-	public void test_014_isLast() {
-		Recipe r = new Recipe("isLast");
-		r.addStep("first step");
-		r.addStep("middle step");
-		r.addStep("last step");
-		assertTrue(r.isLast("last step"));
-		assertFalse(r.isLast("middle step"));
+	public void test_013_isLast() {
+		assertFalse(r.isLast("testing step 1"));
+		assertFalse(r.isLast("testing step 2"));
+		assertTrue(r.isLast("testing step 3"));
 	}
 	
 	@Test
-	public void test_015_addIngredient(){
-		Recipe r = new Recipe("test");
-		Product p = new Product("Farine d'avoine", 500, "g");
-		r.addIngredient(p, 2);
-		assertTrue(r.getAllIngredients().size()==1);
+	public void test_014_addIngredient(){
+		r.addIngredient(new Product("testing product 3", 1, "g"), 2);
+		assertTrue(r.getAllIngredients().size()==3);
 	}
 	
 	@Test
-	public void test_016_getAllIngredients(){
-		Recipe r = new Recipe("test");
-		Product p = new Product("Farine d'avoine", 500, "g");
-		r.addIngredient(p, 2);
+	public void test_015_getAllIngredients(){
 		Map<Product,Float> map = r.getAllIngredients();
-		List<Product> ing = new ArrayList<>(map.keySet());
 		//Normal behavior
-		assertTrue(map.size()==1);
+		assertTrue(map.size()==2);
 		//Cloning Test
-		assertEquals(p, ing.get(0));
+		map.put(new Product("bad product", 1, "g"), (float) 3.);
+		assertNotEquals(map, r.getAllIngredients());
 	}
 	
 	@Test
-	public void test_017_removeIngredient(){
-		Recipe r = new Recipe("test");
-		Product p = new Product("Farine d'avoine", 500, "g");
-		r.addIngredient(p, 2);
+	public void test_016_removeIngredient(){
 		assertFalse(r.getAllIngredients().isEmpty());
-		r.removeIngredient(p);
+		r.removeIngredient(p1);
+		r.removeIngredient(p2);
 		assertTrue(r.getAllIngredients().isEmpty());
 	}
 
 	@Test
-	public void test_018_setIngredient() {
-		Recipe r = new Recipe("setIngredient");
-		Product p = new Product("test",12,"g");
-		r.addIngredient(p, (float) 1.);
-		r.setIngredientQuantity(p, (float) 2.);
-		assertEquals(r.getAllIngredients().get(p), (float) 2., 0.1);
+	public void test_017_setIngredientQuantity() {
+		r.setIngredientQuantity(p1, (float) 2.);
+		assertEquals(r.getAllIngredients().get(p1), (float) 2., 0.1);
 	}
 
 	@Test
-	public void test_019_getQuantity() {
-		Recipe r = new Recipe("getQuantity");
-		Product p = new Product("testing product", 500, "g");
-		r.addIngredient(p, 12);
-		int quantity = r.getQuantity(p);
-		assertEquals(quantity, 12);
+	public void test_018_getQuantity() {
+		int quantity = r.getQuantity(p2);
+		assertEquals(quantity, (float) 1., 0.1);
 	}
 	
 	@Test
-	public void test_020_clearIngredients() {
-		Recipe r = new Recipe("clearSteps");
-		r.addIngredient(new Product("test",12,"g"), 1);
+	public void test_019_clearIngredients() {
 		r.clearIngredients();
 		assertTrue(r.getAllIngredients().isEmpty());
 	}
