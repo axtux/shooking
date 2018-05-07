@@ -26,7 +26,8 @@ import netscape.javascript.JSObject;
  * Controller class of the Google Map view
  * It configure the map and manage the markers on this map
  */
-public class MapController extends MainController implements MapComponentInitializedListener, UncaughtExceptionHandler {
+@SuppressWarnings("restriction")
+public class MapController implements MapComponentInitializedListener, UncaughtExceptionHandler {
 
     @FXML
     ClusteredGoogleMapView mapView;
@@ -41,11 +42,9 @@ public class MapController extends MainController implements MapComponentInitial
     //TODO Make it smarter
     static LatLong latLong;
 
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-		Thread.setDefaultUncaughtExceptionHandler(this);
-    	mapView.addMapInializedListener(this);
+    public void initialize() {
+	Thread.setDefaultUncaughtExceptionHandler(this);
+        mapView.addMapInializedListener(this);
     }
 
 	@Override

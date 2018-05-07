@@ -28,7 +28,7 @@ import javafx.util.StringConverter;
  * Controller Class of the shopping list (ShoppingList)
  * It is used to update the information in the different fields and
  */
-public class ShoppingListController extends MainController {
+public class ShoppingListController {
 
 	@FXML
 	private Button editBT;
