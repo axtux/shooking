@@ -1,32 +1,32 @@
 package be.ac.ulb.infof307.g10.controllers;
 
+import java.lang.Thread.UncaughtExceptionHandler;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import com.lynden.gmapsfx.ClusteredGoogleMapView;
 import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.event.GMapMouseEvent;
 import com.lynden.gmapsfx.javascript.event.UIEventType;
-import com.lynden.gmapsfx.javascript.object.Marker;
-import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.ClusteredGoogleMap;
 import com.lynden.gmapsfx.javascript.object.InfoWindow;
 import com.lynden.gmapsfx.javascript.object.LatLong;
+import com.lynden.gmapsfx.javascript.object.MapOptions;
 import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
+import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Shop;
 import javafx.fxml.FXML;
-
 import netscape.javascript.JSObject;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 /**
  * Controller class of the Google Map view
  * It configure the map and manage the markers on this map
  */
-public class MapController extends MainController implements MapComponentInitializedListener {
+public class MapController extends MainController implements MapComponentInitializedListener, UncaughtExceptionHandler {
 
     @FXML
     ClusteredGoogleMapView mapView;
@@ -44,10 +44,18 @@ public class MapController extends MainController implements MapComponentInitial
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        mapView.addMapInializedListener(this);
+		Thread.setDefaultUncaughtExceptionHandler(this);
+    	mapView.addMapInializedListener(this);
     }
-    
 
+	@Override
+	public void uncaughtException(Thread t, Throwable e) {
+		if(e.getClass().getName() == "netscape.javascript.JSException") {
+			Main.getInstance().showDialog("MapError", "Error");
+		} else {
+			throw new RuntimeException(e);
+		}
+	}
     /**
      * Initialization of the map
      */
@@ -123,4 +131,5 @@ public class MapController extends MainController implements MapComponentInitial
 			addShopToMap(s);
 		}
 	}
+
 }
