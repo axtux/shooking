@@ -160,4 +160,19 @@ public class TestRecipe extends AbstractTestDatabase {
 		r.clearIngredients();
 		assertTrue(r.getAllIngredients().isEmpty());
 	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void test_020_createRecipeException() {
+		Recipe r = new Recipe("");
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void test_021_createRecipeException() {
+		Recipe r = new Recipe("correct name", 0);
+	}
+	
+	@Test(expected=NullPointerException.class)
+	public void test_022_createRecipeException() {
+		Recipe r = new Recipe("correct name", 1, null);
+	}
 }
