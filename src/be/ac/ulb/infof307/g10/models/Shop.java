@@ -6,25 +6,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.RollbackException;
+import javax.persistence.*;
 
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 
+/**
+ * Class represnting a shop. It is defined by a name, a stock, a schedule, a latitude and a longitude.
+ * His primary keys in the db are the name, the longitude and the latitude. It defines when a shop is unique.
+ */
 @Entity
+@Table(uniqueConstraints={
+		@UniqueConstraint(columnNames = {"name", "longitude","latitude"})
+})
 public class Shop extends ModelObject {
 
 	private static final long serialVersionUID = -0L;
-
-	@Column(unique = true)
+	
+	@Column(name="name")
 	private String name;
-	private String[] schedule;
+	@Column(name="latitude")
 	private double latitude;
+	@Column(name="longitude")
 	private double longitude;
+	
+	private String[] schedule;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Stock stock;
