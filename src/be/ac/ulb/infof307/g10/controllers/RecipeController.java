@@ -199,8 +199,11 @@ public class RecipeController implements Initializable {
 			// no change or cleared
 			return;
 		}
+		Recipe r = actualRecipe;
 		actualRecipe.setName(newValue);
 		changed();
+		updateRecipes();
+		recipesListCombo.getSelectionModel().select(r);
 	}
 
 	@FXML
