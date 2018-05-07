@@ -22,10 +22,10 @@ public class Product extends ModelObject {
 	public Product(String name, int size, String sizeUnit) {
 		
 		if (name == null || sizeUnit == null)
-			throw new NullPointerException("The name and the sizeUnit must not be null");
+			throw new NullPointerException("The name and the size unit must not be null");
 		if (name.equals("") || sizeUnit.equals(""))//we don't allow empty Strings
-			throw new IllegalArgumentException("The fields should not be empty");
-		if(size < 0)
+			throw new IllegalArgumentException("The name and the size unit must not be empty");
+		if(size <= 0)
 			throw new IllegalArgumentException("size must be > 0");
 		
 		this.name = name;

@@ -43,7 +43,7 @@ public class CreateProductController {
 			p.save();
 			Main.getInstance().closeDialog();
 		}catch (DatabaseException e){
-			printLabel.setText("Error in database");
+			printLabel.setText("Error in database - The product you are creating already exists");
 		} catch (NullPointerException e){ // should never happen because fields are empty strings by default
 			printLabel.setText(e.getMessage());
 		} catch (IllegalArgumentException e){ // name or unit fields are empty
