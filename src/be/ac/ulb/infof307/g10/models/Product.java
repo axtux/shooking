@@ -22,7 +22,7 @@ public class Product extends ModelObject {
 		
 		if (name == null || sizeUnit == null) {
 			throw new NullPointerException("The name and the size unit must not be null");
-		} else if (name.equals("") || sizeUnit.equals("")) {//we don't allow empty Strings
+		} else if (name.trim().equals("") || sizeUnit.equals("")) {//we don't allow empty Strings
 			throw new IllegalArgumentException("The name and the size unit must not be empty");
 		} else if(size <= 0) {
 			throw new IllegalArgumentException("size must be > 0");
