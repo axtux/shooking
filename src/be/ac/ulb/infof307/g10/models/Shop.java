@@ -14,6 +14,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.RollbackException;
 
 import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 
 /**
@@ -147,7 +148,7 @@ public class Shop extends ModelObject {
 			Shop s = new Shop(name, latitude, longitude, schedule, stock);
 			s.save();
 			return s;
-		} catch (RollbackException e) {
+		} catch (DatabaseException e) {
 			throw new ExistingException(e);
 		}
 	}
@@ -158,37 +159,5 @@ public class Shop extends ModelObject {
 			s[i] = "Unknown";
 		}
 		return s;
-	}
-
-	/**
-	 * Get shops that contains at least all products.
-	 * @param products Products
-	 * @return List of Shop
-	 */
-	public static List<Shop> getWithProducts(List<Product> products) {
-		List<Shop> shops = new ArrayList<>();
-		for(Shop s: Database.getAll(Shop.class)) {
-			for(Product p: products) {
-				if(s.getStock().getQuantity(p) > 0) {
-					shops.add(s);
-				}
-			}
-		}
-		return shops;
-	}
-
-	/**
-	 * Get shops that contains product.
-	 * @param product Product
-	 * @return List of Shop
-	 */
-	public static List<Shop> getWithProduct(Product product) {
-		List<Shop> shops = new ArrayList<>();
-		for(Shop s: Database.getAll(Shop.class)) {
-			if(s.getStock().getQuantity(product) > 0) {
-				shops.add(s);
-			}
-		}
-		return shops;
 	}
 }

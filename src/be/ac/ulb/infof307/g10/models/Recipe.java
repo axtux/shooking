@@ -101,13 +101,6 @@ public class Recipe extends ModelObject {
 	public int getQuantity(Product ingredient) {
 		return Math.round(ingredients.getOrDefault(ingredient, (float) 0));
 	}
-	/**
-	 * Get ingredients
-	 * @return Map of each ingredients to its quantity
-	 */
-	public Map<Product,Float> getAllIngredients(){
-		return new HashMap<Product,Float>(ingredients);
-	}
 	
 	/**
 	 * Get steps
@@ -255,6 +248,14 @@ public class Recipe extends ModelObject {
 	 */
 	public void removeIngredient(Product p){
 		ingredients.remove(p);
+	}
+
+	/**
+	 * Get ingredients
+	 * @return Map of each ingredients to its quantity
+	 */
+	public Map<Product,Float> getAllIngredients(){
+		return new HashMap<Product,Float>(ingredients);
 	}
 
 	/**
