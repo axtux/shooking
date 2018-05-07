@@ -6,6 +6,7 @@ import be.ac.ulb.infof307.g10.models.Price;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
+import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.utils.GetterConverter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -26,7 +27,6 @@ public class ShoppingListController extends AbstractProductController {
 	
 	@FXML
 	private Label status;
-	//TODO use this label to print the actions processed or the error
 	
 	@FXML
 	private Label totalLabel;
@@ -42,7 +42,11 @@ public class ShoppingListController extends AbstractProductController {
 	private ShoppingList sl;
 
 	private void changed() {
-		sl.save();
+		try {
+			sl.save();
+		} catch (DatabaseException e) {
+			status.setText("Database error");
+		}
 		updateTable();
 	}
 
