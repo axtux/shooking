@@ -25,14 +25,9 @@ import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
  * Persistence database to manage Objects persistence.
  * This database is generic (as its name suggest), and is working without knowing object type.
  * Feel free to extends this class to add your own queries to your database.
+ * Abstract because contains only static methods.
  */
-public class GenericDatabase {
-	/**
-	 * Can be defined within underlying class
-	 * TODO should be ?
-	 */
-	protected static String NAME = "GL10PU";
-	
+abstract public class GenericDatabase {
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
 	private static boolean autoCommit = true;
@@ -61,7 +56,7 @@ public class GenericDatabase {
 			properties = new HashMap<>();
 		}
 		if (emf == null || !emf.isOpen()) {
-			emf = Persistence.createEntityManagerFactory(NAME, properties);
+			emf = Persistence.createEntityManagerFactory(properties.get("name"), properties);
 		}
 		if (em == null || !em.isOpen()) {
 			em = emf.createEntityManager();
