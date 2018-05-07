@@ -7,15 +7,12 @@ import com.lynden.gmapsfx.javascript.object.LatLong;
 
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Shop;
-import be.ac.ulb.infof307.g10.models.Stock;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 /**
  * Controller for the CreateShop view
- * @author pierre
- *
  */
 public class CreateShopController {
 
@@ -69,18 +66,14 @@ public class CreateShopController {
     }
     
     /**
-     * Construct the schedule array containing the opening hours
-     * @return the schedule array containing the opening hours
+     * Construct the schedule of the shop
      */
-    private String[] makeSchedule(){
-    	String[] schedule = new String[7];
+    private String[] createSchedule(){	
     	TextField[] textFields=getTextFields();
+    	String[] schedule = Shop.defaultSchedule();
     	for(int i=0;i<7;i++){
     		//The user does not have to know all the schedule
-    		if(textFields[i].getText().equals("")){
-    			schedule[i]="Unknown";
-    		}
-    		else{
+    		if(!textFields[i].getText().equals("")){
     			schedule[i]=textFields[i].getText();
     		}
     	}
@@ -89,13 +82,12 @@ public class CreateShopController {
 
     /**
      * Creation of the Shop in the database
-     * @param event the clic on the button
+     * @param event the click on the button
      */
     @FXML
     void create(ActionEvent event) {
     	LatLong latLong = MapController.latLong;
-    	Shop shop = new Shop(name.getText(),latLong.getLatitude(), latLong.getLongitude(),makeSchedule(), new Stock());
-    	shop.save();
+    	Shop.create(name.getText(),latLong.getLatitude(), latLong.getLongitude(),createSchedule());
 		Main.getInstance().closeDialog();
     }
 

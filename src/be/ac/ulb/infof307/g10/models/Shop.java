@@ -40,7 +40,7 @@ public class Shop extends ModelObject {
 	 * @param longitude Position longitude
 	 * @param stock Shop stock
 	 */
-	public Shop(String name, double latitude, double longitude, String [] schedule, Stock stock) {
+	private Shop(String name, double latitude, double longitude, String [] schedule, Stock stock) {
 		this.name = name;
 		if (schedule.length != 7) {
 			throw new IllegalArgumentException("schedule length must be 7");
@@ -95,6 +95,7 @@ public class Shop extends ModelObject {
 		this.stock = stock;
 	}
 
+
 	// static methods
 	/**
 	 * Create shop into database with default schedule and empty stock
@@ -144,7 +145,7 @@ public class Shop extends ModelObject {
 	public static String[] defaultSchedule() {
 		String[] s = new String[7];
 		for(int i = 0; i < s.length; i++) {
-			s[i] = "CLOSED";
+			s[i] = "Unknown";
 		}
 		return s;
 	}
