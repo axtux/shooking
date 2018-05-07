@@ -6,6 +6,7 @@ import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
@@ -22,6 +23,9 @@ public class CreateRecipeController {
 	@FXML
 	private Button button;
 	
+	@FXML
+	private Label printLabel;
+	
 	/**
 	 * Creation of the Product
 	 * The button is disable during the creation
@@ -29,12 +33,18 @@ public class CreateRecipeController {
 	public void create() {
 		button.setText("Creating...");
 		button.setDisable(true);
-		Recipe r = new Recipe(name.getText(), serving.getInt());
+		
 		try {
+			Recipe r = new Recipe(name.getText(), serving.getInt());
 			r.save();
+		}catch (NullPointerException e){
+			printLabel.setText(e.getMessage());
 		}catch (DatabaseException e){
-			//TODO generate error Label to the view (create Label in view)
+			printLabel.setText("Error in Database - you should not create the same recipe");
+		}catch (IllegalArgumentException e){
+			printLabel.setText(e.getMessage());
 		}
+		
 		Main.getInstance().closeDialog();
 	}
 
