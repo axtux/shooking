@@ -15,8 +15,7 @@ public class Stock extends ShoppingList {
 	@ElementCollection(fetch = FetchType.EAGER)
 	Map<Product, Integer> productsAndPrice;
 
-	// NEEDED BY JPA
-	public Stock() {
+	public Stock() { // Needed by JPA
 		super();
 		productsAndPrice = new HashMap<>();
 	}
