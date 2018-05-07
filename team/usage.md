@@ -1,6 +1,6 @@
 # Utilisation
 ## Story 1 
-- [x] L'utilisateur doit pouvoir créer et modi􏰃er une liste de courses comportant des produits disponibles dans une base de données générique. 
+- [x] L'utilisateur doit pouvoir créer et modifier􏰃 une liste de courses comportant des produits disponibles dans une base de données générique. 
 ![Alt text](Screenshots/1-1.png)
 
 - [x] Pour chaque produit apparaissant dans la liste, il faut pouvoir indiquer le nombre ou la quantité désirée de ce produit. La quantité doit pouvoir être encodée manuellement ou se faire à l'aide de boutons "+" et "-". 
