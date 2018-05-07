@@ -10,6 +10,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller of the Login view
+ * It is used to print the different type of error in the corresponding label during the connection
+ */
 public class LoginController extends MainController{
 
     @FXML

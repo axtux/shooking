@@ -11,22 +11,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+
 /**
  * Controller for the CreateShop view
  */
 public class CreateShopController {
 
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
     private TextField name;
 
     @FXML
-    private TextField monday;
+    private TextField monday; //these are the schedules corresponding to each day
 
     @FXML
     private TextField tuesday;
@@ -46,8 +41,6 @@ public class CreateShopController {
     @FXML
     private TextField sunday;
 
-    @FXML
-    private Button creation;
     
     /**
      * Construct an array with the schedule text fields
@@ -82,13 +75,13 @@ public class CreateShopController {
 
     /**
      * Creation of the Shop in the database
-     * @param event the click on the button
      */
     @FXML
-    void create(ActionEvent event) {
+    void create() {
     	LatLong latLong = MapController.latLong;
     	Shop.create(name.getText(),latLong.getLatitude(), latLong.getLongitude(),createSchedule());
 		Main.getInstance().closeDialog();
+		//TODO create an error label in the view and print an error message when the store already exists
     }
 
 }

@@ -3,7 +3,6 @@ package be.ac.ulb.infof307.g10.controllers;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Shop;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -21,18 +20,19 @@ public class ResearchController  {
 	@FXML
 	private TextArea shopTA;
 
-	public void research(ActionEvent actionEvent) {
+	public void research() {
 		shopTA.setText("");
-
 		List<Shop> shopList = Shop.getWithProduct(Database.getProduct(productTF.getText()));
 		String shopNames = "";
+		
 		for (Shop s : shopList) {
 			shopNames += s.getName() + "\n";
 		}
+		
 		shopTA.setText(shopNames);
 	}
-
-	public void researchProducts(ActionEvent actionEvent) {
+	//TODO is this method used ?
+	public void researchProducts() {
 		shopTA.setText("");
 		shopTA.setText(productTF.getText());
 	}
