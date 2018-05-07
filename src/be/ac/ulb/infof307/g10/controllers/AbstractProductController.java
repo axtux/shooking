@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
@@ -72,7 +73,8 @@ abstract public class AbstractProductController {
 		productsNameColumn.setCellValueFactory(data -> {
 			return new SimpleStringProperty(data.getValue().getName());
 		});
-		
+
+		productsTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		productsTable.getSelectionModel().selectedItemProperty().addListener(
 			(observable, oldValue, newValue) -> productsTableSelect(newValue)
 		);

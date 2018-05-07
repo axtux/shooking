@@ -13,7 +13,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 
 /**
@@ -79,15 +78,11 @@ public class ShoppingListController extends AbstractProductController {
 		changed();
 	}
 
-	/**
-	 * Update the information for the view when the user select a cell of the table products
-	 */
-	private void productSelected(Product newValue) {
-		productsTableSelected = newValue;
+	@Override
+	protected void productsTableSelect(Product newValue) {
+		super.productsTableSelect(newValue);
 		if (productsTableSelected != null) {
 			productsAmountField.setInt(sl.getQuantity(productsTableSelected));
-			productsCombo.getSelectionModel().select(productsTableSelected);
-		} else { //no product selected
 		}
 	}
 	/**
@@ -169,15 +164,6 @@ public class ShoppingListController extends AbstractProductController {
 		// convert Shop to string
 		shopsCombo.setConverter(GetterConverter.create(Shop.class, "name"));
 		
-		// add listener to call selected method
-		productsTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-		productsTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
-			@Override
-			public void changed(ObservableValue<? extends Product> observable, Product oldValue, Product newValue) {
-				productSelected(newValue);
-			}
-		});
-		
 		shopsCombo.valueProperty().addListener(new ChangeListener<Shop>() {
 			@Override
 			public void changed(ObservableValue<? extends Shop> observable, Shop oldValue, Shop newValue) {
@@ -185,7 +171,6 @@ public class ShoppingListController extends AbstractProductController {
 			}
 		});
 		
-		productSelected(null);
 		updateProducts();
 		updateShops();
 		updateTable();

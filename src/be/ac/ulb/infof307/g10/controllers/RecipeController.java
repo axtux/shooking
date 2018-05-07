@@ -55,9 +55,8 @@ public class RecipeController extends AbstractProductController {
 	
 	private Recipe actualRecipe;
 
-	@FXML
-	private void recipeComboChanged() {
-		actualRecipe = recipesListCombo.getSelectionModel().getSelectedItem();
+	private void recipesComboSelect(Recipe newValue) {
+		actualRecipe = newValue;
 		updateSelectedRecipe();
 	}
 
@@ -182,7 +181,6 @@ public class RecipeController extends AbstractProductController {
 	/**
 	 * Select a cell of the table Step, update the corresponding fields, and enable/disable some buttons on the view
 	 */
-
 	private void updateSelectedStep(String newValue) {
 		selectedStep = newValue;
 		if (selectedStep == null) {
@@ -253,6 +251,8 @@ public class RecipeController extends AbstractProductController {
 		
 		// use Recipe name
 		recipesListCombo.setConverter(GetterConverter.create(Recipe.class, "name"));
+		recipesListCombo.getSelectionModel().selectedItemProperty().addListener(
+			(observable, oldValue, newValue) -> recipesComboSelect(newValue));
 
 		BooleanBinding notSelected = recipesListCombo.getSelectionModel().selectedItemProperty().isNull();
 		recipeNameTF.disableProperty().bind(notSelected);
@@ -268,7 +268,6 @@ public class RecipeController extends AbstractProductController {
 		
 		// load data and disable unavailable inputs
 		peopleTF.setDisable(true);
-		productsTableSelect(null);
 		updateSelectedStep(null);
 		updateSelectedRecipe();
 	}
