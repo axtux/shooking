@@ -14,6 +14,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.RollbackException;
 
 import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 
 /**
@@ -147,7 +148,7 @@ public class Shop extends ModelObject {
 			Shop s = new Shop(name, latitude, longitude, schedule, stock);
 			s.save();
 			return s;
-		} catch (RollbackException e) {
+		} catch (DatabaseException e) {
 			throw new ExistingException(e);
 		}
 	}

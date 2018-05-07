@@ -15,6 +15,7 @@ import static org.junit.Assert.assertFalse;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 
 public class TestShop extends AbstractTestDatabase {
@@ -40,7 +41,7 @@ public class TestShop extends AbstractTestDatabase {
 		stock.addProduct(p1, 1);
 		stock.addProduct(p2, 1);
 		stock.addProduct(p3, 1);
-		Shop.create("#test Shop with Stock", 0., 0., schedule, stock);
+		Shop.create("#test Testing shop", 0., 0., schedule, stock);
 	}
 	
 	@Test
@@ -48,15 +49,22 @@ public class TestShop extends AbstractTestDatabase {
 		Shop shop = Shop.create("#test createShop", 0, 0);
 		assertNotNull(shop);
 	}
+	/*
+	@Test(expected=ExistingException.class)
+	public void test_002_createShopException() {
+			// TODO test fail
+			// A shop already exist at this coordinate
+		Shop.create("#test create shop exception", 0., 0.);
+	}*/
 	
 	@Test
-	public void test_002_deleteShop() {
+	public void test_003_deleteShop() {
 		Database.deleteAll(Shop.class);
 		assertTrue(Database.getAllShops().isEmpty());
 	}
 	
 	@Test
-	public void test_003_getSchedule() {
+	public void test_004_getSchedule() {
 		String[] testingSchedule = {"1","2","3","4","5","6","7"};
 		Shop shop = Shop.create("#test getSchedule", 0.,0., testingSchedule);
 		assertEquals(shop.getSchedule(0), "1");
