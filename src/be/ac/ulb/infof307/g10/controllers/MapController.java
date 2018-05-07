@@ -84,6 +84,7 @@ public class MapController extends MainController implements MapComponentInitial
 			});
 		} catch (Exception e) {
 			e.printStackTrace();
+			Main.getInstance().showDialog("MapError", "Error loading map");
 		}
     }
 
