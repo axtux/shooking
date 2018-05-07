@@ -7,39 +7,23 @@ import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.utils.GetterConverter;
-import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 
 /**
  * Controller Class of the shopping list (ShoppingList)
  * It is used to update the information in the different fields and
  */
-public class ShoppingListController {
+public class ShoppingListController extends AbstractProductController {
 
-	@FXML
-	private Button editBT;
-	
-	@FXML
-	private Button removeBT;
-	
-	@FXML
-	private ComboBox<Product> productsListCombo;
-	
 	@FXML
 	private ComboBox<Shop> shopsCombo;
 	
-	@FXML
-	private IntField amountTF;
-
 	@FXML
 	private Label status;
 	//TODO use this label to print the actions processed or the error
@@ -48,18 +32,11 @@ public class ShoppingListController {
 	private Label totalLabel;
 	
 	@FXML
-	private TableView<Product> table;
+	private TableColumn<Product, String> productsAmountColumn;
 	
 	@FXML
-	private TableColumn<Product, String> productCL;
+	private TableColumn<Product, String> productsPriceColumn;
 	
-	@FXML
-	private TableColumn<Product, String> amountCL;
-	
-	@FXML
-	private TableColumn<Product, String> priceCL;
-	
-	private Product selected;
 	private Shop selectedShop;
 	
 	private ShoppingList sl;
@@ -70,60 +47,42 @@ public class ShoppingListController {
 	}
 
 	@FXML
-	private void clear() {
+	private void productsClear() {
 		sl.clear();
 		changed();
 	}	
 
 	@FXML
-	private void add() {
-		Product p = productsListCombo.getValue();
-		sl.addProduct(p, amountTF.getInt());
+	private void productsAdd() {
+		Product p = productsCombo.getValue();
+		sl.addProduct(p, productsAmountField.getInt());
 		changed();
-		table.getSelectionModel().select(p);
+		productsTable.getSelectionModel().select(p);
 	}
 
 	@FXML
-	private void edit() {
-		if (selected == null) {
+	private void productsEdit() {
+		if (productsTableSelected == null) {
 			return;
 		}
-		sl.removeProduct(selected);
-		add();
+		sl.removeProduct(productsTableSelected);
+		productsAdd();
 	}
 
 	@FXML
-	private void remove() {
-		if (selected == null) {
+	private void productsRemove() {
+		if (productsTableSelected == null) {
 			return;
 		}
-		sl.removeProduct(selected);
+		sl.removeProduct(productsTableSelected);
 		changed();
 	}
 
-	@FXML
-	void amountUp() {
-		amountTF.setInt(amountTF.getInt()+1);
-	}
-
-	@FXML
-	void amountDown() {
-		amountTF.setInt(amountTF.getInt()-1);
-	}
-
-	/**
-	 * Update the information for the view when the user select a cell of the table products
-	 */
-	private void productSelected(Product newValue) {
-		selected = newValue;
-		if (selected != null) {
-			editBT.setDisable(false);
-			removeBT.setDisable(false);
-			amountTF.setInt(sl.getQuantity(selected));
-			productsListCombo.getSelectionModel().select(selected);
-		} else { //no product selected
-			editBT.setDisable(true);
-			removeBT.setDisable(true);
+	@Override
+	protected void productsTableSelect(Product newValue) {
+		super.productsTableSelect(newValue);
+		if (productsTableSelected != null) {
+			productsAmountField.setInt(sl.getQuantity(productsTableSelected));
 		}
 	}
 	/**
@@ -134,19 +93,14 @@ public class ShoppingListController {
 		updateTable();
 	}
 	
-	private void updateProducts() {
-		productsListCombo.getItems().clear();
-		productsListCombo.getItems().addAll(Database.getAllProducts());
-	}
-	
 	private void updateShops() {
 		shopsCombo.getItems().clear();
 		shopsCombo.getItems().addAll(Database.getAllShops());
 	}
 	
 	private void updateTable() {
-		table.getItems().clear();
-		table.getItems().addAll(sl.getProducts());
+		productsTable.getItems().clear();
+		productsTable.getItems().addAll(sl.getProducts());
 		updateTotal();
 	}
 	
@@ -176,24 +130,25 @@ public class ShoppingListController {
 	}
 
 	@FXML
-	private void createNewProduct() {
+	private void productsNew() {
 		Main.getInstance().showDialog("CreateProduct", "Create product");
 		updateProducts();
 	}
 
 	public void initialize() {
+		super.initialize();
 		sl = Main.getInstance().getUser().getShoppingList();
 		
-		productCL.setCellValueFactory(data -> {
+		productsNameColumn.setCellValueFactory(data -> {
 			return new SimpleStringProperty(data.getValue().getName());
 		});
 		
-		amountCL.setCellValueFactory(data -> {
+		productsAmountColumn.setCellValueFactory(data -> {
 			int quantity = sl.getQuantity(data.getValue());
 			return new SimpleStringProperty(Integer.toString(quantity));
 		});
 		
-		priceCL.setCellValueFactory(data -> {
+		productsPriceColumn.setCellValueFactory(data -> {
 			if (selectedShop == null) {
 				return new SimpleStringProperty("-");
 			}
@@ -205,18 +160,9 @@ public class ShoppingListController {
 		});
 		
 		// convert Product to string
-		productsListCombo.setConverter(GetterConverter.create(Product.class, "fullName"));
+		productsCombo.setConverter(GetterConverter.create(Product.class, "fullName"));
 		// convert Shop to string
 		shopsCombo.setConverter(GetterConverter.create(Shop.class, "name"));
-		
-		// add listener to call selected method
-		table.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-		table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
-			@Override
-			public void changed(ObservableValue<? extends Product> observable, Product oldValue, Product newValue) {
-				productSelected(newValue);
-			}
-		});
 		
 		shopsCombo.valueProperty().addListener(new ChangeListener<Shop>() {
 			@Override
@@ -225,7 +171,6 @@ public class ShoppingListController {
 			}
 		});
 		
-		productSelected(null);
 		updateProducts();
 		updateShops();
 		updateTable();
