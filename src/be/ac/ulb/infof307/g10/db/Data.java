@@ -60,13 +60,14 @@ public class Data {
 	}
 	
 	public static List<Shop> getShops() {
-		ArrayList<Shop> list = new ArrayList<>();
+		List<Shop> list = Database.getAllShops();
 
-		// TODO rename method ?
-		list.add(Shop.create("Aldi", 50.828488, 4.362717));
-		list.add(Shop.create("Colruyt", 50.867831, 4.403058));
-		list.add(Shop.create("Carrefour", 50.859922, 4.342290));
-		list.add(Shop.create("Delhaize", 50.845075, 4.389325));
+		if (list.isEmpty()) {
+			list.add(Shop.create("Aldi", 50.828488, 4.362717));
+			list.add(Shop.create("Colruyt", 50.867831, 4.403058));
+			list.add(Shop.create("Carrefour", 50.859922, 4.342290));
+			list.add(Shop.create("Delhaize", 50.845075, 4.389325));
+		}
 		
 		return list;
 	}

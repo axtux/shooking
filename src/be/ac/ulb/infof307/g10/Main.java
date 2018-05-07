@@ -45,8 +45,6 @@ public class Main extends Application {
 		launch(args);
 	}
 	
-	//TODO have a list of pages id to permit the programmer to check rapidly the different id
-	
 	public User getUser() {
 		return user;
 	}

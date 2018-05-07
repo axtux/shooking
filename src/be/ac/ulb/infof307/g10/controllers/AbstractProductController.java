@@ -62,7 +62,6 @@ abstract public class AbstractProductController {
 			productsAmountField.clear();
 			productsCombo.getSelectionModel().clearSelection();
 		} else {
-			// TODO add IntField update here
 			productsCombo.getSelectionModel().select(productsTableSelected);
 		}
 	}

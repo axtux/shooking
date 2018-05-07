@@ -13,6 +13,8 @@ public abstract class AbstractTestDatabase {
 	@BeforeClass
 	public static void beforeClass() {
 		// use test database
+		Database.setProp("name", "GL10PU");
+		// use test database
 		Database.setProp("javax.persistence.jdbc.url", "jdbc:h2:./test");
 		// turn off logging
 		Database.setProp("eclipselink.logging.level", "OFF");
