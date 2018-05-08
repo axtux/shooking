@@ -8,8 +8,9 @@ public class Hash {
 	/**
 	 * SHA-256
 	 * 
-	 * @param str String to hash
-	 * @return Lowercased hexadecimal hash
+	 * @param str
+	 *            String to hash
+	 * @return Lower case hexadecimal hash
 	 */
 	public static String sha256(String str) {
 		try {
@@ -17,8 +18,10 @@ public class Hash {
 			byte[] hash = digest.digest(str.getBytes(StandardCharsets.UTF_8));
 			return bytesToHex(hash);
 		} catch (NoSuchAlgorithmException e) {
-			// this exception never happens because "SHA-256" is required by implementation
-			// see https://docs.oracle.com/javase/8/docs/api/java/security/MessageDigest.html
+			// this exception never happens because "SHA-256" is required by
+			// implementation
+			// see
+			// https://docs.oracle.com/javase/8/docs/api/java/security/MessageDigest.html
 			throw new RuntimeException(e);
 		}
 	}

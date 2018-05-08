@@ -17,28 +17,28 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 
 /**
- * Controller Class of the shopping list (ShoppingList)
- * It is used to update the information in the different fields and
+ * Controller Class of the shopping list (ShoppingList) It is used to update the
+ * information in the different fields and
  */
 public class ShoppingListController extends AbstractProductController {
 
 	@FXML
 	private ComboBox<Shop> shopsCombo;
-	
+
 	@FXML
 	private Label status;
-	
+
 	@FXML
 	private Label totalLabel;
-	
+
 	@FXML
 	private TableColumn<Product, String> productsAmountColumn;
-	
+
 	@FXML
 	private TableColumn<Product, String> productsPriceColumn;
-	
+
 	private Shop selectedShop;
-	
+
 	private ShoppingList sl;
 
 	private void changed() {
@@ -54,7 +54,7 @@ public class ShoppingListController extends AbstractProductController {
 	private void productsClear() {
 		sl.clear();
 		changed();
-	}	
+	}
 
 	@FXML
 	private void productsAdd() {
@@ -89,39 +89,41 @@ public class ShoppingListController extends AbstractProductController {
 			productsAmountField.setInt(sl.getQuantity(productsTableSelected));
 		}
 	}
+
 	/**
-	 * Update the information for the view when the user select a cell of the table products
+	 * Update the information for the view when the user select a cell of the
+	 * table products
 	 */
 	private void shopSelected(Shop newValue) {
 		selectedShop = newValue;
 		updateTable();
 	}
-	
+
 	private void updateShops() {
 		shopsCombo.getItems().clear();
 		shopsCombo.getItems().addAll(Database.getAllShops());
 	}
-	
+
 	private void updateTable() {
 		productsTable.getItems().clear();
 		productsTable.getItems().addAll(sl.getProducts());
 		updateTotal();
 	}
-	
+
 	@FXML
 	private void researchShop() {
 		Main.getInstance().showCreateRecipeDialog(sl);
 	}
-	
+
 	private void updateTotal() {
 		if (selectedShop == null) {
 			totalLabel.setText("-");
 			return;
 		}
-		
+
 		int total = 0;
 		int price;
-		for(Product p: sl.getProducts()) {
+		for (Product p : sl.getProducts()) {
 			price = selectedShop.getStock().getPrice(p, sl.getQuantity(p));
 			if (price == 0) {
 				totalLabel.setText("unavailable");
@@ -142,16 +144,16 @@ public class ShoppingListController extends AbstractProductController {
 	public void initialize() {
 		super.initialize();
 		sl = Main.getInstance().getUser().getShoppingList();
-		
+
 		productsNameColumn.setCellValueFactory(data -> {
 			return new SimpleStringProperty(data.getValue().getName());
 		});
-		
+
 		productsAmountColumn.setCellValueFactory(data -> {
 			int quantity = sl.getQuantity(data.getValue());
 			return new SimpleStringProperty(Integer.toString(quantity));
 		});
-		
+
 		productsPriceColumn.setCellValueFactory(data -> {
 			if (selectedShop == null) {
 				return new SimpleStringProperty("-");
@@ -162,19 +164,19 @@ public class ShoppingListController extends AbstractProductController {
 			}
 			return new SimpleStringProperty(Price.toString(price));
 		});
-		
+
 		// convert Product to string
 		productsCombo.setConverter(GetterConverter.create(Product.class, "fullName"));
 		// convert Shop to string
 		shopsCombo.setConverter(GetterConverter.create(Shop.class, "name"));
-		
+
 		shopsCombo.valueProperty().addListener(new ChangeListener<Shop>() {
 			@Override
 			public void changed(ObservableValue<? extends Shop> observable, Shop oldValue, Shop newValue) {
 				shopSelected(newValue);
 			}
 		});
-		
+
 		updateProducts();
 		updateShops();
 		updateTable();

@@ -24,13 +24,15 @@ public class Main extends Application {
 	 * Singleton pattern
 	 */
 	private static Main instance;
+
 	public static Main getInstance() {
 		return instance;
 	}
+
 	public Main() {
 		instance = this;
 	}
-	
+
 	private Stage stage;
 	private Stage dialog;
 	private User user;
@@ -41,15 +43,15 @@ public class Main extends Application {
 	}
 
 	@Override
-	public void start(Stage stage){
+	public void start(Stage stage) {
 		this.stage = stage;
 		goToLogin();
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
-	
+
 	public User getUser() {
 		return user;
 	}
@@ -72,57 +74,58 @@ public class Main extends Application {
 	}
 
 	public void goToCreateAccount() {
-        stage.setTitle("Account creation");
-        loadFXML("CreateAccount");
-        update();
+		stage.setTitle("Account creation");
+		loadFXML("CreateAccount");
+		update();
 	}
+
 	public void goToRecipe() {
 		GeneralView page = new GeneralView(stage, "Recipe", "Menu");
 		page.disableButtons(Arrays.asList("recipe"));
 		update();
 	}
-	
+
 	public void goToShoppingList() {
 		GeneralView page = new GeneralView(stage, "ShoppingList", "Menu");
 		page.disableButtons(Arrays.asList("shoppingList"));
 		update();
 	}
 
-	public void goToMap(){
+	public void goToMap() {
 		GeneralView page = new GeneralView(stage, "Map", "Menu");
 		page.disableButtons(Arrays.asList("map"));
 		update();
 	}
-	
+
 	public void showMapErrorDialog() {
 		showDialog("MapError", "Error");
 	}
-	
+
 	public void showCreateShopDialog(LatLong position) {
 		CreateShopController.sposition = position;
 		showDialog("CreateShop", "Create shop");
 	}
-	
+
 	public void showCreateRecipeDialog() {
 		showDialog("CreateRecipe", "Create recipe");
 	}
-	
+
 	public void showCreateRecipeDialog(ShoppingList sl) {
 		ResearchShopController.ssl = sl;
 		showDialog("ResearchShop", "Research shop");
 	}
-	
+
 	public void showCreateProductDialog() {
 		showDialog("CreateProduct", "Create product");
 	}
 
-	public void exit(){
+	public void exit() {
 		Platform.exit();
 	}
 
 	private Scene getFXMLScene(String name) {
 		try {
-			Parent parent = FXMLLoader.load(getClass().getResource("/FXML/"+name+".fxml"));
+			Parent parent = FXMLLoader.load(getClass().getResource("/FXML/" + name + ".fxml"));
 			return new Scene(parent);
 		} catch (IOException e) {
 			// never happens as resources are packed within application
@@ -144,11 +147,11 @@ public class Main extends Application {
 		dialog.setScene(scene);
 		dialog.showAndWait();
 	}
-	
+
 	public void closeDialog() {
 		dialog.close();
 	}
-	
+
 	private void update() {
 		stage.centerOnScreen();
 	}

@@ -16,13 +16,18 @@ public class ShoppingList extends ModelObject {
 	@ElementCollection(fetch = FetchType.EAGER)
 	Map<Product, Integer> productsAndQuantity;
 
-	public ShoppingList() {  // Needed by JPA
+	/**
+	 * Needed by JPA
+	 */
+	public ShoppingList() {
 		productsAndQuantity = new HashMap<>();
 	}
 
 	/**
 	 * Copy ShoppingList
-	 * @param sl Shopping list to copy
+	 * 
+	 * @param sl
+	 *            Shopping list to copy
 	 */
 	public ShoppingList(ShoppingList sl) {
 		setProductsAndQuantity(sl.productsAndQuantity);
@@ -33,17 +38,17 @@ public class ShoppingList extends ModelObject {
 	}
 
 	public void addProduct(Product p, int quantity) {
-		setProduct(p, quantity+getQuantity(p));
+		setProduct(p, quantity + getQuantity(p));
 	}
 
 	public void removeProduct(Product p) {
 		productsAndQuantity.remove(p);
 	}
-	
+
 	public int getQuantity(Product p) {
 		return productsAndQuantity.getOrDefault(p, 0);
 	}
-	
+
 	public int size() {
 		return productsAndQuantity.size();
 	}

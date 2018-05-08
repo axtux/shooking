@@ -17,8 +17,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 /**
- * Controller class of the Recipe view.
- * It is used to manage the different action on a recipe such as adding one, editing one, adding a new step in it, ...
+ * Controller class of the Recipe view. It is used to manage the different
+ * action on a recipe such as creation and edition.
  */
 public class RecipeController extends AbstractProductController {
 
@@ -50,9 +50,9 @@ public class RecipeController extends AbstractProductController {
 	private TableView<String> stepsTable;
 	@FXML
 	private TableColumn<String, String> recipeStepCL;
-	
+
 	private String selectedStep;
-	
+
 	private Recipe actualRecipe;
 
 	private void recipesComboSelect(Recipe newValue) {
@@ -77,7 +77,7 @@ public class RecipeController extends AbstractProductController {
 		actualRecipe.removeIngredient(productsTableSelected);
 		productsAdd();
 	}
-	
+
 	@FXML
 	private void productsRemove() {
 		if (productsTableSelected == null) {
@@ -141,7 +141,7 @@ public class RecipeController extends AbstractProductController {
 		changed();
 		stepsTable.getSelectionModel().select(s);
 	}
-	
+
 	@FXML
 	private void moveDownStep() {
 		String s = selectedStep;
@@ -155,10 +155,10 @@ public class RecipeController extends AbstractProductController {
 		Main.getInstance().showCreateRecipeDialog();
 		updateRecipes();
 	}
-	
+
 	@FXML
 	private void editRecipeName(String newValue) {
-		if("".equals(newValue) || actualRecipe.getName().equals(newValue)) {
+		if ("".equals(newValue) || actualRecipe.getName().equals(newValue)) {
 			// no change or cleared
 			return;
 		}
@@ -179,7 +179,8 @@ public class RecipeController extends AbstractProductController {
 
 	@FXML
 	/**
-	 * Select a cell of the table Step, update the corresponding fields, and enable/disable some buttons on the view
+	 * Select a cell of the table Step, update the corresponding fields, and
+	 * enable/disable some buttons on the view
 	 */
 	private void updateSelectedStep(String newValue) {
 		selectedStep = newValue;
@@ -193,9 +194,10 @@ public class RecipeController extends AbstractProductController {
 			stepTF.setText(selectedStep);
 		}
 	}
-	
+
 	/**
-	 * Select a recipe, update the corresponding fields, and enable/disable some buttons on the view
+	 * Select a recipe, update the corresponding fields, and enable/disable some
+	 * buttons on the view
 	 */
 	private void updateSelectedRecipe() {
 		productsCombo.getSelectionModel().clearSelection();
@@ -222,37 +224,34 @@ public class RecipeController extends AbstractProductController {
 			stepsTable.getItems().addAll(actualRecipe.getAllSteps());
 		}
 	}
-	
+
 	private void updateRecipes() {
 		recipesListCombo.getItems().clear();
 		recipesListCombo.getItems().addAll(Database.getAllRecipes());
 	}
-	
+
 	public void initialize() {
 		super.initialize();
 		updateRecipes();
-		
-		recipeNameTF.textProperty().addListener(
-			(observable, oldValue, newValue) -> editRecipeName(newValue)
-		);
-		
+
+		recipeNameTF.textProperty().addListener((observable, oldValue, newValue) -> editRecipeName(newValue));
+
 		productsAmountColumn.setCellValueFactory(data -> {
 			int amount = actualRecipe.getQuantity(data.getValue());
 			return new SimpleStringProperty(Integer.toString(amount));
 		});
-		
+
 		recipeStepCL.setCellValueFactory(data -> {
 			return new SimpleStringProperty(data.getValue());
 		});
 
-		stepsTable.getSelectionModel().selectedItemProperty().addListener(
-			(observable, oldValue, newValue) -> updateSelectedStep(newValue)
-		);
-		
+		stepsTable.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> updateSelectedStep(newValue));
+
 		// use Recipe name
 		recipesListCombo.setConverter(GetterConverter.create(Recipe.class, "name"));
-		recipesListCombo.getSelectionModel().selectedItemProperty().addListener(
-			(observable, oldValue, newValue) -> recipesComboSelect(newValue));
+		recipesListCombo.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> recipesComboSelect(newValue));
 
 		BooleanBinding notSelected = recipesListCombo.getSelectionModel().selectedItemProperty().isNull();
 		recipeNameTF.disableProperty().bind(notSelected);
@@ -265,7 +264,7 @@ public class RecipeController extends AbstractProductController {
 		notSelected = stepsTable.getSelectionModel().selectedItemProperty().isNull();
 		editStepBT.disableProperty().bind(notSelected);
 		removeStepBT.disableProperty().bind(notSelected);
-		
+
 		// load data and disable unavailable inputs
 		peopleTF.setDisable(true);
 		updateSelectedStep(null);

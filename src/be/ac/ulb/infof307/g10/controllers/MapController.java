@@ -21,51 +21,53 @@ import javafx.fxml.FXML;
 import netscape.javascript.JSObject;
 
 /**
- * Controller class of the Google Map view
- * It configure the map and manage the markers on this map
+ * Controller class of the Google Map view It configure the map and manage the
+ * markers on this map
  */
 @SuppressWarnings("restriction")
 public class MapController implements MapComponentInitializedListener, UncaughtExceptionHandler {
 
-    @FXML
-    ClusteredGoogleMapView mapView;
-    @FXML
-    ClusteredGoogleMap map;
-    @FXML
-    InfoWindow popup;
-    
-    public void initialize() {
-	Thread.setDefaultUncaughtExceptionHandler(this);
-        mapView.addMapInializedListener(this);
-    }
+	@FXML
+	ClusteredGoogleMapView mapView;
+	@FXML
+	ClusteredGoogleMap map;
+	@FXML
+	InfoWindow popup;
+
+	public void initialize() {
+		Thread.setDefaultUncaughtExceptionHandler(this);
+		mapView.addMapInializedListener(this);
+	}
 
 	@Override
 	public void uncaughtException(Thread t, Throwable e) {
-		if(e.getClass().getName() == "netscape.javascript.JSException") {
+		if (e.getClass().getName() == "netscape.javascript.JSException") {
 			Main.getInstance().showMapErrorDialog();
 		} else {
 			throw new RuntimeException(e);
 		}
 	}
-    /**
-     * Initialization of the map
-     */
-    @Override
-    public void mapInitialized() {
-		// needed to debug Exception, see https://gitlab.com/INFOF307-1718/Groupe10/issues/23
-        try {
+
+	/**
+	 * Initialization of the map
+	 */
+	@Override
+	public void mapInitialized() {
+		// needed to debug Exception, see
+		// https://gitlab.com/INFOF307-1718/Groupe10/issues/23
+		try {
 			// Set the initial properties of the map.
 			MapOptions mapOptions = new MapOptions();
 			LatLong latLong = new LatLong((double) 50.8504500, (double) 4.3487800);
-			mapOptions.center(latLong)
-			        .mapType(MapTypeIdEnum.ROADMAP)
-			        .overviewMapControl(false)
-			        .panControl(false)
-			        .rotateControl(false)
-			        .scaleControl(false)
-			        .streetViewControl(false)
-			        .zoomControl(false)
-			        .zoom(12);
+			mapOptions.center(latLong);
+			mapOptions.mapType(MapTypeIdEnum.ROADMAP);
+			mapOptions.overviewMapControl(false);
+			mapOptions.panControl(false);
+			mapOptions.rotateControl(false);
+			mapOptions.scaleControl(false);
+			mapOptions.streetViewControl(false);
+			mapOptions.zoomControl(false);
+			mapOptions.zoom(12);
 
 			map = mapView.createMap(mapOptions);
 			popup = new InfoWindow();
@@ -74,7 +76,8 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 
 			// Add a marker to the map on right click
 			map.addMouseEventHandler(UIEventType.rightclick, (GMapMouseEvent event) -> {
-				// needed to debug Exception, see https://gitlab.com/INFOF307-1718/Groupe10/issues/23
+				// needed to debug Exception, see
+				// https://gitlab.com/INFOF307-1718/Groupe10/issues/23
 				try {
 					createShop(event);
 				} catch (Exception e) {
@@ -84,12 +87,14 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-    }
+	}
 
-    /**
-     * Launching of the popup for the creation of a shop
-     * @param event the right clic on the map
-     */
+	/**
+	 * Launching of the popup for the creation of a shop
+	 * 
+	 * @param event
+	 *            the right clic on the map
+	 */
 	@FXML
 	public void createShop(GMapMouseEvent event) {
 		Main.getInstance().showCreateShopDialog(event.getLatLong());
@@ -98,7 +103,9 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 
 	/**
 	 * Adding a shop add a marker on the map
-	 * @param s the shop to add
+	 * 
+	 * @param s
+	 *            the shop to add
 	 */
 	private void addShopToMap(Shop s) {
 		LatLong latLong = new LatLong(s.getLatitude(), s.getLongitude());
@@ -111,13 +118,14 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 			popup.open(map, marker);
 		});
 	}
+
 	/**
-	 * Update of the interface
-	 * removing of all the markers then query the database to obtain all the shops and render them
+	 * Update of the interface removing of all the markers then query the
+	 * database to obtain all the shops and render them
 	 */
-	private void updateInterface(){
+	private void updateInterface() {
 		map.getMarkerClusterer().clearMarkers();
-		for(Shop s: Database.getAllShops()) {
+		for (Shop s : Database.getAllShops()) {
 			addShopToMap(s);
 		}
 	}

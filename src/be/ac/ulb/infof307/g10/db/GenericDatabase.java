@@ -22,10 +22,10 @@ import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 /**
- * Persistence database to manage Objects persistence.
- * This database is generic (as its name suggest), and is working without knowing object type.
- * Feel free to extends this class to add your own queries to your database.
- * Abstract because contains only static methods.
+ * Persistence database to manage Objects persistence. This database is generic
+ * (as its name suggest), and is working without knowing object type. Feel free
+ * to extends this class to add your own queries to your database. Abstract
+ * because contains only static methods.
  */
 abstract public class GenericDatabase {
 	private static EntityManagerFactory emf;
@@ -35,8 +35,11 @@ abstract public class GenericDatabase {
 
 	/**
 	 * Set property to overwrite any value from persistence.xml
-	 * @param name Name of property
-	 * @param value Value
+	 * 
+	 * @param name
+	 *            Name of property
+	 * @param value
+	 *            Value
 	 */
 	public static void setProp(String name, String value) {
 		if (properties == null) {
@@ -49,6 +52,7 @@ abstract public class GenericDatabase {
 
 	/**
 	 * Return the EntityManager
+	 * 
 	 * @return EntityManager
 	 */
 	private static EntityManager getEM() {
@@ -68,6 +72,7 @@ abstract public class GenericDatabase {
 
 	/**
 	 * Return underlying transaction
+	 * 
 	 * @return EntityTransaction
 	 */
 	private static EntityTransaction getET() {
@@ -76,30 +81,34 @@ abstract public class GenericDatabase {
 
 	/**
 	 * Get managed classes by this database
+	 * 
 	 * @return Array of simpleName of the managed classes
 	 */
 	public static Class<?>[] getManagedClasses() {
 		// get managed types from metamodel
 		Set<ManagedType<?>> mt = getEM().getMetamodel().getManagedTypes();
-		
+
 		int size = mt.size();
 		Class<?>[] arr = new Class[size];
-		
-		for(ManagedType<?> t: mt) {
+
+		for (ManagedType<?> t : mt) {
 			size--;
 			arr[size] = t.getJavaType();
 		}
-		
+
 		return arr;
 	}
 
 	/**
-	 * Disable autoCommit before doing lots of operations on database. Re-enable when finished.
-	 * @param autoCommit New value. Default true.
+	 * Disable autoCommit before doing lots of operations on database. Re-enable
+	 * when finished.
+	 * 
+	 * @param autoCommit
+	 *            New value. Default true.
 	 */
 	public static void setAutoCommit(boolean autoCommit) {
 		GenericDatabase.autoCommit = autoCommit;
-		if(autoCommit) {
+		if (autoCommit) {
 			// commit after starting auto commit
 			getET().commit();
 		} else {
@@ -122,58 +131,78 @@ abstract public class GenericDatabase {
 
 	/**
 	 * Create TypedQuery of type with query bound with positional params
+	 * 
 	 * @param type
 	 * @param query
-	 * @param params Optional positional parameters starting at 1 ("?1" for first parameter)
+	 * @param params
+	 *            Optional positional parameters starting at 1 ("?1" for first
+	 *            parameter)
 	 * @return
 	 */
 	private static <T> TypedQuery<T> createQuery(Class<T> type, String query, Object[] params) {
 		TypedQuery<T> tq = getEM().createQuery(query, type);
 		int i = 1;
-		for(Object p: params) {
+		for (Object p : params) {
 			tq = tq.setParameter(i, p);
 			i++;
 		}
 		return tq;
 	}
+
 	/**
-	 * Get one Object of type c from database corresponding to query bounds with params
-	 * Params have to be positional parameters. E.g. ?1 for first parameter.
-	 * @param <T> Type of Object to get
-	 * @param type Return Object type
-	 * @param query JPQL Query
-	 * @param params Optional positional parameters starting at 1 ("?1" for first parameter)
+	 * Get one Object of type c from database corresponding to query bounds with
+	 * params Params have to be positional parameters. E.g. ?1 for first
+	 * parameter.
+	 * 
+	 * @param <T>
+	 *            Type of Object to get
+	 * @param type
+	 *            Return Object type
+	 * @param query
+	 *            JPQL Query
+	 * @param params
+	 *            Optional positional parameters starting at 1 ("?1" for first
+	 *            parameter)
 	 * @return Object of type T
 	 */
-	public static <T> T getOne(Class<T> type, String query, Object ... params)
+	public static <T> T getOne(Class<T> type, String query, Object... params)
 			throws NoResultException, NonUniqueResultException {
 		return createQuery(type, query, params).getSingleResult();
 	}
 
 	/**
-	 * Get all Object of type c from database corresponding to query bounds with params
-	 * @param <T> Type of Object to get
-	 * @param type Return Object type
-	 * @param query JPQL Query
-	 * @param params Optional positional parameters starting at 1 ("?1" for first parameter)
+	 * Get all Object of type c from database corresponding to query bounds with
+	 * params
+	 * 
+	 * @param <T>
+	 *            Type of Object to get
+	 * @param type
+	 *            Return Object type
+	 * @param query
+	 *            JPQL Query
+	 * @param params
+	 *            Optional positional parameters starting at 1 ("?1" for first
+	 *            parameter)
 	 * @return Objects of type T
 	 */
-	public static <T> List<T> getAll(Class<T> type, String query, Object ... params) {
+	public static <T> List<T> getAll(Class<T> type, String query, Object... params) {
 		return createQuery(type, query, params).getResultList();
 	}
 
 	public static <T> List<T> getAll(Class<T> type) {
-		String sql = "SELECT o from "+type.getSimpleName()+" o";
+		String sql = "SELECT o from " + type.getSimpleName() + " o";
 		return getAll(type, sql);
 	}
 
 	/**
 	 * Delete all objects of class type from database
-	 * @param type Type of objects to delete
+	 * 
+	 * @param type
+	 *            Type of objects to delete
 	 */
 	public static void deleteAll(Class<?> type) {
 		begin();
-		getEM().createQuery("delete from "+type.getSimpleName()+" o").executeUpdate();
+		getEM().createQuery("delete from " + type.getSimpleName() + " o").executeUpdate();
 		commit();
 	}
 
@@ -189,7 +218,7 @@ abstract public class GenericDatabase {
 		getEM().clear();
 		// start batch operations
 		setAutoCommit(false);
-		for(Class<?> c: getManagedClasses()) {
+		for (Class<?> c : getManagedClasses()) {
 			deleteAll(c);
 		}
 		// end batch operations
@@ -201,7 +230,7 @@ abstract public class GenericDatabase {
 	}
 
 	public static boolean isEmpty() {
-		for(Class<?> c: getManagedClasses()) {
+		for (Class<?> c : getManagedClasses()) {
 			if (!getAll(c).isEmpty()) {
 				return false;
 			}
@@ -210,23 +239,28 @@ abstract public class GenericDatabase {
 	}
 
 	/**
-	 * Insert an object into database. Any further modification will be reflected into database
-	 * unless you call the {@link #detach(Object)} method.
-	 * @param o Object to insert
+	 * Insert an object into database. Any further modification will be
+	 * reflected into database unless you call the {@link #detach(Object)}
+	 * method.
+	 * 
+	 * @param o
+	 *            Object to insert
 	 */
 	private static void insert(Object o) throws ExistingException {
 		try {
 			begin();
 			getEM().persist(o);
 			commit();
-		} catch(RollbackException e) {
+		} catch (RollbackException e) {
 			throw new ExistingException(e);
 		}
 	}
 
 	/**
 	 * Update detached object into database.
-	 * @param o Object to update
+	 * 
+	 * @param o
+	 *            Object to update
 	 */
 	private static void update(Object o) throws NonExistingException {
 		try {
@@ -237,13 +271,16 @@ abstract public class GenericDatabase {
 			throw new NonExistingException(e);
 		}
 	}
+
 	/**
 	 * Save object into database.
-	 * @param o Object to save
+	 * 
+	 * @param o
+	 *            Object to save
 	 */
 	public static void save(ModelObject o) throws DatabaseException {
 		try {
-			if(o.getId() == null) {
+			if (o.getId() == null) {
 				insert(o);
 			} else {
 				update(o);
@@ -256,7 +293,9 @@ abstract public class GenericDatabase {
 
 	/**
 	 * Delete object from database.
-	 * @param o Object to delete
+	 * 
+	 * @param o
+	 *            Object to delete
 	 */
 	public static void delete(Object o) throws NoResultException {
 		begin();
@@ -265,9 +304,11 @@ abstract public class GenericDatabase {
 	}
 
 	/**
-	 * Detach object from database. Any further modification of the object will not be saved into database
-	 * unless you use {@link #update(Object)} method.
-	 * @param o Object to detach
+	 * Detach object from database. Any further modification of the object will
+	 * not be saved into database unless you use {@link #update(Object)} method.
+	 * 
+	 * @param o
+	 *            Object to detach
 	 */
 	private static void detach(Object o) {
 		begin();

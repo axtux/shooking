@@ -1,11 +1,10 @@
 package be.ac.ulb.infof307.g10.models;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,14 +12,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
-import be.ac.ulb.infof307.g10.models.Product;
-import be.ac.ulb.infof307.g10.models.Recipe;
 
 public class TestRecipe extends AbstractTestDatabase {
 
 	private Recipe r;
 	private Product p1;
 	private Product p2;
+
 	@Before
 	public void before() {
 		r = new Recipe("Testing recipe");
@@ -32,29 +30,31 @@ public class TestRecipe extends AbstractTestDatabase {
 		r.addIngredient(p1, (float) 1.);
 		r.addIngredient(p2, (float) 1.);
 	}
+
 	@Test
 	public void test_001_addStep() {
 		r.addStep("testing step 4");
-		assertTrue(r.getAllSteps().size()==4);
+		assertTrue(r.getAllSteps().size() == 4);
 	}
-	
+
 	@Test
-	public void test_002_getAllSteps(){
+	public void test_002_getAllSteps() {
 		List<String> steps = r.getAllSteps();
 		assertEquals(steps.get(0), "testing step 1");
 		assertEquals(steps.get(1), "testing step 2");
 		assertEquals(steps.get(2), "testing step 3");
 	}
-	
+
 	@Test
-	public void test_003_moveStep(){
-		r.moveStep(0,1);
+	public void test_003_moveStep() {
+		r.moveStep(0, 1);
 		assertEquals(r.getStep(0), "testing step 2");
 		assertEquals(r.getStep(1), "testing step 1");
 	}
+
 	@Test(expected = IndexOutOfBoundsException.class)
-	public void test_004_moveStepException(){
-		r.moveStep(0,5);
+	public void test_004_moveStepException() {
+		r.moveStep(0, 5);
 	}
 
 	@Test
@@ -63,7 +63,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		assertEquals(r.getStep(0), "testing step 2");
 		assertEquals(r.getStep(1), "testing step 1");
 	}
-	
+
 	@Test
 	public void test_006_moveDownStep() {
 		r.moveDownStep("testing step 2");
@@ -76,13 +76,13 @@ public class TestRecipe extends AbstractTestDatabase {
 		r.setStep(0, "set step");
 		assertEquals(r.getStep(0), "set step");
 	}
-	
+
 	@Test
 	public void test_008_setStep() {
 		r.setStep("testing step 1", "set step");
 		assertEquals(r.getStep(0), "set step");
 	}
-	
+
 	@Test
 	public void test_009_removeStep() {
 		r.removeStep(0);
@@ -90,7 +90,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		r.removeStep(0);
 		assertTrue(r.getAllSteps().isEmpty());
 	}
-	
+
 	@Test
 	public void test_010_removeStep() {
 		r.removeStep("testing step 1");
@@ -98,45 +98,45 @@ public class TestRecipe extends AbstractTestDatabase {
 		r.removeStep("testing step 3");
 		assertTrue(r.getAllSteps().isEmpty());
 	}
-	
+
 	@Test
 	public void test_011_clearSteps() {
 		r.clearSteps();
 		assertTrue(r.getAllSteps().isEmpty());
 	}
-	
+
 	@Test
 	public void test_012_isFirst() {
 		assertTrue(r.isFirst("testing step 1"));
 		assertFalse(r.isFirst("testing step 2"));
 		assertFalse(r.isFirst("testing step 3"));
 	}
-	
+
 	@Test
 	public void test_013_isLast() {
 		assertFalse(r.isLast("testing step 1"));
 		assertFalse(r.isLast("testing step 2"));
 		assertTrue(r.isLast("testing step 3"));
 	}
-	
+
 	@Test
-	public void test_014_addIngredient(){
+	public void test_014_addIngredient() {
 		r.addIngredient(new Product("testing product 3", 1, "g"), 2);
-		assertTrue(r.getAllIngredients().size()==3);
+		assertTrue(r.getAllIngredients().size() == 3);
 	}
-	
+
 	@Test
-	public void test_015_getAllIngredients(){
-		Map<Product,Float> map = r.getAllIngredients();
-		//Normal behavior
-		assertTrue(map.size()==2);
-		//Cloning Test
+	public void test_015_getAllIngredients() {
+		Map<Product, Float> map = r.getAllIngredients();
+		// Normal behavior
+		assertTrue(map.size() == 2);
+		// Cloning Test
 		map.put(new Product("bad product", 1, "g"), (float) 3.);
 		assertNotEquals(map, r.getAllIngredients());
 	}
-	
+
 	@Test
-	public void test_016_removeIngredient(){
+	public void test_016_removeIngredient() {
 		assertFalse(r.getAllIngredients().isEmpty());
 		r.removeIngredient(p1);
 		r.removeIngredient(p2);
@@ -154,25 +154,25 @@ public class TestRecipe extends AbstractTestDatabase {
 		int quantity = r.getQuantity(p2);
 		assertEquals(quantity, (float) 1., 0.1);
 	}
-	
+
 	@Test
 	public void test_019_clearIngredients() {
 		r.clearIngredients();
 		assertTrue(r.getAllIngredients().isEmpty());
 	}
-	
-	@Test(expected=IllegalArgumentException.class)
+
+	@Test(expected = IllegalArgumentException.class)
 	public void test_020_createRecipeException() {
-		Recipe r = new Recipe("");
+		new Recipe("");
 	}
-	
-	@Test(expected=IllegalArgumentException.class)
+
+	@Test(expected = IllegalArgumentException.class)
 	public void test_021_createRecipeException() {
-		Recipe r = new Recipe("correct name", 0);
+		new Recipe("correct name", 0);
 	}
-	
-	@Test(expected=NullPointerException.class)
+
+	@Test(expected = NullPointerException.class)
 	public void test_022_createRecipeException() {
-		Recipe r = new Recipe("correct name", 1, null);
+		new Recipe("correct name", 1, null);
 	}
 }

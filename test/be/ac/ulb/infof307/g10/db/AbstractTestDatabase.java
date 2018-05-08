@@ -4,9 +4,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 /**
- * This class can be extended to run tests on database.
- * A test database will be used to avoid messing with production database.
- * This test database is cleaned before each test to avoid conflict between tests.
+ * This class can be extended to run tests on database. A test database will be
+ * used to avoid messing with production database. This test database is cleaned
+ * before each test to avoid conflict between tests.
  */
 public abstract class AbstractTestDatabase {
 
