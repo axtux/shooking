@@ -30,7 +30,6 @@ public class TermsOfUseController {
 		InputStream in = getClass().getResourceAsStream("/terms_of_use.txt");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		String content = reader.lines().collect(Collectors.joining());
-		button.setText("I agree");
 		text.setText(content);
 
 	}
