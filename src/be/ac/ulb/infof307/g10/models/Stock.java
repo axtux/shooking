@@ -45,7 +45,7 @@ public class Stock extends ShoppingList {
 			throw new IllegalArgumentException("quantity must be >= 0");
 		}
 		if (quantity > getQuantity(p)) {
-			throw new NonExistingException("not enough quanity for product " + p.getName());
+			throw new NonExistingException("not enough quantity for product " + p.getName());
 		}
 		return getPrice(p) * quantity;
 	}
