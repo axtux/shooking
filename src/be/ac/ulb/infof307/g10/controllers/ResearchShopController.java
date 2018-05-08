@@ -2,9 +2,9 @@ package be.ac.ulb.infof307.g10.controllers;
 
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Price;
-import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 
@@ -27,20 +27,12 @@ public class ResearchShopController {
 
 	public void initialize() {
 		StringBuilder all = new StringBuilder();
-		int total;
-		int price;
 		for (Shop s : Database.getAllShops()) {
-			total = 0;
-			for (Product p : sl.getProducts()) {
-				price = s.getStock().getPrice(p, sl.getQuantity(p));
-				if (price == 0) {
-					total = 0;
-					break;
-				}
-				total += price;
-			}
-			if (total != 0) {
+			try {
+				int total = s.getStock().getPrice(sl);
 				all.append(s.getName() + "    " + Price.toString(total) + "\n");
+			} catch (NonExistingException e) {
+				continue;
 			}
 		}
 		shopTA.setText(all.toString());

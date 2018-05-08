@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
+
 public class TestStock {
 
 	static private Stock stock;
@@ -24,10 +26,28 @@ public class TestStock {
 	}
 
 	@Test
-	public void test_001_getPrice() {
+	public void test_000_getPrice() {
 		assertEquals(stock.getPrice(p), 10);
 		assertEquals(stock.getPrice(p, 5), 50);
-		assertEquals(stock.getPrice(p, 9), 0);
+	}
+
+	@Test
+	public void test_000_getShoppingListPrice() {
+		ShoppingList sl = new ShoppingList();
+		sl.addProduct(p, 2);
+		assertEquals(stock.getPrice(sl), 20);
+	}
+
+	@Test(expected = NonExistingException.class)
+	public void test_001_getPriceNonExisting() {
+		stock.getPrice(p, 9);
+	}
+
+	@Test(expected = NonExistingException.class)
+	public void test_001_getShoppingListPriceNonExisting() {
+		ShoppingList sl = new ShoppingList();
+		sl.addProduct(p, 9);
+		stock.getPrice(sl);
 	}
 
 	@Test
