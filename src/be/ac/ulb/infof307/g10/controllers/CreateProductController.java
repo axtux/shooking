@@ -10,43 +10,44 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 /**
- * Controller for the creation of a Product corresponding to the CreateProduct view
- * It is used to generate the different type of message during the creation
+ * Controller for the creation of a Product corresponding to the CreateProduct
+ * view It is used to generate the different type of message during the creation
  */
 public class CreateProductController {
-	
+
 	@FXML
 	private TextField name;
-	
+
 	@FXML
 	private IntField size;
-	
+
 	@FXML
 	private TextField unit;
-	
+
 	@FXML
 	private Button button;
-	
+
 	@FXML
-	private Label printLabel; //used to show an error on the view during the creation
-	
+	private Label printLabel; // used to show an error on the view during the
+								// creation
+
 	/**
-	 * Creation of the Product
-	 * The button is disable during the creation
+	 * Creation of the Product The button is disable during the creation
 	 */
 	public void create() {
 		printLabel.setText("Creating...");
-		button.setDisable(true); //we disable the button during the creation
-		
+		button.setDisable(true); // we disable the button during the creation
+
 		try {
 			Product p = new Product(name.getText(), size.getInt(), unit.getText());
 			p.save();
 			Main.getInstance().closeDialog();
-		}catch (DatabaseException e){
+		} catch (DatabaseException e) {
 			printLabel.setText("Error in database - The product you are creating already exists");
-		} catch (NullPointerException e){ // should never happen because fields are empty strings by default
+		} catch (NullPointerException e) { // should never happen because fields
+											// are empty strings by default
 			printLabel.setText(e.getMessage());
-		} catch (IllegalArgumentException e){ // name or unit fields are empty
+		} catch (IllegalArgumentException e) { // name or unit fields are empty
 			printLabel.setText(e.getMessage());
 		}
 		button.setDisable(false);

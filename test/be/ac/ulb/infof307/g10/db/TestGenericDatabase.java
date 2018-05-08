@@ -71,7 +71,7 @@ public class TestGenericDatabase extends AbstractTestDatabase {
 		try {
 			User.signup("test", "test");
 			assert false;
-		} catch(ExistingException e) {
+		} catch (ExistingException e) {
 			assert true;
 		}
 		User.signup("test2", "test2");

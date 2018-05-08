@@ -1,22 +1,18 @@
 package be.ac.ulb.infof307.g10.models;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-
 import org.junit.Test;
 
+import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
-import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 
 public class TestShop extends AbstractTestDatabase {
 
@@ -24,10 +20,11 @@ public class TestShop extends AbstractTestDatabase {
 	static private Product p1;
 	static private Product p2;
 	static private Product p3;
+
 	@BeforeClass
 	public static void beforeClass() {
 		Stock stock = new Stock();
-		String[] schedule = {"","","","","","",""};
+		String[] schedule = { "", "", "", "", "", "", "" };
 		pList = new ArrayList<>();
 		p1 = new Product("#test product 1", 1, "g");
 		p2 = new Product("#test product 2", 1, "g");
@@ -43,30 +40,29 @@ public class TestShop extends AbstractTestDatabase {
 		stock.addProduct(p3, 1);
 		Shop.create("#test Testing shop", 0., 0., schedule, stock);
 	}
-	
+
 	@Test
 	public void test_001_createShop() {
 		Shop shop = Shop.create("#test createShop", 0, 0);
 		assertNotNull(shop);
 	}
-	/*
-	@Test(expected=ExistingException.class)
+
+	@Test(expected = ExistingException.class)
 	public void test_002_createShopException() {
-			// TODO test fail
-			// A shop already exist at this coordinate
+		// TODO test fail
 		Shop.create("#test create shop exception", 0., 0.);
-	}*/
-	
+	}
+
 	@Test
 	public void test_003_deleteShop() {
 		Database.deleteAll(Shop.class);
 		assertTrue(Database.getAllShops().isEmpty());
 	}
-	
+
 	@Test
 	public void test_004_getSchedule() {
-		String[] testingSchedule = {"1","2","3","4","5","6","7"};
-		Shop shop = Shop.create("#test getSchedule", 0.,0., testingSchedule);
+		String[] testingSchedule = { "1", "2", "3", "4", "5", "6", "7" };
+		Shop shop = Shop.create("#test getSchedule", 0., 0., testingSchedule);
 		assertEquals(shop.getSchedule(0), "1");
 	}
 }

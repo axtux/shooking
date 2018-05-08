@@ -77,7 +77,7 @@ abstract public class AbstractProductController {
 		productsTable.getSelectionModel().selectedItemProperty().addListener(
 			(observable, oldValue, newValue) -> productsTableSelect(newValue)
 		);
-		
+
 		// use Product full name
 		productsCombo.setConverter(GetterConverter.create(Product.class, "fullName"));
 

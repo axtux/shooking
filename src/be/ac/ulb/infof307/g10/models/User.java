@@ -13,8 +13,7 @@ import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.utils.Hash;
 
 /**
- * Manage user, password and shopping list.
- * Use static methods to get instance.
+ * Manage user, password and shopping list. Use static methods to get instance.
  */
 @Entity
 public class User extends ModelObject {
@@ -29,7 +28,11 @@ public class User extends ModelObject {
 	@OneToOne(cascade = CascadeType.ALL)
 	private ShoppingList shoppingList;
 
-	protected User() {} // Needed by JPA
+	/**
+	 * Needed by JPA
+	 */
+	protected User() {
+	}
 
 	private User(String username, String password) {
 		if (username == null || password == null) {
@@ -59,26 +62,25 @@ public class User extends ModelObject {
 	public ShoppingList getShoppingList() {
 		return shoppingList;
 	}
-	
+
 	// static methods
-	public static User login(String username, String password)
-		throws IncorrectPasswordException, NonExistingException {
+	public static User login(String username, String password) throws IncorrectPasswordException, NonExistingException {
 		try {
 			User u = Database.getUser(username);
 			if (u.isPassword(password)) {
 				return u;
 			}
 			throw new IncorrectPasswordException();
-		} catch(NoResultException e) {
+		} catch (NoResultException e) {
 			throw new NonExistingException(e);
 		}
 	}
-	
+
 	public static User signup(String username, String password) throws ExistingException {
 		try {
 			Database.getUser(username);
 			throw new ExistingException();
-		} catch(NoResultException e) {
+		} catch (NoResultException e) {
 			User u = new User(username, password);
 			u.save();
 			return u;

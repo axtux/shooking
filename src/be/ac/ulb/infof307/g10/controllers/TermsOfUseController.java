@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * Controller class of the Terms of use view
  */
 public class TermsOfUseController {
-	
+
 	@FXML
 	private TextArea text;
 	@FXML

@@ -15,7 +15,10 @@ public class Stock extends ShoppingList {
 	@ElementCollection(fetch = FetchType.EAGER)
 	Map<Product, Integer> productsAndPrice;
 
-	public Stock() { // Needed by JPA
+	/**
+	 * Needed by JPA
+	 */
+	public Stock() {
 		super();
 		productsAndPrice = new HashMap<>();
 	}
@@ -23,17 +26,21 @@ public class Stock extends ShoppingList {
 	public int getPrice(Product p) {
 		return productsAndPrice.getOrDefault(p, 0);
 	}
+
 	/**
 	 * Get price of Product p adapted to quantity
-	 * @param p Product
-	 * @param quantity Quantity
+	 * 
+	 * @param p
+	 *            Product
+	 * @param quantity
+	 *            Quantity
 	 * @return Price adapted to quantity or 0 if not enough quantity of Product
 	 */
 	public int getPrice(Product p, int quantity) {
 		if (quantity > getQuantity(p)) {
 			return 0;
 		}
-		return getPrice(p)*quantity;
+		return getPrice(p) * quantity;
 	}
 
 	public void setPrice(Product p, int price) {
@@ -50,11 +57,11 @@ public class Stock extends ShoppingList {
 	}
 
 	public void addProduct(Product p, int quantity) {
-		setProduct(p, quantity+getQuantity(p), getPrice(p));
+		setProduct(p, quantity + getQuantity(p), getPrice(p));
 	}
 
 	public void addProduct(Product p, int quantity, int price) {
-		setProduct(p, quantity+getQuantity(p), price);
+		setProduct(p, quantity + getQuantity(p), price);
 	}
 
 	public void removeProduct(Product p) {

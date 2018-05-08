@@ -11,38 +11,40 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 /**
- * Controller of the Login view
- * It is used to print the different type of error in the corresponding label during the connection
+ * Controller of the Login view It is used to print the different type of error
+ * in the corresponding label during the connection
  */
-public class LoginController extends MainController{
+public class LoginController extends MainController {
 
-    @FXML
-    TextField loginField;
-    @FXML
-    PasswordField pwdField;
+	@FXML
+	TextField loginField;
+	@FXML
+	PasswordField pwdField;
 	/**
-	 * Text field to show if the login of the account is not possible, or if the connection succeed
+	 * Text field to show if the login of the account is not possible, or if the
+	 * connection succeed
 	 */
 	@FXML
-    Label printLabel;
+	Label printLabel;
 
-    /**
-     * This method is used to check the information of the user in the database and connect the user to the application
-     * Some error could be shown to the user in the corresponding view
-     */
-    @FXML
-    public void submit(){
-        String log = loginField.getText();
-        String pwd = pwdField.getText();
-        
-        try{
-            printLabel.setText("Connection ...");
-            User user = User.login(log, pwd);
-            Main.getInstance().setUser(user);
-        } catch(IncorrectPasswordException e){
-            printLabel.setText("Incorrect Password");
-        } catch(NonExistingException e) {
-            printLabel.setText("This user does not exist");
-        }
-    }
+	/**
+	 * This method is used to check the information of the user in the database
+	 * and connect the user to the application Some error could be shown to the
+	 * user in the corresponding view
+	 */
+	@FXML
+	public void submit() {
+		String log = loginField.getText();
+		String pwd = pwdField.getText();
+
+		try {
+			printLabel.setText("Connection ...");
+			User user = User.login(log, pwd);
+			Main.getInstance().setUser(user);
+		} catch (IncorrectPasswordException e) {
+			printLabel.setText("Incorrect Password");
+		} catch (NonExistingException e) {
+			printLabel.setText("This user does not exist");
+		}
+	}
 }
