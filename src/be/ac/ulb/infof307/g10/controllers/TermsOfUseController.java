@@ -29,8 +29,9 @@ public class TermsOfUseController {
 	public void initialize() {
 		InputStream in = getClass().getResourceAsStream("/terms_of_use.txt");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-		String content = reader.lines().collect(Collectors.joining());
+		String content = reader.lines().collect(Collectors.joining("\n"));
 		text.setText(content);
-
+		text.setFocusTraversable(false);
+		button.requestFocus();
 	}
 }

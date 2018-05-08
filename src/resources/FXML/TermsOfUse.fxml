@@ -5,11 +5,10 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox alignment="TOP_CENTER" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.ac.ulb.infof307.g10.controllers.TermsOfUseController">
    <children>
       <TextArea fx:id="text" editable="false" wrapText="true" VBox.vgrow="ALWAYS" />
-      <Button fx:id="button" defaultButton="true" mnemonicParsing="false" onMouseClicked="#agree" text="I agree" VBox.vgrow="NEVER">
+      <Button fx:id="button" defaultButton="true" mnemonicParsing="false" onAction="#agree" text="I agree" VBox.vgrow="NEVER">
          <VBox.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </VBox.margin>
