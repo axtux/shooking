@@ -25,7 +25,7 @@ public class CreateShopController {
 	@FXML
 	private TextField tuesday;
 	@FXML
-	private TextField wedsnday;
+	private TextField wednesday;
 	@FXML
 	private TextField thursday;
 	@FXML

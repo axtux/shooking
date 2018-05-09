@@ -9,31 +9,30 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.ac.ulb.infof307.g10.controllers.CreateAccountController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0" prefWidth="500.0"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="be.ac.ulb.infof307.g10.controllers.CreateAccountController">
 
-    <children>
-      <HBox alignment="CENTER" layoutY="270.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <VBox alignment="CENTER" spacing="30.0">
-               <children>
-                  <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Sign up">
-                     <font>
-                        <Font size="43.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="textFieldLog" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Login" />
-                  <PasswordField fx:id="pwdField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Password" />
-                  <PasswordField fx:id="pwdField2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Re enter the password" />
-                  <Label fx:id="errorLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
-                  <HBox alignment="CENTER" spacing="50.0">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#goToLogin" text="Sign in" />
-                        <Button defaultButton="true" mnemonicParsing="false" onAction="#submit" text="Sign up" />
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-    </children>
+    <HBox alignment="CENTER" layoutY="270.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="CENTER" spacing="30.0">
+            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                   text="Sign up">
+                <font>
+                    <Font size="43.0"/>
+                </font>
+            </Label>
+            <TextField fx:id="textFieldLog" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                       promptText="Login"/>
+            <PasswordField fx:id="pwdField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                           promptText="Password"/>
+            <PasswordField fx:id="pwdField2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                           promptText="Re enter the password"/>
+            <Label fx:id="errorLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"/>
+            <HBox alignment="CENTER" spacing="50.0">
+                <Button mnemonicParsing="false" onAction="#goToLogin" text="Sign in"/>
+                <Button defaultButton="true" mnemonicParsing="false" onAction="#submit" text="Sign up"/>
+            </HBox>
+        </VBox>
+    </HBox>
 </AnchorPane>
