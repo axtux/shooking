@@ -118,7 +118,7 @@ public class RecipeController extends AbstractProductController {
 	}
 
 	@FXML
-	private void removeStep(ActionEvent event) {
+	private void removeStep() {
 		if (selectedStep == null) {
 			return;
 		}
