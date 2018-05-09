@@ -57,8 +57,7 @@ public class GeneralView extends Parent {
 
 		} catch (IOException e) {
 			// never happens as resource is packed within application
-			e.printStackTrace();
-			return null;
+			throw new RuntimeException(e);
 		}
 	}
 
