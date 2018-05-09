@@ -4,7 +4,7 @@ import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
-import be.ac.ulb.infof307.g10.utils.GetterConverter;
+import be.ac.ulb.infof307.g10.utils.ToStringConverter;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
@@ -249,7 +249,10 @@ public class RecipeController extends AbstractProductController {
 				.addListener((observable, oldValue, newValue) -> updateSelectedStep(newValue));
 
 		// use Recipe name
-		recipesListCombo.setConverter(GetterConverter.create(Recipe.class, "name"));
+		recipesListCombo.setConverter(new ToStringConverter<>((recipe) -> {
+			return recipe.getName();
+		}));
+
 		recipesListCombo.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> recipesComboSelect(newValue));
 

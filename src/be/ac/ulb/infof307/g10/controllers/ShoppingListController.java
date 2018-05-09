@@ -8,7 +8,7 @@ import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
-import be.ac.ulb.infof307.g10.utils.GetterConverter;
+import be.ac.ulb.infof307.g10.utils.ToStringConverter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -165,9 +165,13 @@ public class ShoppingListController extends AbstractProductController {
 		});
 
 		// convert Product to string
-		productsCombo.setConverter(GetterConverter.create(Product.class, "fullName"));
+		productsCombo.setConverter(new ToStringConverter<>((product) -> {
+			return product.getFullName();
+		}));
 		// convert Shop to string
-		shopsCombo.setConverter(GetterConverter.create(Shop.class, "name"));
+		shopsCombo.setConverter(new ToStringConverter<>((shop) -> {
+			return shop.getName();
+		}));
 
 		shopsCombo.valueProperty().addListener(new ChangeListener<Shop>() {
 			@Override
