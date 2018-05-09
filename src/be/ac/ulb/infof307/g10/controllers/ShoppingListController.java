@@ -11,6 +11,7 @@ import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.utils.ToStringConverter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -23,6 +24,12 @@ public class ShoppingListController extends AbstractProductController {
 
 	@FXML
 	private ComboBox<Shop> shopsCombo;
+
+	@FXML
+	private Button productsNewButton;
+
+	@FXML
+	private Button researchShopsButton;
 
 	@FXML
 	private Label status;
@@ -167,6 +174,9 @@ public class ShoppingListController extends AbstractProductController {
 
 		shopsCombo.valueProperty().addListener((observable, oldValue, newValue) -> shopSelected(newValue));
 
+		// TODO change this when multiple shopping lists
+		productsNewButton.setDisable(false);
+		researchShopsButton.setDisable(false);
 		updateProducts();
 		updateShops();
 		updateTable();

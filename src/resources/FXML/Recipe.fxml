@@ -41,43 +41,43 @@
                 SplitPane.resizableWithParent="false">
         <Label layoutX="8.0" layoutY="182.0" minHeight="-Infinity" minWidth="-Infinity" text="Ingredient:">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x1312"/>
+                <Font name="System Bold Italic" size="15.0" />
             </font>
         </Label>
         <Label layoutX="8.0" layoutY="233.0" text="Amount:">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x1313"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Label>
         <IntField fx:id="productsAmountField" layoutX="45.0" layoutY="253.0" prefHeight="16.0" prefWidth="87.0"/>
         <Label layoutX="7.0" layoutY="105.0" text="Servings:">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x1314"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Label>
         <IntField fx:id="peopleTF" layoutX="17.0" layoutY="124.0" prefHeight="26.0" prefWidth="108.0"/>
         <Button fx:id="productsClearButton" layoutX="144.0" layoutY="330.0" mnemonicParsing="false"
                 onAction="#productsClear" prefHeight="31.0" prefWidth="108.0" text="Clear">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x1315"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Button>
         <Button id="addIngredientT" fx:id="productsAddButton" layoutX="19.0" layoutY="289.0" mnemonicParsing="false"
                 onAction="#productsAdd" prefHeight="31.0" prefWidth="108.0" text="Add">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x1316"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Button>
         <Button fx:id="productsEditButton" layoutX="144.0" layoutY="289.0" mnemonicParsing="false"
                 onAction="#productsEdit" prefHeight="31.0" prefWidth="108.0" text="Edit">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x1317"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Button>
         <Button fx:id="productsRemoveButton" layoutX="19.0" layoutY="330.0" mnemonicParsing="false"
                 onAction="#productsRemove" prefHeight="31.0" prefWidth="108.0" text="Remove">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x1318"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Button>
         <Button fx:id="productsAmountUpButton" layoutX="131.0" layoutY="253.0" mnemonicParsing="false"
@@ -87,30 +87,30 @@
         <Button fx:id="addStepBT" layoutX="20.0" layoutY="492.0" mnemonicParsing="false" onAction="#addStep"
                 prefHeight="31.0" prefWidth="108.0" text="Add">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x1319"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Button>
         <Button id="editStepBT1" fx:id="editStepBT" layoutX="141.0" layoutY="492.0" mnemonicParsing="false"
                 onAction="#editStep" prefHeight="31.0" prefWidth="108.0" text="Edit">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x1320"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Button>
         <Button fx:id="removeStepBT" layoutX="20.0" layoutY="530.0" mnemonicParsing="false" onAction="#removeStep"
                 prefHeight="31.0" prefWidth="108.0" text="Remove ">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x1321"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Button>
         <Button id="clearBT1" fx:id="clearStepBT" layoutX="140.0" layoutY="530.0" mnemonicParsing="false"
                 onAction="#clearStep" prefHeight="31.0" prefWidth="108.0" text="Clear">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x1322"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Button>
         <Label layoutX="6.0" layoutY="399.0" text="Step:">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x1323"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Label>
         <TextField fx:id="stepTF" layoutX="20.0" layoutY="422.0" prefHeight="26.0" prefWidth="230.0"/>
@@ -126,7 +126,7 @@
         </ComboBox>
         <Label layoutX="7.0" layoutY="11.0" text="Recipe:">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x1324"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Label>
         <ComboBox id="recipeListCombo" fx:id="productsCombo" layoutX="19.0" layoutY="205.0" prefHeight="26.0"
@@ -142,22 +142,22 @@
         <Button id="upStep" fx:id="moveUpStepBT" layoutX="142.0" layoutY="455.0" mnemonicParsing="false"
                 onAction="#moveUpStep" prefHeight="29.0" prefWidth="108.0" text="Up" textAlignment="RIGHT">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x1325"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Button>
         <Button id="moveDownStep" fx:id="moveDownStepBT" layoutX="20.0" layoutY="455.0" mnemonicParsing="false"
                 onAction="#moveDownStep" prefHeight="29.0" prefWidth="108.0" text="Down" textAlignment="CENTER">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x1326"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Button>
         <Label layoutX="7.0" layoutY="59.0" text="Name:">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x1311"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Label>
         <TextField fx:id="recipeNameTF" layoutX="17.0" layoutY="77.0" prefHeight="26.0" prefWidth="159.0"/>
-        <Button id="createRecipeBT" fx:id="newRecipeBT" font="$x131" layoutX="189.0" layoutY="75.0"
+        <Button id="createRecipeBT" font="$x131" layoutX="189.0" layoutY="75.0"
                 mnemonicParsing="false" onAction="#createRecipe" text="New">
             <font>
                 <Font name="System Bold Italic" size="15.0" fx:id="x131"/>

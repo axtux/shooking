@@ -30,8 +30,6 @@ public class RecipeController extends AbstractProductController {
 	@FXML
 	private TextField recipeNameTF;
 	@FXML
-	private Button newRecipeBT;
-	@FXML
 	private Button addStepBT;
 	@FXML
 	private Button editStepBT;

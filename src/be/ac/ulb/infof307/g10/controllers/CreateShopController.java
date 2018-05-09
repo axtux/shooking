@@ -6,6 +6,7 @@ import com.lynden.gmapsfx.javascript.object.LatLong;
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Shop;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -17,6 +18,8 @@ public class CreateShopController {
 	@FXML
 	private TextField name;
 
+	@FXML
+	private Button createButton;
 	/**
 	 * Schedule of each day
 	 */
@@ -72,14 +75,17 @@ public class CreateShopController {
 	 */
 	@FXML
 	void create() {
+		createButton.setDisable(true);
 		try {
 			Shop.create(name.getText(), position.getLatitude(), position.getLongitude(), createSchedule());
 			Main.getInstance().closeDialog();
+			return;
 		} catch (DatabaseException e) {
 			printLabel.setText("Database error");
 		} catch (IllegalArgumentException e) {
 			printLabel.setText(e.getMessage());
 		}
+		createButton.setDisable(false);
 	}
 
 }

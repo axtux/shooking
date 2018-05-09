@@ -60,7 +60,7 @@
         <Separator layoutY="193.0" prefHeight="20.0" prefWidth="263.0"/>
         <Label layoutX="8.0" layoutY="228.0" text="Shop:">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x12"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Label>
         <ComboBox fx:id="shopsCombo" layoutX="15.0" layoutY="250.0" prefHeight="27.0" prefWidth="234.0"/>
@@ -71,10 +71,10 @@
         </Label>
         <Label fx:id="totalLabel" layoutX="209.0" layoutY="288.0" text="0.00€"/>
         <Separator layoutX="-1.0" layoutY="210.0" prefHeight="20.0" prefWidth="263.0"/>
-        <Button fx:id="researchShopsBT" layoutX="14.0" layoutY="322.0" mnemonicParsing="false" onAction="#researchShop"
+        <Button fx:id="researchShopsButton" layoutX="14.0" layoutY="322.0" mnemonicParsing="false" onAction="#researchShop"
                 prefHeight="29.0" prefWidth="234.0" text="Research shops">
             <font>
-                <Font name="System Bold Italic" size="15.0" fx:id="x11"/>
+                <Font name="System Bold Italic" size="15.0"/>
             </font>
         </Button>
     </AnchorPane>
