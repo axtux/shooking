@@ -236,22 +236,18 @@ public class RecipeController extends AbstractProductController {
 
 		recipeNameTF.textProperty().addListener((observable, oldValue, newValue) -> editRecipeName(newValue));
 
-		productsAmountColumn.setCellValueFactory(data -> {
-			int amount = actualRecipe.getQuantity(data.getValue());
+		productsAmountColumn.setCellValueFactory(cell -> {
+			int amount = actualRecipe.getQuantity(cell.getValue());
 			return new SimpleStringProperty(Integer.toString(amount));
 		});
 
-		recipeStepCL.setCellValueFactory(data -> {
-			return new SimpleStringProperty(data.getValue());
-		});
+		recipeStepCL.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue()));
 
 		stepsTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> updateSelectedStep(newValue));
 
 		// use Recipe name
-		recipesListCombo.setConverter(new ToStringConverter<>((recipe) -> {
-			return recipe.getName();
-		}));
+		recipesListCombo.setConverter(new ToStringConverter<>(Recipe::getName));
 
 		recipesListCombo.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> recipesComboSelect(newValue));

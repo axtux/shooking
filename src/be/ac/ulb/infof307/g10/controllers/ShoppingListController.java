@@ -10,8 +10,6 @@ import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.utils.ToStringConverter;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -141,21 +139,19 @@ public class ShoppingListController extends AbstractProductController {
 		super.initialize();
 		sl = Main.getInstance().getUser().getShoppingList();
 
-		productsNameColumn.setCellValueFactory(data -> {
-			return new SimpleStringProperty(data.getValue().getName());
-		});
+		productsNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
 
-		productsAmountColumn.setCellValueFactory(data -> {
-			int quantity = sl.getQuantity(data.getValue());
+		productsAmountColumn.setCellValueFactory(cell -> {
+			int quantity = sl.getQuantity(cell.getValue());
 			return new SimpleStringProperty(Integer.toString(quantity));
 		});
 
-		productsPriceColumn.setCellValueFactory(data -> {
+		productsPriceColumn.setCellValueFactory(cell -> {
 			if (selectedShop == null) {
 				return new SimpleStringProperty("-");
 			}
 			try {
-				Product p = data.getValue();
+				Product p = cell.getValue();
 				int price = selectedShop.getStock().getPrice(p, sl.getQuantity(p));
 				return new SimpleStringProperty(Price.toString(price));
 			} catch (NonExistingException e) {
@@ -165,20 +161,11 @@ public class ShoppingListController extends AbstractProductController {
 		});
 
 		// convert Product to string
-		productsCombo.setConverter(new ToStringConverter<>((product) -> {
-			return product.getFullName();
-		}));
+		productsCombo.setConverter(new ToStringConverter<>(Product::getFullName));
 		// convert Shop to string
-		shopsCombo.setConverter(new ToStringConverter<>((shop) -> {
-			return shop.getName();
-		}));
+		shopsCombo.setConverter(new ToStringConverter<>(Shop::getName));
 
-		shopsCombo.valueProperty().addListener(new ChangeListener<Shop>() {
-			@Override
-			public void changed(ObservableValue<? extends Shop> observable, Shop oldValue, Shop newValue) {
-				shopSelected(newValue);
-			}
-		});
+		shopsCombo.valueProperty().addListener((observable, oldValue, newValue) -> shopSelected(newValue));
 
 		updateProducts();
 		updateShops();

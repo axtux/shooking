@@ -69,9 +69,7 @@ abstract public class AbstractProductController {
 	public void initialize() {
 		updateProducts();
 		
-		productsNameColumn.setCellValueFactory(data -> {
-			return new SimpleStringProperty(data.getValue().getName());
-		});
+		productsNameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
 
 		productsTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		productsTable.getSelectionModel().selectedItemProperty().addListener(
@@ -79,9 +77,7 @@ abstract public class AbstractProductController {
 		);
 
 		// use Product full name
-		productsCombo.setConverter(new ToStringConverter<>((product) -> {
-			return product.getFullName();
-		}));
+		productsCombo.setConverter(new ToStringConverter<>(Product::getFullName));
 
 		BooleanBinding notSelected = productsCombo.getSelectionModel().selectedItemProperty().isNull();
 		productsAddButton.disableProperty().bind(notSelected);

@@ -6,14 +6,17 @@ import javafx.util.StringConverter;
  * Convert a ToStringInterface into a StringConverter.
  * 
  * Can be used as a StringConverter to only implement toString method. This
- * enable lambda usage for a simpler code.
- * 
- * E.g.
+ * enable lambda usage for a simpler code:
  * <pre>{@code
  * 	new ToStringConverter<MyObject>((object) -> {
  * 		// return whatever you want
  * 		return object.toString();
  * 	});
+ * }</pre>
+ *
+ * or with method reference:
+ * <pre>{@code
+ * 	new ToStringConverter<MyObject>(MyObject::method);
  * }</pre>
  * 
  * @param <T> Object type to convert.
