@@ -96,10 +96,10 @@ public class RecipeController extends AbstractProductController {
 
 	@FXML
 	private void addStep() {
-		if (stepTF.equals("")) {
+		String step = stepTF.getText().trim();
+		if (step.isEmpty()) {
 			return;
 		}
-		String step = stepTF.getText();
 		stepTF.clear();
 		actualRecipe.addStep(step);
 		changed();
