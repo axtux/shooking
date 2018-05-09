@@ -46,6 +46,6 @@ public class ToStringConverter<T> extends StringConverter<T> {
 	}
 
 	public interface ToStringInterface<T> {
-		public String toString(T object);
+		String toString(T object);
 	}
 }

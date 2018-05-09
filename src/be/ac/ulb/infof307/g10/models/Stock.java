@@ -73,6 +73,7 @@ public class Stock extends ShoppingList {
 		setProduct(p, getQuantity(p), price);
 	}
 
+	@Override
 	public void setProduct(Product p, int quantity) {
 		setProduct(p, quantity, getPrice(p));
 	}
@@ -82,6 +83,7 @@ public class Stock extends ShoppingList {
 		productsAndPrice.put(p, price);
 	}
 
+	@Override
 	public void addProduct(Product p, int quantity) {
 		setProduct(p, quantity + getQuantity(p), getPrice(p));
 	}
@@ -90,11 +92,13 @@ public class Stock extends ShoppingList {
 		setProduct(p, quantity + getQuantity(p), price);
 	}
 
+	@Override
 	public void removeProduct(Product p) {
 		super.removeProduct(p);
 		productsAndPrice.remove(p);
 	}
 
+	@Override
 	public void clear() {
 		super.clear();
 		productsAndPrice.clear();

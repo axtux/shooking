@@ -229,6 +229,7 @@ public class RecipeController extends AbstractProductController {
 		recipesListCombo.getItems().addAll(Database.getAllRecipes());
 	}
 
+	@Override
 	public void initialize() {
 		super.initialize();
 		updateRecipes();
