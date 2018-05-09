@@ -7,6 +7,8 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
+
 @Entity
 public class Stock extends ShoppingList {
 
@@ -28,19 +30,43 @@ public class Stock extends ShoppingList {
 	}
 
 	/**
-	 * Get price of Product p adapted to quantity
+	 * Get price of Product p for quantity
 	 * 
 	 * @param p
 	 *            Product
 	 * @param quantity
 	 *            Quantity
-	 * @return Price adapted to quantity or 0 if not enough quantity of Product
+	 * @return Price for quantity
+	 * @throws NonExistingException
+	 *             if not enough quantity is available in this stock
 	 */
-	public int getPrice(Product p, int quantity) {
+	public int getPrice(Product p, int quantity) throws NonExistingException {
+		if (quantity < 0) {
+			throw new IllegalArgumentException("quantity must be >= 0");
+		}
 		if (quantity > getQuantity(p)) {
-			return 0;
+			throw new NonExistingException("not enough quantity for product " + p.getName());
 		}
 		return getPrice(p) * quantity;
+	}
+
+	/**
+	 * Get price of shopping list.
+	 * 
+	 * @param sl
+	 *            Shopping list
+	 * @return Price adapted to quantity from shopping list or 0 if not enough
+	 *         quantity of one product
+	 * @throws NonExistingException
+	 *             if not enough quantity of one product is available in this
+	 *             stock
+	 */
+	public int getPrice(ShoppingList sl) throws NonExistingException {
+		int total = 0;
+		for (Product p : sl.getProducts()) {
+			total += getPrice(p, sl.getQuantity(p));
+		}
+		return total;
 	}
 
 	public void setPrice(Product p, int price) {

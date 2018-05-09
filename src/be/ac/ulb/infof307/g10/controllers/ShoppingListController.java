@@ -7,6 +7,7 @@ import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.utils.GetterConverter;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -121,17 +122,12 @@ public class ShoppingListController extends AbstractProductController {
 			return;
 		}
 
-		int total = 0;
-		int price;
-		for (Product p : sl.getProducts()) {
-			price = selectedShop.getStock().getPrice(p, sl.getQuantity(p));
-			if (price == 0) {
-				totalLabel.setText("unavailable");
-				return;
-			}
-			total += price;
+		try {
+			int total = selectedShop.getStock().getPrice(sl);
+			totalLabel.setText(Price.toString(total));
+		} catch (NonExistingException e) {
+			totalLabel.setText("unavailable");
 		}
-		totalLabel.setText(Price.toString(total));
 	}
 
 	@FXML
@@ -158,11 +154,14 @@ public class ShoppingListController extends AbstractProductController {
 			if (selectedShop == null) {
 				return new SimpleStringProperty("-");
 			}
-			int price = selectedShop.getStock().getPrice(data.getValue(), sl.getQuantity(data.getValue()));
-			if (price == 0) {
+			try {
+				Product p = data.getValue();
+				int price = selectedShop.getStock().getPrice(p, sl.getQuantity(p));
+				return new SimpleStringProperty(Price.toString(price));
+			} catch (NonExistingException e) {
 				return new SimpleStringProperty("unavailable");
 			}
-			return new SimpleStringProperty(Price.toString(price));
+			
 		});
 
 		// convert Product to string

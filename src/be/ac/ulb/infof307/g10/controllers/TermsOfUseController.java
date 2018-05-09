@@ -29,9 +29,10 @@ public class TermsOfUseController {
 	public void initialize() {
 		InputStream in = getClass().getResourceAsStream("/terms_of_use.txt");
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-		String content = reader.lines().collect(Collectors.joining());
-		button.setText("I agree");
+		String content = reader.lines().collect(Collectors.joining("\n"));
 		text.setText(content);
-
+		// remove focus from text (needed to focus button)
+		text.setFocusTraversable(false);
+		button.requestFocus();
 	}
 }
