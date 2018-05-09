@@ -50,7 +50,7 @@ public class CreateShopController {
 	}
 
 	public void initialize() {
-		schedule = new TextField[] { monday, tuesday, wedsnday, thursday, friday, saturday, sunday };
+		schedule = new TextField[] { monday, tuesday, wednesday, thursday, friday, saturday, sunday };
 	}
 
 	/**
