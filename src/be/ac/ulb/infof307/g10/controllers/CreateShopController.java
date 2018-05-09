@@ -40,7 +40,7 @@ public class CreateShopController {
 	private TextField[] schedule;
 
 	public static LatLong sposition;
-	private LatLong position;
+	private final LatLong position;
 
 	public CreateShopController() {
 		this.position = sposition;

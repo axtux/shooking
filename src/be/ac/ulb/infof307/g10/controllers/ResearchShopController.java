@@ -14,7 +14,7 @@ import javafx.scene.control.TextArea;
 public class ResearchShopController {
 
 	public static ShoppingList ssl;
-	private ShoppingList sl;
+	private final ShoppingList sl;
 	@FXML
 	private TextArea shopTA;
 

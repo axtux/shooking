@@ -20,7 +20,7 @@ import javafx.util.StringConverter;
  */
 public class ToStringConverter<T> extends StringConverter<T> {
 
-	ToStringInterface<T> converter;
+	private ToStringInterface<T> converter;
 
 	public ToStringConverter(ToStringInterface<T> converter) {
 		if (converter == null) {

@@ -14,7 +14,7 @@ public class ShoppingList extends ModelObject {
 	private static final long serialVersionUID = -0L;
 
 	@ElementCollection(fetch = FetchType.EAGER)
-	Map<Product, Integer> productsAndQuantity;
+	private Map<Product, Integer> productsAndQuantity;
 
 	/**
 	 * Needed by JPA

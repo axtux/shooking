@@ -30,9 +30,9 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 	@FXML
 	ClusteredGoogleMapView mapView;
 	@FXML
-	ClusteredGoogleMap map;
+	private ClusteredGoogleMap map;
 	@FXML
-	InfoWindow popup;
+	private InfoWindow popup;
 
 	public void initialize() {
 		Thread.setDefaultUncaughtExceptionHandler(this);
@@ -96,7 +96,7 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 	 *            the right clic on the map
 	 */
 	@FXML
-	public void createShop(GMapMouseEvent event) {
+	private void createShop(GMapMouseEvent event) {
 		Main.getInstance().showCreateShopDialog(event.getLatLong());
 		updateInterface();
 	}

@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class GeneralView extends Parent {
 
-	protected Parent centerPage;
+	private Parent centerPage;
 	protected AnchorPane menu;
 
 	public GeneralView(Stage stage, String centerPage, String menu) {

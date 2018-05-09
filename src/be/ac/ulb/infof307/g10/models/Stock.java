@@ -15,7 +15,7 @@ public class Stock extends ShoppingList {
 	private static final long serialVersionUID = -0L;
 
 	@ElementCollection(fetch = FetchType.EAGER)
-	Map<Product, Integer> productsAndPrice;
+	private final Map<Product, Integer> productsAndPrice;
 
 	/**
 	 * Needed by JPA

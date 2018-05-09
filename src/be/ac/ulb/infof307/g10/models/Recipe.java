@@ -102,7 +102,7 @@ public class Recipe extends ModelObject {
 		}
 		this.setName(name);
 		this.servings = servings;
-		this.ingredients = new HashMap<Product, Float>(ingredients);
+		this.ingredients = new HashMap<>(ingredients);
 		this.steps = new ArrayList<String>(steps);
 	}
 
