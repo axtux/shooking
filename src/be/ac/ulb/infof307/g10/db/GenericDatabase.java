@@ -27,7 +27,7 @@ import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
  * to extends this class to add your own queries to your database. Abstract
  * because contains only static methods.
  */
-abstract public class GenericDatabase {
+public class GenericDatabase {
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
 	private static boolean autoCommit = true;
