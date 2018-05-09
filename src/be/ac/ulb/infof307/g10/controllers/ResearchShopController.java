@@ -32,6 +32,7 @@ public class ResearchShopController {
 				int total = s.getStock().getPrice(sl);
 				all.append(s.getName() + "    " + Price.toString(total) + "\n");
 			} catch (NonExistingException e) {
+				// at least one product not within stock
 				continue;
 			}
 		}
