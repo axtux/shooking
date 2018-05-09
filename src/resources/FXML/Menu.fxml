@@ -13,7 +13,7 @@
           prefWidth="506.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
           AnchorPane.topAnchor="0.0">
         <Button fx:id="shoppingList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                mnemonicParsing="false" onAction="#goToShoppingList" text="Shoping List">
+                mnemonicParsing="false" onAction="#goToShoppingList" text="Shopping List">
             <graphic>
                 <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                     <Image url="@../pictures/trolley.png"/>

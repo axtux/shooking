@@ -175,7 +175,7 @@ public class Recipe extends ModelObject {
 
 	/**
 	 * Takes the indexInit th step and move it to the indexFinal th place . All
-	 * the concerned steps are swaped to the left or the right if necessary
+	 * the concerned steps are swapped to the left or the right if necessary
 	 * 
 	 * @param indexInit
 	 *            The initial index of the step to move

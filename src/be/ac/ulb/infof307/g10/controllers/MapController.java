@@ -93,7 +93,7 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 	 * Launching of the popup for the creation of a shop
 	 * 
 	 * @param event
-	 *            the right clic on the map
+	 *            the right click on the map
 	 */
 	@FXML
 	private void createShop(GMapMouseEvent event) {
@@ -110,7 +110,7 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 	private void addShopToMap(Shop s) {
 		LatLong latLong = new LatLong(s.getLatitude(), s.getLongitude());
 		MarkerOptions markerOptions = new MarkerOptions();
-		markerOptions.position(latLong).visible(Boolean.TRUE).title(s.getInfos());
+		markerOptions.position(latLong).visible(Boolean.TRUE).title(s.getInfo());
 		Marker marker = new Marker(markerOptions);
 		map.addClusterableMarker(marker);
 		map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {

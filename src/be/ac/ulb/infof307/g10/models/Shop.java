@@ -83,11 +83,11 @@ public class Shop extends ModelObject {
 	}
 
 	/**
-	 * Get shop informations
+	 * Get shop information
 	 * 
 	 * @return Name and schedule, in String format for all days
 	 */
-	public String getInfos() {
+	public String getInfo() {
 		StringBuilder ret = new StringBuilder(getName()).append("\n\n");
 		int day = 1;
 

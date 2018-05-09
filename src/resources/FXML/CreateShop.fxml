@@ -19,7 +19,7 @@
           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
           AnchorPane.topAnchor="0.0">
         <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-               maxWidth="1.7976931348623157E308" text="Shop Informations" textAlignment="CENTER">
+               maxWidth="1.7976931348623157E308" text="Shop information" textAlignment="CENTER">
             <font>
                 <Font size="29.0"/>
             </font>
@@ -66,7 +66,7 @@
                        maxWidth="1.7976931348623157E308" promptText="Schedule" GridPane.columnIndex="1"
                        GridPane.rowIndex="1"/>
             <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-                   maxWidth="1.7976931348623157E308" text="Wedsnday" textAlignment="CENTER" GridPane.rowIndex="2"/>
+                   maxWidth="1.7976931348623157E308" text="Wednesday" textAlignment="CENTER" GridPane.rowIndex="2"/>
             <TextField fx:id="wednesday" alignment="CENTER" maxHeight="1.7976931348623157E308"
                        maxWidth="1.7976931348623157E308" promptText="Schedule" GridPane.columnIndex="1"
                        GridPane.rowIndex="2"/>
