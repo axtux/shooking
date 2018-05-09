@@ -31,6 +31,7 @@ public class TermsOfUseController {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 		String content = reader.lines().collect(Collectors.joining("\n"));
 		text.setText(content);
+		// remove focus from text (needed to focus button)
 		text.setFocusTraversable(false);
 		button.requestFocus();
 	}
