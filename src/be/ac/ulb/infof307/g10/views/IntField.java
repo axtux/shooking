@@ -49,7 +49,7 @@ public class IntField extends TextField implements ChangeListener<String> {
 	}
 
 	private boolean zeroValue(String s) {
-		return (signed && s.equals("-")) || s.equals("");
+		return (signed && "-".equals(s)) || "".equals(s);
 	}
 
 	private boolean valid(String s) {
