@@ -103,7 +103,7 @@ public class Recipe extends ModelObject {
 		this.setName(name);
 		this.servings = servings;
 		this.ingredients = new HashMap<>(ingredients);
-		this.steps = new ArrayList<String>(steps);
+		this.steps = new ArrayList<>(steps);
 	}
 
 	public String getName() {
@@ -124,7 +124,7 @@ public class Recipe extends ModelObject {
 	 * @return List of steps
 	 */
 	public List<String> getAllSteps() {
-		return new ArrayList<String>(steps);
+		return new ArrayList<>(steps);
 	}
 
 	/**
@@ -303,7 +303,7 @@ public class Recipe extends ModelObject {
 	 * @return Map of each ingredients to its quantity
 	 */
 	public Map<Product, Float> getAllIngredients() {
-		return new HashMap<Product, Float>(ingredients);
+		return new HashMap<>(ingredients);
 	}
 
 	/**

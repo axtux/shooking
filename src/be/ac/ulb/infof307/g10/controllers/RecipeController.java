@@ -176,11 +176,11 @@ public class RecipeController extends AbstractProductController {
 		}
 	}
 
-	@FXML
 	/**
 	 * Select a cell of the table Step, update the corresponding fields, and
 	 * enable/disable some buttons on the view
 	 */
+	@FXML
 	private void updateSelectedStep(String newValue) {
 		selectedStep = newValue;
 		if (selectedStep == null) {
