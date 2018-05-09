@@ -35,7 +35,8 @@ public class TestGenericDatabase extends AbstractTestDatabase {
 
 	@Test
 	public void saveGetAll() {
-		initList();
+		List<Product> pl = initList();
+		Assert.assertNotNull(pl);
 	}
 
 	@Test
@@ -74,6 +75,7 @@ public class TestGenericDatabase extends AbstractTestDatabase {
 		} catch (ExistingException e) {
 			assert true;
 		}
-		User.signup("test2", "test2");
+		User u = User.signup("test2", "test2");
+		Assert.assertNotNull(u);
 	}
 }
