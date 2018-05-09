@@ -129,16 +129,6 @@ public class GenericDatabase {
 		}
 	}
 
-	/**
-	 * Create TypedQuery of type with query bound with positional params
-	 * 
-	 * @param type
-	 * @param query
-	 * @param params
-	 *            Optional positional parameters starting at 1 ("?1" for first
-	 *            parameter)
-	 * @return
-	 */
 	private static <T> TypedQuery<T> createQuery(Class<T> type, String query, Object[] params) {
 		TypedQuery<T> tq = getEM().createQuery(query, type);
 		int i = 1;

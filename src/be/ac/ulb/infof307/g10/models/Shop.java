@@ -88,14 +88,14 @@ public class Shop extends ModelObject {
 	 * @return Name and schedule, in String format for all days
 	 */
 	public String getInfos() {
-		String ret = getName() + "\n\n";
+		StringBuilder ret = new StringBuilder(getName()).append("\n\n");
 		int day = 1;
 
 		for (String s : this.schedule) {
-			ret += DayOfWeek.of(day).getDisplayName(TextStyle.FULL, Locale.ENGLISH) + ": " + s + "\n";
+			ret.append(DayOfWeek.of(day).getDisplayName(TextStyle.FULL, Locale.ENGLISH)).append(": ").append(s).append("\n");
 			day++;
 		}
-		return ret;
+		return ret.toString();
 	}
 
 	public double getLatitude() {

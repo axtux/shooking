@@ -30,10 +30,10 @@ public class ResearchShopController {
 		for (Shop s : Database.getAllShops()) {
 			try {
 				int total = s.getStock().getPrice(sl);
-				all.append(s.getName() + "    " + Price.toString(total) + "\n");
+				all.append(s.getName()).append("    ").append(Price.toString(total)).append("\n");
 			} catch (NonExistingException e) {
 				// at least one product not within stock
-				continue;
+				// do not add this shop to the list
 			}
 		}
 		shopTA.setText(all.toString());
