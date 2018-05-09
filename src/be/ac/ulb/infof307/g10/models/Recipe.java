@@ -90,7 +90,7 @@ public class Recipe extends ModelObject {
 	 * @param steps
 	 *            ArrayList of String represent the steps for the Recipe
 	 */
-	public Recipe(String name, int servings, Map<Product, Float> ingredients, ArrayList<String> steps) {
+	public Recipe(String name, int servings, Map<Product, Float> ingredients, List<String> steps) {
 		if (name == null || ingredients == null || steps == null) {
 			throw new NullPointerException("one parameter is null");
 		}
@@ -102,8 +102,8 @@ public class Recipe extends ModelObject {
 		}
 		this.setName(name);
 		this.servings = servings;
-		this.ingredients = ingredients;
-		this.steps = steps;
+		this.ingredients = new HashMap<Product, Float>(ingredients);
+		this.steps = new ArrayList<String>(steps);
 	}
 
 	public String getName() {
@@ -255,7 +255,7 @@ public class Recipe extends ModelObject {
 	 * @return true is the step is the last (false otherwise)
 	 */
 	public boolean isLast(String step) {
-		int index = steps.indexOf(step);
+		int index = steps.lastIndexOf(step);
 		return index == steps.size() - 1;
 	}
 
