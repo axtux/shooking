@@ -150,8 +150,7 @@ public class RecipeController extends AbstractProductController {
 
 	@FXML
 	private void createRecipe() {
-		DialogView.show(View.CREATE_RECIPE);
-		updateRecipes();
+		DialogView.show(View.CREATE_RECIPE, (event) -> updateRecipes());
 	}
 
 	@FXML

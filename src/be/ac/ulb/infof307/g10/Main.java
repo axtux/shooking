@@ -40,7 +40,6 @@ public class Main extends Application {
 
 	@Override
 	public void start(final Stage stage) {
-		MainView.init(stage);
 		MainView.show(View.LOGIN);
 	}
 

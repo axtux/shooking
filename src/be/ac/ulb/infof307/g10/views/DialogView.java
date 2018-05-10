@@ -1,31 +1,41 @@
 package be.ac.ulb.infof307.g10.views;
 
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.event.EventHandler;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 public class DialogView {
-	// singleton
-	private static Stage current;
-	private static Stage getStage() {
-		if (current == null) {
-			current = new Stage();
-			current.initModality(Modality.APPLICATION_MODAL);
+	private static MyStage stage;
+	/**
+	 * Create stage and scene
+	 */
+	private static void init() {
+		if (stage == null) {
+			stage = new MyStage();
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.hideOnEscape();
 		}
-		return current;
 	}
 
 	public static void show(View view) {
-		Parent parent = view.getParent();
-		Scene scene = new Scene(parent);
-		Stage stage = getStage();
+		show(view, null);
+	}
+
+	public static void show(View view, EventHandler<WindowEvent> onHidden) {
+		init();
+		
+		stage.setOnHidden(onHidden);
+		stage.setRoot(view.getParent());
 		stage.setTitle(view.getName());
-		stage.setScene(scene);
-		stage.showAndWait();
+		stage.show();
+		// center on main view
+		stage.setCenter(MainView.getCenter());
 	}
 
 	public static void hide() {
-		getStage().hide();
+		if (stage != null) {
+			stage.hide();
+		}
 	}
+
 }

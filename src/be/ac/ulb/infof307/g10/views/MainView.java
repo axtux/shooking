@@ -1,10 +1,9 @@
 package be.ac.ulb.infof307.g10.views;
 
+import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 
 /**
  * This class is used to create different views with the same template (border
@@ -15,43 +14,42 @@ import javafx.stage.Stage;
  */
 public class MainView {
 
-	private static HBox topMenu;
+	private static MyStage stage;
 	private static BorderPane container;
-	private static Scene scene;
-	private static Stage stage;
+	private static HBox menu;
 
 	/**
 	 * Cache menu, container, scene and stage
 	 * @param stage Stage
 	 */
-	public static void init(Stage s) {
-		topMenu = (HBox) View.MENU.getParent();
-		container = new BorderPane();
-		scene = new Scene(container);
-		stage = s;
-		stage.setScene(scene);
-		stage.setTitle("Shooking (shopping and cooking)");
-		stage.show();
+	public static void init() {
+		if (stage == null) {
+			stage = new MyStage();
+			container = new BorderPane();
+			stage.setRoot(container);
+			menu = (HBox) View.MENU.getParent();
+			container.setTop(menu);
+			stage.setTitle("Shooking (shopping and cooking)");
+			stage.show();
+		}
 	}
 
 	public static void show(View view) {
-		if (stage == null) {
-			throw new UnsupportedOperationException("You must init stage first");
-		}
+		init();
+		// save center
+		Point2D center = stage.getCenter();
+		
 		if (view.hasMenu()) {
-			container.setTop(topMenu);
-			disableButton(topMenu, view.toCamelCase());
+			container.setTop(menu);
+			disableMenuButton(view.toCamelCase());
 		} else {
 			container.setTop(null);
 		}
+		
 		container.setCenter(view.getParent());
-		// creation of the scene and configuration
-		double h = stage.getHeight();
-		double w = stage.getWidth();
 		stage.sizeToScene();
-		if (h != stage.getHeight() || w != stage.getWidth()) {
-			stage.centerOnScreen();
-		}
+		// center back to saved center
+		stage.setCenter(center);
 	}
 
 	/**
@@ -59,7 +57,7 @@ public class MainView {
 	 * @param menu Container within which to look
 	 * @param id Id of button to disable
 	 */
-	private static void disableButton(HBox menu, String id) {
+	private static void disableMenuButton(String id) {
 		id = id.toLowerCase();
 		String buttonId;
 		for (Node button : menu.getChildren()) {
@@ -68,4 +66,7 @@ public class MainView {
 		}
 	}
 
+	public static Point2D getCenter() {
+		return stage.getCenter();
+	}
 }
