@@ -43,7 +43,7 @@ public class Main extends Application {
 	@Override
 	public void start(final Stage stage) {
 		this.stage = stage;
-		goToLogin();
+		show(View.LOGIN);
 	}
 
 	public static void main(final String[] args) {
@@ -56,35 +56,15 @@ public class Main extends Application {
 
 	public void setUser(final User user) {
 		this.user = user;
-		goToShoppingList();
+		show(View.SHOPPING_LIST);
 	}
 
-	public void goToLogin() {
-		new GeneralView(stage, View.LOGIN);
+	public void show(View view) {
+		new GeneralView(stage, view);
 	}
 
-	public void goToTerms() {
-		new GeneralView(stage, View.TERMS_OF_USE);
-	}
-
-	public void goToCreateAccount() {
-		new GeneralView(stage, View.CREATE_ACCOUNT);
-	}
-
-	public void goToRecipe() {
-		new GeneralView(stage, View.RECIPE);
-	}
-
-	public void goToShoppingList() {
-		new GeneralView(stage, View.SHOPPING_LIST);
-	}
-
-	public void goToMap() {
-		new GeneralView(stage, View.MAP);
-	}
-
-	public void showMapErrorDialog() {
-		DialogView.show(View.MAP_ERROR);
+	public void showDialog(View view) {
+		DialogView.show(view);
 	}
 
 	public void showCreateShopDialog(final LatLong position) {
@@ -92,17 +72,9 @@ public class Main extends Application {
 		DialogView.show(View.CREATE_SHOP);
 	}
 
-	public void showCreateRecipeDialog() {
-		DialogView.show(View.CREATE_RECIPE);
-	}
-
 	public void showResearchShopDialog(final ShoppingList shoppingList) {
 		ResearchShopController.ssl = shoppingList;
 		DialogView.show(View.RESEARCH_SHOP);
-	}
-
-	public void showCreateProductDialog() {
-		DialogView.show(View.CREATE_PRODUCT);
 	}
 
 	public void closeDialog() {
