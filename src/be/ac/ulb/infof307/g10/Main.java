@@ -6,10 +6,9 @@ import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.views.DialogView;
-import be.ac.ulb.infof307.g10.views.GeneralView;
+import be.ac.ulb.infof307.g10.views.MainView;
 import be.ac.ulb.infof307.g10.views.View;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import com.lynden.gmapsfx.javascript.object.LatLong;
@@ -18,7 +17,6 @@ public class Main extends Application {
 	//Singleton pattern
 	private static Main instance;
 
-	private Stage stage;
 	private User user;
 
 	/**
@@ -42,8 +40,8 @@ public class Main extends Application {
 
 	@Override
 	public void start(final Stage stage) {
-		this.stage = stage;
-		show(View.LOGIN);
+		MainView.init(stage);
+		MainView.show(View.LOGIN);
 	}
 
 	public static void main(final String[] args) {
@@ -56,15 +54,7 @@ public class Main extends Application {
 
 	public void setUser(final User user) {
 		this.user = user;
-		show(View.SHOPPING_LIST);
-	}
-
-	public void show(View view) {
-		new GeneralView(stage, view);
-	}
-
-	public void showDialog(View view) {
-		DialogView.show(view);
+		MainView.show(View.SHOPPING_LIST);
 	}
 
 	public void showCreateShopDialog(final LatLong position) {
@@ -75,14 +65,6 @@ public class Main extends Application {
 	public void showResearchShopDialog(final ShoppingList shoppingList) {
 		ResearchShopController.ssl = shoppingList;
 		DialogView.show(View.RESEARCH_SHOP);
-	}
-
-	public void closeDialog() {
-		DialogView.hide();
-	}
-
-	public void exit() {
-		Platform.exit();
 	}
 
 }

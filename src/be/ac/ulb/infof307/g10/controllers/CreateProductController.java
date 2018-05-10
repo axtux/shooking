@@ -1,8 +1,8 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
+import be.ac.ulb.infof307.g10.views.DialogView;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -41,7 +41,7 @@ public class CreateProductController {
 		try {
 			Product p = new Product(name.getText(), size.getInt(), unit.getText());
 			p.save();
-			Main.getInstance().closeDialog();
+			DialogView.hide();
 		} catch (DatabaseException e) {
 			printLabel.setText("Error in database - The product you are creating already exists");
 		} catch (NullPointerException | IllegalArgumentException e) { // should never happen because fields

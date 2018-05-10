@@ -9,6 +9,7 @@ import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.utils.ToStringConverter;
+import be.ac.ulb.infof307.g10.views.DialogView;
 import be.ac.ulb.infof307.g10.views.View;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -138,7 +139,7 @@ public class ShoppingListController extends AbstractProductController {
 
 	@FXML
 	private void productsNew() {
-		Main.getInstance().showDialog(View.CREATE_PRODUCT);
+		DialogView.show(View.CREATE_PRODUCT);
 		updateProducts();
 	}
 

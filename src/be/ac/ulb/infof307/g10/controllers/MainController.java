@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import be.ac.ulb.infof307.g10.Main;
+import be.ac.ulb.infof307.g10.views.DialogView;
+import be.ac.ulb.infof307.g10.views.MainView;
 import be.ac.ulb.infof307.g10.views.View;
 import javafx.application.Platform;
 
@@ -12,33 +13,33 @@ import javafx.application.Platform;
 public class MainController {
 
 	public void goToLogin() {
-		Main.getInstance().show(View.LOGIN);
+		MainView.show(View.LOGIN);
 	}
 
 	public void goToTerms() {
-		Main.getInstance().show(View.TERMS_OF_USE);
+		MainView.show(View.TERMS_OF_USE);
 	}
 
 	public void goToSignUp() {
-		Main.getInstance().show(View.CREATE_ACCOUNT);
+		MainView.show(View.CREATE_ACCOUNT);
 
 	}
 
 	public void goToRecipe() {
-		Main.getInstance().show(View.RECIPE);
+		MainView.show(View.RECIPE);
 	}
 
 	public void goToShoppingList() {
-		Main.getInstance().show(View.SHOPPING_LIST);
+		MainView.show(View.SHOPPING_LIST);
 
 	}
 
 	public void goToCreateAccount() {
-		Main.getInstance().showDialog(View.TERMS_OF_USE);
+		DialogView.show(View.TERMS_OF_USE);
 	}
 
 	public void goToMap() {
-		Main.getInstance().show(View.MAP);
+		MainView.show(View.MAP);
 
 	}
 

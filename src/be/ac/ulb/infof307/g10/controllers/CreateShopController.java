@@ -1,9 +1,10 @@
 package be.ac.ulb.infof307.g10.controllers;
 
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
+import be.ac.ulb.infof307.g10.views.DialogView;
+
 import com.lynden.gmapsfx.javascript.object.LatLong;
 
-import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Shop;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -78,7 +79,7 @@ public class CreateShopController {
 		createButton.setDisable(true);
 		try {
 			Shop.create(name.getText(), position.getLatitude(), position.getLongitude(), createSchedule());
-			Main.getInstance().closeDialog();
+			DialogView.hide();
 			return;
 		} catch (DatabaseException e) {
 			printLabel.setText("Database error");

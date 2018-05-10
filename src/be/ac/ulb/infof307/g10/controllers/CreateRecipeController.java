@@ -1,8 +1,8 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
+import be.ac.ulb.infof307.g10.views.DialogView;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -37,7 +37,7 @@ public class CreateRecipeController {
 		try {
 			Recipe r = new Recipe(name.getText(), serving.getInt());
 			r.save();
-			Main.getInstance().closeDialog();
+			DialogView.hide();
 		} catch (NullPointerException | IllegalArgumentException e) {
 			printLabel.setText(e.getMessage());
 		} catch (DatabaseException e) {
