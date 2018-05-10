@@ -4,13 +4,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * This class is used to create different views with the same template (border
@@ -21,23 +19,26 @@ import java.util.List;
  */
 public class GeneralView extends Parent {
 
-	private Parent centerPage;
-	protected HBox menu;
+	private BorderPane container;
 
-	public GeneralView(Stage stage, String centerPage, String menu) {
-
-		this.centerPage = loadFXML(centerPage);
-		this.menu = (HBox) loadFXML(menu);
-
-		BorderPane borderPane = new BorderPane();
-		borderPane.setCenter(this.centerPage);
-		borderPane.setTop(this.menu);
-
+	public GeneralView(Stage stage, String view) {
+		this(stage, view, true);
+	}
+	
+	public GeneralView(Stage stage, String view, boolean menu) {
+		container = new BorderPane();
+		container.setCenter(loadFXML(view));
+		if (menu) {
+			HBox topMenu = (HBox) loadFXML("Menu");
+			disableButton(topMenu, view);
+			container.setTop(topMenu);
+		}
 		// creation of the scene and configuration
-		Scene scene = new Scene(borderPane);
+		Scene scene = new Scene(container);
 		stage.setTitle("Shooking (shopping and cooking)");
 		stage.setScene(scene);
 		stage.show();
+		stage.centerOnScreen();
 	}
 
 	/**
@@ -61,22 +62,19 @@ public class GeneralView extends Parent {
 	}
 
 	/**
-	 * This method is used to disable the buttons not wanted in the general menu
-	 * (see Menu fxml) It really depends of the structure of the menu, if the
-	 * menu view is modified, this function may not work anymore
-	 * 
-	 * @param btns
-	 *            A list of String representing the id of the buttons we want to
-	 *            disable
+	 * Disable button in menu with id.
+	 * @param menu Container within which to look
+	 * @param id Id of button to disable
 	 */
-	public void disableButtons(List<String> btns) {
-
-		for (Node btn : menu.getChildren()) {
-			if (btns.contains(btn.getId())) {
-				btn.setDisable(true);
+	private void disableButton(HBox menu, String id) {
+		id = id.toLowerCase();
+		String buttonId;
+		for (Node button : menu.getChildren()) {
+			buttonId = button.getId().toLowerCase();
+			if (buttonId.equals(id)) {
+				button.setDisable(true);
 			}
 		}
-
 	}
 
 }

@@ -15,7 +15,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import com.lynden.gmapsfx.javascript.object.LatLong;
 
@@ -66,39 +65,27 @@ public class Main extends Application {
 	}
 
 	public void goToLogin() {
-		stage.setTitle("Login");
-		loadFXML("Login");
-		update();
+		new GeneralView(stage, "Login", false);
 	}
 
 	public void goToTerms() {
-		stage.setTitle("Terms of use");
-		loadFXML("TermsOfUse");
-		update();
+		new GeneralView(stage, "TermsOfUse", false);
 	}
 
 	public void goToCreateAccount() {
-		stage.setTitle("Account creation");
-		loadFXML("CreateAccount");
-		update();
+		new GeneralView(stage, "CreateAccount", false);
 	}
 
 	public void goToRecipe() {
-		final GeneralView page = new GeneralView(stage, "Recipe", "Menu");
-		page.disableButtons(Arrays.asList("recipe"));
-		update();
+		new GeneralView(stage, "Recipe");
 	}
 
 	public void goToShoppingList() {
-		final GeneralView page = new GeneralView(stage, "ShoppingList", "Menu");
-		page.disableButtons(Arrays.asList("shoppingList"));
-		update();
+		new GeneralView(stage, "ShoppingList");
 	}
 
 	public void goToMap() {
-		final GeneralView page = new GeneralView(stage, "Map", "Menu");
-		page.disableButtons(Arrays.asList("map"));
-		update();
+		new GeneralView(stage, "Map");
 	}
 
 	public void showMapErrorDialog() {
@@ -137,12 +124,6 @@ public class Main extends Application {
 		}
 	}
 
-	private void loadFXML(final String name) {
-		final Scene scene = getFXMLScene(name);
-		stage.setScene(scene);
-		stage.show();
-	}
-
 	private void showDialog(final String name, final String title) {
 		final Scene scene = getFXMLScene(name);
 		dialog = new Stage();
@@ -154,10 +135,6 @@ public class Main extends Application {
 
 	public void closeDialog() {
 		dialog.close();
-	}
-
-	private void update() {
-		stage.centerOnScreen();
 	}
 
 }
