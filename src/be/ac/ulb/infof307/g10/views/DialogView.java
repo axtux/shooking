@@ -6,8 +6,9 @@ import javafx.stage.WindowEvent;
 
 public class DialogView {
 	private static MyStage stage;
+
 	/**
-	 * Create stage and scene
+	 * Create stage
 	 */
 	private static void init() {
 		if (stage == null) {
@@ -17,13 +18,29 @@ public class DialogView {
 		}
 	}
 
+	/**
+	 * Show view within a modal dialog window. No other window can be accessed
+	 * while a modal dialog is opened. Can be closed with escape key.
+	 * 
+	 * @param view
+	 *            View to show
+	 */
 	public static void show(View view) {
 		show(view, null);
 	}
 
+	/**
+	 * Same as {{@link #show(View)} adding an event.
+	 * 
+	 * @param view
+	 *            View to show
+	 * @param onHidden
+	 *            Event whose handle method is called when dialog window is
+	 *            hidden.
+	 */
 	public static void show(View view, EventHandler<WindowEvent> onHidden) {
 		init();
-		
+
 		stage.setOnHidden(onHidden);
 		stage.setRoot(view.getParent());
 		stage.setTitle(view.getName());

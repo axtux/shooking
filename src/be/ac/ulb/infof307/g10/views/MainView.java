@@ -19,10 +19,9 @@ public class MainView {
 	private static HBox menu;
 
 	/**
-	 * Cache menu, container, scene and stage
-	 * @param stage Stage
+	 * Create menu, container and stage
 	 */
-	public static void init() {
+	private static void init() {
 		if (stage == null) {
 			stage = new MyStage();
 			container = new BorderPane();
@@ -34,18 +33,24 @@ public class MainView {
 		}
 	}
 
+	/**
+	 * Show view on main window (hiding eventual existing view).
+	 * 
+	 * @param view
+	 *            View to show.
+	 */
 	public static void show(View view) {
 		init();
 		// save center
 		Point2D center = stage.getCenter();
-		
+
 		if (view.hasMenu()) {
 			container.setTop(menu);
 			disableMenuButton(view.toCamelCase());
 		} else {
 			container.setTop(null);
 		}
-		
+
 		container.setCenter(view.getParent());
 		stage.sizeToScene();
 		// center back to saved center
@@ -54,8 +59,11 @@ public class MainView {
 
 	/**
 	 * Disable button in menu with id.
-	 * @param menu Container within which to look
-	 * @param id Id of button to disable
+	 * 
+	 * @param menu
+	 *            Container within which to look
+	 * @param id
+	 *            Id of button to disable
 	 */
 	private static void disableMenuButton(String id) {
 		id = id.toLowerCase();
@@ -66,6 +74,11 @@ public class MainView {
 		}
 	}
 
+	/**
+	 * Get window center
+	 * 
+	 * @return Center
+	 */
 	public static Point2D getCenter() {
 		return stage.getCenter();
 	}
