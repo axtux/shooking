@@ -22,12 +22,12 @@ import java.util.List;
 public class GeneralView extends Parent {
 
 	private Parent centerPage;
-	protected AnchorPane menu;
+	protected HBox menu;
 
 	public GeneralView(Stage stage, String centerPage, String menu) {
 
 		this.centerPage = loadFXML(centerPage);
-		this.menu = (AnchorPane) loadFXML(menu);
+		this.menu = (HBox) loadFXML(menu);
 
 		BorderPane borderPane = new BorderPane();
 		borderPane.setCenter(this.centerPage);
@@ -70,10 +70,8 @@ public class GeneralView extends Parent {
 	 *            disable
 	 */
 	public void disableButtons(List<String> btns) {
-		// the container of menu buttons
-		HBox menuBar = (HBox) menu.getChildren().get(0);
 
-		for (Node btn : menuBar.getChildren()) {
+		for (Node btn : menu.getChildren()) {
 			if (btns.contains(btn.getId())) {
 				btn.setDisable(true);
 			}

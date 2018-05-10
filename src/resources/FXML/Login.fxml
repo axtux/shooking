@@ -1,52 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0"
-            prefWidth="500.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="be.ac.ulb.infof307.g10.controllers.LoginController">
 
-    <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="700.0"
-          prefWidth="500.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-              spacing="30.0" BorderPane.alignment="CENTER">
-            <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                   text="Login">
-                <font>
-                    <Font size="45.0"/>
-                </font>
-            </Label>
-            <TextField fx:id="loginField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                       promptText="Login"/>
-            <PasswordField fx:id="pwdField" maxHeight="1.7976931348623157E308"
-                           maxWidth="1.7976931348623157E308" promptText="Password"/>
-            <Label fx:id="printLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-                <font>
-                    <Font size="22.0"/>
-                </font>
-            </Label>
-            <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                  spacing="50.0">
-                <Button defaultButton="true" maxHeight="1.7976931348623157E308"
-                        maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#submit"
-                        text="Sign in "/>
-                <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                        mnemonicParsing="false" onAction="#goToCreateAccount" text="Sign up"/>
-            </HBox>
-            <ImageView fitHeight="123.0" fitWidth="245.0" pickOnBounds="true" preserveRatio="true">
-                <Image url="@../pictures/welcome.png"/>
-            </ImageView>
-        </VBox>
-    </HBox>
-</AnchorPane>
+  <VBox alignment="CENTER" spacing="30.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.ac.ulb.infof307.g10.controllers.LoginController">
+      <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Login">
+          <font>
+              <Font size="45.0" />
+          </font>
+      </Label>
+      <TextField fx:id="loginField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Login" />
+      <PasswordField fx:id="pwdField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="Password" />
+      <Label fx:id="printLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+          <font>
+              <Font size="22.0" />
+          </font>
+      </Label>
+      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="50.0">
+          <Button defaultButton="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#submit" text="Sign in " />
+          <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToCreateAccount" text="Sign up" />
+      </HBox>
+      <ImageView fitHeight="100.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
+          <Image url="@../pictures/welcome.png" />
+      </ImageView>
+   <padding>
+      <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />
+   </padding>
+  </VBox>

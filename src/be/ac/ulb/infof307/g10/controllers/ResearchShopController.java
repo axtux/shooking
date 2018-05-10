@@ -5,8 +5,13 @@ import be.ac.ulb.infof307.g10.models.Price;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controller Class of the research product view (Research)
@@ -15,31 +20,40 @@ public class ResearchShopController {
 
 	public static ShoppingList ssl;
 	private final ShoppingList sl;
+	private final Map<Shop, Integer> shopsPrice;
 	@FXML
-	private TextArea shopTA;
+	private TableView<Shop> shopsTable;
+	@FXML
+	private TableColumn<Shop, String> shopsNameColumn;
+	@FXML
+	private TableColumn<Shop, String> shopsPriceColumn;
 
 	public ResearchShopController() {
 		this.sl = ResearchShopController.ssl;
 		if (sl == null) {
 			throw new NullPointerException();
 		}
+		shopsPrice = new HashMap<>();
 	}
 
 	public void initialize() {
-		StringBuilder all = new StringBuilder();
+		shopsNameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
+		shopsPriceColumn.setCellValueFactory(cell -> {
+			int price = shopsPrice.get(cell.getValue());
+			return new SimpleStringProperty(Price.toString(price));
+		});
+
 		for (Shop s : Database.getAllShops()) {
 			try {
 				int total = s.getStock().getPrice(sl);
-				all.append(s.getName()).append("    ").append(Price.toString(total)).append("\n");
+				shopsPrice.put(s, total);
 			} catch (NonExistingException e) {
 				// at least one product not within stock
 				// do not add this shop to the list
 			}
 		}
-		shopTA.setText(all.toString());
-		if (shopTA.getText().isEmpty()) {
-			shopTA.setText("No shop with all products in selected quantity");
-		}
+		shopsTable.getItems().clear();
+		shopsTable.getItems().addAll(shopsPrice.keySet());
 	}
 
 }
