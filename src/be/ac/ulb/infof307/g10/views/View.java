@@ -6,27 +6,66 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
 public enum View {
-	CREATE_ACCOUNT(false);
-	
+	CREATE_ACCOUNT(false),
+	CREATE_PRODUCT(true),
+	CREATE_RECIPE(true),
+	CREATE_SHOP(true),
+	LOGIN(false),
+	MAP(true),
+	MAP_ERROR(true),
+	MENU(false),
+	RECIPE(true),
+	RESEARCH_SHOP(true),
+	SHOPPING_LIST(true),
+	TERMS_OF_USE(false);
+
 	private boolean menu;
+
 	View(boolean menu) {
 		this.menu = menu;
 	}
 
+	public boolean hasMenu() {
+		return menu;
+	}
+
+	public static String firstUpper(String s) {
+		if (s.length() == 0) {
+			return "";
+		}
+		return s.substring(0, 1).toUpperCase() + s.substring(1);
+	}
+
+	public String toCamelCase() {
+		String[] parts = toString().toLowerCase().split("_");
+		for (int i = 0; i < parts.length; i++) {
+			parts[i] = firstUpper(parts[i]);
+		}
+		return String.join("", parts);
+	}
 
 	/**
-	 * Load parent from FXML file
-	 * 
-	 * @param name
-	 *            The name of the FXML resource file, without ".fxml" extension
-	 * @return The root parent node found within FXML file
+	 * User readable name.
+	 * @return Name
 	 */
-	public static Parent loadFXML(String name) {
+	public String getName() {
+		String[] parts = toString().toLowerCase().split("_");
+		parts[0] = firstUpper(parts[0]);
+		return String.join(" ", parts);
+	}
+
+	/**
+	 * Load parent from FXML file. FXML File name should be CamelCase name.
+	 * 
+	 * @return Parent of view.
+	 */
+	public Parent getParent() {
 		try {
-			return FXMLLoader.load(View.class.getResource("/FXML/" + name + ".fxml"));
+			return FXMLLoader.load(View.class.getResource("/FXML/" + toCamelCase() + ".fxml"));
 		} catch (IOException e) {
 			// never happens as resource is packed within application
 			throw new RuntimeException(e);
 		}
 	}
+
 }

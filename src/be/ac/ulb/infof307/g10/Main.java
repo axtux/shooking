@@ -7,6 +7,7 @@ import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.views.DialogView;
 import be.ac.ulb.infof307.g10.views.GeneralView;
+import be.ac.ulb.infof307.g10.views.View;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -59,49 +60,49 @@ public class Main extends Application {
 	}
 
 	public void goToLogin() {
-		new GeneralView(stage, "Login", false);
+		new GeneralView(stage, View.LOGIN);
 	}
 
 	public void goToTerms() {
-		new GeneralView(stage, "TermsOfUse", false);
+		new GeneralView(stage, View.TERMS_OF_USE);
 	}
 
 	public void goToCreateAccount() {
-		new GeneralView(stage, "CreateAccount", false);
+		new GeneralView(stage, View.CREATE_ACCOUNT);
 	}
 
 	public void goToRecipe() {
-		new GeneralView(stage, "Recipe");
+		new GeneralView(stage, View.RECIPE);
 	}
 
 	public void goToShoppingList() {
-		new GeneralView(stage, "ShoppingList");
+		new GeneralView(stage, View.SHOPPING_LIST);
 	}
 
 	public void goToMap() {
-		new GeneralView(stage, "Map");
+		new GeneralView(stage, View.MAP);
 	}
 
 	public void showMapErrorDialog() {
-		DialogView.show("MapError", "Error");
+		DialogView.show(View.MAP_ERROR);
 	}
 
 	public void showCreateShopDialog(final LatLong position) {
 		CreateShopController.sposition = position;
-		DialogView.show("CreateShop", "Create shop");
+		DialogView.show(View.CREATE_SHOP);
 	}
 
 	public void showCreateRecipeDialog() {
-		DialogView.show("CreateRecipe", "Create recipe");
+		DialogView.show(View.CREATE_RECIPE);
 	}
 
-	public void showCreateRecipeDialog(final ShoppingList shoppingList) {
+	public void showResearchShopDialog(final ShoppingList shoppingList) {
 		ResearchShopController.ssl = shoppingList;
-		DialogView.show("ResearchShop", "Research shop");
+		DialogView.show(View.RESEARCH_SHOP);
 	}
 
 	public void showCreateProductDialog() {
-		DialogView.show("CreateProduct", "Create product");
+		DialogView.show(View.CREATE_PRODUCT);
 	}
 
 	public void closeDialog() {

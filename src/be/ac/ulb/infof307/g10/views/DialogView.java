@@ -16,11 +16,11 @@ public class DialogView {
 		return current;
 	}
 
-	public static void show(final String view, final String title) {
-		Parent parent = View.loadFXML(view);
+	public static void show(View view) {
+		Parent parent = view.getParent();
 		Scene scene = new Scene(parent);
 		Stage stage = getStage();
-		stage.setTitle(title);
+		stage.setTitle(view.getName());
 		stage.setScene(scene);
 		stage.showAndWait();
 	}

@@ -17,16 +17,12 @@ public class GeneralView {
 
 	private BorderPane container;
 
-	public GeneralView(Stage stage, String view) {
-		this(stage, view, true);
-	}
-	
-	public GeneralView(Stage stage, String view, boolean menu) {
+	public GeneralView(Stage stage, View view) {
 		container = new BorderPane();
-		container.setCenter(View.loadFXML(view));
-		if (menu) {
-			HBox topMenu = (HBox) View.loadFXML("Menu");
-			disableButton(topMenu, view);
+		container.setCenter(view.getParent());
+		if (view.hasMenu()) {
+			HBox topMenu = (HBox) View.MENU.getParent();
+			disableButton(topMenu, view.toCamelCase());
 			container.setTop(topMenu);
 		}
 		// creation of the scene and configuration
