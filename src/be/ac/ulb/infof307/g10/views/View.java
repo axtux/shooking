@@ -5,6 +5,11 @@ import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 
+/**
+ * Enumeration of views available within application. Each entry contains an
+ * FXML file within FXML resource directory. The filename is CamelCase entry
+ * name. Some methods let you deal with those views.
+ */
 public enum View {
 	CREATE_ACCOUNT(false),
 	CREATE_PRODUCT(true),
