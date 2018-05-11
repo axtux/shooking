@@ -10,7 +10,7 @@ import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
-import be.ac.ulb.infof307.g10.utils.Hash;
+import be.ac.ulb.infof307.g10.utils.Crypto;
 
 /**
  * Manage user, password and shopping list. Use static methods to get instance.
@@ -27,6 +27,8 @@ public class User extends ModelObject {
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private ShoppingList shoppingList;
+
+	private String salt;
 
 	/**
 	 * Needed by JPA
@@ -52,11 +54,12 @@ public class User extends ModelObject {
 	}
 
 	public void setPassword(String password) {
-		this.hashedPassword = Hash.sha256(password);
+		this.salt = Crypto.generateSalt();
+		this.hashedPassword = Crypto.sha256(password + this.salt);
 	}
 
 	public boolean isPassword(String password) {
-		return Hash.sha256(password).equals(hashedPassword);
+		return Crypto.sha256(password).equals(hashedPassword);
 	}
 
 	public ShoppingList getShoppingList() {
@@ -67,7 +70,7 @@ public class User extends ModelObject {
 	public static User login(String username, String password) throws IncorrectPasswordException, NonExistingException {
 		try {
 			User u = Database.getUser(username);
-			if (u.isPassword(password)) {
+			if (u.isPassword(password + u.salt)) {
 				return u;
 			}
 			throw new IncorrectPasswordException();
