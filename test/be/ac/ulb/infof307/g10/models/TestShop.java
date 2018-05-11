@@ -16,31 +16,6 @@ import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 
 public class TestShop extends AbstractTestDatabase {
 
-	static private List<Product> pList;
-	static private Product p1;
-	static private Product p2;
-	static private Product p3;
-
-	@BeforeClass
-	public static void beforeClass() {
-		Stock stock = new Stock();
-		String[] schedule = { "", "", "", "", "", "", "" };
-		pList = new ArrayList<>();
-		p1 = new Product("#test product 1", 1, "g");
-		p2 = new Product("#test product 2", 1, "g");
-		p3 = new Product("#test product 3", 1, "g");
-		p1.save();
-		p2.save();
-		p3.save();
-		pList.add(p1);
-		pList.add(p2);
-		pList.add(p3);
-		stock.addProduct(p1, 1);
-		stock.addProduct(p2, 1);
-		stock.addProduct(p3, 1);
-		Shop.create("#test Testing shop", 0., 0., schedule, stock);
-	}
-
 	@Test
 	public void test_001_createShop() {
 		Shop shop = Shop.create("#test createShop", 0, 0);
@@ -49,8 +24,8 @@ public class TestShop extends AbstractTestDatabase {
 
 	@Test(expected = ExistingException.class)
 	public void test_002_createShopException() {
-		Shop.create("#test create shop exception", 0., 0.);
-		Shop.create("#test create shop exception", 0., 0.);
+		Shop.create("#test create shop exception 1", 0., 0.);
+		Shop.create("#test create shop exception 2", 0., 0.);
 	}
 
 	@Test
