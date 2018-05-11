@@ -112,6 +112,7 @@ public class Shop extends ModelObject {
 
 	public void setStock(Stock stock) {
 		this.stock = stock;
+		this.changed();
 	}
 
 	// static methods

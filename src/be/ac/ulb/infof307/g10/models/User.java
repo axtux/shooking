@@ -3,13 +3,8 @@ package be.ac.ulb.infof307.g10.models;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.NoResultException;
 import javax.persistence.OneToOne;
 
-import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
-import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.utils.Crypto;
 
 /**
@@ -56,6 +51,7 @@ public class User extends ModelObject {
 	public void setPassword(String password) {
 		this.salt = Crypto.generateSalt();
 		this.hashedPassword = Crypto.sha256(password + this.salt);
+		this.changed();
 	}
 
 	public boolean isPassword(String password) {

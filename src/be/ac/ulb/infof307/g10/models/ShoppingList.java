@@ -35,14 +35,17 @@ public class ShoppingList extends ModelObject {
 
 	public void setProduct(Product p, int quantity) {
 		productsAndQuantity.put(p, quantity);
+		this.changed();
 	}
 
 	public void addProduct(Product p, int quantity) {
 		setProduct(p, quantity + getQuantity(p));
+		this.changed();
 	}
 
 	public void removeProduct(Product p) {
 		productsAndQuantity.remove(p);
+		this.changed();
 	}
 
 	public int getQuantity(Product p) {
@@ -55,6 +58,7 @@ public class ShoppingList extends ModelObject {
 
 	public void clear() {
 		productsAndQuantity.clear();
+		this.changed();
 	}
 
 	public Set<Product> getProducts() {
@@ -67,6 +71,7 @@ public class ShoppingList extends ModelObject {
 
 	public void setProductsAndQuantity(Map<Product, Integer> productsAndQuantity) {
 		this.productsAndQuantity = new HashMap<>(productsAndQuantity);
+		this.changed();
 	}
 
 }
