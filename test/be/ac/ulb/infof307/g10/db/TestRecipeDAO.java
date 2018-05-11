@@ -4,10 +4,16 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import be.ac.ulb.infof307.g10.models.Recipe;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 public class TestRecipeDAO {
 
+	public static void createRecipe() {
+		RecipeDAO.createRecipe("#test testingRecipe", 12);
+	}
+	
 	@Test
 	public void test_001_createRecipe() {
 		Recipe r = RecipeDAO.createRecipe("#test createRecipe", 12);
@@ -26,18 +32,20 @@ public class TestRecipeDAO {
 		assertNull(r);
 	}
 	
-	public static void createRecipe() {
-		RecipeDAO.createRecipe("#test testingRecipe", 12);
+	@Test(expected=ExistingException.class)
+	public void test_004_createRecipeException() {
+		Recipe r = RecipeDAO.createRecipe("#test testingRecipe", 12);
+		assertNotNull(r);
 	}
 	
 	@Test
-	public void test_004_getRecipe() {
+	public void test_005_getRecipe() {
 		Recipe r = RecipeDAO.getRecipe("#test testingRecipe");
 		assertNotNull(r);
 	}
 	
 	@Test(expected=NonExistingException.class)
-	public void test_005_getRecipeException() {
+	public void test_006_getRecipeException() {
 		Recipe r = RecipeDAO.getRecipe("#test badRecipeName");
 		assertNull(r);
 	}
