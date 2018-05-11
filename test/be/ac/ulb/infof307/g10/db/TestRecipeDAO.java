@@ -23,4 +23,20 @@ public class TestRecipeDAO {
 		Recipe r = RecipeDAO.createRecipe("#test createRecipeException", 12, null, null);
 		assertNull(r);
 	}
+	
+	public static void createRecipe() {
+		RecipeDAO.createRecipe("#test testingRecipe", 12);
+	}
+	
+	@Test
+	public void test_004_getRecipe() {
+		Recipe r = RecipeDAO.getRecipe("#test testingRecipe");
+		assertNotNull(r);
+	}
+	
+	@Test(expected=NonExistingException.class)
+	public void test_005_getRecipe() {
+		Recipe r = RecipeDAO.getRecipe("#test badRecipeName");
+		assertNull(r);
+	}
 }
