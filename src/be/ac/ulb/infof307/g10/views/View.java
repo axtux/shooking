@@ -26,6 +26,12 @@ public enum View {
 
 	private boolean menu;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param menu
+	 *            Whether or not menu should be included on top of this view.
+	 */
 	View(boolean menu) {
 		this.menu = menu;
 	}
