@@ -2,6 +2,9 @@ package be.ac.ulb.infof307.g10;
 
 import be.ac.ulb.infof307.g10.db.Data;
 import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.db.ProductDAO;
+import be.ac.ulb.infof307.g10.db.RecipeDAO;
+import be.ac.ulb.infof307.g10.db.ShopDAO;
 import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
@@ -56,46 +59,46 @@ public class TestDB {
 
 	@Test
 	public void test_0070_GetProduct() {
-		Database.getProduct("#DB 6 Apples");
+		ProductDAO.getProduct("#DB 6 Apples");
 	}
 
 	@Test
 	public void test_0072_GetProducts() {
-		Database.getAllProducts();
+		ProductDAO.getAllProducts();
 	}
 
 	@Test
 	public void test_0080_CreateShop() {
 		Shop s = Shop.create("#DB Delhaize", 0.0, 0.0);
-		s.getStock().addProduct(Database.getProduct("#DB 6 Apples"), 10);
+		s.getStock().addProduct(ProductDAO.getProduct("#DB 6 Apples"), 10);
 		s.save();
 	}
 
 	@Test
 	public void test_0090_GetShop() {
-		Database.getShop("#DB Delhaize");
+		ShopDAO.getShop("#DB Delhaize");
 	}
 
 	@Test
 	public void test_0091_updateShopStock() {
-		Shop shop = Database.getShop("#DB Delhaize");
+		Shop shop = ShopDAO.getShop("#DB Delhaize");
 
 		Arrays.asList(shop.getStock());
-		Product p = Database.getProduct("#DB 6 Apples");
+		Product p = ProductDAO.getProduct("#DB 6 Apples");
 		int quantity = shop.getStock().getQuantity(p);
 
 		shop.getStock().setProduct(p, quantity - 3);
 		shop.save();
 
-		Database.getShop("#DB Delhaize");
-		Database.getProduct("#DB 6 Apples");
+		ShopDAO.getShop("#DB Delhaize");
+		ProductDAO.getProduct("#DB 6 Apples");
 	}
 
 	@Test
 	public void test_0110_CreateList() {
 		ShoppingList l = new ShoppingList();
-		l.addProduct(Database.getProduct("#DB 6 Apples"), 1);
-		l.addProduct(Database.getProduct("#DB 6 Apples"), 2);
+		l.addProduct(ProductDAO.getProduct("#DB 6 Apples"), 1);
+		l.addProduct(ProductDAO.getProduct("#DB 6 Apples"), 2);
 		l.save();
 	}
 
@@ -106,12 +109,12 @@ public class TestDB {
 
 	@Test
 	public void test_0994_DeleteProduct() {
-		Database.delete(Database.getProduct("#DB 7 Apples"));
+		Database.delete(ProductDAO.getProduct("#DB 7 Apples"));
 	}
 
 	@Test
 	public void test_0998_DeleteShop() {
-		Database.delete(Database.getShop("#DB Delhaize"));
+		Database.delete(ShopDAO.getShop("#DB Delhaize"));
 	}
 
 	@Test
@@ -127,15 +130,15 @@ public class TestDB {
 		r.setName("#test new name");
 		r.addStep("#test step 1");
 		r.save();
-		assertNotNull(Database.getRecipe("#test new name"));
+		assertNotNull(RecipeDAO.getRecipe("#test new name"));
 	}
 
 	@Test(expected = NoResultException.class)
 	public void test_1002_DeleteRecipe() {
 		new Recipe("#test Delete Recipe", 1).save();
-		Recipe r = Database.getRecipe("#test Delete Recipe");
+		Recipe r = RecipeDAO.getRecipe("#test Delete Recipe");
 		Database.delete(r);
-		Database.getRecipe("#test Delete Recipe"); // throw an exception
+		RecipeDAO.getRecipe("#test Delete Recipe"); // throw an exception
 	}
 
 }

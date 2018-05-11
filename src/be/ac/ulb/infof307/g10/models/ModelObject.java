@@ -2,6 +2,7 @@ package be.ac.ulb.infof307.g10.models;
 
 import java.io.Serializable;
 import java.util.Observable;
+import java.util.Observer;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,6 +54,15 @@ public class ModelObject extends Observable implements Serializable {
 	public void changed() {
 		setChanged();
 		notifyObservers();
+	}
+	
+	/**
+	 * Overriding addObserver to save Observed object in DB during the creation
+	 */
+	@Override
+	public void addObserver(Observer o){
+		super.addObserver(o);
+		this.changed();
 	}
 
 	@Override

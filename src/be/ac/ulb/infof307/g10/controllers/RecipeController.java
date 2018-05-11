@@ -1,6 +1,6 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.db.RecipeDAO;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.utils.ToStringConverter;
@@ -224,7 +224,7 @@ public class RecipeController extends AbstractProductController {
 
 	private void updateRecipes() {
 		recipesListCombo.getItems().clear();
-		recipesListCombo.getItems().addAll(Database.getAllRecipes());
+		recipesListCombo.getItems().addAll(RecipeDAO.getAllRecipes());
 	}
 
 	@Override

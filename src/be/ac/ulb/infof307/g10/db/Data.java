@@ -66,7 +66,7 @@ public class Data {
 	}
 
 	public static List<Shop> getShops() {
-		List<Shop> list = Database.getAllShops();
+		List<Shop> list = ShopDAO.getAllShops();
 
 		if (list.isEmpty()) {
 			list.add(Shop.create("Aldi", 50.828488, 4.362717));

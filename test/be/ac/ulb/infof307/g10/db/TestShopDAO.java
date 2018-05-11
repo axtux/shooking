@@ -24,7 +24,7 @@ public class TestShopDAO {
 	}
 	
 	public static void createShop() {
-		ShopDAO.CreateShop("#test testingShop", 0., 0.);
+		ShopDAO.createShop("#test testingShop", 0., 0.);
 	}
 	
 	@Test

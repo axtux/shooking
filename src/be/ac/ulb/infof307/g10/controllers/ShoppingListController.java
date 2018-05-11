@@ -1,7 +1,7 @@
 package be.ac.ulb.infof307.g10.controllers;
 
 import be.ac.ulb.infof307.g10.Main;
-import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.db.ShopDAO;
 import be.ac.ulb.infof307.g10.models.Price;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Shop;
@@ -109,7 +109,7 @@ public class ShoppingListController extends AbstractProductController {
 
 	private void updateShops() {
 		shopsCombo.getItems().clear();
-		shopsCombo.getItems().addAll(Database.getAllShops());
+		shopsCombo.getItems().addAll(ShopDAO.getAllShops());
 	}
 
 	private void updateTable() {

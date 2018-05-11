@@ -1,6 +1,6 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.db.ShopDAO;
 import be.ac.ulb.infof307.g10.models.Price;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
@@ -53,7 +53,7 @@ public class ResearchShopController {
 			return new SimpleStringProperty(Price.toString(price));
 		});
 
-		for (Shop s : Database.getAllShops()) {
+		for (Shop s : ShopDAO.getAllShops()) {
 			try {
 				int total = s.getStock().getPrice(shoppingList);
 				shopsPrice.put(s, total);

@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.db.ShopDAO;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 
 public class TestShop extends AbstractTestDatabase {
@@ -31,7 +32,7 @@ public class TestShop extends AbstractTestDatabase {
 	@Test
 	public void test_003_deleteShop() {
 		Database.deleteAll(Shop.class);
-		assertTrue(Database.getAllShops().isEmpty());
+		assertTrue(ShopDAO.getAllShops().isEmpty());
 	}
 
 	@Test

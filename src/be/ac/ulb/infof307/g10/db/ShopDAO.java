@@ -1,6 +1,9 @@
 package be.ac.ulb.infof307.g10.db;
 
+import java.util.List;
 import java.util.Observable;
+
+import javax.persistence.NoResultException;
 
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.Stock;
@@ -21,8 +24,8 @@ public class ShopDAO extends AbstractDAO {
 	 *            Position longitude
 	 * @return Created shop
 	 */
-	public static Shop create(String name, double latitude, double longitude) {
-		return create(name, latitude, longitude, null);
+	public static Shop createShop(String name, double latitude, double longitude) {
+		return createShop(name, latitude, longitude, null);
 	}
 
 	/**
@@ -39,8 +42,8 @@ public class ShopDAO extends AbstractDAO {
 	 *            Tuesday, ..., and 6 for Sunday
 	 * @return Created shop
 	 */
-	public static Shop create(String name, double latitude, double longitude, String[] schedule) {
-		return create(name, latitude, longitude, schedule, new Stock());
+	public static Shop createShop(String name, double latitude, double longitude, String[] schedule) {
+		return createShop(name, latitude, longitude, schedule, new Stock());
 	}
 
 	/**
@@ -58,28 +61,26 @@ public class ShopDAO extends AbstractDAO {
 	 *            Shop stock 0 for Monday, 1 for Tuesday, ..., and 6 for Sunday
 	 * @return Created shop
 	 */
-	public static Shop create(String name, double latitude, double longitude, String[] schedule, Stock stock) {
+	public static Shop createShop(String name, double latitude, double longitude, String[] schedule, Stock stock) {
 		String[] safeSchedule = schedule;
 		if (safeSchedule == null) {
-			safeSchedule = defaultSchedule();
+			safeSchedule = Shop.defaultSchedule();
 		}
 		try {
 			Shop s = new Shop(name, latitude, longitude, safeSchedule, stock);
-			s.save();
+			s.addObserver(SaverObserver.getInstance());
 			return s;
 		} catch (DatabaseException e) {
 			throw new ExistingException(e);
 		}
 	}
 
-	/**
-	 * Save the object when observed object has changed
-	 * @param obj	The observed object
-	 */
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+	public static Shop getShop(String name) throws NoResultException {
+		return GenericDatabase.getOne(Shop.class, "SELECT b FROM Shop b WHERE b.name LIKE ?1", name);
 	}
 
+	public static List<Shop> getAllShops() {
+		return GenericDatabase.getAll(Shop.class);
+	}
+	
 }
