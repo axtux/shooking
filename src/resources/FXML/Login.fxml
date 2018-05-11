@@ -30,7 +30,7 @@
         <Button mnemonicParsing="false" onAction="#goToCreateAccount" text="Sign up"/>
     </HBox>
     <ImageView fitHeight="100.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../pictures/welcome.png"/>
+        <Image url="@../images/welcome.png"/>
     </ImageView>
     <padding>
         <Insets bottom="100.0" left="100.0" right="100.0" top="100.0"/>

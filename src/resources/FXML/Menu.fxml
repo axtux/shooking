@@ -11,14 +11,14 @@
             text="Shopping List">
         <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                <Image url="@../pictures/trolley.png"/>
+                <Image url="@../images/trolley.png"/>
             </ImageView>
         </graphic>
     </Button>
     <Button fx:id="map" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToMap" text="Shop Map">
         <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                <Image url="@../pictures/map.png"/>
+                <Image url="@../images/map.png"/>
             </ImageView>
         </graphic>
     </Button>
@@ -26,7 +26,7 @@
             text="Recipe">
         <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                <Image url="@../pictures/cooking.png"/>
+                <Image url="@../images/cooking.png"/>
             </ImageView>
         </graphic>
     </Button>
@@ -34,14 +34,14 @@
             text="Logout">
         <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                <Image url="@../pictures/logout.png"/>
+                <Image url="@../images/logout.png"/>
             </ImageView>
         </graphic>
     </Button>
     <Button fx:id="exit" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#exit" text="Exit">
         <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                <Image url="@../pictures/exit.png"/>
+                <Image url="@../images/exit.png"/>
             </ImageView>
         </graphic>
     </Button>
