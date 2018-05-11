@@ -1,11 +1,12 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.utils.ToStringConverter;
+import be.ac.ulb.infof307.g10.views.DialogView;
 import be.ac.ulb.infof307.g10.views.IntField;
+import be.ac.ulb.infof307.g10.views.View;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
@@ -149,8 +150,7 @@ public class RecipeController extends AbstractProductController {
 
 	@FXML
 	private void createRecipe() {
-		Main.getInstance().showCreateRecipeDialog();
-		updateRecipes();
+		DialogView.show(View.CREATE_RECIPE, (event) -> updateRecipes());
 	}
 
 	@FXML

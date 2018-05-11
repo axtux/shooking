@@ -35,10 +35,9 @@
               GridPane.rowIndex="1"/>
     <TextField fx:id="unit" prefHeight="27.0" prefWidth="150.0" promptText="g" GridPane.columnIndex="1"
                GridPane.rowIndex="2"/>
-    <Label fx:id="printLabel" maxHeight="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.halignment="CENTER"
-           GridPane.rowIndex="3">
+    <Label fx:id="printLabel" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
         <font>
-          <Font size="14.0"/>
+            <Font size="14.0"/>
         </font>
     </Label>
     <Button fx:id="button" defaultButton="true" mnemonicParsing="false" onAction="#create" text="Create"

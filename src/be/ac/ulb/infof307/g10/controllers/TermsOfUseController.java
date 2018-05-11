@@ -1,15 +1,11 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.utils.TermsOfUse;
+import be.ac.ulb.infof307.g10.views.MainView;
+import be.ac.ulb.infof307.g10.views.View;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.stream.Collectors;
 
 /**
  * Controller class of the Terms of use view
@@ -24,7 +20,7 @@ public class TermsOfUseController {
 	@FXML
 	void agree() {
 		button.setDisable(true);
-		Main.getInstance().goToCreateAccount();
+		MainView.show(View.CREATE_ACCOUNT);
 	}
 
 	public void initialize() {

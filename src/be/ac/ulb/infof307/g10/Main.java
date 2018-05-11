@@ -1,45 +1,18 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.controllers.CreateShopController;
-import be.ac.ulb.infof307.g10.controllers.ResearchShopController;
 import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.User;
-import be.ac.ulb.infof307.g10.views.GeneralView;
+import be.ac.ulb.infof307.g10.views.MainView;
+import be.ac.ulb.infof307.g10.views.View;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.Arrays;
-
-import com.lynden.gmapsfx.javascript.object.LatLong;
-
 public class Main extends Application {
-	//Singleton pattern
-	private static Main instance;
-
-	private Stage stage;
-	private Stage dialog;
-	private User user;
 
 	/**
-	 * Singleton pattern
-	 * @return Main instance
+	 * Saves currently logged in user.
 	 */
-	public static Main getInstance() {
-		return instance;
-	}
-
-	public Main() {
-		super();
-		instance = this;
-	}
-
+	private static User user;
 
 	@Override
 	public void init() {
@@ -48,116 +21,30 @@ public class Main extends Application {
 
 	@Override
 	public void start(final Stage stage) {
-		this.stage = stage;
-		goToLogin();
+		// show login view
+		logout();
 	}
 
 	public static void main(final String[] args) {
 		launch(args);
 	}
 
-	public User getUser() {
+	/**
+	 * Get currently logged in user
+	 * @return User logged in
+	 */
+	public static User getUser() {
 		return user;
 	}
 
-	public void setUser(final User user) {
-		this.user = user;
-		goToShoppingList();
+	public static void login(final User u) {
+		user = u;
+		MainView.show(View.SHOPPING_LIST);
 	}
 
-	public void goToLogin() {
-		stage.setTitle("Login");
-		loadFXML("Login");
-		update();
-	}
-
-	public void goToTerms() {
-		stage.setTitle("Terms of use");
-		loadFXML("TermsOfUse");
-		update();
-	}
-
-	public void goToCreateAccount() {
-		stage.setTitle("Account creation");
-		loadFXML("CreateAccount");
-		update();
-	}
-
-	public void goToRecipe() {
-		final GeneralView page = new GeneralView(stage, "Recipe", "Menu");
-		page.disableButtons(Arrays.asList("recipe"));
-		update();
-	}
-
-	public void goToShoppingList() {
-		final GeneralView page = new GeneralView(stage, "ShoppingList", "Menu");
-		page.disableButtons(Arrays.asList("shoppingList"));
-		update();
-	}
-
-	public void goToMap() {
-		final GeneralView page = new GeneralView(stage, "Map", "Menu");
-		page.disableButtons(Arrays.asList("map"));
-		update();
-	}
-
-	public void showMapErrorDialog() {
-		showDialog("MapError", "Error");
-	}
-
-	public void showCreateShopDialog(final LatLong position) {
-		CreateShopController.sposition = position;
-		showDialog("CreateShop", "Create shop");
-	}
-
-	public void showCreateRecipeDialog() {
-		showDialog("CreateRecipe", "Create recipe");
-	}
-
-	public void showCreateRecipeDialog(final ShoppingList shoppingList) {
-		ResearchShopController.ssl = shoppingList;
-		showDialog("ResearchShop", "Research shop");
-	}
-
-	public void showCreateProductDialog() {
-		showDialog("CreateProduct", "Create product");
-	}
-
-	public void exit() {
-		Platform.exit();
-	}
-
-	private Scene getFXMLScene(final String name) {
-		try {
-			final Parent parent = FXMLLoader.load(getClass().getResource("/FXML/" + name + ".fxml"));
-			return new Scene(parent);
-		} catch (IOException e) {
-			// never happens as resources are packed within application
-			throw new RuntimeException(e);
-		}
-	}
-
-	private void loadFXML(final String name) {
-		final Scene scene = getFXMLScene(name);
-		stage.setScene(scene);
-		stage.show();
-	}
-
-	private void showDialog(final String name, final String title) {
-		final Scene scene = getFXMLScene(name);
-		dialog = new Stage();
-		dialog.setTitle(title);
-		dialog.initModality(Modality.APPLICATION_MODAL);
-		dialog.setScene(scene);
-		dialog.showAndWait();
-	}
-
-	public void closeDialog() {
-		dialog.close();
-	}
-
-	private void update() {
-		stage.centerOnScreen();
+	public static void logout() {
+		user = null;
+		MainView.show(View.LOGIN);
 	}
 
 }

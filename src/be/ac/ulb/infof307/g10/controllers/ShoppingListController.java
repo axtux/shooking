@@ -9,6 +9,8 @@ import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.utils.ToStringConverter;
+import be.ac.ulb.infof307.g10.views.DialogView;
+import be.ac.ulb.infof307.g10.views.View;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -118,7 +120,8 @@ public class ShoppingListController extends AbstractProductController {
 
 	@FXML
 	private void researchShop() {
-		Main.getInstance().showCreateRecipeDialog(sl);
+		ResearchShopController.setShoppingList(sl);
+		DialogView.show(View.RESEARCH_SHOP);
 	}
 
 	private void updateTotal() {
@@ -137,14 +140,13 @@ public class ShoppingListController extends AbstractProductController {
 
 	@FXML
 	private void productsNew() {
-		Main.getInstance().showCreateProductDialog();
-		updateProducts();
+		DialogView.show(View.CREATE_PRODUCT, (event) -> updateProducts());
 	}
 
 	@Override
 	public void initialize() {
 		super.initialize();
-		sl = Main.getInstance().getUser().getShoppingList();
+		sl = Main.getUser().getShoppingList();
 
 		productsNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
 

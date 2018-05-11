@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="be.ac.ulb.infof307.g10.controllers.ResearchShopController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
-    <TextArea fx:id="shopTA" prefHeight="200.0" prefWidth="549.0" AnchorPane.bottomAnchor="0.0"
-              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
-</AnchorPane>
+<TableView fx:id="shopsTable" prefHeight="800.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.ac.ulb.infof307.g10.controllers.ResearchShopController">
+  <columns>
+    <TableColumn fx:id="shopsNameColumn" prefWidth="300.0" text="Shop" />
+    <TableColumn fx:id="shopsPriceColumn" prefWidth="300.0" text="Price" />
+  </columns>
+</TableView>

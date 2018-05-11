@@ -31,10 +31,9 @@
     <TextField fx:id="name" prefHeight="27.0" prefWidth="150.0" GridPane.columnIndex="1"/>
     <Label text="Serving People" GridPane.rowIndex="1"/>
     <IntField fx:id="serving" prefHeight="27.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-    <Label fx:id="printLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308"
-           maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowIndex="3">
+    <Label fx:id="printLabel" alignment="CENTER" contentDisplay="CENTER" GridPane.columnSpan="2" GridPane.rowIndex="3">
         <font>
-          <Font size="15.0"/>
+            <Font size="15.0"/>
         </font>
     </Label>
     <Button fx:id="button" defaultButton="true" mnemonicParsing="false" onAction="#create" text="Create"
