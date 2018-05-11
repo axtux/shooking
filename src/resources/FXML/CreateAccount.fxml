@@ -20,8 +20,8 @@
     <PasswordField fx:id="pwdField2" promptText="Re enter the password" />
     <Label fx:id="errorLabel" />
     <HBox alignment="CENTER" spacing="50.0">
-        <Button mnemonicParsing="false" onAction="#goToLogin" text="Sign in" />
-        <Button defaultButton="true" mnemonicParsing="false" onAction="#submit" text="Sign up" />
+        <Button mnemonicParsing="false" onAction="#showLogin" text="Sign in" />
+        <Button defaultButton="true" mnemonicParsing="false" onAction="#signup" text="Sign up" />
     </HBox>
     <padding>
         <Insets bottom="100.0" left="100.0" right="100.0" top="100.0" />

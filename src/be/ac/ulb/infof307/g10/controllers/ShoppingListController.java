@@ -146,7 +146,7 @@ public class ShoppingListController extends AbstractProductController {
 	@Override
 	public void initialize() {
 		super.initialize();
-		sl = Main.getInstance().getUser().getShoppingList();
+		sl = Main.getUser().getShoppingList();
 
 		productsNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
 

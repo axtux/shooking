@@ -19,7 +19,7 @@ public class MainView {
 	private static HBox menu;
 
 	/**
-	 * Create menu, container and stage
+	 * Create menu, container, stage and hide eventual dialog
 	 */
 	private static void init() {
 		if (stage == null) {
@@ -31,6 +31,7 @@ public class MainView {
 			stage.setTitle("Shooking (shopping and cooking)");
 			stage.show();
 		}
+		DialogView.hide();
 	}
 
 	/**

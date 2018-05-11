@@ -1,7 +1,6 @@
 package be.ac.ulb.infof307.g10.controllers;
 
 import be.ac.ulb.infof307.g10.utils.TermsOfUse;
-import be.ac.ulb.infof307.g10.views.DialogView;
 import be.ac.ulb.infof307.g10.views.MainView;
 import be.ac.ulb.infof307.g10.views.View;
 import javafx.fxml.FXML;
@@ -21,7 +20,6 @@ public class TermsOfUseController {
 	@FXML
 	void agree() {
 		button.setDisable(true);
-		DialogView.hide();
 		MainView.show(View.CREATE_ACCOUNT);
 	}
 

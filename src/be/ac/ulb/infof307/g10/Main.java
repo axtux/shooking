@@ -8,24 +8,8 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-	//Singleton pattern
-	private static Main instance;
 
-	private User user;
-
-	/**
-	 * Singleton pattern
-	 * @return Main instance
-	 */
-	public static Main getInstance() {
-		return instance;
-	}
-
-	public Main() {
-		super();
-		instance = this;
-	}
-
+	private static User user;
 
 	@Override
 	public void init() {
@@ -34,20 +18,29 @@ public class Main extends Application {
 
 	@Override
 	public void start(final Stage stage) {
-		MainView.show(View.LOGIN);
+		logout();
 	}
 
 	public static void main(final String[] args) {
 		launch(args);
 	}
 
-	public User getUser() {
+	/**
+	 * Get currently logged in user
+	 * @return User logged in
+	 */
+	public static User getUser() {
 		return user;
 	}
 
-	public void setUser(final User user) {
-		this.user = user;
+	public static void login(final User u) {
+		user = u;
 		MainView.show(View.SHOPPING_LIST);
+	}
+
+	public static void logout() {
+		user = null;
+		MainView.show(View.LOGIN);
 	}
 
 }

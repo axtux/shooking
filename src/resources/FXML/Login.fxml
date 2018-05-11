@@ -26,8 +26,8 @@
         </font>
     </Label>
     <HBox alignment="CENTER" spacing="50.0">
-        <Button defaultButton="true" mnemonicParsing="false" onAction="#submit" text="Sign in "/>
-        <Button mnemonicParsing="false" onAction="#goToCreateAccount" text="Sign up"/>
+        <Button defaultButton="true" mnemonicParsing="false" onAction="#login" text="Sign in "/>
+        <Button mnemonicParsing="false" onAction="#showSignup" text="Sign up"/>
     </HBox>
     <ImageView fitHeight="100.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true">
         <Image url="@../images/welcome.png"/>

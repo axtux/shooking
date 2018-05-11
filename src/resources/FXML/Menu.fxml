@@ -6,8 +6,8 @@
 <?import javafx.scene.layout.HBox?>
 
 <HBox fx:id="hbox1" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="be.ac.ulb.infof307.g10.controllers.MainController">
-    <Button fx:id="shoppingList" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToShoppingList"
+      fx:controller="be.ac.ulb.infof307.g10.controllers.MenuController">
+    <Button fx:id="shoppingList" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#showShoppingList"
             text="Shopping List">
         <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -15,14 +15,14 @@
             </ImageView>
         </graphic>
     </Button>
-    <Button fx:id="map" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToMap" text="Shop Map">
+    <Button fx:id="map" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#showMap" text="Shop Map">
         <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                 <Image url="@../images/map.png"/>
             </ImageView>
         </graphic>
     </Button>
-    <Button fx:id="recipe" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToRecipe"
+    <Button fx:id="recipe" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#showRecipe"
             text="Recipe">
         <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -30,7 +30,7 @@
             </ImageView>
         </graphic>
     </Button>
-    <Button fx:id="logout" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#goToLogin"
+    <Button fx:id="logout" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#logout"
             text="Logout">
         <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">

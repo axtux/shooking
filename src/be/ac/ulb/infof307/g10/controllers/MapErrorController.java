@@ -5,7 +5,7 @@ import be.ac.ulb.infof307.g10.views.MainView;
 import be.ac.ulb.infof307.g10.views.View;
 import javafx.fxml.FXML;
 
-public class MapErrorController extends MainController {
+public class MapErrorController {
 
 	@FXML
 	void tryAgain() {
