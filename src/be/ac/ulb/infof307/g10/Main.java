@@ -1,17 +1,11 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.controllers.CreateShopController;
-import be.ac.ulb.infof307.g10.controllers.ResearchShopController;
 import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.User;
-import be.ac.ulb.infof307.g10.views.DialogView;
 import be.ac.ulb.infof307.g10.views.MainView;
 import be.ac.ulb.infof307.g10.views.View;
 import javafx.application.Application;
 import javafx.stage.Stage;
-
-import com.lynden.gmapsfx.javascript.object.LatLong;
 
 public class Main extends Application {
 	//Singleton pattern
@@ -54,16 +48,6 @@ public class Main extends Application {
 	public void setUser(final User user) {
 		this.user = user;
 		MainView.show(View.SHOPPING_LIST);
-	}
-
-	public void showCreateShopDialog(final LatLong position) {
-		CreateShopController.sposition = position;
-		DialogView.show(View.CREATE_SHOP);
-	}
-
-	public void showResearchShopDialog(final ShoppingList shoppingList) {
-		ResearchShopController.ssl = shoppingList;
-		DialogView.show(View.RESEARCH_SHOP);
 	}
 
 }

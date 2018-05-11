@@ -18,8 +18,9 @@ import java.util.Map;
  */
 public class ResearchShopController {
 
-	public static ShoppingList ssl;
-	private final ShoppingList sl;
+	private static ShoppingList staticShoppingList;
+
+	private final ShoppingList shoppingList;
 	private final Map<Shop, Integer> shopsPrice;
 	@FXML
 	private TableView<Shop> shopsTable;
@@ -28,11 +29,20 @@ public class ResearchShopController {
 	@FXML
 	private TableColumn<Shop, String> shopsPriceColumn;
 
+	/**
+	 * Set shopping list to use to compute prices. Should be done before object construction.
+	 * @param shoppingList Shopping list used to compute prices.
+	 */
+	public static void setShoppingList(ShoppingList shoppingList) {
+		staticShoppingList = shoppingList;
+	}
+
 	public ResearchShopController() {
-		this.sl = ResearchShopController.ssl;
-		if (sl == null) {
+		shoppingList = staticShoppingList;
+		if (shoppingList == null) {
 			throw new NullPointerException();
 		}
+		staticShoppingList = null;
 		shopsPrice = new HashMap<>();
 	}
 
@@ -45,7 +55,7 @@ public class ResearchShopController {
 
 		for (Shop s : Database.getAllShops()) {
 			try {
-				int total = s.getStock().getPrice(sl);
+				int total = s.getStock().getPrice(shoppingList);
 				shopsPrice.put(s, total);
 			} catch (NonExistingException e) {
 				// at least one product not within stock

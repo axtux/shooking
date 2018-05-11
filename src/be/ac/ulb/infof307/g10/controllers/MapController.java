@@ -14,7 +14,6 @@ import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
-import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.views.DialogView;
@@ -99,8 +98,8 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 	 */
 	@FXML
 	private void createShop(GMapMouseEvent event) {
-		Main.getInstance().showCreateShopDialog(event.getLatLong());
-		updateInterface();
+		CreateShopController.setPosition(event.getLatLong());
+		DialogView.show(View.CREATE_SHOP, (e) -> updateInterface());
 	}
 
 	/**

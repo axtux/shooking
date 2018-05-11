@@ -120,7 +120,8 @@ public class ShoppingListController extends AbstractProductController {
 
 	@FXML
 	private void researchShop() {
-		Main.getInstance().showResearchShopDialog(sl);
+		ResearchShopController.setShoppingList(sl);
+		DialogView.show(View.RESEARCH_SHOP);
 	}
 
 	private void updateTotal() {

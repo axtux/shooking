@@ -16,6 +16,8 @@ import javafx.scene.control.TextField;
  */
 public class CreateShopController {
 
+	private static LatLong staticPosition;
+
 	@FXML
 	private TextField name;
 
@@ -43,14 +45,22 @@ public class CreateShopController {
 
 	private TextField[] schedule;
 
-	public static LatLong sposition;
 	private final LatLong position;
 
+	/**
+	 * Set position of shop to create. Should be done before object construction.
+	 * @param position Position of shop to create.
+	 */
+	public static void setPosition(LatLong position) {
+		staticPosition = position;
+	}
+
 	public CreateShopController() {
-		this.position = sposition;
+		position = staticPosition;
 		if (position == null) {
 			throw new NullPointerException("position must not be null");
 		}
+		staticPosition = null;
 	}
 
 	public void initialize() {
