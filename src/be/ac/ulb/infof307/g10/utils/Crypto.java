@@ -3,8 +3,9 @@ package be.ac.ulb.infof307.g10.utils;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
-public class Hash {
+public class Crypto {
 	/**
 	 * SHA-256
 	 * 
@@ -31,5 +32,17 @@ public class Hash {
 		for (byte b : in)
 			builder.append(String.format("%02x", b));
 		return builder.toString();
+	}
+
+
+	public static String generateSalt(){
+		Random rand = new Random();
+
+		String salt = "";
+		for (int i = 0 ; i < 15 ; i++){
+			int n = rand.nextInt(256);
+			salt += (char)n;
+		}
+		return salt;
 	}
 }

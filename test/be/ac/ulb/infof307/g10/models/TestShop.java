@@ -49,7 +49,7 @@ public class TestShop extends AbstractTestDatabase {
 
 	@Test(expected = ExistingException.class)
 	public void test_002_createShopException() {
-		// TODO test fail
+		Shop.create("#test create shop exception", 0., 0.);
 		Shop.create("#test create shop exception", 0., 0.);
 	}
 
