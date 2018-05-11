@@ -38,12 +38,10 @@ public class CreateRecipeController {
 			Recipe r = new Recipe(name.getText(), serving.getInt());
 			r.save();
 			Main.getInstance().closeDialog();
-		} catch (NullPointerException e) {
+		} catch (NullPointerException | IllegalArgumentException e) {
 			printLabel.setText(e.getMessage());
 		} catch (DatabaseException e) {
 			printLabel.setText("Error in Database - you should not create the same recipe");
-		} catch (IllegalArgumentException e) {
-			printLabel.setText(e.getMessage());
 		}
 		button.setDisable(false);
 	}

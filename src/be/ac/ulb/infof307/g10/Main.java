@@ -20,22 +20,26 @@ import java.util.Arrays;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 
 public class Main extends Application {
-	/*
-	 * Singleton pattern
-	 */
+	//Singleton pattern
 	private static Main instance;
 
+	private Stage stage;
+	private Stage dialog;
+	private User user;
+
+	/**
+	 * Singleton pattern
+	 * @return Main instance
+	 */
 	public static Main getInstance() {
 		return instance;
 	}
 
 	public Main() {
+		super();
 		instance = this;
 	}
 
-	private Stage stage;
-	private Stage dialog;
-	private User user;
 
 	@Override
 	public void init() {
@@ -43,12 +47,12 @@ public class Main extends Application {
 	}
 
 	@Override
-	public void start(Stage stage) {
+	public void start(final Stage stage) {
 		this.stage = stage;
 		goToLogin();
 	}
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		launch(args);
 	}
 
@@ -56,7 +60,7 @@ public class Main extends Application {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(final User user) {
 		this.user = user;
 		goToShoppingList();
 	}
@@ -80,19 +84,19 @@ public class Main extends Application {
 	}
 
 	public void goToRecipe() {
-		GeneralView page = new GeneralView(stage, "Recipe", "Menu");
+		final GeneralView page = new GeneralView(stage, "Recipe", "Menu");
 		page.disableButtons(Arrays.asList("recipe"));
 		update();
 	}
 
 	public void goToShoppingList() {
-		GeneralView page = new GeneralView(stage, "ShoppingList", "Menu");
+		final GeneralView page = new GeneralView(stage, "ShoppingList", "Menu");
 		page.disableButtons(Arrays.asList("shoppingList"));
 		update();
 	}
 
 	public void goToMap() {
-		GeneralView page = new GeneralView(stage, "Map", "Menu");
+		final GeneralView page = new GeneralView(stage, "Map", "Menu");
 		page.disableButtons(Arrays.asList("map"));
 		update();
 	}
@@ -101,7 +105,7 @@ public class Main extends Application {
 		showDialog("MapError", "Error");
 	}
 
-	public void showCreateShopDialog(LatLong position) {
+	public void showCreateShopDialog(final LatLong position) {
 		CreateShopController.sposition = position;
 		showDialog("CreateShop", "Create shop");
 	}
@@ -110,8 +114,8 @@ public class Main extends Application {
 		showDialog("CreateRecipe", "Create recipe");
 	}
 
-	public void showCreateRecipeDialog(ShoppingList sl) {
-		ResearchShopController.ssl = sl;
+	public void showCreateRecipeDialog(final ShoppingList shoppingList) {
+		ResearchShopController.ssl = shoppingList;
 		showDialog("ResearchShop", "Research shop");
 	}
 
@@ -123,9 +127,9 @@ public class Main extends Application {
 		Platform.exit();
 	}
 
-	private Scene getFXMLScene(String name) {
+	private Scene getFXMLScene(final String name) {
 		try {
-			Parent parent = FXMLLoader.load(getClass().getResource("/FXML/" + name + ".fxml"));
+			final Parent parent = FXMLLoader.load(getClass().getResource("/FXML/" + name + ".fxml"));
 			return new Scene(parent);
 		} catch (IOException e) {
 			// never happens as resources are packed within application
@@ -133,14 +137,14 @@ public class Main extends Application {
 		}
 	}
 
-	private void loadFXML(String name) {
-		Scene scene = getFXMLScene(name);
+	private void loadFXML(final String name) {
+		final Scene scene = getFXMLScene(name);
 		stage.setScene(scene);
 		stage.show();
 	}
 
-	private void showDialog(String name, String title) {
-		Scene scene = getFXMLScene(name);
+	private void showDialog(final String name, final String title) {
+		final Scene scene = getFXMLScene(name);
 		dialog = new Stage();
 		dialog.setTitle(title);
 		dialog.initModality(Modality.APPLICATION_MODAL);

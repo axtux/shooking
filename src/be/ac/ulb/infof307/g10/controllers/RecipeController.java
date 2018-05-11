@@ -4,11 +4,10 @@ import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
-import be.ac.ulb.infof307.g10.utils.GetterConverter;
+import be.ac.ulb.infof307.g10.utils.ToStringConverter;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -30,8 +29,6 @@ public class RecipeController extends AbstractProductController {
 	private TextField stepTF;
 	@FXML
 	private TextField recipeNameTF;
-	@FXML
-	private Button newRecipeBT;
 	@FXML
 	private Button addStepBT;
 	@FXML
@@ -96,10 +93,10 @@ public class RecipeController extends AbstractProductController {
 
 	@FXML
 	private void addStep() {
-		if (stepTF.equals("")) {
+		String step = stepTF.getText().trim();
+		if (step.isEmpty()) {
 			return;
 		}
-		String step = stepTF.getText();
 		stepTF.clear();
 		actualRecipe.addStep(step);
 		changed();
@@ -118,7 +115,7 @@ public class RecipeController extends AbstractProductController {
 	}
 
 	@FXML
-	private void removeStep(ActionEvent event) {
+	private void removeStep() {
 		if (selectedStep == null) {
 			return;
 		}
@@ -177,11 +174,11 @@ public class RecipeController extends AbstractProductController {
 		}
 	}
 
-	@FXML
 	/**
 	 * Select a cell of the table Step, update the corresponding fields, and
 	 * enable/disable some buttons on the view
 	 */
+	@FXML
 	private void updateSelectedStep(String newValue) {
 		selectedStep = newValue;
 		if (selectedStep == null) {
@@ -230,26 +227,26 @@ public class RecipeController extends AbstractProductController {
 		recipesListCombo.getItems().addAll(Database.getAllRecipes());
 	}
 
+	@Override
 	public void initialize() {
 		super.initialize();
 		updateRecipes();
 
 		recipeNameTF.textProperty().addListener((observable, oldValue, newValue) -> editRecipeName(newValue));
 
-		productsAmountColumn.setCellValueFactory(data -> {
-			int amount = actualRecipe.getQuantity(data.getValue());
+		productsAmountColumn.setCellValueFactory(cell -> {
+			int amount = actualRecipe.getQuantity(cell.getValue());
 			return new SimpleStringProperty(Integer.toString(amount));
 		});
 
-		recipeStepCL.setCellValueFactory(data -> {
-			return new SimpleStringProperty(data.getValue());
-		});
+		recipeStepCL.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue()));
 
 		stepsTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> updateSelectedStep(newValue));
 
 		// use Recipe name
-		recipesListCombo.setConverter(GetterConverter.create(Recipe.class, "name"));
+		recipesListCombo.setConverter(new ToStringConverter<>(Recipe::getName));
+
 		recipesListCombo.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> recipesComboSelect(newValue));
 

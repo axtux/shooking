@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class GeneralView extends Parent {
 
-	protected Parent centerPage;
+	private Parent centerPage;
 	protected AnchorPane menu;
 
 	public GeneralView(Stage stage, String centerPage, String menu) {
@@ -52,13 +52,11 @@ public class GeneralView extends Parent {
 	private Parent loadFXML(String name) {
 		try {
 
-			Parent root = FXMLLoader.load(getClass().getResource("/FXML/" + name + ".fxml"));
-			return root;
+			return FXMLLoader.load(getClass().getResource("/FXML/" + name + ".fxml"));
 
 		} catch (IOException e) {
 			// never happens as resource is packed within application
-			e.printStackTrace();
-			return null;
+			throw new RuntimeException(e);
 		}
 	}
 

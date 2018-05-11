@@ -2,7 +2,7 @@ package be.ac.ulb.infof307.g10.controllers;
 
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Product;
-import be.ac.ulb.infof307.g10.utils.GetterConverter;
+import be.ac.ulb.infof307.g10.utils.ToStringConverter;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
@@ -69,9 +69,7 @@ abstract public class AbstractProductController {
 	public void initialize() {
 		updateProducts();
 		
-		productsNameColumn.setCellValueFactory(data -> {
-			return new SimpleStringProperty(data.getValue().getName());
-		});
+		productsNameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
 
 		productsTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		productsTable.getSelectionModel().selectedItemProperty().addListener(
@@ -79,7 +77,7 @@ abstract public class AbstractProductController {
 		);
 
 		// use Product full name
-		productsCombo.setConverter(GetterConverter.create(Product.class, "fullName"));
+		productsCombo.setConverter(new ToStringConverter<>(Product::getFullName));
 
 		BooleanBinding notSelected = productsCombo.getSelectionModel().selectedItemProperty().isNull();
 		productsAddButton.disableProperty().bind(notSelected);

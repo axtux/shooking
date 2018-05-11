@@ -13,7 +13,7 @@ import java.util.List;
  * Adding some queries to GenericDatabase to meet the need of our custom
  * objects. Abstract because contains only static methods.
  */
-abstract public class Database extends GenericDatabase {
+public class Database extends GenericDatabase {
 
 	public static void init() {
 		setProp("name", "GL10PU");

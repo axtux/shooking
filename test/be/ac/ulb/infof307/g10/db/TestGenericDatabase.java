@@ -35,14 +35,15 @@ public class TestGenericDatabase extends AbstractTestDatabase {
 
 	@Test
 	public void saveGetAll() {
-		initList();
+		List<Product> pl = initList();
+		Assert.assertNotNull(pl);
 	}
 
 	@Test
 	public void delete() {
 		List<Product> pl = initList();
-		Database.delete(pl.get(0));
-		Database.close();
+		GenericDatabase.delete(pl.get(0));
+		GenericDatabase.close();
 		pl = GenericDatabase.getAll(Product.class);
 		Assert.assertEquals(0, pl.size());
 	}
@@ -50,8 +51,8 @@ public class TestGenericDatabase extends AbstractTestDatabase {
 	@Test
 	public void deleteAll() {
 		List<Product> pl = initList();
-		Database.deleteAll(Product.class);
-		Database.close();
+		GenericDatabase.deleteAll(Product.class);
+		GenericDatabase.close();
 		pl = GenericDatabase.getAll(Product.class);
 		Assert.assertEquals(0, pl.size());
 	}
@@ -59,8 +60,8 @@ public class TestGenericDatabase extends AbstractTestDatabase {
 	@Test
 	public void empty() {
 		List<Product> pl = initList();
-		Database.empty();
-		Database.close();
+		GenericDatabase.empty();
+		GenericDatabase.close();
 		pl = GenericDatabase.getAll(Product.class);
 		Assert.assertEquals(0, pl.size());
 	}
@@ -74,6 +75,7 @@ public class TestGenericDatabase extends AbstractTestDatabase {
 		} catch (ExistingException e) {
 			assert true;
 		}
-		User.signup("test2", "test2");
+		User u = User.signup("test2", "test2");
+		Assert.assertNotNull(u);
 	}
 }

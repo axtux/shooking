@@ -34,7 +34,7 @@ public class TestRecipe extends AbstractTestDatabase {
 	@Test
 	public void test_001_addStep() {
 		r.addStep("testing step 4");
-		assertTrue(r.getAllSteps().size() == 4);
+		assertEquals(4, r.getAllSteps().size());
 	}
 
 	@Test
@@ -122,14 +122,14 @@ public class TestRecipe extends AbstractTestDatabase {
 	@Test
 	public void test_014_addIngredient() {
 		r.addIngredient(new Product("testing product 3", 1, "g"), 2);
-		assertTrue(r.getAllIngredients().size() == 3);
+		assertEquals(3, r.getAllIngredients().size());
 	}
 
 	@Test
 	public void test_015_getAllIngredients() {
 		Map<Product, Float> map = r.getAllIngredients();
 		// Normal behavior
-		assertTrue(map.size() == 2);
+		assertEquals(2, map.size());
 		// Cloning Test
 		map.put(new Product("bad product", 1, "g"), (float) 3.);
 		assertNotEquals(map, r.getAllIngredients());

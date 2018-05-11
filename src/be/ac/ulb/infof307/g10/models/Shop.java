@@ -61,7 +61,7 @@ public class Shop extends ModelObject {
 			throw new IllegalArgumentException("the name must not be empty");
 		}
 
-		this.schedule = schedule;
+		this.schedule = schedule.clone();
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.stock = stock;
@@ -83,19 +83,19 @@ public class Shop extends ModelObject {
 	}
 
 	/**
-	 * Get shop informations
+	 * Get shop information
 	 * 
 	 * @return Name and schedule, in String format for all days
 	 */
-	public String getInfos() {
-		String ret = getName() + "\n\n";
+	public String getInfo() {
+		StringBuilder ret = new StringBuilder(getName()).append("\n\n");
 		int day = 1;
 
 		for (String s : this.schedule) {
-			ret += DayOfWeek.of(day).getDisplayName(TextStyle.FULL, Locale.ENGLISH) + ": " + s + "\n";
+			ret.append(DayOfWeek.of(day).getDisplayName(TextStyle.FULL, Locale.ENGLISH)).append(": ").append(s).append("\n");
 			day++;
 		}
-		return ret;
+		return ret.toString();
 	}
 
 	public double getLatitude() {
@@ -164,11 +164,12 @@ public class Shop extends ModelObject {
 	 * @return Created shop
 	 */
 	public static Shop create(String name, double latitude, double longitude, String[] schedule, Stock stock) {
-		if (schedule == null) {
-			schedule = defaultSchedule();
+		String[] safeSchedule = schedule;
+		if (safeSchedule == null) {
+			safeSchedule = defaultSchedule();
 		}
 		try {
-			Shop s = new Shop(name, latitude, longitude, schedule, stock);
+			Shop s = new Shop(name, latitude, longitude, safeSchedule, stock);
 			s.save();
 			return s;
 		} catch (DatabaseException e) {

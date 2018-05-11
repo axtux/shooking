@@ -90,7 +90,7 @@ public class Recipe extends ModelObject {
 	 * @param steps
 	 *            ArrayList of String represent the steps for the Recipe
 	 */
-	public Recipe(String name, int servings, Map<Product, Float> ingredients, ArrayList<String> steps) {
+	public Recipe(String name, int servings, Map<Product, Float> ingredients, List<String> steps) {
 		if (name == null || ingredients == null || steps == null) {
 			throw new NullPointerException("one parameter is null");
 		}
@@ -102,8 +102,8 @@ public class Recipe extends ModelObject {
 		}
 		this.setName(name);
 		this.servings = servings;
-		this.ingredients = ingredients;
-		this.steps = steps;
+		this.ingredients = new HashMap<>(ingredients);
+		this.steps = new ArrayList<>(steps);
 	}
 
 	public String getName() {
@@ -124,7 +124,7 @@ public class Recipe extends ModelObject {
 	 * @return List of steps
 	 */
 	public List<String> getAllSteps() {
-		return new ArrayList<String>(steps);
+		return new ArrayList<>(steps);
 	}
 
 	/**
@@ -175,7 +175,7 @@ public class Recipe extends ModelObject {
 
 	/**
 	 * Takes the indexInit th step and move it to the indexFinal th place . All
-	 * the concerned steps are swaped to the left or the right if necessary
+	 * the concerned steps are swapped to the left or the right if necessary
 	 * 
 	 * @param indexInit
 	 *            The initial index of the step to move
@@ -255,7 +255,7 @@ public class Recipe extends ModelObject {
 	 * @return true is the step is the last (false otherwise)
 	 */
 	public boolean isLast(String step) {
-		int index = steps.indexOf(step);
+		int index = steps.lastIndexOf(step);
 		return index == steps.size() - 1;
 	}
 
@@ -303,7 +303,7 @@ public class Recipe extends ModelObject {
 	 * @return Map of each ingredients to its quantity
 	 */
 	public Map<Product, Float> getAllIngredients() {
-		return new HashMap<Product, Float>(ingredients);
+		return new HashMap<>(ingredients);
 	}
 
 	/**

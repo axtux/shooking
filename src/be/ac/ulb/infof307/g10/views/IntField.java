@@ -4,7 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
-public class IntField extends TextField {
+public class IntField extends TextField implements ChangeListener<String> {
 	private boolean signed;
 
 	public boolean isSigned() {
@@ -22,14 +22,15 @@ public class IntField extends TextField {
 	public IntField(boolean signed) {
 		this.signed = signed;
 		// check each change
-		textProperty().addListener(new ChangeListener<String>() {
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				if (zeroValue(newValue) || valid(newValue)) {
-					return;
-				}
-				setText(oldValue);
-			}
-		});
+		textProperty().addListener(this);
+	}
+
+	@Override
+	public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		if (zeroValue(newValue) || valid(newValue)) {
+			return;
+		}
+		setText(oldValue);
 	}
 
 	public int getInt() {
@@ -48,7 +49,7 @@ public class IntField extends TextField {
 	}
 
 	private boolean zeroValue(String s) {
-		return (signed && s.equals("-")) || s.equals("");
+		return (signed && "-".equals(s)) || "".equals(s);
 	}
 
 	private boolean valid(String s) {
@@ -66,4 +67,5 @@ public class IntField extends TextField {
 		}
 		return true;
 	}
+
 }

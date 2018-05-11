@@ -1,6 +1,6 @@
 package be.ac.ulb.infof307.g10.models;
 
-abstract public class Price {
+public class Price {
 	public static String toString(int price) {
 		String cents = Integer.toString(price % 100);
 		if (cents.length() == 1) {

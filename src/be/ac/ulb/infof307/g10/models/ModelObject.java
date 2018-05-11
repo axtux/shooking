@@ -14,7 +14,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.HashCodeExclude;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.db.GenericDatabase;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -39,11 +39,11 @@ public class ModelObject implements Serializable {
 	}
 
 	public void save() {
-		Database.save(this);
+		GenericDatabase.save(this);
 	}
 
 	public void delete() {
-		Database.delete(this);
+		GenericDatabase.delete(this);
 	}
 
 	@Override

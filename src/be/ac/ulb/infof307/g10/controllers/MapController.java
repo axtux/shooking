@@ -30,9 +30,9 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 	@FXML
 	ClusteredGoogleMapView mapView;
 	@FXML
-	ClusteredGoogleMap map;
+	private ClusteredGoogleMap map;
 	@FXML
-	InfoWindow popup;
+	private InfoWindow popup;
 
 	public void initialize() {
 		Thread.setDefaultUncaughtExceptionHandler(this);
@@ -41,7 +41,7 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 
 	@Override
 	public void uncaughtException(Thread t, Throwable e) {
-		if (e.getClass().getName() == "netscape.javascript.JSException") {
+		if (e.getClass().getName().equals("netscape.javascript.JSException")) {
 			Main.getInstance().showMapErrorDialog();
 		} else {
 			throw new RuntimeException(e);
@@ -58,7 +58,7 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 		try {
 			// Set the initial properties of the map.
 			MapOptions mapOptions = new MapOptions();
-			LatLong latLong = new LatLong((double) 50.8504500, (double) 4.3487800);
+			LatLong latLong = new LatLong(50.8504500, 4.3487800);
 			mapOptions.center(latLong);
 			mapOptions.mapType(MapTypeIdEnum.ROADMAP);
 			mapOptions.overviewMapControl(false);
@@ -93,10 +93,10 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 	 * Launching of the popup for the creation of a shop
 	 * 
 	 * @param event
-	 *            the right clic on the map
+	 *            the right click on the map
 	 */
 	@FXML
-	public void createShop(GMapMouseEvent event) {
+	private void createShop(GMapMouseEvent event) {
 		Main.getInstance().showCreateShopDialog(event.getLatLong());
 		updateInterface();
 	}
@@ -110,7 +110,7 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 	private void addShopToMap(Shop s) {
 		LatLong latLong = new LatLong(s.getLatitude(), s.getLongitude());
 		MarkerOptions markerOptions = new MarkerOptions();
-		markerOptions.position(latLong).visible(Boolean.TRUE).title(s.getInfos());
+		markerOptions.position(latLong).visible(Boolean.TRUE).title(s.getInfo());
 		Marker marker = new Marker(markerOptions);
 		map.addClusterableMarker(marker);
 		map.addUIEventHandler(marker, UIEventType.click, (JSObject obj) -> {
