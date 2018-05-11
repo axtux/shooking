@@ -10,6 +10,8 @@ import javax.persistence.NoResultException;
 
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 public class RecipeDAO extends AbstractDAO {
 
@@ -25,18 +27,31 @@ public class RecipeDAO extends AbstractDAO {
 		return createRecipe(name, servings, ingredients, new ArrayList<>());
 	}
 	
-	public static Recipe createRecipe(String name, int servings, Map<Product, Float> ingredients, List<String> steps) {
-		Recipe r = new Recipe(name, servings, ingredients, steps);
-		r.addObserver(SaverObserver.getInstance());
-		return r;
+	public static Recipe createRecipe(String name, int servings, Map<Product, Float> ingredients, List<String> steps) throws ExistingException {
+		try {
+			getRecipe(name);
+			throw new ExistingException();
+		} catch (NonExistingException e) {
+			Recipe r = new Recipe(name, servings, ingredients, steps);
+			r.addObserver(SaverObserver.getInstance());
+			return r;
+		}
 	}
 
-	public static Recipe getRecipe(String name) throws NoResultException {
-		return GenericDatabase.getOne(Recipe.class, "SELECT b FROM Recipe b WHERE b.name LIKE ?1", name);
+	public static Recipe getRecipe(String name) throws NonExistingException {
+		try{
+			return GenericDatabase.getOne(Recipe.class, "SELECT b FROM Recipe b WHERE b.name LIKE ?1", name);
+		} catch (NoResultException e) {
+			throw new NonExistingException();
+		}
 	}
 
-	public static List<Recipe> getAllRecipes() {
-		return GenericDatabase.getAll(Recipe.class);
+	public static List<Recipe> getAllRecipes() throws NonExistingException {
+		try {
+			return GenericDatabase.getAll(Recipe.class);
+		} catch (NoResultException e) {
+			throw new NonExistingException();
+		}
 	}
 	
 }

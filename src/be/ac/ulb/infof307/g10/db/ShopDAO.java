@@ -5,10 +5,12 @@ import java.util.Observable;
 
 import javax.persistence.NoResultException;
 
+import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.Stock;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 public class ShopDAO extends AbstractDAO {
 
@@ -25,7 +27,7 @@ public class ShopDAO extends AbstractDAO {
 	 * @return Created shop
 	 */
 	public static Shop createShop(String name, double latitude, double longitude) {
-		return createShop(name, latitude, longitude, null);
+		return createShop(name, latitude, longitude, Shop.defaultSchedule());
 	}
 
 	/**
@@ -61,7 +63,7 @@ public class ShopDAO extends AbstractDAO {
 	 *            Shop stock 0 for Monday, 1 for Tuesday, ..., and 6 for Sunday
 	 * @return Created shop
 	 */
-	public static Shop createShop(String name, double latitude, double longitude, String[] schedule, Stock stock) {
+	public static Shop createShop(String name, double latitude, double longitude, String[] schedule, Stock stock) throws ExistingException{
 		String[] safeSchedule = schedule;
 		if (safeSchedule == null) {
 			safeSchedule = Shop.defaultSchedule();
@@ -75,12 +77,20 @@ public class ShopDAO extends AbstractDAO {
 		}
 	}
 
-	public static Shop getShop(String name) throws NoResultException {
-		return GenericDatabase.getOne(Shop.class, "SELECT b FROM Shop b WHERE b.name LIKE ?1", name);
+	public static Shop getShop(String name) throws NonExistingException {
+		try{
+			return GenericDatabase.getOne(Shop.class, "SELECT b FROM Shop b WHERE b.name LIKE ?1", name);
+		} catch (NoResultException e) {
+			throw new NonExistingException();
+		}
 	}
 
-	public static List<Shop> getAllShops() {
-		return GenericDatabase.getAll(Shop.class);
+	public static List<Shop> getAllShops() throws NonExistingException {
+		try{
+			return GenericDatabase.getAll(Shop.class);
+		} catch (NoResultException e) {
+			throw new NonExistingException();
+		}
 	}
 	
 }

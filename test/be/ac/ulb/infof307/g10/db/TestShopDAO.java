@@ -10,6 +10,10 @@ import be.ac.ulb.infof307.g10.models.Shop;
 
 public class TestShopDAO {
 
+	public static void createShop() {
+		ShopDAO.createShop("#test testingShop", 0., 0.);
+	}
+	
 	@Test
 	public void test_001_createShop() {
 		Shop s = ShopDAO.createShop("#test createShop", 0., 0.);
@@ -21,10 +25,6 @@ public class TestShopDAO {
 		ShopDAO.createShop("#test createShop", 0., 0.);
 		Shop s = ShopDAO.createShop("#test new shop in same position", 0., 0.);
 		assertNull(s);
-	}
-	
-	public static void createShop() {
-		ShopDAO.createShop("#test testingShop", 0., 0.);
 	}
 	
 	@Test

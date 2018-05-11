@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +18,7 @@ public class Recipe extends ModelObject {
 	/**
 	 * Name of the recipe
 	 */
+	@Column(unique = true)
 	private String name;
 
 	/**

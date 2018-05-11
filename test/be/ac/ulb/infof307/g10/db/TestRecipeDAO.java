@@ -36,11 +36,12 @@ public class TestRecipeDAO {
 	public void test_004_createRecipeException() {
 		createTestingRecipe();
 		Recipe r = RecipeDAO.createRecipe("#test testingRecipe", 12);
-		assertNotNull(r);
+		assertNull(r);
 	}
 	
 	@Test
 	public void test_005_getRecipe() {
+		createTestingRecipe();
 		Recipe r = RecipeDAO.getRecipe("#test testingRecipe");
 		assertNotNull(r);
 	}

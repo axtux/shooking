@@ -68,11 +68,6 @@ public class TestDB {
 	}
 
 	@Test
-	public void test_0090_GetShop() {
-		ShopDAO.getShop("#DB Delhaize");
-	}
-
-	@Test
 	public void test_0091_updateShopStock() {
 		Shop shop = ShopDAO.getShop("#DB Delhaize");
 
@@ -106,17 +101,6 @@ public class TestDB {
 	}
 
 	@Test
-	public void test_0998_DeleteShop() {
-		Database.delete(ShopDAO.getShop("#DB Delhaize"));
-	}
-
-	@Test
-	public void test_1000_CreateRecipe() {
-		Recipe r = new Recipe("#test new recette", 1);
-		r.save();
-	}
-
-	@Test
 	public void test_1001_ModifyRecipe() {
 		Recipe r = new Recipe("#test modify recipe", 1);
 		r.save();
@@ -125,13 +109,4 @@ public class TestDB {
 		r.save();
 		assertNotNull(RecipeDAO.getRecipe("#test new name"));
 	}
-
-	@Test(expected = NoResultException.class)
-	public void test_1002_DeleteRecipe() {
-		new Recipe("#test Delete Recipe", 1).save();
-		Recipe r = RecipeDAO.getRecipe("#test Delete Recipe");
-		Database.delete(r);
-		RecipeDAO.getRecipe("#test Delete Recipe"); // throw an exception
-	}
-
 }

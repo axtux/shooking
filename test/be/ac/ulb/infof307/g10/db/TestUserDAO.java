@@ -32,7 +32,8 @@ public class TestUserDAO extends AbstractTestDatabase {
 	
 	@Test(expected=IncorrectPasswordException.class)
 	public void test_003_userLoginException() {
-		User u = UserDAO.userLogin("#test testingUser", "bas password");
+		createTestingUser();
+		User u = UserDAO.userLogin("#test testingUser", "bad password");
 		assertNull(u);
 	}
 	

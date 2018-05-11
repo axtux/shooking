@@ -2,7 +2,10 @@ package be.ac.ulb.infof307.g10.db;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import be.ac.ulb.infof307.g10.models.Product;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 public class ProductDAO extends AbstractDAO {
 
@@ -19,11 +22,19 @@ public class ProductDAO extends AbstractDAO {
 		return p;
 	}
 
-	public static List<Product> getAllProducts() {
-		return GenericDatabase.getAll(Product.class);
+	public static List<Product> getAllProducts() throws NonExistingException {
+		try{
+			return GenericDatabase.getAll(Product.class);
+		} catch (NoResultException e) {
+			throw new NonExistingException();
+		}
 	}
 
-	public static Product getProduct(String name) {
-		return GenericDatabase.getOne(Product.class, "SELECT b FROM Product b WHERE b.name LIKE ?1", name);
+	public static Product getProduct(String name) throws NonExistingException {
+		try{
+			return GenericDatabase.getOne(Product.class, "SELECT b FROM Product b WHERE b.name LIKE ?1", name);
+		} catch (NoResultException e) {
+			throw new NonExistingException();
+		}
 	}
 }
