@@ -30,13 +30,13 @@ public class TestShoppingListDAO {
 	@Test
 	public void test_003_getShoppingList() {
 		createTestingShoppingList();
-		ShoppingList sl = ShoppingListDAO.createShoppingList("#test testingShoppingList");
+		ShoppingList sl = ShoppingListDAO.getShoppingList("#test testingShoppingList");
 		assertNotNull(sl);
 	}
 	
 	@Test(expected=NonExistingException.class)
 	public void test_004_getShoppingListException() {
-		ShoppingList sl = ShoppingListDAO.createShoppingList("#test getShoppingListException");
+		ShoppingList sl = ShoppingListDAO.getShoppingList("#test getShoppingListException");
 		assertNull(sl);
 	}
 }

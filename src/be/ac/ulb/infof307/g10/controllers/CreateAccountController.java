@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g10.controllers;
 
 import be.ac.ulb.infof307.g10.Main;
+import be.ac.ulb.infof307.g10.db.UserDAO;
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.views.MainView;
@@ -47,7 +48,7 @@ public class CreateAccountController {
 		if (pwd.equals(pwd2)) {
 			try {
 				errorLabel.setText("User creation...");
-				User user = User.signup(log, pwd);
+				User user = UserDAO.userSignup(log, pwd);
 				Main.login(user);
 			} catch (ExistingException e) {
 				errorLabel.setText("This user name already exists");

@@ -15,12 +15,17 @@ public class ShoppingList extends ModelObject {
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	private Map<Product, Integer> productsAndQuantity;
+	private String name;
 
 	/**
 	 * Needed by JPA
 	 */
 	public ShoppingList() {
 		productsAndQuantity = new HashMap<>();
+	}
+	
+	public ShoppingList(String name) {
+		this.name = name;
 	}
 
 	/**

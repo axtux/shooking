@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.db.UserDAO;
 import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
@@ -11,46 +12,8 @@ import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 public class TestUser extends AbstractTestDatabase {
 
-	@Test
-	public void signupTest() {
-		User u = User.signup("test", "test");
-		Assert.assertEquals("test", u.getUsername());
-	}
-
-	@Test
-	public void signupPersistenceTest() {
-		User u = User.signup("test", "test");
-		Database.close();
-		u = Database.getUser("test");
-		Assert.assertNotNull(u);
-	}
-
-	@Test(expected = ExistingException.class)
-	public void signupExistingUserExceptionTest() {
-		User.signup("test", "test");
-		User.signup("test", "test");
-	}
-
-	@Test
-	public void loginTest() {
-		User.signup("test", "test");
-		User u = User.login("test", "test");
-		Assert.assertEquals("test", u.getUsername());
-	}
-
-	@Test(expected = IncorrectPasswordException.class)
-	public void loginIncorrectPasswordExceptionTest() {
-		User.signup("test", "test");
-		User.login("test", "badPassword");
-	}
-
-	@Test(expected = NonExistingException.class)
-	public void loginNonExistingUserExceptionTest() {
-		User.login("badUser", "anyPassword");
-	}
-
 	public static User userWithShoppingList() {
-		User u = User.signup("test", "test");
+		User u = UserDAO.userSignup("test", "test");
 		ShoppingList sl = u.getShoppingList();
 
 		Product p1 = new Product("test1", 1, "unit");

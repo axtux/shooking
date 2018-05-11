@@ -65,17 +65,4 @@ public class TestGenericDatabase extends AbstractTestDatabase {
 		pl = GenericDatabase.getAll(Product.class);
 		Assert.assertEquals(0, pl.size());
 	}
-
-	@Test
-	public void recoverAfterError() {
-		User.signup("test", "test");
-		try {
-			User.signup("test", "test");
-			assert false;
-		} catch (ExistingException e) {
-			assert true;
-		}
-		User u = User.signup("test2", "test2");
-		Assert.assertNotNull(u);
-	}
 }

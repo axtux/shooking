@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g10.controllers;
 
 import be.ac.ulb.infof307.g10.Main;
+import be.ac.ulb.infof307.g10.db.UserDAO;
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
@@ -40,7 +41,7 @@ public class LoginController {
 
 		try {
 			printLabel.setText("Connection ...");
-			User user = User.login(log, pwd);
+			User user = UserDAO.userLogin(log, pwd);
 			Main.login(user);
 		} catch (IncorrectPasswordException e) {
 			printLabel.setText("Incorrect Password");

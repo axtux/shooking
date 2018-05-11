@@ -68,13 +68,6 @@ public class TestDB {
 	}
 
 	@Test
-	public void test_0080_CreateShop() {
-		Shop s = Shop.create("#DB Delhaize", 0.0, 0.0);
-		s.getStock().addProduct(ProductDAO.getProduct("#DB 6 Apples"), 10);
-		s.save();
-	}
-
-	@Test
 	public void test_0090_GetShop() {
 		ShopDAO.getShop("#DB Delhaize");
 	}

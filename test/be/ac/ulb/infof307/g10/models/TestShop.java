@@ -18,27 +18,9 @@ import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 public class TestShop extends AbstractTestDatabase {
 
 	@Test
-	public void test_001_createShop() {
-		Shop shop = Shop.create("#test createShop", 0, 0);
-		assertNotNull(shop);
-	}
-
-	@Test(expected = ExistingException.class)
-	public void test_002_createShopException() {
-		Shop.create("#test create shop exception 1", 0., 0.);
-		Shop.create("#test create shop exception 2", 0., 0.);
-	}
-
-	@Test
-	public void test_003_deleteShop() {
-		Database.deleteAll(Shop.class);
-		assertTrue(ShopDAO.getAllShops().isEmpty());
-	}
-
-	@Test
-	public void test_004_getSchedule() {
+	public void test_001_getSchedule() {
 		String[] testingSchedule = { "1", "2", "3", "4", "5", "6", "7" };
-		Shop shop = Shop.create("#test getSchedule", 0., 0., testingSchedule);
+		Shop shop = new Shop("#test getSchedule", 0., 0., testingSchedule,  new Stock());
 		assertEquals(shop.getSchedule(0), "1");
 	}
 }

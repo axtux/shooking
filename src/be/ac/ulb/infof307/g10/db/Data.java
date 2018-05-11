@@ -69,10 +69,10 @@ public class Data {
 		List<Shop> list = ShopDAO.getAllShops();
 
 		if (list.isEmpty()) {
-			list.add(Shop.create("Aldi", 50.828488, 4.362717));
-			list.add(Shop.create("Colruyt", 50.867831, 4.403058));
-			list.add(Shop.create("Carrefour", 50.859922, 4.342290));
-			list.add(Shop.create("Delhaize", 50.845075, 4.389325));
+			list.add(ShopDAO.createShop("Aldi", 50.828488, 4.362717));
+			list.add(ShopDAO.createShop("Colruyt", 50.867831, 4.403058));
+			list.add(ShopDAO.createShop("Carrefour", 50.859922, 4.342290));
+			list.add(ShopDAO.createShop("Delhaize", 50.845075, 4.389325));
 		}
 
 		return list;
