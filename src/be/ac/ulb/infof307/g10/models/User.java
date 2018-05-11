@@ -36,7 +36,7 @@ public class User extends ModelObject {
 	protected User() {
 	}
 
-	private User(String username, String password) {
+	public User(String username, String password) {
 		if (username == null || password == null) {
 			throw new NullPointerException();
 		}
@@ -64,29 +64,5 @@ public class User extends ModelObject {
 
 	public ShoppingList getShoppingList() {
 		return shoppingList;
-	}
-
-	// static methods
-	public static User login(String username, String password) throws IncorrectPasswordException, NonExistingException {
-		try {
-			User u = Database.getUser(username);
-			if (u.isPassword(password)) {
-				return u;
-			}
-			throw new IncorrectPasswordException();
-		} catch (NoResultException e) {
-			throw new NonExistingException(e);
-		}
-	}
-
-	public static User signup(String username, String password) throws ExistingException {
-		try {
-			Database.getUser(username);
-			throw new ExistingException();
-		} catch (NoResultException e) {
-			User u = new User(username, password);
-			u.save();
-			return u;
-		}
 	}
 }

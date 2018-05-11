@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g10.models;
 
 import java.io.Serializable;
+import java.util.Observable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ import be.ac.ulb.infof307.g10.db.GenericDatabase;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class ModelObject implements Serializable {
+public class ModelObject extends Observable implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -44,6 +45,14 @@ public class ModelObject implements Serializable {
 
 	public void delete() {
 		GenericDatabase.delete(this);
+	}
+	
+	/**
+	 * Shortcut to notify Observers
+	 */
+	public void changed() {
+		setChanged();
+		notifyObservers();
 	}
 
 	@Override

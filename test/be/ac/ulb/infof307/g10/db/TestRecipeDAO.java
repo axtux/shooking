@@ -10,7 +10,7 @@ import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 public class TestRecipeDAO {
 
-	public static void createRecipe() {
+	public static void createTestingRecipe() {
 		RecipeDAO.createRecipe("#test testingRecipe", 12);
 	}
 	
@@ -34,6 +34,7 @@ public class TestRecipeDAO {
 	
 	@Test(expected=ExistingException.class)
 	public void test_004_createRecipeException() {
+		createTestingRecipe();
 		Recipe r = RecipeDAO.createRecipe("#test testingRecipe", 12);
 		assertNotNull(r);
 	}
