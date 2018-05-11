@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+	/**
+	 * Saves currently logged in user.
+	 */
 	private static User user;
 
 	@Override
@@ -18,6 +21,7 @@ public class Main extends Application {
 
 	@Override
 	public void start(final Stage stage) {
+		// show login view
 		logout();
 	}
 

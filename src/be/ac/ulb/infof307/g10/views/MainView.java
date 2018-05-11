@@ -7,13 +7,13 @@ import javafx.scene.layout.HBox;
 
 /**
  * This class is used to create different views with the same template (border
- * plane with a menu) It is useful to permit a uniformity of the different pages
- * of the application The menu used has a defined structure in the file
- * Menu.fxml (resources package) If it is modified, some method used here should
- * not work anymore. They have to be modified in this case
+ * plane with an eventual menu). Allows uniformity of application views. Menu
+ * root element is expected to be an HBox. If modified, this class can provide
+ * unexpected behavior.
  */
 public class MainView {
 
+	private static final String APP_NAME = "Shooking (shopping and cooking)";
 	private static MyStage stage;
 	private static BorderPane container;
 	private static HBox menu;
@@ -28,7 +28,7 @@ public class MainView {
 			stage.setRoot(container);
 			menu = (HBox) View.MENU.getParent();
 			container.setTop(menu);
-			stage.setTitle("Shooking (shopping and cooking)");
+			stage.setTitle(APP_NAME);
 			stage.show();
 		}
 		DialogView.hide();
@@ -59,10 +59,8 @@ public class MainView {
 	}
 
 	/**
-	 * Disable button in menu with id.
+	 * Disable button in menu with id. Id check is case insensitive.
 	 * 
-	 * @param menu
-	 *            Container within which to look
 	 * @param id
 	 *            Id of button to disable
 	 */

@@ -4,6 +4,9 @@ import javafx.event.EventHandler;
 import javafx.stage.Modality;
 import javafx.stage.WindowEvent;
 
+/**
+ * Manage modal dialog.
+ */
 public class DialogView {
 	private static MyStage stage;
 
@@ -50,7 +53,7 @@ public class DialogView {
 	}
 
 	public static void hide() {
-		if (stage != null) {
+		if (stage != null && stage.isShowing()) {
 			stage.hide();
 		}
 	}

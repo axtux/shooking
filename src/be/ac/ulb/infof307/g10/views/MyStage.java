@@ -9,6 +9,10 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+/**
+ * Extends Stage to ease center manipulation, scene management and hiding on
+ * escape.
+ */
 public class MyStage extends Stage {
 
 	public MyStage() {
