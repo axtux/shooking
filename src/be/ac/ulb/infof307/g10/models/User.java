@@ -59,7 +59,7 @@ public class User extends ModelObject {
 	}
 
 	public boolean isPassword(String password) {
-		return Crypto.sha256(password).equals(hashedPassword);
+		return Crypto.sha256(password  + this.salt ).equals(hashedPassword);
 	}
 
 	public ShoppingList getShoppingList() {
@@ -70,7 +70,7 @@ public class User extends ModelObject {
 	public static User login(String username, String password) throws IncorrectPasswordException, NonExistingException {
 		try {
 			User u = Database.getUser(username);
-			if (u.isPassword(password + u.salt)) {
+			if (u.isPassword(password)) {
 				return u;
 			}
 			throw new IncorrectPasswordException();
