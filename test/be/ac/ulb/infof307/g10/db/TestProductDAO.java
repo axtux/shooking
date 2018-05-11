@@ -7,7 +7,7 @@ import org.junit.Test;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
-public class ProductDAO {
+public class TestProductDAO {
 
 	@Test
 	public void test_001_createProduct() {
@@ -39,9 +39,8 @@ public class ProductDAO {
 	}
 	
 	@Test(expected=NonExistingException.class)
-	public void test_005_getProduct() {
-		createProduct();
-		Product p = ProductDAO.getProduct("test bad product name");
+	public void test_005_getProductException() {
+		Product p = ProductDAO.getProduct("test badProductName");
 		assertNull(p);
 	}
 }

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.models.Shop;
 
 public class TestShopDAO {
@@ -16,7 +17,7 @@ public class TestShopDAO {
 	}
 	
 	@Test(expected=ExistingException.class)
-	public void test_002_createShop() {
+	public void test_002_createShopException() {
 		ShopDAO.createShop("#test createShop", 0., 0.);
 		Shop s = ShopDAO.createShop("#test new shop in same position", 0., 0.);
 		assertNull(s);

@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
+
 public class TestRecipeDAO {
 
 	@Test
@@ -35,7 +37,7 @@ public class TestRecipeDAO {
 	}
 	
 	@Test(expected=NonExistingException.class)
-	public void test_005_getRecipe() {
+	public void test_005_getRecipeException() {
 		Recipe r = RecipeDAO.getRecipe("#test badRecipeName");
 		assertNull(r);
 	}
