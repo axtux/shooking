@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g10.controllers;
 
 import be.ac.ulb.infof307.g10.Main;
+import be.ac.ulb.infof307.g10.utils.TermsOfUse;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -27,10 +28,7 @@ public class TermsOfUseController {
 	}
 
 	public void initialize() {
-		InputStream in = getClass().getResourceAsStream("/terms_of_use.txt");
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-		String content = reader.lines().collect(Collectors.joining("\n"));
-		text.setText(content);
+		text.setText(TermsOfUse.get());
 		// remove focus from text (needed to focus button)
 		text.setFocusTraversable(false);
 		button.requestFocus();
