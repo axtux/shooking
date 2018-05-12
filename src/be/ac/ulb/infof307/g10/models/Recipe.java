@@ -191,11 +191,12 @@ public class Recipe extends ModelObject {
 	public void moveStep(int indexInit, int indexFinal) throws IndexOutOfBoundsException {
 		if (indexInit >= 0 && indexInit < steps.size() && indexFinal >= 0 && indexFinal < steps.size()) {
 			String step = steps.remove(indexInit);
+			this.changed();	//If we dont use this.changed() here, the save function does't working
 			steps.add(indexFinal, step);
+			this.changed();
 		} else {
 			throw new IndexOutOfBoundsException();
 		}
-		this.changed();
 	}
 
 	/**
@@ -207,7 +208,6 @@ public class Recipe extends ModelObject {
 	public void moveUpStep(String step) throws IndexOutOfBoundsException {
 		int index = steps.indexOf(step);
 		moveStep(index, index - 1);
-		this.changed();
 	}
 
 	/**
@@ -219,7 +219,6 @@ public class Recipe extends ModelObject {
 	public void moveDownStep(String step) throws IndexOutOfBoundsException {
 		int index = steps.indexOf(step);
 		moveStep(index, index + 1);
-		this.changed();
 	}
 
 	/**
