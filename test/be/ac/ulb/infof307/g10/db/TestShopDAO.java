@@ -8,7 +8,7 @@ import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.models.Shop;
 
-public class TestShopDAO {
+public class TestShopDAO extends AbstractTestDatabase {
 
 	public static void createShop() {
 		ShopDAO.createShop("#test testingShop", 0., 0.);
