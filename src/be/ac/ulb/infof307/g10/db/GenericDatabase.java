@@ -7,7 +7,6 @@ import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.FlushModeType;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
@@ -18,20 +17,17 @@ import javax.persistence.metamodel.ManagedType;
 
 import be.ac.ulb.infof307.g10.models.ModelObject;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
-import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
-import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 /**
- * Persistence database to manage Objects persistence. This database is generic
- * (as its name suggest), and is working without knowing object type. Feel free
- * to extends this class to add your own queries to your database. Abstract
- * because contains only static methods.
+ * Object to manage ModelObjects persistence. This database is working only with
+ * ModelObjects because save method needs the auto generated id. Feel free to extends
+ * this class to add your own queries to your database. For more informations
+ * about internal behavior, please see official JPA documentation.
  */
 public class GenericDatabase {
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
-	private static boolean autoCommit = true;
-	private static Map<String, String> properties;
+	private static Map<String, String> properties = new HashMap<>();
 
 	/**
 	 * Set property to overwrite any value from persistence.xml
@@ -42,9 +38,6 @@ public class GenericDatabase {
 	 *            Value
 	 */
 	public static void setProp(String name, String value) {
-		if (properties == null) {
-			properties = new HashMap<>();
-		}
 		properties.put(name, value);
 		// force reopening at next use
 		close();
@@ -56,8 +49,8 @@ public class GenericDatabase {
 	 * @return EntityManager
 	 */
 	private static EntityManager getEM() {
-		if (properties == null) {
-			properties = new HashMap<>();
+		if (properties.getOrDefault("name", null) == null) {
+			throw new RuntimeException("You must set name property before using GenericDatabase");
 		}
 		if (emf == null || !emf.isOpen()) {
 			emf = Persistence.createEntityManagerFactory(properties.get("name"), properties);
@@ -71,12 +64,40 @@ public class GenericDatabase {
 	}
 
 	/**
-	 * Return underlying transaction
+	 * Surround
 	 * 
-	 * @return EntityTransaction
+	 * @param transaction
+	 *            Transaction to run
 	 */
-	private static EntityTransaction getET() {
-		return getEM().getTransaction();
+	private static void transaction(Runnable transaction) {
+		EntityManager em = getEM();
+		em.getTransaction().begin();
+		transaction.run();
+		em.getTransaction().commit();
+	}
+
+	private static void query(String query) {
+		transaction(() -> getEM().createQuery(query).executeUpdate());
+	}
+
+	private static void nativeQuery(String query) {
+		transaction(() -> getEM().createNativeQuery(query).executeUpdate());
+	}
+
+	private static void persist(Object o) {
+		transaction(() -> getEM().persist(o));
+	}
+
+	private static void merge(Object o) {
+		transaction(() -> getEM().merge(o));
+	}
+
+	private static void detach(Object o) {
+		transaction(() -> getEM().detach(o));
+	}
+
+	private static void remove(Object o) {
+		transaction(() -> getEM().remove(o));
 	}
 
 	/**
@@ -85,7 +106,7 @@ public class GenericDatabase {
 	 * @return Array of simpleName of the managed classes
 	 */
 	public static Class<?>[] getManagedClasses() {
-		// get managed types from metamodel
+		// get managed types from meta model
 		Set<ManagedType<?>> mt = getEM().getMetamodel().getManagedTypes();
 
 		int size = mt.size();
@@ -97,36 +118,6 @@ public class GenericDatabase {
 		}
 
 		return arr;
-	}
-
-	/**
-	 * Disable autoCommit before doing lots of operations on database. Re-enable
-	 * when finished.
-	 * 
-	 * @param autoCommit
-	 *            New value. Default true.
-	 */
-	public static void setAutoCommit(boolean autoCommit) {
-		GenericDatabase.autoCommit = autoCommit;
-		if (autoCommit) {
-			// commit after starting auto commit
-			getET().commit();
-		} else {
-			// begin transaction before
-			getET().begin();
-		}
-	}
-
-	private static void begin() {
-		if (autoCommit) {
-			getET().begin();
-		}
-	}
-
-	private static void commit() {
-		if (autoCommit) {
-			getET().commit();
-		}
 	}
 
 	private static <T> TypedQuery<T> createQuery(Class<T> type, String query, Object[] params) {
@@ -191,9 +182,7 @@ public class GenericDatabase {
 	 *            Type of objects to delete
 	 */
 	public static void deleteAll(Class<?> type) {
-		begin();
-		getEM().createQuery("delete from " + type.getSimpleName() + " o").executeUpdate();
-		commit();
+		query("delete from " + type.getSimpleName() + " o");
 	}
 
 	/**
@@ -201,22 +190,14 @@ public class GenericDatabase {
 	 */
 	public static void empty() {
 		// disable FK constraints
-		begin();
-		getEM().createNativeQuery("SET FOREIGN_KEY_CHECKS=0").executeUpdate();
-		commit();
+		nativeQuery("SET FOREIGN_KEY_CHECKS=0");
 		// clear links between objects and database
 		getEM().clear();
-		// start batch operations
-		setAutoCommit(false);
 		for (Class<?> c : getManagedClasses()) {
 			deleteAll(c);
 		}
-		// end batch operations
-		setAutoCommit(true);
 		// enable FK constraints
-		begin();
-		getEM().createNativeQuery("SET FOREIGN_KEY_CHECKS=1").executeUpdate();
-		commit();
+		nativeQuery("SET FOREIGN_KEY_CHECKS=1");
 	}
 
 	public static boolean isEmpty() {
@@ -229,40 +210,6 @@ public class GenericDatabase {
 	}
 
 	/**
-	 * Insert an object into database. Any further modification will be
-	 * reflected into database unless you call the {@link #detach(Object)}
-	 * method.
-	 * 
-	 * @param o
-	 *            Object to insert
-	 */
-	private static void insert(Object o) throws ExistingException {
-		try {
-			begin();
-			getEM().persist(o);
-			commit();
-		} catch (RollbackException e) {
-			throw new ExistingException(e);
-		}
-	}
-
-	/**
-	 * Update detached object into database.
-	 * 
-	 * @param o
-	 *            Object to update
-	 */
-	private static void update(Object o) throws NonExistingException {
-		try {
-			begin();
-			getEM().merge(o);
-			commit();
-		} catch (RollbackException e) {
-			throw new NonExistingException(e);
-		}
-	}
-
-	/**
 	 * Save object into database.
 	 * 
 	 * @param o
@@ -271,39 +218,28 @@ public class GenericDatabase {
 	public static void save(ModelObject o) throws DatabaseException {
 		try {
 			if (o.getId() == null) {
-				insert(o);
+				persist(o);
 			} else {
-				update(o);
+				merge(o);
 			}
-		} catch (ExistingException | NonExistingException e) {
+		} catch (RollbackException e) {
 			throw new DatabaseException(e);
 		}
 		detach(o);
 	}
 
-	/**
-	 * Delete object from database.
-	 * 
-	 * @param o
-	 *            Object to delete
-	 */
-	public static void delete(Object o) throws NoResultException {
-		begin();
-		getEM().remove(o);
-		commit();
+	public static void autosave(ModelObject o) {
+		save(o);
+		o.addObserver((observable, arg) -> GenericDatabase.save(o));
 	}
 
-	/**
-	 * Detach object from database. Any further modification of the object will
-	 * not be saved into database unless you use {@link #update(Object)} method.
-	 * 
-	 * @param o
-	 *            Object to detach
-	 */
-	private static void detach(Object o) {
-		begin();
-		getEM().detach(o);
-		commit();
+	public static void delete(ModelObject o) throws DatabaseException {
+		try {
+			merge(o);
+			remove(o);
+		} catch (RollbackException e) {
+			throw new DatabaseException(e);
+		}
 	}
 
 	public static void close() {
