@@ -113,8 +113,8 @@ public class Recipe extends ModelObject {
 	}
 
 	public void setName(String name) {
-		this.changed();
 		this.name = name;
+		this.changed();
 	}
 
 	public int getQuantity(Product ingredient) {

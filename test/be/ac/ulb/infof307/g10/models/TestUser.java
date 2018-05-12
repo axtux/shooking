@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.db.ProductDAO;
 import be.ac.ulb.infof307.g10.db.UserDAO;
 import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
@@ -16,11 +17,8 @@ public class TestUser extends AbstractTestDatabase {
 		User u = UserDAO.userSignup("test", "test");
 		ShoppingList sl = u.getShoppingList();
 
-		Product p1 = new Product("test1", 1, "unit");
-		Product p2 = new Product("test2", 2, "unit");
-		// products have to be in database
-		p1.save();
-		p2.save();
+		Product p1 = ProductDAO.createProduct("test1", 1, "unit");
+		Product p2 = ProductDAO.createProduct("test2", 2, "unit");
 
 		sl.setProduct(p1, 42);
 		sl.setProduct(p2, 13);

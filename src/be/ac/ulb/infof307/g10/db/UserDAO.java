@@ -34,10 +34,6 @@ public class UserDAO extends AbstractDAO {
 	}
 
 	public static User getUser(String username) throws NonExistingException {
-		try{
-			return GenericDatabase.getOne(User.class, "SELECT b from User b where b.username LIKE ?1", username);
-		} catch (NoResultException e) {
-			throw new NonExistingException(e);
-		}
+		return GenericDatabase.getOne(User.class, "SELECT b from User b where b.username LIKE ?1", username);
 	}
 }

@@ -23,14 +23,14 @@ public class ProductDAO extends AbstractDAO {
 	}
 
 	public static List<Product> getAllProducts() throws NonExistingException {
-		try{
-			return GenericDatabase.getAll(Product.class);
-		} catch (NoResultException e) {
-			throw new NonExistingException(e);
-		}
+		return GenericDatabase.getAll(Product.class);
 	}
 
 	public static Product getProduct(String name) throws NonExistingException {
-		return GenericDatabase.getOne(Product.class, "SELECT b FROM Product b WHERE b.name LIKE ?1", name);
+		try{
+			return GenericDatabase.getOne(Product.class, "SELECT b FROM Product b WHERE b.name LIKE ?1", name);
+		} catch (NoResultException e) {
+			throw new NonExistingException(e);
+		}
 	}
 }

@@ -142,7 +142,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		r.removeIngredient(p2);
 		assertTrue(r.getAllIngredients().isEmpty());
 	}
-
+	
 	@Test
 	public void test_017_setIngredientQuantity() {
 		r.setIngredientQuantity(p1, (float) 2.);
