@@ -22,7 +22,7 @@ public class TestShopDAO extends AbstractTestDatabase {
 	
 	@Test(expected=ExistingException.class)
 	public void test_002_createShopException() {
-		ShopDAO.createShop("#test createShop", 0., 0.);
+		createShop();
 		Shop s = ShopDAO.createShop("#test new shop in same position", 0., 0.);
 		assertNull(s);
 	}

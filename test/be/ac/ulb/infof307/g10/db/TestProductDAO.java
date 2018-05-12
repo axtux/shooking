@@ -7,7 +7,7 @@ import org.junit.Test;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
-public class TestProductDAO {
+public class TestProductDAO extends AbstractTestDatabase {
 
 	@Test
 	public void test_001_createProduct() {

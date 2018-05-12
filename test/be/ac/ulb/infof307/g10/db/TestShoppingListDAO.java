@@ -8,7 +8,7 @@ import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
-public class TestShoppingListDAO {
+public class TestShoppingListDAO extends AbstractTestDatabase {
 
 	public static void createTestingShoppingList() {
 		ShoppingListDAO.createShoppingList("#test testingShoppingList");

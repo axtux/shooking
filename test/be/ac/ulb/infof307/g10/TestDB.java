@@ -68,21 +68,6 @@ public class TestDB {
 	}
 
 	@Test
-	public void test_0091_updateShopStock() {
-		Shop shop = ShopDAO.getShop("#DB Delhaize");
-
-		Arrays.asList(shop.getStock());
-		Product p = ProductDAO.getProduct("#DB 6 Apples");
-		int quantity = shop.getStock().getQuantity(p);
-
-		shop.getStock().setProduct(p, quantity - 3);
-		shop.save();
-
-		ShopDAO.getShop("#DB Delhaize");
-		ProductDAO.getProduct("#DB 6 Apples");
-	}
-
-	@Test
 	public void test_0110_CreateList() {
 		ShoppingList l = new ShoppingList();
 		l.addProduct(ProductDAO.getProduct("#DB 6 Apples"), 1);

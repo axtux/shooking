@@ -8,7 +8,7 @@ import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
-public class TestRecipeDAO {
+public class TestRecipeDAO extends AbstractTestDatabase {
 
 	public static void createTestingRecipe() {
 		RecipeDAO.createRecipe("#test testingRecipe", 12);
