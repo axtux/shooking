@@ -42,16 +42,12 @@ public class RecipeDAO extends AbstractDAO {
 		try{
 			return GenericDatabase.getOne(Recipe.class, "SELECT b FROM Recipe b WHERE b.name LIKE ?1", name);
 		} catch (NoResultException e) {
-			throw new NonExistingException();
+			throw new NonExistingException(e);
 		}
 	}
 
 	public static List<Recipe> getAllRecipes() throws NonExistingException {
-		try {
-			return GenericDatabase.getAll(Recipe.class);
-		} catch (NoResultException e) {
-			throw new NonExistingException();
-		}
+		return GenericDatabase.getAll(Recipe.class);
 	}
 	
 }

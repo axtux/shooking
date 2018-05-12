@@ -40,7 +40,7 @@ public class TestUser extends AbstractTestDatabase {
 		u.save();
 		Database.close();
 
-		User o = Database.getUser("test");
+		User o = UserDAO.getUser("test");
 		Assert.assertEquals(2, o.getShoppingList().size());
 	}
 
@@ -50,7 +50,7 @@ public class TestUser extends AbstractTestDatabase {
 		u.getShoppingList().save();
 		Database.close();
 
-		User o = Database.getUser("test");
+		User o = UserDAO.getUser("test");
 		Assert.assertEquals(2, o.getShoppingList().size());
 	}
 }

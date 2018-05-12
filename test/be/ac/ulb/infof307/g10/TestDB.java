@@ -5,6 +5,7 @@ import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.db.ProductDAO;
 import be.ac.ulb.infof307.g10.db.RecipeDAO;
 import be.ac.ulb.infof307.g10.db.ShopDAO;
+import be.ac.ulb.infof307.g10.db.UserDAO;
 import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
@@ -48,7 +49,7 @@ public class TestDB {
 
 	@Test(expected = NoResultException.class)
 	public void test_0050_GetUser_noResultExceptionExpected() {
-		Assert.assertNotEquals(null, Database.getUser("fzvsvsfvsfvsf"));
+		Assert.assertNotEquals(null, UserDAO.getUser("fzvsvsfvsfvsf"));
 	}
 
 	@Test
@@ -77,7 +78,7 @@ public class TestDB {
 
 	@Test(expected = NoResultException.class)
 	public void test_0991_DeleteUser_noResultExceptionExpected() {
-		Database.delete((Database.getUser("#DB lala")));
+		Database.delete((UserDAO.getUser("#DB lala")));
 	}
 
 	@Test

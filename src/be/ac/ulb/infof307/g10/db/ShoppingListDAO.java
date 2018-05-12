@@ -28,15 +28,11 @@ public class ShoppingListDAO extends AbstractDAO {
 		try {
 			return GenericDatabase.getOne(ShoppingList.class, "SELECT b FROM ShoppingList b WHERE b.name LIKE ?1", name);
 		} catch (NoResultException e) {
-			throw new NonExistingException();
+			throw new NonExistingException(e);
 		}
 	}
 
 	public static List<ShoppingList> getAllShoppingList() throws NonExistingException {
-		try { 
-			return GenericDatabase.getAll(ShoppingList.class);
-		} catch (NoResultException e) {
-			throw new NonExistingException();
-		}
+		return GenericDatabase.getAll(ShoppingList.class);
 	}
 }

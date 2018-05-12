@@ -81,16 +81,12 @@ public class ShopDAO extends AbstractDAO {
 		try{
 			return GenericDatabase.getOne(Shop.class, "SELECT b FROM Shop b WHERE b.name LIKE ?1", name);
 		} catch (NoResultException e) {
-			throw new NonExistingException();
+			throw new NonExistingException(e);
 		}
 	}
 
 	public static List<Shop> getAllShops() throws NonExistingException {
-		try{
-			return GenericDatabase.getAll(Shop.class);
-		} catch (NoResultException e) {
-			throw new NonExistingException();
-		}
+		return GenericDatabase.getAll(Shop.class);
 	}
 	
 }
