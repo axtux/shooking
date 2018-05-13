@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.db.GenericDatabase;
 import be.ac.ulb.infof307.g10.db.ProductDAO;
 import be.ac.ulb.infof307.g10.db.ShopDAO;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
@@ -26,6 +27,7 @@ public class TestShop extends AbstractTestDatabase {
 		Stock stock = new Stock();
 		stock.addProduct(product, 1);
 		shop.setStock(stock);
+		GenericDatabase.close();
 	}
 	
 	@Test
@@ -49,21 +51,4 @@ public class TestShop extends AbstractTestDatabase {
 		Shop shop = ShopDAO.getShop("#test testingShop");
 		assertEquals(shop.getStock().size(), 1);
 	}
-	
-
-	/*
-	@Test
-	public void test_0091_updateShopStock() {
-		Shop shop = ShopDAO.getShop("#DB Delhaize");
-
-		Arrays.asList(shop.getStock());
-		Product p = ProductDAO.getProduct("#DB 6 Apples");
-		int quantity = shop.getStock().getQuantity(p);
-
-		shop.getStock().setProduct(p, quantity - 3);
-		shop.save();
-
-		ShopDAO.getShop("#DB Delhaize");
-		ProductDAO.getProduct("#DB 6 Apples");
-	}*/
 }

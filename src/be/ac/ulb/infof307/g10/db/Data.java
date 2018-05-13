@@ -86,8 +86,8 @@ public class Data {
 	public static List<Recipe> getRecipes() {
 		ArrayList<Recipe> list = new ArrayList<>();
 
-		list.add(new Recipe("Omelette au fromage", 1));
-		list.add(new Recipe("Pancake tombé dans la neige avant le 31 Décembre", 1));
+		list.add(RecipeDAO.createRecipe("Omelette au fromage", 1));
+		list.add(RecipeDAO.createRecipe("Pancake tombé dans la neige avant le 31 Décembre", 1));
 
 		return list;
 	}
@@ -95,11 +95,11 @@ public class Data {
 	public static List<Product> getProducts() {
 		ArrayList<Product> list = new ArrayList<>();
 
-		list.add(new Product("Pasta", 500, "g"));
-		list.add(new Product("Rice", 500, "g"));
-		list.add(new Product("Bread", 1, "unit"));
-		list.add(new Product("Banana", 1, "unit"));
-		list.add(new Product("Tomato", 1, "unit"));
+		list.add(ProductDAO.createProduct("Pasta", 500, "g"));
+		list.add(ProductDAO.createProduct("Rice", 500, "g"));
+		list.add(ProductDAO.createProduct("Bread", 1, "unit"));
+		list.add(ProductDAO.createProduct("Banana", 1, "unit"));
+		list.add(ProductDAO.createProduct("Tomato", 1, "unit"));
 
 		return list;
 	}

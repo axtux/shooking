@@ -28,6 +28,7 @@ public class ShoppingList extends ModelObject {
 	
 	public ShoppingList(String name) {
 		this.name = name;
+		productsAndQuantity = new HashMap<>();
 	}
 
 	/**
@@ -47,7 +48,6 @@ public class ShoppingList extends ModelObject {
 
 	public void addProduct(Product p, int quantity) {
 		setProduct(p, quantity + getQuantity(p));
-		this.changed();
 	}
 
 	public void removeProduct(Product p) {
