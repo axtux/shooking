@@ -1,6 +1,6 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import be.ac.ulb.infof307.g10.models.Recipe;
+import be.ac.ulb.infof307.g10.db.RecipeDAO;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.views.DialogView;
 import be.ac.ulb.infof307.g10.views.IntField;
@@ -35,8 +35,7 @@ public class CreateRecipeController {
 		button.setDisable(true);
 
 		try {
-			Recipe r = new Recipe(name.getText(), serving.getInt());
-			r.save();
+			RecipeDAO.createRecipe(name.getText(), serving.getInt());
 			DialogView.hide();
 		} catch (NullPointerException | IllegalArgumentException e) {
 			printLabel.setText(e.getMessage());

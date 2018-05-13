@@ -63,7 +63,7 @@ public class RecipeController extends AbstractProductController {
 		Product p = productsCombo.getSelectionModel().getSelectedItem();
 		int quantity = productsAmountField.getInt();
 		actualRecipe.addIngredient(p, quantity);
-		changed();
+		updateTable();
 		productsTable.getSelectionModel().select(p);
 	}
 
@@ -82,14 +82,14 @@ public class RecipeController extends AbstractProductController {
 			return;
 		}
 		actualRecipe.removeIngredient(productsTableSelected);
-		changed();
+		updateTable();
 
 	}
 
 	@FXML
 	private void productsClear() {
 		actualRecipe.clearIngredients();
-		changed();
+		updateTable();
 	}
 
 	@FXML
@@ -100,7 +100,7 @@ public class RecipeController extends AbstractProductController {
 		}
 		stepTF.clear();
 		actualRecipe.addStep(step);
-		changed();
+		updateTable();
 		stepsTable.getSelectionModel().select(step);
 	}
 
@@ -111,7 +111,7 @@ public class RecipeController extends AbstractProductController {
 		}
 		String step = stepTF.getText();
 		actualRecipe.setStep(selectedStep, step);
-		changed();
+		updateTable();
 		stepsTable.getSelectionModel().select(step);
 	}
 
@@ -121,7 +121,7 @@ public class RecipeController extends AbstractProductController {
 			return;
 		}
 		actualRecipe.removeStep(selectedStep);
-		changed();
+		updateTable();
 	}
 
 	@FXML
@@ -129,14 +129,14 @@ public class RecipeController extends AbstractProductController {
 		stepsTable.getSelectionModel().clearSelection();
 		stepTF.clear();
 		actualRecipe.clearSteps();
-		changed();
+		updateTable();
 	}
 
 	@FXML
 	private void moveUpStep() {
 		String s = selectedStep;
 		actualRecipe.moveUpStep(s);
-		changed();
+		updateTable();
 		stepsTable.getSelectionModel().select(s);
 	}
 
@@ -144,7 +144,7 @@ public class RecipeController extends AbstractProductController {
 	private void moveDownStep() {
 		String s = selectedStep;
 		actualRecipe.moveDownStep(s);
-		changed();
+		updateTable();
 		stepsTable.getSelectionModel().select(s);
 	}
 
@@ -161,7 +161,7 @@ public class RecipeController extends AbstractProductController {
 		}
 		Recipe r = actualRecipe;
 		actualRecipe.setName(newValue);
-		changed();
+		updateTable();
 		updateRecipes();
 		recipesListCombo.getSelectionModel().select(r);
 	}
@@ -203,11 +203,6 @@ public class RecipeController extends AbstractProductController {
 		} else {
 			peopleTF.setInt(actualRecipe.getServings());
 		}
-		updateTable();
-	}
-
-	private void changed() {
-		actualRecipe.save();
 		updateTable();
 	}
 

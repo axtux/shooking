@@ -40,14 +40,20 @@ public class RecipeDAO extends AbstractDAO {
 
 	public static Recipe getRecipe(String name) throws NonExistingException {
 		try{
-			return GenericDatabase.getOne(Recipe.class, "SELECT b FROM Recipe b WHERE b.name LIKE ?1", name);
+			Recipe r = GenericDatabase.getOne(Recipe.class, "SELECT b FROM Recipe b WHERE b.name LIKE ?1", name);
+			r.addObserver(SaverObserver.getInstance());
+			return r;
 		} catch (NoResultException e) {
 			throw new NonExistingException(e);
 		}
 	}
 
 	public static List<Recipe> getAllRecipes() throws NonExistingException {
-		return GenericDatabase.getAll(Recipe.class);
+		List<Recipe> lr = GenericDatabase.getAll(Recipe.class);
+		for (Recipe r : lr){
+			r.addObserver(SaverObserver.getInstance());
+		}
+		return lr;
 	}
 	
 }

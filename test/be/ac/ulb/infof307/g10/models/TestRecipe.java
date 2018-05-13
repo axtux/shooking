@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
+import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.db.GenericDatabase;
 import be.ac.ulb.infof307.g10.db.ProductDAO;
 import be.ac.ulb.infof307.g10.db.RecipeDAO;
@@ -271,5 +272,15 @@ public class TestRecipe extends AbstractTestDatabase {
 
 		assertEquals(slTemp.getQuantity(p1), 2);
 		assertEquals(slTemp.getQuantity(p2), 3);
+	}
+
+	@Test
+	public void test_0023_persistenceDB() {
+		Recipe re = RecipeDAO.createRecipe("#test persistenceDB");
+		Database.close();
+		re = RecipeDAO.getRecipe("#test persistenceDB");
+		re.setName("#test persistenceDB Rename");
+		Database.close();
+		re = RecipeDAO.getRecipe("#test persistenceDB Rename");
 	}
 }
