@@ -3,13 +3,10 @@ package be.ac.ulb.infof307.g10.models;
 import org.junit.Assert;
 import org.junit.Test;
 
+import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.db.ProductDAO;
 import be.ac.ulb.infof307.g10.db.UserDAO;
-import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
-import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
-import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 public class TestUser extends AbstractTestDatabase {
 
