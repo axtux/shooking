@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.NoResultException;
 
 import be.ac.ulb.infof307.g10.models.Shop;
-import be.ac.ulb.infof307.g10.models.Stock;
 import be.ac.ulb.infof307.g10.models.database.GenericDatabase;
 import be.ac.ulb.infof307.g10.models.database.SaverObserver;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
@@ -27,25 +26,7 @@ public class ShopDAO {
 	 * @return Created shop
 	 */
 	public static Shop createShop(String name, double latitude, double longitude) {
-		return createShop(name, latitude, longitude, Shop.defaultSchedule());
-	}
-
-	/**
-	 * Create shop into database with empty stock
-	 * 
-	 * @param name
-	 *            Shop name
-	 * @param latitude
-	 *            Position latitude
-	 * @param longitude
-	 *            Position longitude
-	 * @param schedule
-	 *            Weekly schedule. Length must be 7. 0 for Monday, 1 for
-	 *            Tuesday, ..., and 6 for Sunday
-	 * @return Created shop
-	 */
-	public static Shop createShop(String name, double latitude, double longitude, String[] schedule) {
-		return createShop(name, latitude, longitude, schedule, new Stock());
+		return createShop(name, latitude, longitude, null);
 	}
 
 	/**
@@ -58,18 +39,12 @@ public class ShopDAO {
 	 * @param longitude
 	 *            Position longitude
 	 * @param schedule
-	 *            Weekly schedule. Length must be 7.
-	 * @param stock
-	 *            Shop stock 0 for Monday, 1 for Tuesday, ..., and 6 for Sunday
+	 *            Weekly schedule. Length must be 7. 0 for Monday, 1 for Tuesday, ..., and 6 for Sunday
 	 * @return Created shop
 	 */
-	public static Shop createShop(String name, double latitude, double longitude, String[] schedule, Stock stock) throws ExistingException{
-		String[] safeSchedule = schedule;
-		if (safeSchedule == null) {
-			safeSchedule = Shop.defaultSchedule();
-		}
+	public static Shop createShop(String name, double latitude, double longitude, String[] schedule) throws ExistingException{
 		try {
-			Shop s = new Shop(name, latitude, longitude, safeSchedule, stock);
+			Shop s = new Shop(name, latitude, longitude, schedule);
 			s.addObserver(SaverObserver.getInstance());
 			return s;
 		} catch (DatabaseException e) {

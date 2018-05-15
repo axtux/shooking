@@ -40,28 +40,42 @@ public class Shop extends ModelObject {
 	 * 
 	 * @param name
 	 *            Shop name
-	 * @param schedule
-	 *            Weekly schedule. Length must be 7.
 	 * @param latitude
 	 *            Position latitude
 	 * @param longitude
 	 *            Position longitude
-	 * @param stock
-	 *            Shop stock
 	 */
-	public Shop(String name, double latitude, double longitude, String[] schedule, Stock stock) {
-		this.name = name;
+	public Shop(String name, double latitude, double longitude) {
+		this(name, latitude, longitude, null);
+	}
 
-		if (schedule.length != 7) {
-			throw new IllegalArgumentException("schedule length must be 7");
-		} else if (name.trim().equals("")) {
-			throw new IllegalArgumentException("the name must not be empty");
+	/**
+	 * Create shop
+	 * 
+	 * @param name
+	 *            Shop name
+	 * @param latitude
+	 *            Position latitude
+	 * @param longitude
+	 *            Position longitude
+	 * @param schedule
+	 *            Weekly schedule. Length must be 7.
+	 */
+	public Shop(String name, double latitude, double longitude, String[] schedule) {
+		if (name.trim().isEmpty()) {
+			throw new IllegalArgumentException("name must not be empty");
 		}
-
-		this.schedule = schedule.clone();
+		this.name = name;
 		this.latitude = latitude;
 		this.longitude = longitude;
-		this.stock = stock;
+
+		if (schedule == null) {
+			schedule = defaultSchedule();
+		} else if (schedule.length != 7) {
+			throw new IllegalArgumentException("schedule length must be 7");
+		}
+		this.schedule = schedule.clone();
+		this.stock = new Stock();
 	}
 
 	public String getName() {
