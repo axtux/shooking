@@ -49,16 +49,6 @@ public class Recipe extends ModelObject {
 	 * 
 	 * @param name
 	 *            Name of the Recipe
-	 */
-	public Recipe(String name) {
-		this(name, 1);
-	}
-
-	/**
-	 * Constructor for a new Recipe
-	 * 
-	 * @param name
-	 *            Name of the Recipe
 	 * @param servings
 	 *            Number of people for the recipe
 	 */

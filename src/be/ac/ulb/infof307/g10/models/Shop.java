@@ -121,11 +121,6 @@ public class Shop extends ModelObject {
 		return stock;
 	}
 
-	public void setStock(Stock stock) {
-		this.stock = stock;
-		this.changed();
-	}
-
 	public static String[] defaultSchedule() {
 		String[] s = new String[7];
 		for (int i = 0; i < s.length; i++) {
