@@ -189,10 +189,8 @@ public class TestRecipe extends AbstractTestDatabase {
 		r2.addIngredient(p2, (float) 3.);
 
 		ShoppingList slTemp = r2.toShoppingList();
-		System.out.println(slTemp.getProductsAndQuantity());
-		for (Product p : slTemp.getProductsAndQuantity().keySet()) {
-			System.out.println(p);
-			System.out.println(slTemp.getProductsAndQuantity().get(p));
-		}
+
+		assertEquals(slTemp.getQuantity(p1), 2);
+		assertEquals(slTemp.getQuantity(p2), 3);
 	}
 }

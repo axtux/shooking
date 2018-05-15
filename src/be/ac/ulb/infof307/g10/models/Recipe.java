@@ -317,18 +317,14 @@ public class Recipe extends ModelObject {
 		return this.servings;
 	}
 
-	public Map<Product, Float> getIngredients() {
-		return ingredients;
-	}
 
 	public ShoppingList toShoppingList(){
 		ShoppingList retShoppingList = new ShoppingList();
-		for (Product p : getAllIngredients().keySet()) {
-			int quantityToHave = Math.round(this.getAllIngredients().get(p));
+		for (Product p : ingredients.keySet()) {
+			int quantityToHave = getQuantity(p);
 			int q = 0;
 			while (p.getSize()*q < quantityToHave ){
 				q ++;
-				System.out.println(q);
 			}
 			retShoppingList.addProduct(p, q);
 		}
