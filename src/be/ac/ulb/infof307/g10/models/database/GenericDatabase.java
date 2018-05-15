@@ -237,7 +237,7 @@ public class GenericDatabase {
 	 * @param o
 	 *            Object to save
 	 */
-	public static void save(List<ModelObject> ol) throws DatabaseException {
+	public static void save(Iterable<? extends ModelObject> ol) throws DatabaseException {
 		for (ModelObject o : ol) {
 			save(o);
 		}
@@ -248,7 +248,7 @@ public class GenericDatabase {
 		o.addObserver((observable, arg) -> GenericDatabase.save(o));
 	}
 
-	public static void autosave(List<ModelObject> ol) {
+	public static void autosave(Iterable<? extends ModelObject> ol) {
 		for (ModelObject o : ol) {
 			autosave(o);
 		}
