@@ -3,9 +3,11 @@ package be.ac.ulb.infof307.g10.models.dao;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
+import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.dao.UserDAO;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
@@ -13,6 +15,44 @@ import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 public class TestUserDAO extends AbstractTestDatabase {
+
+	@Test
+	public void signupTest() {
+		User u = UserDAO.userSignup("test", "test");
+		Assert.assertEquals("test", u.getUsername());
+	}
+
+	@Test
+	public void signupPersistenceTest() {
+		User u = UserDAO.userSignup("test", "test");
+		Database.close();
+		u = UserDAO.getUser("test");
+		Assert.assertNotNull(u);
+	}
+
+	@Test(expected = ExistingException.class)
+	public void signupExistingUserExceptionTest() {
+		UserDAO.userSignup("test", "test");
+		UserDAO.userSignup("test", "test");
+	}
+
+	@Test
+	public void loginTest() {
+		UserDAO.userSignup("test", "test");
+		User u = UserDAO.userLogin("test", "test");
+		Assert.assertEquals("test", u.getUsername());
+	}
+
+	@Test(expected = IncorrectPasswordException.class)
+	public void loginIncorrectPasswordExceptionTest() {
+		UserDAO.userSignup("test", "test");
+		UserDAO.userLogin("test", "badPassword");
+	}
+
+	@Test(expected = NonExistingException.class)
+	public void loginNonExistingUserExceptionTest() {
+		UserDAO.userLogin("badUser", "anyPassword");
+	}
 
 	public static void createTestingUser() {
 		UserDAO.userSignup("#test testingUser", "very good password");

@@ -6,6 +6,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.models.Product;
+import be.ac.ulb.infof307.g10.models.User;
+import be.ac.ulb.infof307.g10.models.dao.UserDAO;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 
 public class TestGenericDatabase extends AbstractTestDatabase {
 
@@ -63,4 +66,18 @@ public class TestGenericDatabase extends AbstractTestDatabase {
 		pl = GenericDatabase.getAll(Product.class);
 		Assert.assertEquals(0, pl.size());
 	}
+
+	@Test
+	public void recoverAfterError() {
+		UserDAO.userSignup("test", "test");
+		try {
+			UserDAO.userSignup("test", "test");
+			assert false;
+		} catch (ExistingException e) {
+			assert true;
+		}
+		User u = UserDAO.userSignup("test2", "test2");
+		Assert.assertNotNull(u);
+	}
+
 }
