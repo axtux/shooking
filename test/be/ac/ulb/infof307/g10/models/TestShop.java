@@ -4,10 +4,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
-import be.ac.ulb.infof307.g10.db.GenericDatabase;
 import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
 import be.ac.ulb.infof307.g10.models.dao.ShopDAO;
+import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
+import be.ac.ulb.infof307.g10.models.database.GenericDatabase;
 
 public class TestShop extends AbstractTestDatabase {
 

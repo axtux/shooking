@@ -11,11 +11,11 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
-import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.db.GenericDatabase;
 import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
 import be.ac.ulb.infof307.g10.models.dao.RecipeDAO;
+import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
+import be.ac.ulb.infof307.g10.models.database.Database;
+import be.ac.ulb.infof307.g10.models.database.GenericDatabase;
 
 public class TestRecipe extends AbstractTestDatabase {
 

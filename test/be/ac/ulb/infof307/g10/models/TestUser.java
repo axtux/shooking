@@ -3,10 +3,10 @@ package be.ac.ulb.infof307.g10.models;
 import org.junit.Assert;
 import org.junit.Test;
 
-import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
-import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
 import be.ac.ulb.infof307.g10.models.dao.UserDAO;
+import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
+import be.ac.ulb.infof307.g10.models.database.Database;
 
 public class TestUser extends AbstractTestDatabase {
 

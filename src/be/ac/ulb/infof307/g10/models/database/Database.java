@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g10.db;
+package be.ac.ulb.infof307.g10.models.database;
 
 /**
  * Adding some queries to GenericDatabase to meet the need of our custom

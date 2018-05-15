@@ -2,8 +2,8 @@ package be.ac.ulb.infof307.g10.models.dao;
 
 import javax.persistence.NoResultException;
 
-import be.ac.ulb.infof307.g10.db.GenericDatabase;
 import be.ac.ulb.infof307.g10.models.User;
+import be.ac.ulb.infof307.g10.models.database.GenericDatabase;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;

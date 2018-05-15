@@ -1,7 +1,7 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.User;
+import be.ac.ulb.infof307.g10.models.database.Database;
 import be.ac.ulb.infof307.g10.views.MainView;
 import be.ac.ulb.infof307.g10.views.View;
 import javafx.application.Application;

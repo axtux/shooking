@@ -4,9 +4,9 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
-import be.ac.ulb.infof307.g10.db.GenericDatabase;
-import be.ac.ulb.infof307.g10.db.SaverObserver;
 import be.ac.ulb.infof307.g10.models.Product;
+import be.ac.ulb.infof307.g10.models.database.GenericDatabase;
+import be.ac.ulb.infof307.g10.models.database.SaverObserver;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 public class ProductDAO {

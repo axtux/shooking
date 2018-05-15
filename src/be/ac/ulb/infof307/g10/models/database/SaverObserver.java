@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g10.db;
+package be.ac.ulb.infof307.g10.models.database;
 
 import java.util.Observable;
 import java.util.Observer;
