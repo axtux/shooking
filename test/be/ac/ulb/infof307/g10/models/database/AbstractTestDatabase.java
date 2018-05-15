@@ -24,13 +24,13 @@ public abstract class AbstractTestDatabase {
 	@Before
 	public void before() {
 		// clean database
-		GenericDatabase.empty();
+		Database.empty();
 	}
 	
 	@AfterClass
 	public static void afterClass() {
 		// clean database
-		GenericDatabase.empty();
+		Database.empty();
 	}
 
 }

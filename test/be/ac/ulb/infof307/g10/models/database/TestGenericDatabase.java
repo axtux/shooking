@@ -14,14 +14,14 @@ public class TestGenericDatabase extends AbstractTestDatabase {
 
 	public static Product initProduct() {
 		Product p = new Product("Pasta", 500, "g");
-		GenericDatabase.save(p);
-		GenericDatabase.close();
+		Database.save(p);
+		Database.close();
 		return p;
 	}
 
 	public static List<Product> initList() {
 		Product p = initProduct();
-		List<Product> pl = GenericDatabase.getAll(Product.class);
+		List<Product> pl = Database.getAll(Product.class);
 		Assert.assertEquals(1, pl.size());
 		Assert.assertEquals(p, pl.get(0));
 		return pl;
@@ -30,7 +30,7 @@ public class TestGenericDatabase extends AbstractTestDatabase {
 	@Test
 	public void saveGetOne() {
 		Product p = initProduct();
-		Product r = GenericDatabase.getOne(Product.class, "SELECT r FROM Product r WHERE r.name LIKE ?1", p.getName());
+		Product r = Database.getOne(Product.class, "SELECT r FROM Product r WHERE r.name LIKE ?1", p.getName());
 		Assert.assertEquals(p, r);
 	}
 
@@ -43,27 +43,27 @@ public class TestGenericDatabase extends AbstractTestDatabase {
 	@Test
 	public void delete() {
 		List<Product> pl = initList();
-		GenericDatabase.delete(pl.get(0));
-		GenericDatabase.close();
-		pl = GenericDatabase.getAll(Product.class);
+		Database.delete(pl.get(0));
+		Database.close();
+		pl = Database.getAll(Product.class);
 		Assert.assertEquals(0, pl.size());
 	}
 
 	@Test
 	public void deleteAll() {
 		List<Product> pl = initList();
-		GenericDatabase.deleteAll(Product.class);
-		GenericDatabase.close();
-		pl = GenericDatabase.getAll(Product.class);
+		Database.deleteAll(Product.class);
+		Database.close();
+		pl = Database.getAll(Product.class);
 		Assert.assertEquals(0, pl.size());
 	}
 
 	@Test
 	public void empty() {
 		List<Product> pl = initList();
-		GenericDatabase.empty();
-		GenericDatabase.close();
-		pl = GenericDatabase.getAll(Product.class);
+		Database.empty();
+		Database.close();
+		pl = Database.getAll(Product.class);
 		Assert.assertEquals(0, pl.size());
 	}
 

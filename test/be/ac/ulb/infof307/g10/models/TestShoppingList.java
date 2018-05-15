@@ -9,7 +9,7 @@ import org.junit.Test;
 import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
 import be.ac.ulb.infof307.g10.models.dao.ShoppingListDAO;
 import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
-import be.ac.ulb.infof307.g10.models.database.GenericDatabase;
+import be.ac.ulb.infof307.g10.models.database.Database;
 
 public class TestShoppingList extends AbstractTestDatabase {
 	
@@ -44,7 +44,7 @@ public class TestShoppingList extends AbstractTestDatabase {
 		Product p2 = ProductDAO.createProduct("#test testingProduct2", 1, "unit");
 		sl.setProduct(p1, 1);
 		sl.setProduct(p2, 2);
-		GenericDatabase.close();
+		Database.close();
 		sl = ShoppingListDAO.getShoppingList("#test testingSL");
 		p1 = ProductDAO.getProduct("#test testingProduct1");
 		p2 = ProductDAO.getProduct("#test testingProduct2");
@@ -69,7 +69,7 @@ public class TestShoppingList extends AbstractTestDatabase {
 		sl.addProduct(p1, 1);
 		sl.addProduct(p1, 1);
 		sl.addProduct(p1, 1);
-		GenericDatabase.close();
+		Database.close();
 		sl = ShoppingListDAO.getShoppingList("#test testingSL");
 		p1 = ProductDAO.getProduct("#test testingProduct1");
 		Assert.assertEquals(3, sl.getQuantity(p1));
@@ -95,7 +95,7 @@ public class TestShoppingList extends AbstractTestDatabase {
 		sl.setProduct(p1, 1);
 		sl.setProduct(p2, 2);
 		sl.removeProduct(p1);
-		GenericDatabase.close();
+		Database.close();
 		sl = ShoppingListDAO.getShoppingList("#test testingSL");
 		p1 = ProductDAO.getProduct("#test testingProduct1");
 		p2 = ProductDAO.getProduct("#test testingProduct2");

@@ -15,7 +15,6 @@ import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
 import be.ac.ulb.infof307.g10.models.dao.RecipeDAO;
 import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.models.database.Database;
-import be.ac.ulb.infof307.g10.models.database.GenericDatabase;
 
 public class TestRecipe extends AbstractTestDatabase {
 
@@ -26,7 +25,7 @@ public class TestRecipe extends AbstractTestDatabase {
 	@Before
 	public void before() {
 		super.before();
-		r = new Recipe("Testing recipe");
+		r = new Recipe("Testing recipe", 1);
 		r.addStep("testing step 1");
 		r.addStep("testing step 2");
 		r.addStep("testing step 3");
@@ -46,7 +45,7 @@ public class TestRecipe extends AbstractTestDatabase {
 	public void test_001_addStepDB() {
 		Recipe re = RecipeDAO.createRecipe("#test addStepDB");
 		re.addStep("new Step");
-		GenericDatabase.close();
+		Database.close();
 		re = RecipeDAO.getRecipe("#test addStepDB");
 		assertEquals(re.getAllSteps().size(), 1);
 	}
@@ -72,7 +71,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		re.addStep("step1");
 		re.addStep("step2");
 		re.moveStep(0, 1);
-		GenericDatabase.close();
+		Database.close();
 		re = RecipeDAO.getRecipe("#test moveStepDB");
 		assertEquals(re.getStep(0), "step2");
 		assertEquals(re.getStep(1), "step1");
@@ -108,7 +107,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		Recipe re = RecipeDAO.createRecipe("#test setStepDB");
 		re.addStep("step");
 		re.setStep(0, "changed step");
-		GenericDatabase.close();
+		Database.close();
 		re = RecipeDAO.getRecipe("#test setStepDB");
 		assertEquals(re.getStep(0), "changed step");
 	}
@@ -132,7 +131,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		Recipe re = RecipeDAO.createRecipe("#test removeStepDB");
 		re.addStep("step"); //save in DB by test_001_addStepDB
 		re.removeStep(0);
-		GenericDatabase.close();
+		Database.close();
 		re = RecipeDAO.getRecipe("#test removeStepDB");
 		assertTrue(re.getAllSteps().isEmpty());
 	}
@@ -176,7 +175,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		Recipe re = RecipeDAO.createRecipe("#test addIngredientDB");
 		Product p = ProductDAO.createProduct("#test product", 12, "g");
 		re.addIngredient(p, 1);
-		GenericDatabase.close();
+		Database.close();
 		re = RecipeDAO.getRecipe("#test addIngredientDB");
 		assertEquals(re.getAllIngredients().size(), 1);
 	}
@@ -205,7 +204,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		Product p = ProductDAO.createProduct("#test product", 12, "g");
 		re.addIngredient(p, 1); // save in DB by test_014_addIngredientDB
 		re.removeIngredient(p);
-		GenericDatabase.close();
+		Database.close();
 		re = RecipeDAO.getRecipe("#test removeIngredientDB");
 		assertEquals(re.getAllIngredients().size(), 0);
 	}
@@ -222,7 +221,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		Product p = ProductDAO.createProduct("#test product", 12, "g");
 		re.addIngredient(p, (float)1.); // save in DB by test_014_addIngredientDB
 		re.setIngredientQuantity(p, (float)2.);
-		GenericDatabase.close();
+		Database.close();
 		re = RecipeDAO.getRecipe("#test setIngredientQuantityDB");
 		p = ProductDAO.getProduct("#test product");
 		assertEquals(re.getQuantity(p), (float)2., 0.1);
@@ -242,7 +241,7 @@ public class TestRecipe extends AbstractTestDatabase {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void test_020_createRecipeException() {
-		new Recipe("");
+		new Recipe("", 1);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -258,7 +257,7 @@ public class TestRecipe extends AbstractTestDatabase {
 	@Test
 	public void test_023_RecipeToShoppingList(){
 
-		Recipe r2 = new Recipe("Testing recipe");
+		Recipe r2 = new Recipe("Testing recipe", 1);
 		r2.addStep("testing step 1");
 		r2.addStep("testing step 2");
 		r2.addStep("testing step 3");
