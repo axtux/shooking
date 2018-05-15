@@ -7,7 +7,7 @@ import javax.persistence.NoResultException;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
-public class ProductDAO extends AbstractDAO {
+public class ProductDAO {
 
 	/**
 	 * Create a new Product and save it in the DB

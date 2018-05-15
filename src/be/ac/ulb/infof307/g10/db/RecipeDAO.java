@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 
 import javax.persistence.NoResultException;
 
@@ -13,7 +12,7 @@ import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
-public class RecipeDAO extends AbstractDAO {
+public class RecipeDAO {
 
 	public static Recipe createRecipe(String name){
 		return createRecipe(name, 1);

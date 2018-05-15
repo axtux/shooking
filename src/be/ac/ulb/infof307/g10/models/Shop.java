@@ -10,9 +10,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
-import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
-
 /**
  * Class representing a shop. It is defined by a name, a stock, a schedule, a
  * latitude and a longitude. His primary keys in the db are the name, the

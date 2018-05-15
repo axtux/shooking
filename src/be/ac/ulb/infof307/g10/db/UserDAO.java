@@ -2,13 +2,12 @@ package be.ac.ulb.infof307.g10.db;
 
 import javax.persistence.NoResultException;
 
-import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
-public class UserDAO extends AbstractDAO {
+public class UserDAO {
 
 	public static User userLogin(String username, String password) throws IncorrectPasswordException, NonExistingException {
 		try {

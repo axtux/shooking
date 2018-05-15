@@ -1,17 +1,14 @@
 package be.ac.ulb.infof307.g10.db;
 
 import java.util.List;
-import java.util.Observable;
 
 import javax.persistence.NoResultException;
 
-import be.ac.ulb.infof307.g10.models.Recipe;
-import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
-public class ShoppingListDAO extends AbstractDAO {
+public class ShoppingListDAO {
 
 	public static ShoppingList createShoppingList(String name) {
 		try {
