@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g10.db;
+package be.ac.ulb.infof307.g10.models.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +7,8 @@ import java.util.Map;
 
 import javax.persistence.NoResultException;
 
+import be.ac.ulb.infof307.g10.db.GenericDatabase;
+import be.ac.ulb.infof307.g10.db.SaverObserver;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;

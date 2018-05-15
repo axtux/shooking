@@ -4,6 +4,9 @@ import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.Stock;
+import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
+import be.ac.ulb.infof307.g10.models.dao.RecipeDAO;
+import be.ac.ulb.infof307.g10.models.dao.ShopDAO;
 
 import java.util.ArrayList;
 import java.util.List;

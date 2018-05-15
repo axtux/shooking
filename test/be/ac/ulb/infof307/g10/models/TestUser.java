@@ -5,8 +5,8 @@ import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.db.ProductDAO;
-import be.ac.ulb.infof307.g10.db.UserDAO;
+import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
+import be.ac.ulb.infof307.g10.models.dao.UserDAO;
 
 public class TestUser extends AbstractTestDatabase {
 

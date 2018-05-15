@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.db.GenericDatabase;
-import be.ac.ulb.infof307.g10.db.ProductDAO;
-import be.ac.ulb.infof307.g10.db.ShoppingListDAO;
+import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
+import be.ac.ulb.infof307.g10.models.dao.ShoppingListDAO;
 
 public class TestShoppingList extends AbstractTestDatabase {
 	

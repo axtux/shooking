@@ -6,8 +6,8 @@ import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.db.GenericDatabase;
-import be.ac.ulb.infof307.g10.db.ProductDAO;
-import be.ac.ulb.infof307.g10.db.ShopDAO;
+import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
+import be.ac.ulb.infof307.g10.models.dao.ShopDAO;
 
 public class TestShop extends AbstractTestDatabase {
 

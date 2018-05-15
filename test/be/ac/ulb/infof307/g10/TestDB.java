@@ -13,12 +13,12 @@ import org.junit.runners.MethodSorters;
 import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.db.Data;
 import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.db.ProductDAO;
-import be.ac.ulb.infof307.g10.db.RecipeDAO;
-import be.ac.ulb.infof307.g10.db.UserDAO;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
+import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
+import be.ac.ulb.infof307.g10.models.dao.RecipeDAO;
+import be.ac.ulb.infof307.g10.models.dao.UserDAO;
 
 /**
  * The tests have to be executed in a certain order, so they are sorted by name

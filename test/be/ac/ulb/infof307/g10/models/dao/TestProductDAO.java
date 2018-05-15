@@ -1,10 +1,12 @@
-package be.ac.ulb.infof307.g10.db;
+package be.ac.ulb.infof307.g10.models.dao;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.models.Product;
+import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 public class TestProductDAO extends AbstractTestDatabase {

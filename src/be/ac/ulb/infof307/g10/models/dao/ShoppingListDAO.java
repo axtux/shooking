@@ -1,9 +1,11 @@
-package be.ac.ulb.infof307.g10.db;
+package be.ac.ulb.infof307.g10.models.dao;
 
 import java.util.List;
 
 import javax.persistence.NoResultException;
 
+import be.ac.ulb.infof307.g10.db.GenericDatabase;
+import be.ac.ulb.infof307.g10.db.SaverObserver;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
