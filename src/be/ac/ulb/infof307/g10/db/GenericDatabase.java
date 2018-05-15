@@ -96,10 +96,6 @@ public class GenericDatabase {
 		transaction(() -> getEM().detach(o));
 	}
 
-	private static void remove(Object o) {
-		transaction(() -> getEM().remove(o));
-	}
-
 	/**
 	 * Get managed classes by this database
 	 * 
@@ -148,7 +144,9 @@ public class GenericDatabase {
 	 */
 	public static <T> T getOne(Class<T> type, String query, Object... params)
 			throws NoResultException, NonUniqueResultException {
-		return createQuery(type, query, params).getSingleResult();
+		T result = createQuery(type, query, params).getSingleResult();
+		detach(result);
+		return result;
 	}
 
 	/**
@@ -167,7 +165,11 @@ public class GenericDatabase {
 	 * @return Objects of type T
 	 */
 	public static <T> List<T> getAll(Class<T> type, String query, Object... params) {
-		return createQuery(type, query, params).getResultList();
+		List<T> resultList = createQuery(type, query, params).getResultList();
+		for (T result : resultList) {
+			detach(result);
+		}
+		return resultList;
 	}
 
 	public static <T> List<T> getAll(Class<T> type) {
@@ -217,6 +219,7 @@ public class GenericDatabase {
 	 */
 	public static void save(ModelObject o) throws DatabaseException {
 		try {
+			// id is defined when object is saved the first time
 			if (o.getId() == null) {
 				persist(o);
 			} else {
@@ -228,15 +231,35 @@ public class GenericDatabase {
 		detach(o);
 	}
 
+	/**
+	 * Save object into database.
+	 * 
+	 * @param o
+	 *            Object to save
+	 */
+	public static void save(List<ModelObject> ol) throws DatabaseException {
+		for (ModelObject o : ol) {
+			save(o);
+		}
+	}
+
 	public static void autosave(ModelObject o) {
 		save(o);
 		o.addObserver((observable, arg) -> GenericDatabase.save(o));
 	}
 
+	public static void autosave(List<ModelObject> ol) {
+		for (ModelObject o : ol) {
+			autosave(o);
+		}
+	}
+
 	public static void delete(ModelObject o) throws DatabaseException {
 		try {
-			merge(o);
-			remove(o);
+			if (!getEM().contains(o)) {
+				o = getEM().merge(o);
+			}
+			getEM().remove(o);
 		} catch (RollbackException e) {
 			throw new DatabaseException(e);
 		}
