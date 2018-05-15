@@ -1,27 +1,24 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.db.Data;
-import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.db.ProductDAO;
-import be.ac.ulb.infof307.g10.db.RecipeDAO;
-import be.ac.ulb.infof307.g10.db.ShopDAO;
-import be.ac.ulb.infof307.g10.db.UserDAO;
-import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
-import be.ac.ulb.infof307.g10.models.Product;
-import be.ac.ulb.infof307.g10.models.Recipe;
-import be.ac.ulb.infof307.g10.models.Shop;
-import be.ac.ulb.infof307.g10.models.ShoppingList;
+import static org.junit.Assert.assertNotNull;
+
+import javax.persistence.NoResultException;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import javax.persistence.NoResultException;
-
-import static org.junit.Assert.*;
-
-import java.util.Arrays;
+import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
+import be.ac.ulb.infof307.g10.db.Data;
+import be.ac.ulb.infof307.g10.db.Database;
+import be.ac.ulb.infof307.g10.db.ProductDAO;
+import be.ac.ulb.infof307.g10.db.RecipeDAO;
+import be.ac.ulb.infof307.g10.db.UserDAO;
+import be.ac.ulb.infof307.g10.models.Product;
+import be.ac.ulb.infof307.g10.models.Recipe;
+import be.ac.ulb.infof307.g10.models.ShoppingList;
 
 /**
  * The tests have to be executed in a certain order, so they are sorted by name

@@ -6,8 +6,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.models.Product;
-import be.ac.ulb.infof307.g10.models.User;
-import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 
 public class TestGenericDatabase extends AbstractTestDatabase {
 
