@@ -175,4 +175,22 @@ public class TestRecipe extends AbstractTestDatabase {
 	public void test_022_createRecipeException() {
 		new Recipe("correct name", 1, null);
 	}
+
+	@Test
+	public void test_023_RecipeToShoppingList(){
+
+		Recipe r2 = new Recipe("Testing recipe");
+		r2.addStep("testing step 1");
+		r2.addStep("testing step 2");
+		r2.addStep("testing step 3");
+		p1 = new Product("testing pastas", 500, "g");
+		p2 = new Product("testing tomatoes", 1, "pc");
+		r2.addIngredient(p1, (float) 600.);
+		r2.addIngredient(p2, (float) 3.);
+
+		ShoppingList slTemp = r2.toShoppingList();
+
+		assertEquals(slTemp.getQuantity(p1), 2);
+		assertEquals(slTemp.getQuantity(p2), 3);
+	}
 }

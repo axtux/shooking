@@ -317,4 +317,18 @@ public class Recipe extends ModelObject {
 		return this.servings;
 	}
 
+
+	public ShoppingList toShoppingList(){
+		ShoppingList retShoppingList = new ShoppingList();
+		for (Product p : ingredients.keySet()) {
+			int quantityToHave = getQuantity(p);
+			int q = 0;
+			while (p.getSize()*q < quantityToHave ){
+				q ++;
+			}
+			retShoppingList.addProduct(p, q);
+		}
+		return retShoppingList;
+	}
+
 }
