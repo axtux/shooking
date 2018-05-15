@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.NoResultException;
 
 import be.ac.ulb.infof307.g10.models.Shop;
-import be.ac.ulb.infof307.g10.models.database.GenericDatabase;
+import be.ac.ulb.infof307.g10.models.database.Database;
 import be.ac.ulb.infof307.g10.models.database.SaverObserver;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
@@ -54,14 +54,14 @@ public class ShopDAO {
 
 	public static Shop getShop(String name) throws NonExistingException {
 		try{
-			return GenericDatabase.getOne(Shop.class, "SELECT b FROM Shop b WHERE b.name LIKE ?1", name);
+			return Database.getOne(Shop.class, "SELECT b FROM Shop b WHERE b.name LIKE ?1", name);
 		} catch (NoResultException e) {
 			throw new NonExistingException(e);
 		}
 	}
 
 	public static List<Shop> getAllShops() throws NonExistingException {
-		return GenericDatabase.getAll(Shop.class);
+		return Database.getAll(Shop.class);
 	}
 	
 }

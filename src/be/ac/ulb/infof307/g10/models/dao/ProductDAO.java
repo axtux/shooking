@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.NoResultException;
 
 import be.ac.ulb.infof307.g10.models.Product;
-import be.ac.ulb.infof307.g10.models.database.GenericDatabase;
+import be.ac.ulb.infof307.g10.models.database.Database;
 import be.ac.ulb.infof307.g10.models.database.SaverObserver;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
@@ -25,12 +25,12 @@ public class ProductDAO {
 	}
 
 	public static List<Product> getAllProducts() throws NonExistingException {
-		return GenericDatabase.getAll(Product.class);
+		return Database.getAll(Product.class);
 	}
 
 	public static Product getProduct(String name) throws NonExistingException {
 		try{
-			return GenericDatabase.getOne(Product.class, "SELECT b FROM Product b WHERE b.name LIKE ?1", name);
+			return Database.getOne(Product.class, "SELECT b FROM Product b WHERE b.name LIKE ?1", name);
 		} catch (NoResultException e) {
 			throw new NonExistingException(e);
 		}

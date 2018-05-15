@@ -24,7 +24,7 @@ import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
  * this class to add your own queries to your database. For more informations
  * about internal behavior, please see official JPA documentation.
  */
-public class GenericDatabase {
+public class Database {
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
 	private static Map<String, String> properties = new HashMap<>();
@@ -245,7 +245,7 @@ public class GenericDatabase {
 
 	public static void autosave(ModelObject o) {
 		save(o);
-		o.addObserver((observable, arg) -> GenericDatabase.save(o));
+		o.addObserver((observable, arg) -> Database.save(o));
 	}
 
 	public static void autosave(Iterable<? extends ModelObject> ol) {

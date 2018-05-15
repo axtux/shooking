@@ -3,7 +3,7 @@ package be.ac.ulb.infof307.g10.models.dao;
 import javax.persistence.NoResultException;
 
 import be.ac.ulb.infof307.g10.models.User;
-import be.ac.ulb.infof307.g10.models.database.GenericDatabase;
+import be.ac.ulb.infof307.g10.models.database.Database;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
@@ -34,6 +34,6 @@ public class UserDAO {
 	}
 
 	public static User getUser(String username) throws NonExistingException {
-		return GenericDatabase.getOne(User.class, "SELECT b from User b where b.username LIKE ?1", username);
+		return Database.getOne(User.class, "SELECT b from User b where b.username LIKE ?1", username);
 	}
 }

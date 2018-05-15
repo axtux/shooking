@@ -9,7 +9,7 @@ import javax.persistence.NoResultException;
 
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
-import be.ac.ulb.infof307.g10.models.database.GenericDatabase;
+import be.ac.ulb.infof307.g10.models.database.Database;
 import be.ac.ulb.infof307.g10.models.database.SaverObserver;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
@@ -41,7 +41,7 @@ public class RecipeDAO {
 
 	public static Recipe getRecipe(String name) throws NonExistingException {
 		try{
-			Recipe r = GenericDatabase.getOne(Recipe.class, "SELECT b FROM Recipe b WHERE b.name LIKE ?1", name);
+			Recipe r = Database.getOne(Recipe.class, "SELECT b FROM Recipe b WHERE b.name LIKE ?1", name);
 			r.addObserver(SaverObserver.getInstance());
 			return r;
 		} catch (NoResultException e) {
@@ -50,7 +50,7 @@ public class RecipeDAO {
 	}
 
 	public static List<Recipe> getAllRecipes() throws NonExistingException {
-		List<Recipe> lr = GenericDatabase.getAll(Recipe.class);
+		List<Recipe> lr = Database.getAll(Recipe.class);
 		for (Recipe r : lr){
 			r.addObserver(SaverObserver.getInstance());
 		}
