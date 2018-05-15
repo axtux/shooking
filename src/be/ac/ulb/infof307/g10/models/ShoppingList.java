@@ -14,7 +14,6 @@ public class ShoppingList extends ModelObject {
 
 	private static final long serialVersionUID = -0L;
 
-	@Column(unique = true)
 	private String name;
 	@ElementCollection(fetch = FetchType.EAGER)
 	private Map<Product, Integer> productsAndQuantity;
