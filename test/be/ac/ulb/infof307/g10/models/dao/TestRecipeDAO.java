@@ -38,13 +38,13 @@ public class TestRecipeDAO extends AbstractTestDatabase {
 	@Test
 	public void test_005_getRecipe() {
 		createTestingRecipe();
-		Recipe r = RecipeDAO.getRecipe("#test testingRecipe");
+		Recipe r = RecipeDAO.getByName("#test testingRecipe");
 		assertNotNull(r);
 	}
 	
 	@Test(expected=NonExistingException.class)
 	public void test_006_getRecipeException() {
-		Recipe r = RecipeDAO.getRecipe("#test badRecipeName");
+		Recipe r = RecipeDAO.getByName("#test badRecipeName");
 		assertNull(r);
 	}
 }

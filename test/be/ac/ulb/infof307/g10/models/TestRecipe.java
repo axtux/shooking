@@ -46,7 +46,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		Recipe re = RecipeDAO.create("#test addStepDB", 1);
 		re.addStep("new Step");
 		Database.close();
-		re = RecipeDAO.getRecipe("#test addStepDB");
+		re = RecipeDAO.getByName("#test addStepDB");
 		assertEquals(re.getAllSteps().size(), 1);
 	}
 
@@ -72,7 +72,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		re.addStep("step2");
 		re.moveStep(0, 1);
 		Database.close();
-		re = RecipeDAO.getRecipe("#test moveStepDB");
+		re = RecipeDAO.getByName("#test moveStepDB");
 		assertEquals(re.getStep(0), "step2");
 		assertEquals(re.getStep(1), "step1");
 	}
@@ -108,7 +108,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		re.addStep("step");
 		re.setStep(0, "changed step");
 		Database.close();
-		re = RecipeDAO.getRecipe("#test setStepDB");
+		re = RecipeDAO.getByName("#test setStepDB");
 		assertEquals(re.getStep(0), "changed step");
 	}
 	
@@ -132,7 +132,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		re.addStep("step"); //save in DB by test_001_addStepDB
 		re.removeStep(0);
 		Database.close();
-		re = RecipeDAO.getRecipe("#test removeStepDB");
+		re = RecipeDAO.getByName("#test removeStepDB");
 		assertTrue(re.getAllSteps().isEmpty());
 	}
 
@@ -176,7 +176,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		Product p = ProductDAO.create("#test product", 12, "g");
 		re.addIngredient(p, 1);
 		Database.close();
-		re = RecipeDAO.getRecipe("#test addIngredientDB");
+		re = RecipeDAO.getByName("#test addIngredientDB");
 		assertEquals(re.getAllIngredients().size(), 1);
 	}
 
@@ -205,7 +205,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		re.addIngredient(p, 1); // save in DB by test_014_addIngredientDB
 		re.removeIngredient(p);
 		Database.close();
-		re = RecipeDAO.getRecipe("#test removeIngredientDB");
+		re = RecipeDAO.getByName("#test removeIngredientDB");
 		assertEquals(re.getAllIngredients().size(), 0);
 	}
 	
@@ -222,7 +222,7 @@ public class TestRecipe extends AbstractTestDatabase {
 		re.addIngredient(p, (float)1.); // save in DB by test_014_addIngredientDB
 		re.setIngredientQuantity(p, (float)2.);
 		Database.close();
-		re = RecipeDAO.getRecipe("#test setIngredientQuantityDB");
+		re = RecipeDAO.getByName("#test setIngredientQuantityDB");
 		p = ProductDAO.getByName("#test product");
 		assertEquals(re.getQuantity(p), (float)2., 0.1);
 	}
@@ -271,9 +271,9 @@ public class TestRecipe extends AbstractTestDatabase {
 	public void test_0023_persistenceDB() {
 		Recipe re = RecipeDAO.create("#test persistenceDB", 1);
 		Database.close();
-		re = RecipeDAO.getRecipe("#test persistenceDB");
+		re = RecipeDAO.getByName("#test persistenceDB");
 		re.setName("#test persistenceDB Rename");
 		Database.close();
-		re = RecipeDAO.getRecipe("#test persistenceDB Rename");
+		re = RecipeDAO.getByName("#test persistenceDB Rename");
 	}
 }

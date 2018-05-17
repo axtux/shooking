@@ -90,6 +90,6 @@ public class TestDB {
 		r.setName("#test new name");
 		r.addStep("#test step 1");
 		r.save();
-		assertNotNull(RecipeDAO.getRecipe("#test new name"));
+		assertNotNull(RecipeDAO.getByName("#test new name"));
 	}
 }

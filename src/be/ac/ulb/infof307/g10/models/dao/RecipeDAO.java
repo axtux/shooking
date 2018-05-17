@@ -14,7 +14,7 @@ public class RecipeDAO {
 
 	public static Recipe create(String name, int servings) {
 		try {
-			getRecipe(name);
+			getByName(name);
 			throw new ExistingException();
 		} catch (NonExistingException e) {
 			Recipe r = new Recipe(name, servings);
@@ -23,7 +23,7 @@ public class RecipeDAO {
 		}
 	}
 
-	public static Recipe getRecipe(String name) throws NonExistingException {
+	public static Recipe getByName(String name) throws NonExistingException {
 		try{
 			Recipe r = Database.getOne(Recipe.class, "SELECT b FROM Recipe b WHERE b.name LIKE ?1", name);
 			r.addObserver(SaverObserver.getInstance());
