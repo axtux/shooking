@@ -273,12 +273,7 @@ public class RecipeController extends AbstractProductController {
 	 */
 	@FXML
 	private void exportAsShoppingList() {
-		try {
-			actualRecipe.toShoppingList();
-			MainView.show(View.SHOPPING_LIST);
-		} catch (NullPointerException e){
-			// TODO -
-		}
-
+		actualRecipe.toShoppingList();
+		MainView.show(View.SHOPPING_LIST);
 	}
 }
