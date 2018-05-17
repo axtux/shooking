@@ -61,4 +61,10 @@ public class User extends ModelObject {
 	public ShoppingList getShoppingList() {
 		return shoppingList;
 	}
+
+	//FIXME - for the moment, this mothods replace the actual ShoppingList,
+	//FIXME - but must add it when the multi list will be supported
+	public void addShoppingList(ShoppingList shoppingList) {
+		this.shoppingList = shoppingList;
+	}
 }

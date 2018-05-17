@@ -1,5 +1,6 @@
 package be.ac.ulb.infof307.g10.controllers;
 
+import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.dao.RecipeDAO;
@@ -273,7 +274,7 @@ public class RecipeController extends AbstractProductController {
 	 */
 	@FXML
 	private void exportAsShoppingList() {
-		actualRecipe.toShoppingList();
+		Main.getUser().addShoppingList(actualRecipe.toShoppingList());
 		MainView.show(View.SHOPPING_LIST);
 	}
 }
