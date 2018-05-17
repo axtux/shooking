@@ -43,7 +43,7 @@ public class TestRecipe extends AbstractTestDatabase {
 	
 	@Test
 	public void test_001_addStepDB() {
-		Recipe re = RecipeDAO.createRecipe("#test addStepDB");
+		Recipe re = RecipeDAO.create("#test addStepDB", 1);
 		re.addStep("new Step");
 		Database.close();
 		re = RecipeDAO.getRecipe("#test addStepDB");
@@ -67,7 +67,7 @@ public class TestRecipe extends AbstractTestDatabase {
 	
 	@Test
 	public void test_003_moveStepDB() {
-		Recipe re = RecipeDAO.createRecipe("#test moveStepDB");
+		Recipe re = RecipeDAO.create("#test moveStepDB", 1);
 		re.addStep("step1");
 		re.addStep("step2");
 		re.moveStep(0, 1);
@@ -104,7 +104,7 @@ public class TestRecipe extends AbstractTestDatabase {
 
 	@Test
 	public void test_007_setStepDB() {
-		Recipe re = RecipeDAO.createRecipe("#test setStepDB");
+		Recipe re = RecipeDAO.create("#test setStepDB", 1);
 		re.addStep("step");
 		re.setStep(0, "changed step");
 		Database.close();
@@ -128,7 +128,7 @@ public class TestRecipe extends AbstractTestDatabase {
 	
 	@Test
 	public void test_009_removeStepDB() {
-		Recipe re = RecipeDAO.createRecipe("#test removeStepDB");
+		Recipe re = RecipeDAO.create("#test removeStepDB", 1);
 		re.addStep("step"); //save in DB by test_001_addStepDB
 		re.removeStep(0);
 		Database.close();
@@ -172,7 +172,7 @@ public class TestRecipe extends AbstractTestDatabase {
 	
 	@Test
 	public void test_014_addIngredientDB() {
-		Recipe re = RecipeDAO.createRecipe("#test addIngredientDB");
+		Recipe re = RecipeDAO.create("#test addIngredientDB", 1);
 		Product p = ProductDAO.create("#test product", 12, "g");
 		re.addIngredient(p, 1);
 		Database.close();
@@ -200,7 +200,7 @@ public class TestRecipe extends AbstractTestDatabase {
 	
 	@Test
 	public void test_016_removeIngredientDB() {
-		Recipe re = RecipeDAO.createRecipe("#test removeIngredientDB");
+		Recipe re = RecipeDAO.create("#test removeIngredientDB", 1);
 		Product p = ProductDAO.create("#test product", 12, "g");
 		re.addIngredient(p, 1); // save in DB by test_014_addIngredientDB
 		re.removeIngredient(p);
@@ -217,7 +217,7 @@ public class TestRecipe extends AbstractTestDatabase {
 	
 	@Test
 	public void test_017_setIngredientQuantityDB() {
-		Recipe re = RecipeDAO.createRecipe("#test setIngredientQuantityDB");
+		Recipe re = RecipeDAO.create("#test setIngredientQuantityDB", 1);
 		Product p = ProductDAO.create("#test product", 12, "g");
 		re.addIngredient(p, (float)1.); // save in DB by test_014_addIngredientDB
 		re.setIngredientQuantity(p, (float)2.);
@@ -249,11 +249,6 @@ public class TestRecipe extends AbstractTestDatabase {
 		new Recipe("correct name", 0);
 	}
 
-	@Test(expected = NullPointerException.class)
-	public void test_022_createRecipeException() {
-		new Recipe("correct name", 1, null);
-	}
-
 	@Test
 	public void test_023_RecipeToShoppingList(){
 
@@ -274,7 +269,7 @@ public class TestRecipe extends AbstractTestDatabase {
 
 	@Test
 	public void test_0023_persistenceDB() {
-		Recipe re = RecipeDAO.createRecipe("#test persistenceDB");
+		Recipe re = RecipeDAO.create("#test persistenceDB", 1);
 		Database.close();
 		re = RecipeDAO.getRecipe("#test persistenceDB");
 		re.setName("#test persistenceDB Rename");

@@ -53,49 +53,16 @@ public class Recipe extends ModelObject {
 	 *            Number of people for the recipe
 	 */
 	public Recipe(String name, int servings) {
-		this(name, servings, new HashMap<>());
-	}
-
-	/**
-	 * Constructor for a new Recipe
-	 * 
-	 * @param name
-	 *            Name of the Recipe
-	 * @param servings
-	 *            Number of people for the recipe
-	 * @param ingredients
-	 *            HashMap of the ingredient (Product, Quantity)
-	 */
-	public Recipe(String name, int servings, Map<Product, Float> ingredients) {
-		this(name, servings, ingredients, new ArrayList<>());
-	}
-
-	/**
-	 * Constructor for a new Recipe
-	 * 
-	 * @param name
-	 *            Name of the Recipe
-	 * @param servings
-	 *            Number of people for the recipe
-	 * @param ingredients
-	 *            HashMap of the ingredient (Product, Quantity)
-	 * @param steps
-	 *            ArrayList of String represent the steps for the Recipe
-	 */
-	public Recipe(String name, int servings, Map<Product, Float> ingredients, List<String> steps) {
-		if (name == null || ingredients == null || steps == null) {
-			throw new NullPointerException("one parameter is null");
-		}
-		if (name.trim().equals("")) {
-			throw new IllegalArgumentException("The name must not be empty");
+		if (name == null || name.trim().equals("")) {
+			throw new IllegalArgumentException("name must not be empty");
 		}
 		if (servings <= 0) {
 			throw new IllegalArgumentException("The servings must be > 0");
 		}
-		this.setName(name);
+		this.name = name;
 		this.servings = servings;
-		this.ingredients = new HashMap<>(ingredients);
-		this.steps = new ArrayList<>(steps);
+		ingredients = new HashMap<>();
+		steps = new ArrayList<>();
 	}
 
 	public String getName() {

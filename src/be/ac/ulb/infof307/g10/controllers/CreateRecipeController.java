@@ -35,7 +35,7 @@ public class CreateRecipeController {
 		button.setDisable(true);
 
 		try {
-			RecipeDAO.createRecipe(name.getText(), serving.getInt());
+			RecipeDAO.create(name.getText(), serving.getInt());
 			DialogView.hide();
 		} catch (NullPointerException | IllegalArgumentException e) {
 			printLabel.setText(e.getMessage());

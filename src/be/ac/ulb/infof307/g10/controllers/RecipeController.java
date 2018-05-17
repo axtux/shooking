@@ -223,7 +223,7 @@ public class RecipeController extends AbstractProductController {
 
 	private void updateRecipes() {
 		recipesListCombo.getItems().clear();
-		recipesListCombo.getItems().addAll(RecipeDAO.getAllRecipes());
+		recipesListCombo.getItems().addAll(RecipeDAO.getAll());
 	}
 
 	@Override
