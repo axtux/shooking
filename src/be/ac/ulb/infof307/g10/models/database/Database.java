@@ -248,17 +248,6 @@ public class Database {
 		}
 	}
 
-	public static void autosave(ModelObject o) {
-		save(o);
-		o.addObserver((observable, arg) -> Database.save(o));
-	}
-
-	public static void autosave(Iterable<? extends ModelObject> ol) {
-		for (ModelObject o : ol) {
-			autosave(o);
-		}
-	}
-
 	public static void close() {
 		if (emf != null && emf.isOpen()) {
 			emf.close();
