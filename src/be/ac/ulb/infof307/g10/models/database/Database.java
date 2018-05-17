@@ -239,8 +239,8 @@ public class Database {
 	/**
 	 * Save object into database.
 	 * 
-	 * @param o
-	 *            Object to save
+	 * @param ol
+	 *            Objects to save
 	 */
 	public static void save(Iterable<? extends ModelObject> ol) throws DatabaseException {
 		for (ModelObject o : ol) {
