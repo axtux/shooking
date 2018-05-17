@@ -3,61 +3,19 @@ package be.ac.ulb.infof307.g10.models;
 import org.junit.Assert;
 import org.junit.Test;
 
-import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
-import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
-import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
+import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
+import be.ac.ulb.infof307.g10.models.dao.UserDAO;
+import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
+import be.ac.ulb.infof307.g10.models.database.Database;
 
 public class TestUser extends AbstractTestDatabase {
 
-	@Test
-	public void signupTest() {
-		User u = User.signup("test", "test");
-		Assert.assertEquals("test", u.getUsername());
-	}
-
-	@Test
-	public void signupPersistenceTest() {
-		User u = User.signup("test", "test");
-		Database.close();
-		u = Database.getUser("test");
-		Assert.assertNotNull(u);
-	}
-
-	@Test(expected = ExistingException.class)
-	public void signupExistingUserExceptionTest() {
-		User.signup("test", "test");
-		User.signup("test", "test");
-	}
-
-	@Test
-	public void loginTest() {
-		User.signup("test", "test");
-		User u = User.login("test", "test");
-		Assert.assertEquals("test", u.getUsername());
-	}
-
-	@Test(expected = IncorrectPasswordException.class)
-	public void loginIncorrectPasswordExceptionTest() {
-		User.signup("test", "test");
-		User.login("test", "badPassword");
-	}
-
-	@Test(expected = NonExistingException.class)
-	public void loginNonExistingUserExceptionTest() {
-		User.login("badUser", "anyPassword");
-	}
-
 	public static User userWithShoppingList() {
-		User u = User.signup("test", "test");
+		User u = UserDAO.userSignup("test", "test");
 		ShoppingList sl = u.getShoppingList();
 
-		Product p1 = new Product("test1", 1, "unit");
-		Product p2 = new Product("test2", 2, "unit");
-		// products have to be in database
-		p1.save();
-		p2.save();
+		Product p1 = ProductDAO.createProduct("test1", 1, "unit");
+		Product p2 = ProductDAO.createProduct("test2", 2, "unit");
 
 		sl.setProduct(p1, 42);
 		sl.setProduct(p2, 13);
@@ -77,7 +35,7 @@ public class TestUser extends AbstractTestDatabase {
 		u.save();
 		Database.close();
 
-		User o = Database.getUser("test");
+		User o = UserDAO.getUser("test");
 		Assert.assertEquals(2, o.getShoppingList().size());
 	}
 
@@ -87,7 +45,7 @@ public class TestUser extends AbstractTestDatabase {
 		u.getShoppingList().save();
 		Database.close();
 
-		User o = Database.getUser("test");
+		User o = UserDAO.getUser("test");
 		Assert.assertEquals(2, o.getShoppingList().size());
 	}
 }

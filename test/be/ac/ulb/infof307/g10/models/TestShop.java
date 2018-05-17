@@ -1,68 +1,43 @@
 package be.ac.ulb.infof307.g10.models;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import be.ac.ulb.infof307.g10.db.AbstractTestDatabase;
-import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
+import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
+import be.ac.ulb.infof307.g10.models.dao.ShopDAO;
+import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
+import be.ac.ulb.infof307.g10.models.database.Database;
 
 public class TestShop extends AbstractTestDatabase {
 
-	static private List<Product> pList;
-	static private Product p1;
-	static private Product p2;
-	static private Product p3;
-
-	@BeforeClass
-	public static void beforeClass() {
-		Stock stock = new Stock();
-		String[] schedule = { "", "", "", "", "", "", "" };
-		pList = new ArrayList<>();
-		p1 = new Product("#test product 1", 1, "g");
-		p2 = new Product("#test product 2", 1, "g");
-		p3 = new Product("#test product 3", 1, "g");
-		p1.save();
-		p2.save();
-		p3.save();
-		pList.add(p1);
-		pList.add(p2);
-		pList.add(p3);
-		stock.addProduct(p1, 1);
-		stock.addProduct(p2, 1);
-		stock.addProduct(p3, 1);
-		Shop.create("#test Testing shop", 0., 0., schedule, stock);
+	private String[] testingSchedule = { "1", "2", "3", "4", "5", "6", "7" };
+	
+	public static void createTestingShop() {
+		Shop shop = ShopDAO.createShop("#test testingShop", 0., 0.);
+		Product product = ProductDAO.createProduct("#test testingProduct", 12, "g");
+		shop.getStock().addProduct(product, 1);
+		Database.save(shop);
+		Database.close();
 	}
-
+	
 	@Test
-	public void test_001_createShop() {
-		Shop shop = Shop.create("#test createShop", 0, 0);
-		assertNotNull(shop);
-	}
-
-	@Test(expected = ExistingException.class)
-	public void test_002_createShopException() {
-		Shop.create("#test create shop exception", 0., 0.);
-		Shop.create("#test create shop exception", 0., 0.);
-	}
-
-	@Test
-	public void test_003_deleteShop() {
-		Database.deleteAll(Shop.class);
-		assertTrue(Database.getAllShops().isEmpty());
-	}
-
-	@Test
-	public void test_004_getSchedule() {
-		String[] testingSchedule = { "1", "2", "3", "4", "5", "6", "7" };
-		Shop shop = Shop.create("#test getSchedule", 0., 0., testingSchedule);
+	public void test_001_getSchedule() {
+		Shop shop = new Shop("#test getSchedule", 0., 0., testingSchedule);
 		assertEquals(shop.getSchedule(0), "1");
+	}
+	
+	@Test
+	public void test_002_setStock() {
+		Shop shop = new Shop("#test setStock", 0., 0., testingSchedule);
+		shop.getStock().addProduct(new Product("#test testingProduct", 12, "g"), 1);
+		assertEquals(shop.getStock().size(), 1);
+	}
+	
+	@Test
+	public void test_003_setStockDB() {
+		createTestingShop();
+		Shop shop = ShopDAO.getShop("#test testingShop");
+		assertEquals(shop.getStock().size(), 1);
 	}
 }

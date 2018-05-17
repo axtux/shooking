@@ -6,6 +6,7 @@ import be.ac.ulb.infof307.g10.views.DialogView;
 import com.lynden.gmapsfx.javascript.object.LatLong;
 
 import be.ac.ulb.infof307.g10.models.Shop;
+import be.ac.ulb.infof307.g10.models.dao.ShopDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -88,7 +89,7 @@ public class CreateShopController {
 	void create() {
 		createButton.setDisable(true);
 		try {
-			Shop.create(name.getText(), position.getLatitude(), position.getLongitude(), createSchedule());
+			ShopDAO.createShop(name.getText(), position.getLatitude(), position.getLongitude(), createSchedule());
 			DialogView.hide();
 			return;
 		} catch (DatabaseException e) {

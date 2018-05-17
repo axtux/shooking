@@ -1,7 +1,8 @@
 package be.ac.ulb.infof307.g10;
 
-import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.User;
+import be.ac.ulb.infof307.g10.models.database.Data;
+import be.ac.ulb.infof307.g10.models.database.Database;
 import be.ac.ulb.infof307.g10.views.MainView;
 import be.ac.ulb.infof307.g10.views.View;
 import javafx.application.Application;
@@ -16,7 +17,10 @@ public class Main extends Application {
 
 	@Override
 	public void init() {
-		Database.init();
+		Database.setProp("name", "GL10PU");
+		if (Database.isEmpty()) {
+			Data.fillDB();
+		}
 	}
 
 	@Override

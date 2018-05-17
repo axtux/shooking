@@ -1,5 +1,6 @@
-package be.ac.ulb.infof307.g10.db;
+package be.ac.ulb.infof307.g10.models.database;
 
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
@@ -23,7 +24,13 @@ public abstract class AbstractTestDatabase {
 	@Before
 	public void before() {
 		// clean database
-		GenericDatabase.empty();
+		Database.empty();
+	}
+	
+	@AfterClass
+	public static void afterClass() {
+		// clean database
+		Database.empty();
 	}
 
 }

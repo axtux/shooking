@@ -3,13 +3,8 @@ package be.ac.ulb.infof307.g10.models;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.NoResultException;
 import javax.persistence.OneToOne;
 
-import be.ac.ulb.infof307.g10.db.Database;
-import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
-import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
-import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.utils.Crypto;
 
 /**
@@ -36,7 +31,7 @@ public class User extends ModelObject {
 	protected User() {
 	}
 
-	private User(String username, String password) {
+	public User(String username, String password) {
 		if (username == null || password == null) {
 			throw new NullPointerException();
 		}
@@ -56,6 +51,7 @@ public class User extends ModelObject {
 	public void setPassword(String password) {
 		this.salt = Crypto.generateSalt();
 		this.hashedPassword = Crypto.sha256(password + this.salt);
+		this.changed();
 	}
 
 	public boolean isPassword(String password) {
@@ -64,29 +60,5 @@ public class User extends ModelObject {
 
 	public ShoppingList getShoppingList() {
 		return shoppingList;
-	}
-
-	// static methods
-	public static User login(String username, String password) throws IncorrectPasswordException, NonExistingException {
-		try {
-			User u = Database.getUser(username);
-			if (u.isPassword(password)) {
-				return u;
-			}
-			throw new IncorrectPasswordException();
-		} catch (NoResultException e) {
-			throw new NonExistingException(e);
-		}
-	}
-
-	public static User signup(String username, String password) throws ExistingException {
-		try {
-			Database.getUser(username);
-			throw new ExistingException();
-		} catch (NoResultException e) {
-			User u = new User(username, password);
-			u.save();
-			return u;
-		}
 	}
 }

@@ -1,6 +1,8 @@
 package be.ac.ulb.infof307.g10.models;
 
 import java.io.Serializable;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,11 +16,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.HashCodeExclude;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import be.ac.ulb.infof307.g10.db.GenericDatabase;
+import be.ac.ulb.infof307.g10.models.database.Database;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public class ModelObject implements Serializable {
+public class ModelObject extends Observable implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -39,11 +41,28 @@ public class ModelObject implements Serializable {
 	}
 
 	public void save() {
-		GenericDatabase.save(this);
+		Database.save(this);
 	}
 
 	public void delete() {
-		GenericDatabase.delete(this);
+		Database.delete(this);
+	}
+	
+	/**
+	 * Shortcut to notify Observers
+	 */
+	public void changed() {
+		setChanged();
+		notifyObservers();
+	}
+	
+	/**
+	 * Overriding addObserver to save Observed object in DB during the creation
+	 */
+	@Override
+	public void addObserver(Observer o){
+		super.addObserver(o);
+		this.changed();
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +18,7 @@ public class Recipe extends ModelObject {
 	/**
 	 * Name of the recipe
 	 */
+	@Column(unique = true)
 	private String name;
 
 	/**
@@ -40,16 +42,6 @@ public class Recipe extends ModelObject {
 	 * Needed by JPA
 	 */
 	protected Recipe() {
-	}
-
-	/**
-	 * Constructor for a new Recipe
-	 * 
-	 * @param name
-	 *            Name of the Recipe
-	 */
-	public Recipe(String name) {
-		this(name, 1);
 	}
 
 	/**
@@ -112,6 +104,7 @@ public class Recipe extends ModelObject {
 
 	public void setName(String name) {
 		this.name = name;
+		this.changed();
 	}
 
 	public int getQuantity(Product ingredient) {
@@ -148,6 +141,7 @@ public class Recipe extends ModelObject {
 	 */
 	public void setStep(int index, String s) throws IndexOutOfBoundsException {
 		steps.set(index, s);
+		this.changed();
 	}
 
 	/**
@@ -161,6 +155,7 @@ public class Recipe extends ModelObject {
 	public void setStep(String oldStep, String newStep) {
 		int index = steps.indexOf(oldStep);
 		setStep(index, newStep);
+		this.changed();
 	}
 
 	/**
@@ -171,6 +166,7 @@ public class Recipe extends ModelObject {
 	 */
 	public void addStep(String step) {
 		steps.add(step);
+		this.changed();
 	}
 
 	/**
@@ -185,7 +181,9 @@ public class Recipe extends ModelObject {
 	public void moveStep(int indexInit, int indexFinal) throws IndexOutOfBoundsException {
 		if (indexInit >= 0 && indexInit < steps.size() && indexFinal >= 0 && indexFinal < steps.size()) {
 			String step = steps.remove(indexInit);
+			this.changed();	//If we dont use this.changed() here, the save function does't working
 			steps.add(indexFinal, step);
+			this.changed();
 		} else {
 			throw new IndexOutOfBoundsException();
 		}
@@ -221,11 +219,13 @@ public class Recipe extends ModelObject {
 	 */
 	public void removeStep(int index) throws IndexOutOfBoundsException {
 		steps.remove(index);
+		this.changed();
 	}
 
 	public void removeStep(String step) {
 		int index = steps.indexOf(step);
 		removeStep(index);
+		this.changed();
 	}
 
 	/**
@@ -233,6 +233,7 @@ public class Recipe extends ModelObject {
 	 */
 	public void clearSteps() {
 		this.steps.clear();
+		this.changed();
 	}
 
 	/**
@@ -271,6 +272,7 @@ public class Recipe extends ModelObject {
 	public void addIngredient(Product product, float quantity) {
 		float before = ingredients.getOrDefault(product, (float) 0);
 		ingredients.put(product, before + quantity);
+		this.changed();
 	}
 
 	/**
@@ -285,6 +287,7 @@ public class Recipe extends ModelObject {
 		if (ingredients.containsKey(product)) {
 			ingredients.put(product, quantity);
 		}
+		this.changed();
 	}
 
 	/**
@@ -295,6 +298,7 @@ public class Recipe extends ModelObject {
 	 */
 	public void removeIngredient(Product p) {
 		ingredients.remove(p);
+		this.changed();
 	}
 
 	/**
@@ -311,6 +315,7 @@ public class Recipe extends ModelObject {
 	 */
 	public void clearIngredients() {
 		this.ingredients.clear();
+		this.changed();
 	}
 
 	public int getServings() {

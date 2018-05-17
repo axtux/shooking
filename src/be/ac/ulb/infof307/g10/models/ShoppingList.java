@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +14,7 @@ public class ShoppingList extends ModelObject {
 
 	private static final long serialVersionUID = -0L;
 
+	private String name;
 	@ElementCollection(fetch = FetchType.EAGER)
 	private Map<Product, Integer> productsAndQuantity;
 
@@ -20,6 +22,11 @@ public class ShoppingList extends ModelObject {
 	 * Needed by JPA
 	 */
 	public ShoppingList() {
+		productsAndQuantity = new HashMap<>();
+	}
+	
+	public ShoppingList(String name) {
+		this.name = name;
 		productsAndQuantity = new HashMap<>();
 	}
 
@@ -35,6 +42,7 @@ public class ShoppingList extends ModelObject {
 
 	public void setProduct(Product p, int quantity) {
 		productsAndQuantity.put(p, quantity);
+		this.changed();
 	}
 
 	public void addProduct(Product p, int quantity) {
@@ -43,6 +51,7 @@ public class ShoppingList extends ModelObject {
 
 	public void removeProduct(Product p) {
 		productsAndQuantity.remove(p);
+		this.changed();
 	}
 
 	public int getQuantity(Product p) {
@@ -55,6 +64,7 @@ public class ShoppingList extends ModelObject {
 
 	public void clear() {
 		productsAndQuantity.clear();
+		this.changed();
 	}
 
 	public Set<Product> getProducts() {
@@ -67,6 +77,7 @@ public class ShoppingList extends ModelObject {
 
 	public void setProductsAndQuantity(Map<Product, Integer> productsAndQuantity) {
 		this.productsAndQuantity = new HashMap<>(productsAndQuantity);
+		this.changed();
 	}
 
 }

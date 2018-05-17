@@ -1,7 +1,7 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Product;
+import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
 import be.ac.ulb.infof307.g10.utils.ToStringConverter;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.binding.BooleanBinding;
@@ -53,7 +53,7 @@ abstract public class AbstractProductController {
 	
 	protected void updateProducts() {
 		productsCombo.getItems().clear();
-		productsCombo.getItems().addAll(Database.getAllProducts());
+		productsCombo.getItems().addAll(ProductDAO.getAllProducts());
 	}
 	
 	protected void productsTableSelect(Product newValue) {

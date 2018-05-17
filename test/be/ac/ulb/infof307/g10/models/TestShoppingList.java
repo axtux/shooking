@@ -6,12 +6,20 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestShoppingList {
+import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
+import be.ac.ulb.infof307.g10.models.dao.ShoppingListDAO;
+import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
+import be.ac.ulb.infof307.g10.models.database.Database;
+
+public class TestShoppingList extends AbstractTestDatabase {
+	
 	private ShoppingList sl;
 
 	@Before
 	public void create() {
-		sl = new ShoppingList();
+		super.before();
+		//sl = new ShoppingList();
+		sl = ShoppingListDAO.createShoppingList("#test testingSL");
 	}
 
 	@Test
@@ -21,10 +29,25 @@ public class TestShoppingList {
 
 	@Test
 	public void setTest() {
-		Product p1 = new Product("test1", 1, "unit");
-		Product p2 = new Product("test2", 2, "unit");
+		Product p1 = ProductDAO.createProduct("#test testingProduct1", 1, "unit");
+		Product p2 = ProductDAO.createProduct("#test testingProduct2", 1, "unit");
 		sl.setProduct(p1, 1);
 		sl.setProduct(p2, 2);
+		Assert.assertEquals(1, sl.getQuantity(p1));
+		Assert.assertEquals(2, sl.getQuantity(p2));
+		Assert.assertEquals(2, sl.size());
+	}
+	
+	@Test
+	public void setTestDB() {
+		Product p1 = ProductDAO.createProduct("#test testingProduct1", 1, "unit");
+		Product p2 = ProductDAO.createProduct("#test testingProduct2", 1, "unit");
+		sl.setProduct(p1, 1);
+		sl.setProduct(p2, 2);
+		Database.close();
+		sl = ShoppingListDAO.getShoppingList("#test testingSL");
+		p1 = ProductDAO.getProduct("#test testingProduct1");
+		p2 = ProductDAO.getProduct("#test testingProduct2");
 		Assert.assertEquals(1, sl.getQuantity(p1));
 		Assert.assertEquals(2, sl.getQuantity(p2));
 		Assert.assertEquals(2, sl.size());
@@ -32,7 +55,7 @@ public class TestShoppingList {
 
 	@Test
 	public void addTest() {
-		Product p1 = new Product("test1", 1, "unit");
+		Product p1 = ProductDAO.createProduct("#test testingProduct1", 1, "unit");
 		sl.addProduct(p1, 1);
 		sl.addProduct(p1, 1);
 		sl.addProduct(p1, 1);
@@ -41,9 +64,22 @@ public class TestShoppingList {
 	}
 
 	@Test
+	public void addTestDB() {
+		Product p1 = ProductDAO.createProduct("#test testingProduct1", 1, "unit");
+		sl.addProduct(p1, 1);
+		sl.addProduct(p1, 1);
+		sl.addProduct(p1, 1);
+		Database.close();
+		sl = ShoppingListDAO.getShoppingList("#test testingSL");
+		p1 = ProductDAO.getProduct("#test testingProduct1");
+		Assert.assertEquals(3, sl.getQuantity(p1));
+		Assert.assertEquals(1, sl.size());
+	}
+	
+	@Test
 	public void removeTest() {
-		Product p1 = new Product("test1", 1, "unit");
-		Product p2 = new Product("test2", 2, "unit");
+		Product p1 = ProductDAO.createProduct("#test testingProduct1", 1, "unit");
+		Product p2 = ProductDAO.createProduct("#test testingProduct2", 1, "unit");
 		sl.setProduct(p1, 1);
 		sl.setProduct(p2, 2);
 		sl.removeProduct(p1);
@@ -51,11 +87,27 @@ public class TestShoppingList {
 		Assert.assertEquals(2, sl.getQuantity(p2));
 		Assert.assertEquals(1, sl.size());
 	}
+	
+	@Test
+	public void removeTestDB() {
+		Product p1 = ProductDAO.createProduct("#test testingProduct1", 1, "unit");
+		Product p2 = ProductDAO.createProduct("#test testingProduct2", 1, "unit");
+		sl.setProduct(p1, 1);
+		sl.setProduct(p2, 2);
+		sl.removeProduct(p1);
+		Database.close();
+		sl = ShoppingListDAO.getShoppingList("#test testingSL");
+		p1 = ProductDAO.getProduct("#test testingProduct1");
+		p2 = ProductDAO.getProduct("#test testingProduct2");
+		Assert.assertEquals(0, sl.getQuantity(p1));
+		Assert.assertEquals(2, sl.getQuantity(p2));
+		Assert.assertEquals(1, sl.size());
+	}
 
 	@Test
 	public void getProductsTest() {
-		Product p1 = new Product("test1", 1, "unit");
-		Product p2 = new Product("test2", 2, "unit");
+		Product p1 = ProductDAO.createProduct("#test testingProduct1", 1, "unit");
+		Product p2 = ProductDAO.createProduct("#test testingProduct2", 1, "unit");
 		sl.setProduct(p1, 1);
 		sl.setProduct(p2, 2);
 		Set<Product> set = sl.getProducts();
@@ -66,8 +118,8 @@ public class TestShoppingList {
 
 	@Test
 	public void copyTest() {
-		Product p1 = new Product("test1", 1, "unit");
-		Product p2 = new Product("test2", 2, "unit");
+		Product p1 = ProductDAO.createProduct("#test testingProduct1", 1, "unit");
+		Product p2 = ProductDAO.createProduct("#test testingProduct2", 1, "unit");
 		sl.setProduct(p1, 1);
 		sl.setProduct(p2, 2);
 

@@ -1,9 +1,8 @@
-package be.ac.ulb.infof307.g10.db;
+package be.ac.ulb.infof307.g10.models.database;
 
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
-import be.ac.ulb.infof307.g10.models.Stock;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,44 +34,32 @@ public class Data {
 	}
 
 	public static void fillDB() {
-		List<Shop> shops = getShops();
-		List<Product> products = getProducts();
-
-		// insert products
-		for (Product p : products) {
-			p.save();
+		for (Shop s : getShops()) {
+			// save products before
+			Database.save(s.getStock().getProducts());
+			Database.save(s);
 		}
 
-		int i = 0;
-		Stock st;
-		// Database.setAutoCommit(false);
-		for (Shop s : shops) {
-			// low cost first
-			st = new Stock();
-			for (Product p : products) {
-				st.addProduct(p, random(100), 10 * i + random(200, 300));
-			}
-			s.setStock(st);
-			i++;
-			s.save();
-		}
-
-		// insert recipes
-		for (Recipe r : getRecipes()) {
-			r.save();
-		}
-
-		// Database.setAutoCommit(true);
+		// save recipes
+		Database.save(getRecipes());
 	}
 
 	public static List<Shop> getShops() {
-		List<Shop> list = Database.getAllShops();
+		List<Shop> list = new ArrayList<>();
+		List<Product> products = getProducts();
 
-		if (list.isEmpty()) {
-			list.add(Shop.create("Aldi", 50.828488, 4.362717));
-			list.add(Shop.create("Colruyt", 50.867831, 4.403058));
-			list.add(Shop.create("Carrefour", 50.859922, 4.342290));
-			list.add(Shop.create("Delhaize", 50.845075, 4.389325));
+		list.add(new Shop("Aldi", 50.828488, 4.362717));
+		list.add(new Shop("Colruyt", 50.867831, 4.403058));
+		list.add(new Shop("Carrefour", 50.859922, 4.342290));
+		list.add(new Shop("Delhaize", 50.845075, 4.389325));
+
+		int i = 0;
+		for (Shop s : list) {
+			for (Product p : products) {
+				// random stock, price random but depending on i (low cost first)
+				s.getStock().addProduct(p, random(100), 10 * i + random(200, 300));
+			}
+			i++;
 		}
 
 		return list;
@@ -84,16 +71,16 @@ public class Data {
 	 * @return List of Recipes
 	 */
 	public static List<Recipe> getRecipes() {
-		ArrayList<Recipe> list = new ArrayList<>();
+		List<Recipe> list = new ArrayList<>();
 
-		list.add(new Recipe("Omelette au fromage", 1));
-		list.add(new Recipe("Pancake tombé dans la neige avant le 31 Décembre", 1));
+		list.add(new Recipe("Omelette au fromage", 3));
+		list.add(new Recipe("Pancake tombé dans la neige avant le 31 Décembre", 4));
 
 		return list;
 	}
 
 	public static List<Product> getProducts() {
-		ArrayList<Product> list = new ArrayList<>();
+		List<Product> list = new ArrayList<>();
 
 		list.add(new Product("Pasta", 500, "g"));
 		list.add(new Product("Rice", 500, "g"));

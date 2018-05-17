@@ -14,8 +14,8 @@ import com.lynden.gmapsfx.javascript.object.MapTypeIdEnum;
 import com.lynden.gmapsfx.javascript.object.Marker;
 import com.lynden.gmapsfx.javascript.object.MarkerOptions;
 
-import be.ac.ulb.infof307.g10.db.Database;
 import be.ac.ulb.infof307.g10.models.Shop;
+import be.ac.ulb.infof307.g10.models.dao.ShopDAO;
 import be.ac.ulb.infof307.g10.views.DialogView;
 import be.ac.ulb.infof307.g10.views.View;
 import javafx.fxml.FXML;
@@ -126,7 +126,7 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 	 */
 	private void updateInterface() {
 		map.getMarkerClusterer().clearMarkers();
-		for (Shop s : Database.getAllShops()) {
+		for (Shop s : ShopDAO.getAllShops()) {
 			addShopToMap(s);
 		}
 	}
