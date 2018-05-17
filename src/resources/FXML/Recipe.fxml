@@ -60,6 +60,6 @@
         <Button id="createRecipeBT" font="$x42" layoutX="138.0" layoutY="123.0" mnemonicParsing="false" onAction="#createRecipe" prefWidth="108.0" text="New" />
         <Separator layoutY="376.0" prefHeight="13.0" prefWidth="266.0" />
         <Separator layoutY="160.0" prefHeight="13.0" prefWidth="266.0" />
-        <Button id="exportAsShoppingListBT" fx:id="exportAsShoppingListBT" font="$x42" layoutX="42.0" layoutY="755.0" mnemonicParsing="false" onAction="#exportAsShoppingList" prefHeight="29.0" prefWidth="184.0" text="Export as shopping list" textAlignment="CENTER" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="42.0" AnchorPane.rightAnchor="44.0" />
+        <Button id="exportAsShoppingListBT" fx:id="exportAsShoppingListBT" font="$x42" layoutX="42.0" layoutY="755.0" mnemonicParsing="false" onAction="#exportAsShoppingList" prefHeight="29.0" prefWidth="184.0" text="To shopping list" textAlignment="CENTER" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="42.0" AnchorPane.rightAnchor="44.0" />
     </AnchorPane>
 </SplitPane>
