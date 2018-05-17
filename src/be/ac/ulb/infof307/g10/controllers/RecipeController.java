@@ -263,8 +263,11 @@ public class RecipeController extends AbstractProductController {
 		updateSelectedRecipe();
 	}
 
+	/**
+	 * Handler for button Export recipe as a shopping list
+	 */
 	@FXML
 	private void exportAsShoppingList() {
-
+		
 	}
 }
