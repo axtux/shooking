@@ -15,7 +15,7 @@ public class TestShop extends AbstractTestDatabase {
 	
 	public static void createTestingShop() {
 		Shop shop = ShopDAO.createShop("#test testingShop", 0., 0.);
-		Product product = ProductDAO.createProduct("#test testingProduct", 12, "g");
+		Product product = ProductDAO.create("#test testingProduct", 12, "g");
 		shop.getStock().addProduct(product, 1);
 		Database.save(shop);
 		Database.close();

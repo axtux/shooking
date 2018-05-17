@@ -173,7 +173,7 @@ public class TestRecipe extends AbstractTestDatabase {
 	@Test
 	public void test_014_addIngredientDB() {
 		Recipe re = RecipeDAO.createRecipe("#test addIngredientDB");
-		Product p = ProductDAO.createProduct("#test product", 12, "g");
+		Product p = ProductDAO.create("#test product", 12, "g");
 		re.addIngredient(p, 1);
 		Database.close();
 		re = RecipeDAO.getRecipe("#test addIngredientDB");
@@ -201,7 +201,7 @@ public class TestRecipe extends AbstractTestDatabase {
 	@Test
 	public void test_016_removeIngredientDB() {
 		Recipe re = RecipeDAO.createRecipe("#test removeIngredientDB");
-		Product p = ProductDAO.createProduct("#test product", 12, "g");
+		Product p = ProductDAO.create("#test product", 12, "g");
 		re.addIngredient(p, 1); // save in DB by test_014_addIngredientDB
 		re.removeIngredient(p);
 		Database.close();
@@ -218,12 +218,12 @@ public class TestRecipe extends AbstractTestDatabase {
 	@Test
 	public void test_017_setIngredientQuantityDB() {
 		Recipe re = RecipeDAO.createRecipe("#test setIngredientQuantityDB");
-		Product p = ProductDAO.createProduct("#test product", 12, "g");
+		Product p = ProductDAO.create("#test product", 12, "g");
 		re.addIngredient(p, (float)1.); // save in DB by test_014_addIngredientDB
 		re.setIngredientQuantity(p, (float)2.);
 		Database.close();
 		re = RecipeDAO.getRecipe("#test setIngredientQuantityDB");
-		p = ProductDAO.getProduct("#test product");
+		p = ProductDAO.getByName("#test product");
 		assertEquals(re.getQuantity(p), (float)2., 0.1);
 	}
 

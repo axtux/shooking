@@ -57,19 +57,19 @@ public class TestDB {
 
 	@Test
 	public void test_0070_GetProduct() {
-		ProductDAO.getProduct("#DB 6 Apples");
+		ProductDAO.getByName("#DB 6 Apples");
 	}
 
 	@Test
 	public void test_0072_GetProducts() {
-		ProductDAO.getAllProducts();
+		ProductDAO.getAll();
 	}
 
 	@Test
 	public void test_0110_CreateList() {
 		ShoppingList l = new ShoppingList();
-		l.addProduct(ProductDAO.getProduct("#DB 6 Apples"), 1);
-		l.addProduct(ProductDAO.getProduct("#DB 6 Apples"), 2);
+		l.addProduct(ProductDAO.getByName("#DB 6 Apples"), 1);
+		l.addProduct(ProductDAO.getByName("#DB 6 Apples"), 2);
 		l.save();
 	}
 
@@ -80,7 +80,7 @@ public class TestDB {
 
 	@Test
 	public void test_0994_DeleteProduct() {
-		Database.delete(ProductDAO.getProduct("#DB 7 Apples"));
+		Database.delete(ProductDAO.getByName("#DB 7 Apples"));
 	}
 
 	@Test

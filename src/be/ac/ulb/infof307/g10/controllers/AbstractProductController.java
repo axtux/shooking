@@ -53,7 +53,7 @@ abstract public class AbstractProductController {
 	
 	protected void updateProducts() {
 		productsCombo.getItems().clear();
-		productsCombo.getItems().addAll(ProductDAO.getAllProducts());
+		productsCombo.getItems().addAll(ProductDAO.getAll());
 	}
 	
 	protected void productsTableSelect(Product newValue) {

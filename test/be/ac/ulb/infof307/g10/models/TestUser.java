@@ -14,8 +14,8 @@ public class TestUser extends AbstractTestDatabase {
 		User u = UserDAO.userSignup("test", "test");
 		ShoppingList sl = u.getShoppingList();
 
-		Product p1 = ProductDAO.createProduct("test1", 1, "unit");
-		Product p2 = ProductDAO.createProduct("test2", 2, "unit");
+		Product p1 = ProductDAO.create("test1", 1, "unit");
+		Product p2 = ProductDAO.create("test2", 2, "unit");
 
 		sl.setProduct(p1, 42);
 		sl.setProduct(p2, 13);

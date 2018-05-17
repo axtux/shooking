@@ -18,17 +18,17 @@ public class ProductDAO {
 	 * @param unitSize	Unit size of the quantity of the Product
 	 * @return	The new Product
 	 */
-	public static Product createProduct(String name, int quantity, String unitSize) {
+	public static Product create(String name, int quantity, String unitSize) {
 		Product p = new Product(name, quantity, unitSize);
 		p.addObserver(SaverObserver.getInstance());
 		return p;
 	}
 
-	public static List<Product> getAllProducts() throws NonExistingException {
+	public static List<Product> getAll() throws NonExistingException {
 		return Database.getAll(Product.class);
 	}
 
-	public static Product getProduct(String name) throws NonExistingException {
+	public static Product getByName(String name) throws NonExistingException {
 		try{
 			return Database.getOne(Product.class, "SELECT b FROM Product b WHERE b.name LIKE ?1", name);
 		} catch (NoResultException e) {
