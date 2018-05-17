@@ -92,10 +92,6 @@ public class Database {
 		transaction(() -> getEM().merge(o));
 	}
 
-	private static void detach(Object o) {
-		transaction(() -> getEM().detach(o));
-	}
-
 	/**
 	 * Get managed classes by this database
 	 * 
@@ -145,7 +141,8 @@ public class Database {
 	public static <T> T getOne(Class<T> type, String query, Object... params)
 			throws NoResultException, NonUniqueResultException {
 		T result = createQuery(type, query, params).getSingleResult();
-		detach(result);
+		// detach object
+		getEM().clear();
 		return result;
 	}
 
@@ -166,9 +163,8 @@ public class Database {
 	 */
 	public static <T> List<T> getAll(Class<T> type, String query, Object... params) {
 		List<T> resultList = createQuery(type, query, params).getResultList();
-		for (T result : resultList) {
-			detach(result);
-		}
+		// detach objects
+		getEM().clear();
 		return resultList;
 	}
 
@@ -185,6 +181,14 @@ public class Database {
 	 */
 	public static void deleteAll(Class<?> type) {
 		query("delete from " + type.getSimpleName() + " o");
+	}
+
+	public static void delete(ModelObject o) throws DatabaseException {
+		if(o.getId() == null) {
+			throw new DatabaseException("Object to delete have never been saved");
+		}
+		
+		query("delete from " + o.getClass().getSimpleName() + " o WHERE o.id=" + o.getId());
 	}
 
 	/**
@@ -225,10 +229,11 @@ public class Database {
 			} else {
 				merge(o);
 			}
+			// detach object
+			getEM().clear();
 		} catch (RollbackException e) {
 			throw new DatabaseException(e);
 		}
-		detach(o);
 	}
 
 	/**
@@ -251,17 +256,6 @@ public class Database {
 	public static void autosave(Iterable<? extends ModelObject> ol) {
 		for (ModelObject o : ol) {
 			autosave(o);
-		}
-	}
-
-	public static void delete(ModelObject o) throws DatabaseException {
-		try {
-			if (!getEM().contains(o)) {
-				o = getEM().merge(o);
-			}
-			getEM().remove(o);
-		} catch (RollbackException e) {
-			throw new DatabaseException(e);
 		}
 	}
 
