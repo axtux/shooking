@@ -223,7 +223,7 @@ public class RecipeController extends AbstractProductController {
 
 	private void updateRecipes() {
 		recipesListCombo.getItems().clear();
-		recipesListCombo.getItems().addAll(RecipeDAO.getAllRecipes());
+		recipesListCombo.getItems().addAll(RecipeDAO.getAll());
 	}
 
 	@Override
@@ -237,6 +237,9 @@ public class RecipeController extends AbstractProductController {
 			int amount = actualRecipe.getQuantity(cell.getValue());
 			return new SimpleStringProperty(Integer.toString(amount));
 		});
+
+		// use Product full name
+		productsCombo.setConverter(new ToStringConverter<>(Product::getIngredientName));
 
 		recipeStepCL.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue()));
 

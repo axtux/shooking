@@ -89,7 +89,7 @@ public class CreateShopController {
 	void create() {
 		createButton.setDisable(true);
 		try {
-			ShopDAO.createShop(name.getText(), position.getLatitude(), position.getLongitude(), createSchedule());
+			ShopDAO.create(name.getText(), position.getLatitude(), position.getLongitude(), createSchedule());
 			DialogView.hide();
 			return;
 		} catch (DatabaseException e) {

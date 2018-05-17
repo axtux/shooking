@@ -4,6 +4,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
+/**
+ * Integer field forces user to only enter valid integer values. If not signed,
+ * only valid positive integer values are accepted.
+ */
 public class IntField extends TextField implements ChangeListener<String> {
 	private boolean signed;
 

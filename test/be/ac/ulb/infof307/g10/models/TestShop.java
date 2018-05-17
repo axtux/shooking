@@ -14,8 +14,8 @@ public class TestShop extends AbstractTestDatabase {
 	private String[] testingSchedule = { "1", "2", "3", "4", "5", "6", "7" };
 	
 	public static void createTestingShop() {
-		Shop shop = ShopDAO.createShop("#test testingShop", 0., 0.);
-		Product product = ProductDAO.createProduct("#test testingProduct", 12, "g");
+		Shop shop = ShopDAO.create("#test testingShop", 0., 0., null);
+		Product product = ProductDAO.create("#test testingProduct", 12, "g");
 		shop.getStock().addProduct(product, 1);
 		Database.save(shop);
 		Database.close();
@@ -37,7 +37,7 @@ public class TestShop extends AbstractTestDatabase {
 	@Test
 	public void test_003_setStockDB() {
 		createTestingShop();
-		Shop shop = ShopDAO.getShop("#test testingShop");
+		Shop shop = ShopDAO.getByName("#test testingShop");
 		assertEquals(shop.getStock().size(), 1);
 	}
 }

@@ -16,8 +16,6 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.HashCodeExclude;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import be.ac.ulb.infof307.g10.models.database.Database;
-
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class ModelObject extends Observable implements Serializable {
@@ -40,14 +38,6 @@ public class ModelObject extends Observable implements Serializable {
 		return id;
 	}
 
-	public void save() {
-		Database.save(this);
-	}
-
-	public void delete() {
-		Database.delete(this);
-	}
-	
 	/**
 	 * Shortcut to notify Observers
 	 */

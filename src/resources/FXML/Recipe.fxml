@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import be.ac.ulb.infof307.g10.views.IntField?>
-
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -13,17 +12,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.725" focusTraversable="true" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.ac.ulb.infof307.g10.controllers.RecipeController">
+<SplitPane dividerPositions="0.725" focusTraversable="true" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.ac.ulb.infof307.g10.controllers.RecipeController">
     <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefWidth="707.0">
         <TableView id="table" fx:id="productsTable" prefHeight="50.0" prefWidth="50.0">
             <columns>
                 <TableColumn fx:id="productsNameColumn" prefWidth="250.0" text="Ingredient" />
-                <TableColumn fx:id="productsAmountColumn" prefWidth="250.0" text="Amount" />
+                <TableColumn fx:id="productsAmountColumn" prefWidth="250.0" text="Quantity" />
             </columns>
         </TableView>
         <TableView id="stateTable" fx:id="stepsTable" prefHeight="50.0" prefWidth="50.0">
             <columns>
-                <TableColumn fx:id="recipeStepCL" prefWidth="250.0" text="Recipe steps" />
+                <TableColumn fx:id="recipeStepCL" prefWidth="250.0" text="Steps" />
             </columns>
         </TableView>
     </SplitPane>

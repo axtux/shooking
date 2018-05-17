@@ -11,11 +11,11 @@ import be.ac.ulb.infof307.g10.models.database.Database;
 public class TestUser extends AbstractTestDatabase {
 
 	public static User userWithShoppingList() {
-		User u = UserDAO.userSignup("test", "test");
+		User u = UserDAO.create("test", "test");
 		ShoppingList sl = u.getShoppingList();
 
-		Product p1 = ProductDAO.createProduct("test1", 1, "unit");
-		Product p2 = ProductDAO.createProduct("test2", 2, "unit");
+		Product p1 = ProductDAO.create("test1", 1, "unit");
+		Product p2 = ProductDAO.create("test2", 2, "unit");
 
 		sl.setProduct(p1, 42);
 		sl.setProduct(p2, 13);
@@ -31,21 +31,19 @@ public class TestUser extends AbstractTestDatabase {
 
 	@Test
 	public void userShoppingListPersistenceTest() {
-		User u = userWithShoppingList();
-		u.save();
+		userWithShoppingList();
 		Database.close();
 
-		User o = UserDAO.getUser("test");
+		User o = UserDAO.getByUsername("test");
 		Assert.assertEquals(2, o.getShoppingList().size());
 	}
 
 	@Test
 	public void shoppingListPersistenceTest() {
-		User u = userWithShoppingList();
-		u.getShoppingList().save();
+		userWithShoppingList();
 		Database.close();
 
-		User o = UserDAO.getUser("test");
+		User o = UserDAO.getByUsername("test");
 		Assert.assertEquals(2, o.getShoppingList().size());
 	}
 }

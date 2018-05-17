@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
+import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.utils.Crypto;
 
 /**
@@ -37,7 +38,9 @@ public class User extends ModelObject {
 		}
 		this.username = username;
 		setPassword(password);
-		this.shoppingList = new ShoppingList();
+		shoppingList = new ShoppingList();
+		User self = this;
+		shoppingList.addObserver((observable, arg) -> self.changed());
 	}
 
 	public String getUsername() {
@@ -54,8 +57,16 @@ public class User extends ModelObject {
 		this.changed();
 	}
 
-	public boolean isPassword(String password) {
-		return Crypto.sha256(password  + this.salt ).equals(hashedPassword);
+	/**
+	 * Check password. Check is case sensitive.
+	 * @param password Password to check
+	 * @throws IncorrectPasswordException If password does not match.
+	 */
+	public void checkPassword(String password) throws IncorrectPasswordException {
+		if(Crypto.sha256(password + this.salt).equals(hashedPassword)) {
+			return;
+		}
+		throw new IncorrectPasswordException();
 	}
 
 	public ShoppingList getShoppingList() {

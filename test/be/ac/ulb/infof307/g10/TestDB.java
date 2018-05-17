@@ -2,15 +2,12 @@ package be.ac.ulb.infof307.g10;
 
 import static org.junit.Assert.assertNotNull;
 
-import javax.persistence.NoResultException;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
@@ -19,6 +16,7 @@ import be.ac.ulb.infof307.g10.models.dao.UserDAO;
 import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.models.database.Data;
 import be.ac.ulb.infof307.g10.models.database.Database;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 /**
  * The tests have to be executed in a certain order, so they are sorted by name
@@ -44,52 +42,49 @@ public class TestDB {
 		Data.fillDB();
 	}
 
-	@Test(expected = NoResultException.class)
-	public void test_0050_GetUser_noResultExceptionExpected() {
-		Assert.assertNotEquals(null, UserDAO.getUser("fzvsvsfvsfvsf"));
+	@Test(expected = NonExistingException.class)
+	public void test_0050_GetUser_NonExistingExceptionExpected() {
+		Assert.assertNotEquals(null, UserDAO.getByUsername("fzvsvsfvsfvsf"));
 	}
 
 	@Test
 	public void test_0060_CreateProduct() {
-		new Product("#DB 6 Apples", 6, "unit").save();
-		new Product("#DB 7 Apples", 6, "unit").save();
+		ProductDAO.create("#DB 6 Apples", 6, "unit");
+		ProductDAO.create("#DB 7 Apples", 6, "unit");
 	}
 
 	@Test
 	public void test_0070_GetProduct() {
-		ProductDAO.getProduct("#DB 6 Apples");
+		ProductDAO.getByName("#DB 6 Apples");
 	}
 
 	@Test
 	public void test_0072_GetProducts() {
-		ProductDAO.getAllProducts();
+		ProductDAO.getAll();
 	}
 
 	@Test
 	public void test_0110_CreateList() {
 		ShoppingList l = new ShoppingList();
-		l.addProduct(ProductDAO.getProduct("#DB 6 Apples"), 1);
-		l.addProduct(ProductDAO.getProduct("#DB 6 Apples"), 2);
-		l.save();
+		l.addProduct(ProductDAO.getByName("#DB 6 Apples"), 1);
+		l.addProduct(ProductDAO.getByName("#DB 6 Apples"), 2);
 	}
 
-	@Test(expected = NoResultException.class)
-	public void test_0991_DeleteUser_noResultExceptionExpected() {
-		Database.delete((UserDAO.getUser("#DB lala")));
+	@Test(expected = NonExistingException.class)
+	public void test_0991_DeleteUser_NonExistingExceptionExpected() {
+		Database.delete((UserDAO.getByUsername("#DB lala")));
 	}
 
 	@Test
 	public void test_0994_DeleteProduct() {
-		Database.delete(ProductDAO.getProduct("#DB 7 Apples"));
+		Database.delete(ProductDAO.getByName("#DB 7 Apples"));
 	}
 
 	@Test
 	public void test_1001_ModifyRecipe() {
-		Recipe r = new Recipe("#test modify recipe", 1);
-		r.save();
+		Recipe r = RecipeDAO.create("#test modify recipe", 1);
 		r.setName("#test new name");
 		r.addStep("#test step 1");
-		r.save();
-		assertNotNull(RecipeDAO.getRecipe("#test new name"));
+		assertNotNull(RecipeDAO.getByName("#test new name"));
 	}
 }

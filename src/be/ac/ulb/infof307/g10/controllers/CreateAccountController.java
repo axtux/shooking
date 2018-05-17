@@ -48,7 +48,7 @@ public class CreateAccountController {
 		if (pwd.equals(pwd2)) {
 			try {
 				errorLabel.setText("User creation...");
-				User user = UserDAO.userSignup(log, pwd);
+				User user = UserDAO.create(log, pwd);
 				Main.login(user);
 			} catch (ExistingException e) {
 				errorLabel.setText("This user name already exists");

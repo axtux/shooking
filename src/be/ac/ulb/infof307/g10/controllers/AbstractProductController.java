@@ -2,7 +2,6 @@ package be.ac.ulb.infof307.g10.controllers;
 
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
-import be.ac.ulb.infof307.g10.utils.ToStringConverter;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
@@ -13,6 +12,11 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+/**
+ * Common code between {@link ShoppingListController} and
+ * {@link RecipeController}. Manages a product combo box with associated
+ * {@link IntField}
+ */
 abstract public class AbstractProductController {
 
 	@FXML
@@ -38,24 +42,24 @@ abstract public class AbstractProductController {
 	protected TableView<Product> productsTable;
 	@FXML
 	protected TableColumn<Product, String> productsNameColumn;
-	
+
 	protected Product productsTableSelected;
-	
+
 	@FXML
 	private void productsAmountUp() {
-		productsAmountField.setInt(productsAmountField.getInt()+1);
+		productsAmountField.setInt(productsAmountField.getInt() + 1);
 	}
 
 	@FXML
 	private void productsAmountDown() {
-		productsAmountField.setInt(productsAmountField.getInt()-1);
+		productsAmountField.setInt(productsAmountField.getInt() - 1);
 	}
-	
+
 	protected void updateProducts() {
 		productsCombo.getItems().clear();
-		productsCombo.getItems().addAll(ProductDAO.getAllProducts());
+		productsCombo.getItems().addAll(ProductDAO.getAll());
 	}
-	
+
 	protected void productsTableSelect(Product newValue) {
 		productsTableSelected = newValue;
 		if (productsTableSelected == null) {
@@ -65,19 +69,16 @@ abstract public class AbstractProductController {
 			productsCombo.getSelectionModel().select(productsTableSelected);
 		}
 	}
-	
+
 	public void initialize() {
 		updateProducts();
-		
+
 		productsNameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
 
 		productsTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		productsTable.getSelectionModel().selectedItemProperty().addListener(
 			(observable, oldValue, newValue) -> productsTableSelect(newValue)
 		);
-
-		// use Product full name
-		productsCombo.setConverter(new ToStringConverter<>(Product::getFullName));
 
 		BooleanBinding notSelected = productsCombo.getSelectionModel().selectedItemProperty().isNull();
 		productsAddButton.disableProperty().bind(notSelected);

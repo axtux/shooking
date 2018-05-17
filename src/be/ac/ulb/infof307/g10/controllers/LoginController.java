@@ -41,7 +41,7 @@ public class LoginController {
 
 		try {
 			printLabel.setText("Connection ...");
-			User user = UserDAO.userLogin(log, pwd);
+			User user = UserDAO.login(log, pwd);
 			Main.login(user);
 		} catch (IncorrectPasswordException e) {
 			printLabel.setText("Incorrect Password");

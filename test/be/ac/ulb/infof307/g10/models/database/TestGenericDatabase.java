@@ -69,14 +69,14 @@ public class TestGenericDatabase extends AbstractTestDatabase {
 
 	@Test
 	public void recoverAfterError() {
-		UserDAO.userSignup("test", "test");
+		UserDAO.create("test", "test");
 		try {
-			UserDAO.userSignup("test", "test");
+			UserDAO.create("test", "test");
 			assert false;
 		} catch (ExistingException e) {
 			assert true;
 		}
-		User u = UserDAO.userSignup("test2", "test2");
+		User u = UserDAO.create("test2", "test2");
 		Assert.assertNotNull(u);
 	}
 

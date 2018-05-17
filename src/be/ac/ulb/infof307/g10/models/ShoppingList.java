@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -38,6 +37,10 @@ public class ShoppingList extends ModelObject {
 	 */
 	public ShoppingList(ShoppingList sl) {
 		setProductsAndQuantity(sl.productsAndQuantity);
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public void setProduct(Product p, int quantity) {
