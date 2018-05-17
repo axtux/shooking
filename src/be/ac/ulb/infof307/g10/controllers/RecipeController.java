@@ -238,6 +238,9 @@ public class RecipeController extends AbstractProductController {
 			return new SimpleStringProperty(Integer.toString(amount));
 		});
 
+		// use Product full name
+		productsCombo.setConverter(new ToStringConverter<>(Product::getIngredientName));
+
 		recipeStepCL.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue()));
 
 		stepsTable.getSelectionModel().selectedItemProperty()

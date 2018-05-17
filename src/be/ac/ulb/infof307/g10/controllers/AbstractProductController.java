@@ -2,7 +2,6 @@ package be.ac.ulb.infof307.g10.controllers;
 
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
-import be.ac.ulb.infof307.g10.utils.ToStringConverter;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
@@ -75,9 +74,6 @@ abstract public class AbstractProductController {
 		productsTable.getSelectionModel().selectedItemProperty().addListener(
 			(observable, oldValue, newValue) -> productsTableSelect(newValue)
 		);
-
-		// use Product full name
-		productsCombo.setConverter(new ToStringConverter<>(Product::getFullName));
 
 		BooleanBinding notSelected = productsCombo.getSelectionModel().selectedItemProperty().isNull();
 		productsAddButton.disableProperty().bind(notSelected);

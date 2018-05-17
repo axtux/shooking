@@ -58,4 +58,8 @@ public class Product extends ModelObject {
 		return name + " (" + size + sizeUnit + ")";
 	}
 
+	public String getIngredientName() {
+		return name + " (" + sizeUnit + ")";
+	}
+
 }

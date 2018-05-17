@@ -148,6 +148,9 @@ public class ShoppingListController extends AbstractProductController {
 		super.initialize();
 		sl = Main.getUser().getShoppingList();
 
+		// use Product full name
+		productsCombo.setConverter(new ToStringConverter<>(Product::getFullName));
+
 		productsNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
 
 		productsAmountColumn.setCellValueFactory(cell -> {
