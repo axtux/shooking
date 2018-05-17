@@ -66,5 +66,6 @@ public class User extends ModelObject {
 	//FIXME - but must add it when the multi list will be supported
 	public void addShoppingList(ShoppingList shoppingList) {
 		this.shoppingList = shoppingList;
+		this.changed();
 	}
 }
