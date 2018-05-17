@@ -2,8 +2,6 @@ package be.ac.ulb.infof307.g10;
 
 import static org.junit.Assert.assertNotNull;
 
-import javax.persistence.NoResultException;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -19,6 +17,7 @@ import be.ac.ulb.infof307.g10.models.dao.UserDAO;
 import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.models.database.Data;
 import be.ac.ulb.infof307.g10.models.database.Database;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 /**
  * The tests have to be executed in a certain order, so they are sorted by name
@@ -44,9 +43,9 @@ public class TestDB {
 		Data.fillDB();
 	}
 
-	@Test(expected = NoResultException.class)
-	public void test_0050_GetUser_noResultExceptionExpected() {
-		Assert.assertNotEquals(null, UserDAO.getUser("fzvsvsfvsfvsf"));
+	@Test(expected = NonExistingException.class)
+	public void test_0050_GetUser_NonExistingExceptionExpected() {
+		Assert.assertNotEquals(null, UserDAO.getByUsername("fzvsvsfvsfvsf"));
 	}
 
 	@Test
@@ -73,9 +72,9 @@ public class TestDB {
 		l.save();
 	}
 
-	@Test(expected = NoResultException.class)
-	public void test_0991_DeleteUser_noResultExceptionExpected() {
-		Database.delete((UserDAO.getUser("#DB lala")));
+	@Test(expected = NonExistingException.class)
+	public void test_0991_DeleteUser_NonExistingExceptionExpected() {
+		Database.delete((UserDAO.getByUsername("#DB lala")));
 	}
 
 	@Test

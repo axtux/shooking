@@ -11,7 +11,7 @@ import be.ac.ulb.infof307.g10.models.database.Database;
 public class TestUser extends AbstractTestDatabase {
 
 	public static User userWithShoppingList() {
-		User u = UserDAO.userSignup("test", "test");
+		User u = UserDAO.create("test", "test");
 		ShoppingList sl = u.getShoppingList();
 
 		Product p1 = ProductDAO.create("test1", 1, "unit");
@@ -35,7 +35,7 @@ public class TestUser extends AbstractTestDatabase {
 		u.save();
 		Database.close();
 
-		User o = UserDAO.getUser("test");
+		User o = UserDAO.getByUsername("test");
 		Assert.assertEquals(2, o.getShoppingList().size());
 	}
 
@@ -45,7 +45,7 @@ public class TestUser extends AbstractTestDatabase {
 		u.getShoppingList().save();
 		Database.close();
 
-		User o = UserDAO.getUser("test");
+		User o = UserDAO.getByUsername("test");
 		Assert.assertEquals(2, o.getShoppingList().size());
 	}
 }
