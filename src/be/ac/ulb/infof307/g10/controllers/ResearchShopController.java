@@ -53,7 +53,7 @@ public class ResearchShopController {
 			return new SimpleStringProperty(Price.toString(price));
 		});
 
-		for (Shop s : ShopDAO.getAllShops()) {
+		for (Shop s : ShopDAO.getAll()) {
 			try {
 				int total = s.getStock().getPrice(shoppingList);
 				shopsPrice.put(s, total);

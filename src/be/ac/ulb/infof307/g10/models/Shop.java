@@ -36,7 +36,7 @@ public class Shop extends ModelObject {
 	}
 
 	/**
-	 * Create shop
+	 * Create shop with default schedule and empty stock.
 	 * 
 	 * @param name
 	 *            Shop name
@@ -50,7 +50,7 @@ public class Shop extends ModelObject {
 	}
 
 	/**
-	 * Create shop
+	 * Create shop with empty stock.
 	 * 
 	 * @param name
 	 *            Shop name
@@ -59,10 +59,10 @@ public class Shop extends ModelObject {
 	 * @param longitude
 	 *            Position longitude
 	 * @param schedule
-	 *            Weekly schedule. Length must be 7.
+	 *            Weekly schedule. Length must be 7. If null, default schedule is used.
 	 */
 	public Shop(String name, double latitude, double longitude, String[] schedule) {
-		if (name.trim().isEmpty()) {
+		if (name == null || name.trim().isEmpty()) {
 			throw new IllegalArgumentException("name must not be empty");
 		}
 		this.name = name;
@@ -121,6 +121,10 @@ public class Shop extends ModelObject {
 		return stock;
 	}
 
+	/**
+	 * Default schedule is a String array containing 7 Strings "Unknown".
+	 * @return Default schedule.
+	 */
 	public static String[] defaultSchedule() {
 		String[] s = new String[7];
 		for (int i = 0; i < s.length; i++) {

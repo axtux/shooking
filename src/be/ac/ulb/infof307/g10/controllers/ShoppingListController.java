@@ -109,7 +109,7 @@ public class ShoppingListController extends AbstractProductController {
 
 	private void updateShops() {
 		shopsCombo.getItems().clear();
-		shopsCombo.getItems().addAll(ShopDAO.getAllShops());
+		shopsCombo.getItems().addAll(ShopDAO.getAll());
 	}
 
 	private void updateTable() {

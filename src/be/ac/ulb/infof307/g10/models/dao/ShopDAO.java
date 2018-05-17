@@ -13,22 +13,6 @@ import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 public class ShopDAO {
 
-	
-	/**
-	 * Create shop into database with default schedule and empty stock
-	 * 
-	 * @param name
-	 *            Shop name
-	 * @param latitude
-	 *            Position latitude
-	 * @param longitude
-	 *            Position longitude
-	 * @return Created shop
-	 */
-	public static Shop createShop(String name, double latitude, double longitude) {
-		return createShop(name, latitude, longitude, null);
-	}
-
 	/**
 	 * Create shop into database
 	 * 
@@ -42,7 +26,7 @@ public class ShopDAO {
 	 *            Weekly schedule. Length must be 7. 0 for Monday, 1 for Tuesday, ..., and 6 for Sunday
 	 * @return Created shop
 	 */
-	public static Shop createShop(String name, double latitude, double longitude, String[] schedule) throws ExistingException{
+	public static Shop create(String name, double latitude, double longitude, String[] schedule) throws ExistingException{
 		try {
 			Shop s = new Shop(name, latitude, longitude, schedule);
 			s.addObserver(SaverObserver.getInstance());
@@ -52,7 +36,7 @@ public class ShopDAO {
 		}
 	}
 
-	public static Shop getShop(String name) throws NonExistingException {
+	public static Shop getByName(String name) throws NonExistingException {
 		try{
 			return Database.getOne(Shop.class, "SELECT b FROM Shop b WHERE b.name LIKE ?1", name);
 		} catch (NoResultException e) {
@@ -60,7 +44,7 @@ public class ShopDAO {
 		}
 	}
 
-	public static List<Shop> getAllShops() throws NonExistingException {
+	public static List<Shop> getAll() throws NonExistingException {
 		return Database.getAll(Shop.class);
 	}
 	

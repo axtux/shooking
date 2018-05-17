@@ -13,32 +13,32 @@ import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
 public class TestShopDAO extends AbstractTestDatabase {
 
 	public static void createShop() {
-		ShopDAO.createShop("#test testingShop", 0., 0.);
+		ShopDAO.create("#test testingShop", 0., 0., null);
 	}
 	
 	@Test
 	public void test_001_createShop() {
-		Shop s = ShopDAO.createShop("#test createShop", 0., 0.);
+		Shop s = ShopDAO.create("#test createShop", 0., 0., null);
 		assertNotNull(s);
 	}
 	
 	@Test(expected=ExistingException.class)
 	public void test_002_createShopException() {
 		createShop();
-		Shop s = ShopDAO.createShop("#test new shop in same position", 0., 0.);
+		Shop s = ShopDAO.create("#test new shop in same position", 0., 0., null);
 		assertNull(s);
 	}
 	
 	@Test
 	public void test_003_getShop() {
 		createShop();
-		Shop s = ShopDAO.getShop("#test testingShop");
+		Shop s = ShopDAO.getByName("#test testingShop");
 		assertNotNull(s);
 	}
 	
 	@Test(expected=NonExistingException.class)
 	public void test_004_getShopException() {
-		Shop s = ShopDAO.getShop("#test badShopName");
+		Shop s = ShopDAO.getByName("#test badShopName");
 		assertNull(s);
 	}
 }

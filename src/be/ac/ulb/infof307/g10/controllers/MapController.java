@@ -126,7 +126,7 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 	 */
 	private void updateInterface() {
 		map.getMarkerClusterer().clearMarkers();
-		for (Shop s : ShopDAO.getAllShops()) {
+		for (Shop s : ShopDAO.getAll()) {
 			addShopToMap(s);
 		}
 	}
