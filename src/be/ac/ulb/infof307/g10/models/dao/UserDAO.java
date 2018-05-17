@@ -31,7 +31,9 @@ public class UserDAO {
 
 	public static User getByUsername(String username) throws NonExistingException {
 		try {
-			return Database.getOne(User.class, "SELECT b from User b where b.username LIKE ?1", username);
+			User u = Database.getOne(User.class, "SELECT b from User b where b.username LIKE ?1", username);
+			u.addObserver(SaverObserver.getInstance());
+			return u;
 		} catch (NoResultException e) {
 			throw new NonExistingException(e);
 		}

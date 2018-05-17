@@ -38,7 +38,9 @@ public class User extends ModelObject {
 		}
 		this.username = username;
 		setPassword(password);
-		this.shoppingList = new ShoppingList();
+		shoppingList = new ShoppingList();
+		User self = this;
+		shoppingList.addObserver((observable, arg) -> self.changed());
 	}
 
 	public String getUsername() {
