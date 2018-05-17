@@ -262,4 +262,9 @@ public class RecipeController extends AbstractProductController {
 		updateSelectedStep(null);
 		updateSelectedRecipe();
 	}
+
+	@FXML
+	private void exportAsShoppingList() {
+
+	}
 }
