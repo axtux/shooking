@@ -1,11 +1,13 @@
 package be.ac.ulb.infof307.g10.controllers;
 
+import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.dao.RecipeDAO;
 import be.ac.ulb.infof307.g10.utils.ToStringConverter;
 import be.ac.ulb.infof307.g10.views.DialogView;
 import be.ac.ulb.infof307.g10.views.IntField;
+import be.ac.ulb.infof307.g10.views.MainView;
 import be.ac.ulb.infof307.g10.views.View;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
@@ -42,6 +44,8 @@ public class RecipeController extends AbstractProductController {
 	private Button moveUpStepBT;
 	@FXML
 	private Button moveDownStepBT;
+	@FXML
+	private Button exportAsShoppingListBT;
 	@FXML
 	private TableColumn<Product, String> productsAmountColumn;
 	@FXML
@@ -252,6 +256,7 @@ public class RecipeController extends AbstractProductController {
 		stepTF.disableProperty().bind(notSelected);
 		addStepBT.disableProperty().bind(notSelected);
 		clearStepBT.disableProperty().bind(notSelected);
+		exportAsShoppingListBT.disableProperty().bind(notSelected);
 
 		notSelected = stepsTable.getSelectionModel().selectedItemProperty().isNull();
 		editStepBT.disableProperty().bind(notSelected);
@@ -261,5 +266,15 @@ public class RecipeController extends AbstractProductController {
 		peopleTF.setDisable(true);
 		updateSelectedStep(null);
 		updateSelectedRecipe();
+
+	}
+
+	/**
+	 * Handler for button Export recipe as a shopping list
+	 */
+	@FXML
+	private void exportAsShoppingList() {
+		Main.getUser().addShoppingList(actualRecipe.toShoppingList());
+		MainView.show(View.SHOPPING_LIST);
 	}
 }
