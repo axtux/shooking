@@ -1,4 +1,4 @@
-package be.ac.ulb.infof307.g10.utils;
+package be.ac.ulb.infof307.g10.models;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
