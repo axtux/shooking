@@ -8,7 +8,6 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
-import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
@@ -50,8 +49,8 @@ public class TestDB {
 
 	@Test
 	public void test_0060_CreateProduct() {
-		new Product("#DB 6 Apples", 6, "unit").save();
-		new Product("#DB 7 Apples", 6, "unit").save();
+		ProductDAO.create("#DB 6 Apples", 6, "unit");
+		ProductDAO.create("#DB 7 Apples", 6, "unit");
 	}
 
 	@Test
@@ -69,7 +68,6 @@ public class TestDB {
 		ShoppingList l = new ShoppingList();
 		l.addProduct(ProductDAO.getByName("#DB 6 Apples"), 1);
 		l.addProduct(ProductDAO.getByName("#DB 6 Apples"), 2);
-		l.save();
 	}
 
 	@Test(expected = NonExistingException.class)
@@ -84,11 +82,9 @@ public class TestDB {
 
 	@Test
 	public void test_1001_ModifyRecipe() {
-		Recipe r = new Recipe("#test modify recipe", 1);
-		r.save();
+		Recipe r = RecipeDAO.create("#test modify recipe", 1);
 		r.setName("#test new name");
 		r.addStep("#test step 1");
-		r.save();
 		assertNotNull(RecipeDAO.getByName("#test new name"));
 	}
 }

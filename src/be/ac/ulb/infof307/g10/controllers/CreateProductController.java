@@ -1,7 +1,7 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import be.ac.ulb.infof307.g10.models.Product;
-import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
+import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.views.DialogView;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.fxml.FXML;
@@ -39,13 +39,9 @@ public class CreateProductController {
 		button.setDisable(true); // we disable the button during the creation
 
 		try {
-			Product p = new Product(name.getText(), size.getInt(), unit.getText());
-			p.save();
+			ProductDAO.create(name.getText(), size.getInt(), unit.getText());
 			DialogView.hide();
-		} catch (DatabaseException e) {
-			printLabel.setText("Error in database - The product you are creating already exists");
-		} catch (NullPointerException | IllegalArgumentException e) { // should never happen because fields
-											// are empty strings by default
+		} catch (ExistingException | IllegalArgumentException e) {
 			printLabel.setText(e.getMessage());
 		}
 		button.setDisable(false);

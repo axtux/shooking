@@ -6,7 +6,6 @@ import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.dao.ShopDAO;
-import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.utils.ToStringConverter;
 import be.ac.ulb.infof307.g10.views.DialogView;
@@ -50,11 +49,6 @@ public class ShoppingListController extends AbstractProductController {
 	private ShoppingList sl;
 
 	private void changed() {
-		try {
-			sl.save();
-		} catch (DatabaseException e) {
-			status.setText("Database error");
-		}
 		updateTable();
 	}
 
@@ -147,9 +141,6 @@ public class ShoppingListController extends AbstractProductController {
 	public void initialize() {
 		super.initialize();
 		sl = Main.getUser().getShoppingList();
-
-		// use Product full name
-		productsCombo.setConverter(new ToStringConverter<>(Product::getFullName));
 
 		productsNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
 

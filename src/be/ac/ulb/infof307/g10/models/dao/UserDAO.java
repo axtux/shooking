@@ -14,6 +14,7 @@ public class UserDAO {
 	public static User login(String username, String password) throws IncorrectPasswordException, NonExistingException {
 		User u = UserDAO.getByUsername(username);
 		u.checkPassword(password);
+		u.addObserver(SaverObserver.getInstance());
 		return u;
 	}
 

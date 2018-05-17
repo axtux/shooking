@@ -6,7 +6,7 @@ import javax.persistence.NoResultException;
 
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.database.Database;
-import be.ac.ulb.infof307.g10.models.database.SaverObserver;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 public class ProductDAO {
@@ -19,9 +19,14 @@ public class ProductDAO {
 	 * @return	The new Product
 	 */
 	public static Product create(String name, int quantity, String unitSize) {
-		Product p = new Product(name, quantity, unitSize);
-		p.addObserver(SaverObserver.getInstance());
-		return p;
+		try {
+			getByName(name);
+			throw new ExistingException("A product with same name already exists");
+		} catch (NonExistingException e) {
+			Product p = new Product(name, quantity, unitSize);
+			Database.save(p);
+			return p;
+		}
 	}
 
 	public static List<Product> getAll() throws NonExistingException {

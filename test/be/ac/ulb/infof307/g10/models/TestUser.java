@@ -31,8 +31,7 @@ public class TestUser extends AbstractTestDatabase {
 
 	@Test
 	public void userShoppingListPersistenceTest() {
-		User u = userWithShoppingList();
-		u.save();
+		userWithShoppingList();
 		Database.close();
 
 		User o = UserDAO.getByUsername("test");
@@ -41,8 +40,7 @@ public class TestUser extends AbstractTestDatabase {
 
 	@Test
 	public void shoppingListPersistenceTest() {
-		User u = userWithShoppingList();
-		u.getShoppingList().save();
+		userWithShoppingList();
 		Database.close();
 
 		User o = UserDAO.getByUsername("test");
