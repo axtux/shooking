@@ -135,7 +135,7 @@ public class Recipe extends AbstractObject {
 	private void moveStep(int indexInit, int indexFinal) throws IndexOutOfBoundsException {
 		if (indexInit >= 0 && indexInit < steps.size() && indexFinal >= 0 && indexFinal < steps.size()) {
 			String step = steps.remove(indexInit);
-			this.changed();	//If we dont use this.changed() here, the save function does't working
+			this.changed(); // if removed, save does not work properly
 			steps.add(indexFinal, step);
 			this.changed();
 		} else {
@@ -144,7 +144,7 @@ public class Recipe extends AbstractObject {
 	}
 
 	/**
-	 * Move up the index th step
+	 * Move up the step. Index of step is decreased.
 	 * 
 	 * @param step
 	 *            Initial step to move up
@@ -155,7 +155,7 @@ public class Recipe extends AbstractObject {
 	}
 
 	/**
-	 * Move down the index th step
+	 * Move down the step. Index of step is increased.
 	 * 
 	 * @param step
 	 *            Initial step to move up
@@ -265,14 +265,13 @@ public class Recipe extends AbstractObject {
 		return this.servings;
 	}
 
-
-	public ShoppingList toShoppingList(){
+	public ShoppingList toShoppingList() {
 		ShoppingList retShoppingList = new ShoppingList("Recipe " + this.name);
 		for (Product p : ingredients.keySet()) {
 			int quantityToHave = getQuantity(p);
 			int q = 0;
-			while (p.getSize()*q < quantityToHave ){
-				q ++;
+			while (p.getSize() * q < quantityToHave) {
+				q++;
 			}
 			retShoppingList.addProduct(p, q);
 		}
