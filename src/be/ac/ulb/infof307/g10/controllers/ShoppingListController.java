@@ -88,6 +88,7 @@ public class ShoppingListController extends AbstractProductController {
 	private void productsClear() {
 		currentList.clear();
 		changed();
+		user.changed(); //TODO pas sur de l'emplacement
 	}
 
 	@FXML
@@ -96,6 +97,7 @@ public class ShoppingListController extends AbstractProductController {
 		currentList.addProduct(p, productsAmountField.getInt());
 		productsTable.getSelectionModel().select(p);
 		changed();
+		user.changed(); //TODO pas sur de l'emplacement
 	}
 
 	@FXML
@@ -114,6 +116,7 @@ public class ShoppingListController extends AbstractProductController {
 		}
 		currentList.removeProduct(productsTableSelected);
 		changed();
+		user.changed(); //TODO pas sur de l'emplacement
 	}
 
 	@Override
