@@ -24,7 +24,10 @@ public class ShoppingList extends ModelObject {
 		productsAndQuantity = new HashMap<>();
 	}
 	
-	public ShoppingList(String name) {
+	public ShoppingList(String name) throws IllegalArgumentException {
+		if(name==null || name.trim().equals("")) {
+			throw new IllegalArgumentException("The name is null or empty");
+		}
 		this.name = name;
 		productsAndQuantity = new HashMap<>();
 	}
