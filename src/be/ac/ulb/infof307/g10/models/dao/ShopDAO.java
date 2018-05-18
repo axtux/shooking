@@ -1,6 +1,8 @@
 package be.ac.ulb.infof307.g10.models.dao;
 
+import java.time.DayOfWeek;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.NoResultException;
 
@@ -26,7 +28,7 @@ public class ShopDAO {
 	 *            Weekly schedule. Length must be 7. 0 for Monday, 1 for Tuesday, ..., and 6 for Sunday
 	 * @return Created shop
 	 */
-	public static Shop create(String name, double latitude, double longitude, String[] schedule) throws ExistingException{
+	public static Shop create(String name, double latitude, double longitude, Map<DayOfWeek, String> schedule) throws ExistingException{
 		try {
 			Shop s = new Shop(name, latitude, longitude, schedule);
 			AutoSaver.autosave(s);
