@@ -1,5 +1,6 @@
 package be.ac.ulb.infof307.g10.models.database;
 
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 import javax.persistence.metamodel.ManagedType;
 
-import be.ac.ulb.infof307.g10.models.AbstractModelObject;
+import be.ac.ulb.infof307.g10.models.AbstractObject;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 
 /**
@@ -183,7 +184,7 @@ public class Database {
 		query("delete from " + type.getSimpleName() + " o");
 	}
 
-	public static void delete(AbstractModelObject o) throws DatabaseException {
+	public static void delete(AbstractObject o) throws DatabaseException {
 		if(o.getId() == null) {
 			throw new DatabaseException("Object to delete have never been saved");
 		}
@@ -200,6 +201,10 @@ public class Database {
 		// clear links between objects and database
 		getEM().clear();
 		for (Class<?> c : getManagedClasses()) {
+			// abstract classes have no table
+			if (Modifier.isAbstract(c.getModifiers())) {
+				continue;
+			}
 			deleteAll(c);
 		}
 		// enable FK constraints
@@ -221,7 +226,7 @@ public class Database {
 	 * @param o
 	 *            Object to save
 	 */
-	public static void save(AbstractModelObject o) throws DatabaseException {
+	public static void save(AbstractObject o) throws DatabaseException {
 		try {
 			// id is defined when object is saved the first time
 			if (o.getId() == null) {
@@ -242,8 +247,8 @@ public class Database {
 	 * @param ol
 	 *            Objects to save
 	 */
-	public static void save(Iterable<? extends AbstractModelObject> ol) throws DatabaseException {
-		for (AbstractModelObject o : ol) {
+	public static void save(Iterable<? extends AbstractObject> ol) throws DatabaseException {
+		for (AbstractObject o : ol) {
 			save(o);
 		}
 	}

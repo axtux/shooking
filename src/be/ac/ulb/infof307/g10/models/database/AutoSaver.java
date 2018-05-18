@@ -3,10 +3,10 @@ package be.ac.ulb.infof307.g10.models.database;
 import java.util.Observable;
 import java.util.Observer;
 
-import be.ac.ulb.infof307.g10.models.AbstractModelObject;
+import be.ac.ulb.infof307.g10.models.AbstractObject;
 
 /**
- * Automatically save {@link AbstractModelObject}s into database after each change.
+ * Automatically save {@link AbstractObject}s into database after each change.
  */
 public class AutoSaver implements Observer {
 
@@ -20,10 +20,10 @@ public class AutoSaver implements Observer {
 	}
 
 	/**
-	 * Automatically save {@link AbstractModelObject} into database after each change.
+	 * Automatically save {@link AbstractObject} into database after each change.
 	 * @param o Object to save automatically.
 	 */
-	public static void autosave(AbstractModelObject o) {
+	public static void autosave(AbstractObject o) {
 		// save first
 		instance.update(o, null);
 		// save at each change
@@ -31,18 +31,18 @@ public class AutoSaver implements Observer {
 	}
 
 	/**
-	 * Automatically save {@link AbstractModelObject}s into database after each change.
+	 * Automatically save {@link AbstractObject}s into database after each change.
 	 * @param ol Objects to save automatically.
 	 */
-	public static void autosave(Iterable<? extends AbstractModelObject> ol) {
-		for (AbstractModelObject o : ol) {
+	public static void autosave(Iterable<? extends AbstractObject> ol) {
+		for (AbstractObject o : ol) {
 			autosave(o);
 		}
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		Database.save((AbstractModelObject) o);
+		Database.save((AbstractObject) o);
 	}
 
 }

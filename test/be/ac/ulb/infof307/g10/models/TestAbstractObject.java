@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestAbstractModelObject {/*
+public class TestAbstractObject {
 	TestObject to;
 	TestObject same;
 	TestObject other;
@@ -69,7 +69,7 @@ public class TestAbstractModelObject {/*
 	/**
 	 * Test class to test all methods correctly
 	 */
-	private class TestObject extends AbstractModelObject {/*
+	private class TestObject extends AbstractObject {
 		private static final long serialVersionUID = 1L;
 		private String test;
 
@@ -79,6 +79,6 @@ public class TestAbstractModelObject {/*
 
 		public String getTest() {
 			return test;
-		}//*/
+		}
 	}
 }

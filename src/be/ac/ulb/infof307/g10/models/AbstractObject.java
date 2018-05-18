@@ -17,13 +17,13 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 /**
  * Abstract superclass of all model objects. This class provide an id for easier
- * JPA management, toString, equals and hashCode functions based on reflexion to
+ * JPA management, toString, equals and hashCode functions based on reflection to
  * avoid the need to override these methods in every subclasses. Also, a changed
  * method is provided to mark object as changed and notify observers.
  */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-abstract public class AbstractModelObject extends Observable implements Serializable {
+abstract public class AbstractObject extends Observable implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,7 +40,7 @@ abstract public class AbstractModelObject extends Observable implements Serializ
 	/**
 	 * Needed by JPA
 	 */
-	protected AbstractModelObject() {
+	protected AbstractObject() {
 	}
 
 	public Long getId() {

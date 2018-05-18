@@ -8,7 +8,7 @@ import javax.persistence.Entity;
  * (positive integer) and a unit (string) related to the size.
  */
 @Entity
-public class Product extends AbstractModelObject {
+public class Product extends AbstractObject {
 
 	private static final long serialVersionUID = -0L;
 
