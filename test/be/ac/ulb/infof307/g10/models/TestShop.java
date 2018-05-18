@@ -26,22 +26,15 @@ public class TestShop extends AbstractTestDatabase {
 	}
 	
 	@Test
-	public void test_001_getSchedule() {
+	public void getSchedule() {
 		Shop shop = new Shop("#test getSchedule", 0., 0., schedule);
 		assertEquals(shop.getSchedule(DayOfWeek.MONDAY), "Unknown");
 	}
 	
 	@Test
-	public void test_002_setStock() {
+	public void stockAddProduct() {
 		Shop shop = new Shop("#test setStock", 0., 0., schedule);
 		shop.getStock().addProduct(new Product("#test testingProduct", 12, "g"), 1);
-		assertEquals(shop.getStock().size(), 1);
-	}
-	
-	@Test
-	public void test_003_setStockDB() {
-		createTestingShop();
-		Shop shop = ShopDAO.getByName("#test testingShop");
 		assertEquals(shop.getStock().size(), 1);
 	}
 }
