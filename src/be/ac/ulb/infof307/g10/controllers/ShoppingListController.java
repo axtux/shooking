@@ -177,6 +177,11 @@ public class ShoppingListController extends AbstractProductController {
 	private void productsNew() {
 		DialogView.show(View.CREATE_PRODUCT, (event) -> updateProducts());
 	}
+	
+	@FXML
+	private void createShoppingList(){
+		DialogView.show(View.CREATE_SHOPPING_LIST, (event)-> updateShoppingLists());
+	}
 
 	@Override
 	public void initialize() {
@@ -225,4 +230,6 @@ public class ShoppingListController extends AbstractProductController {
 		updateShops();
 		updateTable();
 	}
+	
+	
 }
