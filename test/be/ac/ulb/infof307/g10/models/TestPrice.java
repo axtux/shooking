@@ -5,6 +5,16 @@ import org.junit.Test;
 
 public class TestPrice {
 
+	@Test(expected = IllegalArgumentException.class)
+	public void negtiveToString() {
+		Assert.assertNull(Price.toString(-1));
+	}
+
+	@Test
+	public void zeroToString() {
+		Assert.assertEquals("0,00€", Price.toString(0));
+	}
+
 	@Test
 	public void leadingZeroToString() {
 		Assert.assertEquals("0,01€", Price.toString(1));
