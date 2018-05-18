@@ -20,9 +20,9 @@ import be.ac.ulb.infof307.g10.models.AbstractObject;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 
 /**
- * Object to manage ModelObjects persistence. This database is working only with
- * ModelObjects because save method needs the auto generated id. Feel free to extends
- * this class to add your own queries to your database. For more informations
+ * Object to manage {@link AbstractObject} persistence. This database is working
+ * only with {@link AbstractObject}s because save method needs an auto generated
+ * id. General way to access this class is using a DAO. For more informations
  * about internal behavior, please see official JPA documentation.
  */
 public class Database {
@@ -51,7 +51,7 @@ public class Database {
 	 */
 	private static EntityManager getEM() {
 		if (properties.getOrDefault("name", null) == null) {
-			throw new RuntimeException("You must set name property before using GenericDatabase");
+			throw new RuntimeException("You must set name property before using Database");
 		}
 		if (emf == null || !emf.isOpen()) {
 			emf = Persistence.createEntityManagerFactory(properties.get("name"), properties);
@@ -124,9 +124,9 @@ public class Database {
 	}
 
 	/**
-	 * Get one Object of type c from database corresponding to query bounds with
-	 * params Params have to be positional parameters. E.g. ?1 for first
-	 * parameter.
+	 * Get one Object of class type from database corresponding to query with
+	 * parameters params bound as positional parameters. In your query, use ?1
+	 * for first parameter, ?2 for second, ...
 	 * 
 	 * @param <T>
 	 *            Type of Object to get
@@ -148,8 +148,7 @@ public class Database {
 	}
 
 	/**
-	 * Get all Object of type c from database corresponding to query bounds with
-	 * params
+	 * Same as {@link #getOne(Class, String, Object...)} for multiple objects.
 	 * 
 	 * @param <T>
 	 *            Type of Object to get
@@ -160,7 +159,7 @@ public class Database {
 	 * @param params
 	 *            Optional positional parameters starting at 1 ("?1" for first
 	 *            parameter)
-	 * @return Objects of type T
+	 * @return List of objects. Can be empty.
 	 */
 	public static <T> List<T> getAll(Class<T> type, String query, Object... params) {
 		List<T> resultList = createQuery(type, query, params).getResultList();
@@ -185,10 +184,10 @@ public class Database {
 	}
 
 	public static void delete(AbstractObject o) throws DatabaseException {
-		if(o.getId() == null) {
+		if (o.getId() == null) {
 			throw new DatabaseException("Object to delete have never been saved");
 		}
-		
+
 		query("delete from " + o.getClass().getSimpleName() + " o WHERE o.id=" + o.getId());
 	}
 
