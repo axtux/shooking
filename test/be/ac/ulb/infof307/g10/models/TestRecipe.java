@@ -35,6 +35,16 @@ public class TestRecipe extends AbstractTestDatabase {
 		r.addIngredient(p2, (float) 1.);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void createRecipeExceptionName() {
+		new Recipe("", 1);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void createRecipeExceptionServing() {
+		new Recipe("correct name", 0);
+	}
+	
 	@Test
 	public void addStep() {
 		r.addStep("testing step 4");
@@ -50,18 +60,6 @@ public class TestRecipe extends AbstractTestDatabase {
 	}
 
 	@Test
-	public void moveStep() {
-		r.moveStep(0, 1);
-		assertEquals(r.getStep(0), "testing step 2");
-		assertEquals(r.getStep(1), "testing step 1");
-	}
-
-	@Test(expected = IndexOutOfBoundsException.class)
-	public void moveStepException() {
-		r.moveStep(0, 5);
-	}
-
-	@Test
 	public void moveUpStep() {
 		r.moveUpStep("testing step 2");
 		assertEquals(r.getStep(0), "testing step 2");
@@ -74,25 +72,11 @@ public class TestRecipe extends AbstractTestDatabase {
 		assertEquals(r.getStep(1), "testing step 3");
 		assertEquals(r.getStep(2), "testing step 2");
 	}
-
-	@Test
-	public void setStepIndice() {//TODO
-		r.setStep(0, "set step");
-		assertEquals(r.getStep(0), "set step");
-	}
 	
 	@Test
 	public void setStep() {
 		r.setStep("testing step 1", "set step");
 		assertEquals(r.getStep(0), "set step");
-	}
-
-	@Test
-	public void removeStepIndice() {//TODO
-		r.removeStep(0);
-		r.removeStep(0);
-		r.removeStep(0);
-		assertTrue(r.getAllSteps().isEmpty());
 	}
 	
 	@Test
@@ -163,16 +147,6 @@ public class TestRecipe extends AbstractTestDatabase {
 	public void clearIngredients() {
 		r.clearIngredients();
 		assertTrue(r.getAllIngredients().isEmpty());
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void createRecipeExceptionName() {
-		new Recipe("", 1);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void createRecipeExceptionServing() {
-		new Recipe("correct name", 0);
 	}
 
 	@Test

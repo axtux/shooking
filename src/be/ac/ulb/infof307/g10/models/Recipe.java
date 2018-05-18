@@ -106,7 +106,7 @@ public class Recipe extends AbstractObject {
 	 * @param s
 	 *            the new i th step
 	 */
-	public void setStep(int index, String s) throws IndexOutOfBoundsException {
+	private void setStep(int index, String s) throws IndexOutOfBoundsException {
 		steps.set(index, s);
 		this.changed();
 	}
@@ -145,7 +145,7 @@ public class Recipe extends AbstractObject {
 	 * @param indexFinal
 	 *            The new index of the step to move
 	 */
-	public void moveStep(int indexInit, int indexFinal) throws IndexOutOfBoundsException {
+	private void moveStep(int indexInit, int indexFinal) throws IndexOutOfBoundsException {
 		if (indexInit >= 0 && indexInit < steps.size() && indexFinal >= 0 && indexFinal < steps.size()) {
 			String step = steps.remove(indexInit);
 			this.changed();	//If we dont use this.changed() here, the save function does't working
@@ -184,7 +184,7 @@ public class Recipe extends AbstractObject {
 	 * @param index
 	 *            The index of the step
 	 */
-	public void removeStep(int index) throws IndexOutOfBoundsException {
+	private void removeStep(int index) throws IndexOutOfBoundsException {
 		steps.remove(index);
 		this.changed();
 	}
