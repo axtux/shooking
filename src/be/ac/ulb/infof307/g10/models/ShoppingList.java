@@ -1,6 +1,7 @@
 package be.ac.ulb.infof307.g10.models;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,32 +21,32 @@ public class ShoppingList extends AbstractObject {
 	/**
 	 * Needed by JPA
 	 */
-	public ShoppingList() {
-		productsAndQuantity = new HashMap<>();
-	}
-	
-	public ShoppingList(String name) {
-		this.name = name;
+	protected ShoppingList() {
+		// TODO change when productsQuantity is done
+		// should not create shopping list without name
 		productsAndQuantity = new HashMap<>();
 	}
 
-	/**
-	 * Copy ShoppingList
-	 * 
-	 * @param sl
-	 *            Shopping list to copy
-	 */
-	public ShoppingList(ShoppingList sl) {
-		setProductsAndQuantity(sl.productsAndQuantity);
+	public ShoppingList(String name) {
+		setName(name);
+		productsAndQuantity = new HashMap<>();
 	}
 
 	public String getName() {
 		return name;
 	}
 
+	public void setName(String name) {
+		if (name == null || name.trim().isEmpty()) {
+			throw new IllegalArgumentException("name must not be empty");
+		}
+		this.name = name;
+		changed();
+	}
+
 	public void setProduct(Product p, int quantity) {
 		productsAndQuantity.put(p, quantity);
-		this.changed();
+		changed();
 	}
 
 	public void addProduct(Product p, int quantity) {
@@ -54,7 +55,7 @@ public class ShoppingList extends AbstractObject {
 
 	public void removeProduct(Product p) {
 		productsAndQuantity.remove(p);
-		this.changed();
+		changed();
 	}
 
 	public int getQuantity(Product p) {
@@ -67,20 +68,16 @@ public class ShoppingList extends AbstractObject {
 
 	public void clear() {
 		productsAndQuantity.clear();
-		this.changed();
+		changed();
+	}
+
+	public boolean isEmpty() {
+		return productsAndQuantity.isEmpty();
 	}
 
 	public Set<Product> getProducts() {
-		return productsAndQuantity.keySet();
-	}
-
-	public Map<Product, Integer> getProductsAndQuantity() {
-		return new HashMap<>(productsAndQuantity);
-	}
-
-	public void setProductsAndQuantity(Map<Product, Integer> productsAndQuantity) {
-		this.productsAndQuantity = new HashMap<>(productsAndQuantity);
-		this.changed();
+		// return copy of set
+		return new HashSet<>(productsAndQuantity.keySet());
 	}
 
 }
