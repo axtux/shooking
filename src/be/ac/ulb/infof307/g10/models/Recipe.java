@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.OrderColumn;
 
 @Entity
 public class Recipe extends AbstractObject {
@@ -36,6 +37,7 @@ public class Recipe extends AbstractObject {
 	 * List of different steps of the recipe
 	 */
 	@ElementCollection(fetch = FetchType.EAGER)
+	@OrderColumn
 	private List<String> steps;
 
 	/**
@@ -124,23 +126,18 @@ public class Recipe extends AbstractObject {
 	}
 
 	/**
-	 * Takes the indexInit th step and move it to the indexFinal th place . All
-	 * the concerned steps are swapped to the left or the right if necessary
+	 * Swap steps at index1 and index2.
 	 * 
-	 * @param indexInit
-	 *            The initial index of the step to move
-	 * @param indexFinal
-	 *            The new index of the step to move
+	 * @param index1
+	 *            Step index to swap.
+	 * @param index2
+	 *            Step index to swap.
 	 */
-	private void moveStep(int indexInit, int indexFinal) throws IndexOutOfBoundsException {
-		if (indexInit >= 0 && indexInit < steps.size() && indexFinal >= 0 && indexFinal < steps.size()) {
-			String step = steps.remove(indexInit);
-			this.changed(); // if removed, save does not work properly
-			steps.add(indexFinal, step);
-			this.changed();
-		} else {
-			throw new IndexOutOfBoundsException();
-		}
+	private void swapStep(int index1, int index2) throws IndexOutOfBoundsException {
+		String tmp = steps.get(index1);
+		steps.set(index1, steps.get(index2));
+		steps.set(index2, tmp);
+		this.changed();
 	}
 
 	/**
@@ -151,7 +148,7 @@ public class Recipe extends AbstractObject {
 	 */
 	public void moveUpStep(String step) throws IndexOutOfBoundsException {
 		int index = steps.indexOf(step);
-		moveStep(index, index - 1);
+		swapStep(index, index - 1);
 	}
 
 	/**
@@ -162,7 +159,7 @@ public class Recipe extends AbstractObject {
 	 */
 	public void moveDownStep(String step) throws IndexOutOfBoundsException {
 		int index = steps.indexOf(step);
-		moveStep(index, index + 1);
+		swapStep(index, index + 1);
 	}
 
 	public void removeStep(String step) {
