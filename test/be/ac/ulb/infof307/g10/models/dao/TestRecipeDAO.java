@@ -57,4 +57,17 @@ public class TestRecipeDAO extends AbstractTestDatabase {
 		Database.close();
 		r = RecipeDAO.getByName("#test newName"); // No exception
 	}
+
+	@Test
+	public void moveRecipeTestDB() {
+		Recipe re = RecipeDAO.create("#test moveStepDB", 1);
+		re.addStep("step1");
+		re.addStep("step2");
+		re.moveDownStep("step1");
+		Database.close();
+		re = RecipeDAO.getByName("#test moveStepDB");
+		assertEquals(re.getStep(0), "step2");
+		assertEquals(re.getStep(1), "step1");
+	}
+
 }
