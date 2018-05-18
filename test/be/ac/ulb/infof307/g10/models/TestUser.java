@@ -12,7 +12,8 @@ public class TestUser extends AbstractTestDatabase {
 
 	public static User userWithShoppingList() {
 		User u = UserDAO.create("test", "test");
-		ShoppingList sl = u.getShoppingList();
+		u.addShoppingList(new ShoppingList());
+		ShoppingList sl = u.getShoppingLists().get(0);
 
 		Product p1 = ProductDAO.create("test1", 1, "unit");
 		Product p2 = ProductDAO.create("test2", 2, "unit");
@@ -26,7 +27,7 @@ public class TestUser extends AbstractTestDatabase {
 	@Test
 	public void shoppingListTest() {
 		User u = userWithShoppingList();
-		Assert.assertEquals(2, u.getShoppingList().size());
+		Assert.assertEquals(2, u.getShoppingLists().get(0).size());
 	}
 
 	@Test
@@ -35,7 +36,7 @@ public class TestUser extends AbstractTestDatabase {
 		Database.close();
 
 		User o = UserDAO.getByUsername("test");
-		Assert.assertEquals(2, o.getShoppingList().size());
+		Assert.assertEquals(2, o.getShoppingLists().get(0).size());
 	}
 
 	@Test
@@ -44,6 +45,6 @@ public class TestUser extends AbstractTestDatabase {
 		Database.close();
 
 		User o = UserDAO.getByUsername("test");
-		Assert.assertEquals(2, o.getShoppingList().size());
+		Assert.assertEquals(2, o.getShoppingLists().get(0).size());
 	}
 }
