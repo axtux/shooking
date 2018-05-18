@@ -12,16 +12,16 @@ import javafx.scene.Parent;
  */
 public enum View {
 	CREATE_ACCOUNT(false),
-	CREATE_PRODUCT(true),
-	CREATE_RECIPE(true),
-	CREATE_SHOP(true),
+	CREATE_PRODUCT(false),
+	CREATE_RECIPE(false),
+	CREATE_SHOP(false),
 	CREATE_SHOPPING_LIST(false),
 	LOGIN(false),
 	MAP(true),
-	MAP_ERROR(true),
+	MAP_ERROR(false),
 	MENU(false),
 	RECIPE(true),
-	RESEARCH_SHOP(true),
+	RESEARCH_SHOP(false),
 	SHOPPING_LIST(true),
 	TERMS_OF_USE(false);
 	
