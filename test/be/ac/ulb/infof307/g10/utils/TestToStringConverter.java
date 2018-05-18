@@ -26,6 +26,9 @@ public class TestToStringConverter {
 		sc.fromString("Coucou petite perruche !");
 	}
 
+	/**
+	 * Test class to be used in tests
+	 */
 	private class TestClass {
 		String test;
 		
