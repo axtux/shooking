@@ -23,5 +23,4 @@ public class SaverObserver implements Observer {
 	public void update(Observable o, Object arg) {
 		Database.save((ModelObject) o);
 	}
-
 }

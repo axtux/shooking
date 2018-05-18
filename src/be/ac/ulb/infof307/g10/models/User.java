@@ -85,7 +85,6 @@ public class User extends ModelObject {
 	public void addShoppingList(ShoppingList shoppingList) {
 		shoppingList.addObserver((observable, arg) -> this.changed());
 		shoppingLists.add(shoppingList);
-		System.out.println("AAAAAAAAAAAAAAAA");
 		this.changed();
 	}
 }
