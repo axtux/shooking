@@ -36,6 +36,13 @@ public class PreviewData {
 	}
 
 	public static void main(final String[] args) {
+		setPreviewData();
+		// exit correctly, required for Maven
+		Platform.exit();
+		System.exit(0);
+	}
+
+	public static void setPreviewData() {
 		Database.setProp("name", "GL10PU");
 		Database.empty();
 
@@ -47,10 +54,6 @@ public class PreviewData {
 
 		// save recipes
 		Database.save(getRecipes());
-
-		// exit correctly
-		Platform.exit();
-		System.exit(0);
 	}
 
 	public static List<Shop> getShops() {
