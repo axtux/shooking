@@ -1,5 +1,7 @@
 package be.ac.ulb.infof307.g10.models;
 
+import java.util.ArrayList;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +24,7 @@ public class User extends AbstractObject {
 	private String hashedPassword;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	private ShoppingList shoppingList;
+	private ArrayList<ShoppingList> shoppingLists;
 
 	private String salt;
 
@@ -38,9 +40,12 @@ public class User extends AbstractObject {
 		}
 		this.username = username;
 		setPassword(password);
-		shoppingList = new ShoppingList();
+		shoppingLists = new ArrayList<ShoppingList>();
 		User self = this;
-		shoppingList.addObserver((observable, arg) -> self.changed());
+		for(ShoppingList list:shoppingLists){
+			list.addObserver((observable, arg) -> self.changed());
+		}
+		
 	}
 
 	public String getUsername() {
@@ -69,14 +74,15 @@ public class User extends AbstractObject {
 		throw new IncorrectPasswordException();
 	}
 
-	public ShoppingList getShoppingList() {
-		return shoppingList;
+	public ArrayList<ShoppingList> getShoppingLists() {
+		return shoppingLists;
 	}
 
 	//FIXME - for the moment, this mothods replace the actual ShoppingList,
 	//FIXME - but must add it when the multi list will be supported
 	public void addShoppingList(ShoppingList shoppingList) {
-		this.shoppingList = shoppingList;
+		shoppingList.addObserver((observable, arg) -> self.changed());
+		shoppingLists.add(shoppingList);
 		this.changed();
 	}
 }
