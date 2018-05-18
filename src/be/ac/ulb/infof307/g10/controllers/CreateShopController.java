@@ -3,9 +3,12 @@ package be.ac.ulb.infof307.g10.controllers;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.views.DialogView;
 
+import java.time.DayOfWeek;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.lynden.gmapsfx.javascript.object.LatLong;
 
-import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.dao.ShopDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -44,8 +47,6 @@ public class CreateShopController {
 	@FXML
 	private Label printLabel;
 
-	private TextField[] schedule;
-
 	private final LatLong position;
 
 	/**
@@ -64,22 +65,21 @@ public class CreateShopController {
 		staticPosition = null;
 	}
 
-	public void initialize() {
-		schedule = new TextField[] { monday, tuesday, wednesday, thursday, friday, saturday, sunday };
-	}
-
 	/**
 	 * Construct the schedule of the shop
 	 */
-	private String[] createSchedule() {
-		String[] defaultSchedule = Shop.defaultSchedule();
-		for (int i = 0; i < 7; i++) {
-			// The user does not have to know all the schedule
-			if (!schedule[i].getText().isEmpty()) {
-				defaultSchedule[i] = schedule[i].getText();
-			}
-		}
-		return defaultSchedule;
+	private Map<DayOfWeek, String> createSchedule() {
+		Map<DayOfWeek, String> schedule = new HashMap<>();
+		
+		schedule.put(DayOfWeek.MONDAY, monday.getText());
+		schedule.put(DayOfWeek.TUESDAY, tuesday.getText());
+		schedule.put(DayOfWeek.WEDNESDAY, wednesday.getText());
+		schedule.put(DayOfWeek.THURSDAY, thursday.getText());
+		schedule.put(DayOfWeek.FRIDAY, friday.getText());
+		schedule.put(DayOfWeek.SATURDAY, saturday.getText());
+		schedule.put(DayOfWeek.SUNDAY, sunday.getText());
+		
+		return schedule;
 	}
 
 	/**

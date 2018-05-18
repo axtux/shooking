@@ -2,10 +2,14 @@ package be.ac.ulb.infof307.g10.models;
 
 import java.time.DayOfWeek;
 import java.time.format.TextStyle;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -24,7 +28,8 @@ public class Shop extends AbstractObject {
 	private String name;
 	private double latitude;
 	private double longitude;
-	private String[] schedule;
+	@ElementCollection(fetch = FetchType.EAGER)
+	private Map<DayOfWeek, String> schedule;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Stock stock;
@@ -59,22 +64,16 @@ public class Shop extends AbstractObject {
 	 * @param longitude
 	 *            Position longitude
 	 * @param schedule
-	 *            Weekly schedule. Length must be 7. If null, default schedule is used.
+	 *            Weekly schedule.
 	 */
-	public Shop(String name, double latitude, double longitude, String[] schedule) {
+	public Shop(String name, double latitude, double longitude, Map<DayOfWeek, String> schedule) {
 		if (name == null || name.trim().isEmpty()) {
 			throw new IllegalArgumentException("name must not be empty");
 		}
 		this.name = name;
 		this.latitude = latitude;
 		this.longitude = longitude;
-
-		if (schedule == null) {
-			schedule = defaultSchedule();
-		} else if (schedule.length != 7) {
-			throw new IllegalArgumentException("schedule length must be 7");
-		}
-		this.schedule = schedule.clone();
+		setSchedule(schedule);
 		this.stock = new Stock();
 	}
 
@@ -82,31 +81,56 @@ public class Shop extends AbstractObject {
 		return name;
 	}
 
+	private void setSchedule(Map<DayOfWeek, String> schedule) {
+		if (schedule == null) {
+			this.schedule = new HashMap<>();
+			return;
+		}
+		this.schedule = new HashMap<>(schedule);
+		// remove eventual empty days
+		for (DayOfWeek day : this.schedule.keySet()) {
+			if (this.schedule.get(day).trim().isEmpty()) {
+				this.schedule.remove(day);
+			}
+		}
+	}
+
 	/**
 	 * Return the opening time, in String format, of the chosen day.
 	 * 
 	 * @param day
-	 *            0 for Monday, 1 for Tuesday, ..., and 6 for Sunday
+	 *            Day of which to get schedule.
 	 * @return The opening time in String format, or an empty String
 	 */
-	public String getSchedule(int day) throws IndexOutOfBoundsException {
-		return this.schedule[day];
+	public String getSchedule(DayOfWeek day) {
+		return schedule.getOrDefault(day, "Unknown");
 	}
 
 	/**
-	 * Get shop information
+	 * Get whole schedule as string.
 	 * 
-	 * @return Name and schedule, in String format for all days
+	 * @return Format is "Day1: scheduleOfDay\nDay2: ..."
+	 */
+	public String getWholeSchedule() {
+		StringBuilder ret = new StringBuilder();
+
+		for (DayOfWeek day : DayOfWeek.values()) {
+			ret.append(day.getDisplayName(TextStyle.FULL, Locale.ENGLISH));
+			ret.append(": ");
+			ret.append(getSchedule(day));
+			ret.append("\n");
+		}
+
+		return ret.toString();
+	}
+
+	/**
+	 * Get shop information.
+	 * 
+	 * @return Format is "Name\n\nWholeSchedule"
 	 */
 	public String getInfo() {
-		StringBuilder ret = new StringBuilder(getName()).append("\n\n");
-		int day = 1;
-
-		for (String s : this.schedule) {
-			ret.append(DayOfWeek.of(day).getDisplayName(TextStyle.FULL, Locale.ENGLISH)).append(": ").append(s).append("\n");
-			day++;
-		}
-		return ret.toString();
+		return getName() + "\n\n" + getWholeSchedule();
 	}
 
 	public double getLatitude() {
@@ -119,17 +143,5 @@ public class Shop extends AbstractObject {
 
 	public Stock getStock() {
 		return stock;
-	}
-
-	/**
-	 * Default schedule is a String array containing 7 Strings "Unknown".
-	 * @return Default schedule.
-	 */
-	public static String[] defaultSchedule() {
-		String[] s = new String[7];
-		for (int i = 0; i < s.length; i++) {
-			s[i] = "Unknown";
-		}
-		return s;
 	}
 }
