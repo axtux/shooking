@@ -53,13 +53,10 @@ public class Recipe extends AbstractObject {
 	 *            Number of people for the recipe
 	 */
 	public Recipe(String name, int servings) {
-		if (name == null || name.trim().equals("")) {
-			throw new IllegalArgumentException("name must not be empty");
-		}
+		setName(name);
 		if (servings <= 0) {
-			throw new IllegalArgumentException("The servings must be > 0");
+			throw new IllegalArgumentException("servings must be > 0");
 		}
-		this.name = name;
 		this.servings = servings;
 		ingredients = new HashMap<>();
 		steps = new ArrayList<>();
@@ -70,6 +67,9 @@ public class Recipe extends AbstractObject {
 	}
 
 	public void setName(String name) {
+		if (name == null || name.trim().isEmpty()) {
+			throw new IllegalArgumentException("name must not be empty");
+		}
 		this.name = name;
 		this.changed();
 	}
@@ -99,19 +99,6 @@ public class Recipe extends AbstractObject {
 	}
 
 	/**
-	 * Replace the i th step by s
-	 * 
-	 * @param index
-	 *            index of the step
-	 * @param s
-	 *            the new i th step
-	 */
-	private void setStep(int index, String s) throws IndexOutOfBoundsException {
-		steps.set(index, s);
-		this.changed();
-	}
-
-	/**
 	 * Replace the oldStep by newStep
 	 * 
 	 * @param oldStep
@@ -121,7 +108,7 @@ public class Recipe extends AbstractObject {
 	 */
 	public void setStep(String oldStep, String newStep) {
 		int index = steps.indexOf(oldStep);
-		setStep(index, newStep);
+		steps.set(index, newStep);
 		this.changed();
 	}
 
@@ -178,20 +165,9 @@ public class Recipe extends AbstractObject {
 		moveStep(index, index + 1);
 	}
 
-	/**
-	 * Remove a step from the step list
-	 * 
-	 * @param index
-	 *            The index of the step
-	 */
-	private void removeStep(int index) throws IndexOutOfBoundsException {
-		steps.remove(index);
-		this.changed();
-	}
-
 	public void removeStep(String step) {
 		int index = steps.indexOf(step);
-		removeStep(index);
+		steps.remove(index);
 		this.changed();
 	}
 
