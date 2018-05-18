@@ -1,5 +1,6 @@
 package be.ac.ulb.infof307.g10.models.database;
 
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,13 +16,13 @@ import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 import javax.persistence.metamodel.ManagedType;
 
-import be.ac.ulb.infof307.g10.models.ModelObject;
+import be.ac.ulb.infof307.g10.models.AbstractObject;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 
 /**
- * Object to manage ModelObjects persistence. This database is working only with
- * ModelObjects because save method needs the auto generated id. Feel free to extends
- * this class to add your own queries to your database. For more informations
+ * Object to manage {@link AbstractObject} persistence. This database is working
+ * only with {@link AbstractObject}s because save method needs an auto generated
+ * id. General way to access this class is using a DAO. For more informations
  * about internal behavior, please see official JPA documentation.
  */
 public class Database {
@@ -50,7 +51,7 @@ public class Database {
 	 */
 	private static EntityManager getEM() {
 		if (properties.getOrDefault("name", null) == null) {
-			throw new RuntimeException("You must set name property before using GenericDatabase");
+			throw new RuntimeException("You must set name property before using Database");
 		}
 		if (emf == null || !emf.isOpen()) {
 			emf = Persistence.createEntityManagerFactory(properties.get("name"), properties);
@@ -123,9 +124,9 @@ public class Database {
 	}
 
 	/**
-	 * Get one Object of type c from database corresponding to query bounds with
-	 * params Params have to be positional parameters. E.g. ?1 for first
-	 * parameter.
+	 * Get one Object of class type from database corresponding to query with
+	 * parameters params bound as positional parameters. In your query, use ?1
+	 * for first parameter, ?2 for second, ...
 	 * 
 	 * @param <T>
 	 *            Type of Object to get
@@ -147,8 +148,7 @@ public class Database {
 	}
 
 	/**
-	 * Get all Object of type c from database corresponding to query bounds with
-	 * params
+	 * Same as {@link #getOne(Class, String, Object...)} for multiple objects.
 	 * 
 	 * @param <T>
 	 *            Type of Object to get
@@ -159,7 +159,7 @@ public class Database {
 	 * @param params
 	 *            Optional positional parameters starting at 1 ("?1" for first
 	 *            parameter)
-	 * @return Objects of type T
+	 * @return List of objects. Can be empty.
 	 */
 	public static <T> List<T> getAll(Class<T> type, String query, Object... params) {
 		List<T> resultList = createQuery(type, query, params).getResultList();
@@ -183,11 +183,11 @@ public class Database {
 		query("delete from " + type.getSimpleName() + " o");
 	}
 
-	public static void delete(ModelObject o) throws DatabaseException {
-		if(o.getId() == null) {
+	public static void delete(AbstractObject o) throws DatabaseException {
+		if (o.getId() == null) {
 			throw new DatabaseException("Object to delete have never been saved");
 		}
-		
+
 		query("delete from " + o.getClass().getSimpleName() + " o WHERE o.id=" + o.getId());
 	}
 
@@ -200,6 +200,10 @@ public class Database {
 		// clear links between objects and database
 		getEM().clear();
 		for (Class<?> c : getManagedClasses()) {
+			// abstract classes have no table
+			if (Modifier.isAbstract(c.getModifiers())) {
+				continue;
+			}
 			deleteAll(c);
 		}
 		// enable FK constraints
@@ -221,7 +225,7 @@ public class Database {
 	 * @param o
 	 *            Object to save
 	 */
-	public static void save(ModelObject o) throws DatabaseException {
+	public static void save(AbstractObject o) throws DatabaseException {
 		try {
 			// id is defined when object is saved the first time
 			if (o.getId() == null) {
@@ -239,23 +243,12 @@ public class Database {
 	/**
 	 * Save object into database.
 	 * 
-	 * @param o
-	 *            Object to save
+	 * @param ol
+	 *            Objects to save
 	 */
-	public static void save(Iterable<? extends ModelObject> ol) throws DatabaseException {
-		for (ModelObject o : ol) {
+	public static void save(Iterable<? extends AbstractObject> ol) throws DatabaseException {
+		for (AbstractObject o : ol) {
 			save(o);
-		}
-	}
-
-	public static void autosave(ModelObject o) {
-		save(o);
-		o.addObserver((observable, arg) -> Database.save(o));
-	}
-
-	public static void autosave(Iterable<? extends ModelObject> ol) {
-		for (ModelObject o : ol) {
-			autosave(o);
 		}
 	}
 

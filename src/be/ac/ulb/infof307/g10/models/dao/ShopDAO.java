@@ -6,7 +6,7 @@ import javax.persistence.NoResultException;
 
 import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.database.Database;
-import be.ac.ulb.infof307.g10.models.database.SaverObserver;
+import be.ac.ulb.infof307.g10.models.database.AutoSaver;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
@@ -29,7 +29,7 @@ public class ShopDAO {
 	public static Shop create(String name, double latitude, double longitude, String[] schedule) throws ExistingException{
 		try {
 			Shop s = new Shop(name, latitude, longitude, schedule);
-			s.addObserver(SaverObserver.getInstance());
+			AutoSaver.autosave(s);
 			return s;
 		} catch (DatabaseException e) {
 			throw new ExistingException(e);

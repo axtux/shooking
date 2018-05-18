@@ -1,14 +1,16 @@
-package be.ac.ulb.infof307.g10.models.database;
+package be.ac.ulb.infof307.g10.utils;
 
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
+import be.ac.ulb.infof307.g10.models.database.Database;
+import javafx.application.Platform;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Data {
+public class PreviewData {
 	/**
 	 * Random integer
 	 * 
@@ -33,7 +35,17 @@ public class Data {
 		return ThreadLocalRandom.current().nextInt(min, max);
 	}
 
-	public static void fillDB() {
+	public static void main(final String[] args) {
+		setPreviewData();
+		// exit correctly, required for Maven
+		Platform.exit();
+		System.exit(0);
+	}
+
+	public static void setPreviewData() {
+		Database.setProp("name", "GL10PU");
+		Database.empty();
+
 		for (Shop s : getShops()) {
 			// save products before
 			Database.save(s.getStock().getProducts());
@@ -56,7 +68,7 @@ public class Data {
 		int i = 0;
 		for (Shop s : list) {
 			for (Product p : products) {
-				// random stock, price random but depending on i (low cost first)
+				// random stock, random price depending on i (low cost first)
 				s.getStock().addProduct(p, random(100), 10 * i + random(200, 300));
 			}
 			i++;

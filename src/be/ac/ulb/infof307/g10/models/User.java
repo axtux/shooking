@@ -12,7 +12,7 @@ import be.ac.ulb.infof307.g10.utils.Crypto;
  * Manage user, password and shopping list. Use static methods to get instance.
  */
 @Entity
-public class User extends ModelObject {
+public class User extends AbstractObject {
 
 	private static final long serialVersionUID = -0L;
 

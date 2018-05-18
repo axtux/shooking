@@ -16,10 +16,11 @@ L'utilisation complète et détailée se trouve [ici](team/usage.md)
 Ces librairies seront téléchargées et installées automatiquement par Maven. Aucune action n'est nécessaire.
 
 - Eclipselink 2.6.5
-- SQLite-JDBC 3.21.0.1
+- H2 Database 1.4.197
 - JUnit 4.12
 - JavaFX 3.1.7
 - GMapsFx 2.12.0
+- Apache Common Lang 3.7
 
 ## Eclipse
 Le projet peut être importé dans Eclipse en tant que projet Maven. Attention, plusieurs modifications majeures ont eu lieu durant le développement. En cas de problème :
@@ -43,6 +44,11 @@ make jar
 Nécessite d'avoir compilé
 ```
 make run
+```
+
+Des données de démonstrations peuvent être ajoutées avec cette commande. Attention, ceci supprimera l'ensemble des données existantes.
+```
+make preview
 ```
 
 ### Tests

@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
 @Entity
-public class ShoppingList extends ModelObject {
+public class ShoppingList extends AbstractObject {
 
 	private static final long serialVersionUID = -0L;
 

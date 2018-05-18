@@ -17,7 +17,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "longitude", "latitude" }) })
-public class Shop extends ModelObject {
+public class Shop extends AbstractObject {
 
 	private static final long serialVersionUID = -0L;
 
