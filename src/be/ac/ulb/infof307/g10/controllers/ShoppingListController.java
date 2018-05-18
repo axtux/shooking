@@ -74,7 +74,9 @@ public class ShoppingListController extends AbstractProductController {
 	 */
 	private void shoppingListComboSelect(ShoppingList newValue) {
 		currentList = newValue;
-		updateSelectedList();
+		System.out.println("TETSTSTSSTSTTS");
+		//updateSelectedList();
+		System.out.println("TETSTSTSSTSTTS2222222222");
 	}
 
 	/**
@@ -83,7 +85,7 @@ public class ShoppingListController extends AbstractProductController {
 	 */
 	private void updateSelectedList() {
 		shoppingListsCombo.getSelectionModel().clearSelection();
-		updateTable();
+		//updateTable();
 	}
 
 	/**
