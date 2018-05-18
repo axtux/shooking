@@ -6,18 +6,23 @@ import org.junit.Test;
 public class TestPrice {
 
 	@Test
-	public void test_001_1toString() {
+	public void leadingZeroToString() {
 		Assert.assertEquals("0,01€", Price.toString(1));
 	}
 
 	@Test
-	public void test_001_10toString() {
+	public void trailingZeroToString() {
 		Assert.assertEquals("0,10€", Price.toString(10));
 	}
 
 	@Test
-	public void test_001_199toString() {
+	public void smallToString() {
 		Assert.assertEquals("1,99€", Price.toString(199));
+	}
+
+	@Test
+	public void bigToString() {
+		Assert.assertEquals("1234,56€", Price.toString(123456));
 	}
 
 }
