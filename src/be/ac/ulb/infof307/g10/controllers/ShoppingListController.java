@@ -4,6 +4,7 @@ import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Price;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Shop;
+import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.dao.ShopDAO;
 import be.ac.ulb.infof307.g10.models.dao.UserDAO;
@@ -51,6 +52,8 @@ public class ShoppingListController extends AbstractProductController {
 
 	private Shop selectedShop;
 
+	private User user;
+
 	/**
 	 * The current shopping list
 	 */
@@ -79,7 +82,7 @@ public class ShoppingListController extends AbstractProductController {
 	 */
 	private void updateShoppingLists() {
 		shoppingListsCombo.getItems().clear();
-		shoppingListsCombo.getItems().addAll(UserDAO.getShoppingLists(Main.getUser().getUsername()));
+		shoppingListsCombo.getItems().addAll(UserDAO.getShoppingLists(user.getUsername()));
 	}
 
 	@FXML
@@ -186,7 +189,8 @@ public class ShoppingListController extends AbstractProductController {
 	@Override
 	public void initialize() {
 		super.initialize();
-		//shoppingLists = Main.getUser().getShoppingLists();
+
+		user = Main.getUser();
 
 		productsNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
 
