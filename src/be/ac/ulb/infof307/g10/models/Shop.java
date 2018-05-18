@@ -88,8 +88,8 @@ public class Shop extends AbstractObject {
 		}
 		this.schedule = new HashMap<>(schedule);
 		// remove eventual empty days
-		for (DayOfWeek day : this.schedule.keySet()) {
-			if (this.schedule.get(day).trim().isEmpty()) {
+		for (DayOfWeek day : DayOfWeek.values()) {
+			if (this.schedule.containsKey(day) && this.schedule.get(day).trim().isEmpty()) {
 				this.schedule.remove(day);
 			}
 		}
