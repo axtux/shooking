@@ -7,6 +7,7 @@ import org.junit.Test;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.dao.RecipeDAO;
 import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
+import be.ac.ulb.infof307.g10.models.database.Database;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
@@ -46,5 +47,14 @@ public class TestRecipeDAO extends AbstractTestDatabase {
 	public void test_006_getRecipeException() {
 		Recipe r = RecipeDAO.getByName("#test badRecipeName");
 		assertNull(r);
+	}
+	
+	@Test
+	public void autoSaveRecipe() {
+		createTestingRecipe();
+		Recipe r = RecipeDAO.getByName("#test testingRecipe");
+		r.setName("#test newName");
+		Database.close();
+		r = RecipeDAO.getByName("#test newName"); // No exception
 	}
 }
