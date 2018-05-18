@@ -74,19 +74,10 @@ public class ShoppingListController extends AbstractProductController {
 	 */
 	private void shoppingListComboSelect(ShoppingList newValue) {
 		currentList = newValue;
-		System.out.println("TETSTSTSSTSTTS");
-		//updateSelectedList();
-		System.out.println("TETSTSTSSTSTTS2222222222");
+		System.out.println(currentList.getName());
+		updateTable();
 	}
 
-	/**
-	 * Select a recipe, update the corresponding fields, and enable/disable some
-	 * buttons on the view
-	 */
-	private void updateSelectedList() {
-		shoppingListsCombo.getSelectionModel().clearSelection();
-		//updateTable();
-	}
 
 	/**
 	 * Update the available shopping lists
