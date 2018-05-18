@@ -11,12 +11,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
-import be.ac.ulb.infof307.g10.models.dao.RecipeDAO;
-import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
-import be.ac.ulb.infof307.g10.models.database.Database;
-
-public class TestRecipe extends AbstractTestDatabase {
+public class TestRecipe {
 
 	private Recipe r;
 	private Product p1;
@@ -24,7 +19,6 @@ public class TestRecipe extends AbstractTestDatabase {
 
 	@Before
 	public void before() {
-		super.before();
 		r = new Recipe("Testing recipe", 1);
 		r.addStep("testing step 1");
 		r.addStep("testing step 2");
