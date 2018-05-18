@@ -74,7 +74,16 @@ public class ShoppingListController extends AbstractProductController {
 	 */
 	private void shoppingListComboSelect(ShoppingList newValue) {
 		currentList = newValue;
-		changed();
+		updateSelectedList();
+	}
+
+	/**
+	 * Select a recipe, update the corresponding fields, and enable/disable some
+	 * buttons on the view
+	 */
+	private void updateSelectedList() {
+		shoppingListsCombo.getSelectionModel().clearSelection();
+		updateTable();
 	}
 
 	/**
@@ -231,6 +240,7 @@ public class ShoppingListController extends AbstractProductController {
 		productsNewButton.setDisable(false);
 		researchShopsButton.setDisable(false);
 		updateProducts();
+		updateShoppingLists();
 		updateShops();
 		updateTable();
 	}
