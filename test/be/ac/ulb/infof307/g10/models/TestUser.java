@@ -47,4 +47,12 @@ public class TestUser extends AbstractTestDatabase {
 		User o = UserDAO.getByUsername("test");
 		Assert.assertEquals(2, o.getShoppingLists().get(0).size());
 	}
+
+	@Test
+	public void addShoppingList() {
+		User u = UserDAO.create("test", "test");
+		Assert.assertEquals(0,u.getShoppingLists().size());
+		u.addShoppingList(new ShoppingList());
+		Assert.assertEquals(u.getShoppingLists().size(),1);
+	}
 }

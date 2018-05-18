@@ -78,8 +78,10 @@ public class User extends AbstractObject {
 		return shoppingLists;
 	}
 
-	//FIXME - for the moment, this mothods replace the actual ShoppingList,
-	//FIXME - but must add it when the multi list will be supported
+	/**
+	 * Add a shopping list
+	 * @param shoppingList the shopping list to add
+	 */
 	public void addShoppingList(ShoppingList shoppingList) {
 		shoppingList.addObserver((observable, arg) -> this.changed());
 		shoppingLists.add(shoppingList);

@@ -47,7 +47,7 @@ public class ShoppingListController extends AbstractProductController {
 	private TableColumn<Product, String> productsPriceColumn;
 
 	@FXML
-	private ComboBox<ShoppingList> shoppingListCombo;
+	private ComboBox<ShoppingList> shoppingListsCombo;
 
 	private Shop selectedShop;
 
@@ -78,8 +78,8 @@ public class ShoppingListController extends AbstractProductController {
 	 * Update the available shopping lists
 	 */
 	private void updateShoppingLists() {
-		shoppingListCombo.getItems().clear();
-		shoppingListCombo.getItems().addAll(UserDAO.getShoppingLists(Main.getUser().getUsername()));
+		shoppingListsCombo.getItems().clear();
+		shoppingListsCombo.getItems().addAll(UserDAO.getShoppingLists(Main.getUser().getUsername()));
 	}
 
 	@FXML
@@ -131,11 +131,17 @@ public class ShoppingListController extends AbstractProductController {
 		updateTable();
 	}
 
+	/**
+	 * Update the combo box of shop
+	 */
 	private void updateShops() {
 		shopsCombo.getItems().clear();
 		shopsCombo.getItems().addAll(ShopDAO.getAll());
 	}
 
+	/**
+	 * Update the table of products
+	 */
 	private void updateTable() {
 		productsTable.getItems().clear();
 		if(currentList != null){
@@ -150,6 +156,9 @@ public class ShoppingListController extends AbstractProductController {
 		DialogView.show(View.RESEARCH_SHOP);
 	}
 
+	/**
+	 * Update the total amount to buy the list
+	 */
 	private void updateTotal() {
 		if (selectedShop == null) {
 			totalLabel.setText("-");
@@ -195,12 +204,12 @@ public class ShoppingListController extends AbstractProductController {
 			
 		});
 
-		shoppingListCombo.setConverter(new ToStringConverter<>(ShoppingList::getName));
+		shoppingListsCombo.setConverter(new ToStringConverter<>(ShoppingList::getName));
 
-		shoppingListCombo.getSelectionModel().selectedItemProperty()
+		shoppingListsCombo.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> shoppingListComboSelect(newValue));
 
-		BooleanBinding notSelected = shoppingListCombo.getSelectionModel().selectedItemProperty().isNull();
+		BooleanBinding notSelected = shoppingListsCombo.getSelectionModel().selectedItemProperty().isNull();
 
 		// convert Product to string
 		productsCombo.setConverter(new ToStringConverter<>(Product::getFullName));
