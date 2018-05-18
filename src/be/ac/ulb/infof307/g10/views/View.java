@@ -15,6 +15,7 @@ public enum View {
 	CREATE_PRODUCT(true),
 	CREATE_RECIPE(true),
 	CREATE_SHOP(true),
+	CREATE_SHOPPING_LIST(false),
 	LOGIN(false),
 	MAP(true),
 	MAP_ERROR(true),
@@ -23,6 +24,7 @@ public enum View {
 	RESEARCH_SHOP(true),
 	SHOPPING_LIST(true),
 	TERMS_OF_USE(false);
+	
 
 	private boolean menu;
 
