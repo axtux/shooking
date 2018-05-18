@@ -96,13 +96,14 @@ public class TestUserDAO extends AbstractTestDatabase {
 	@Test
 	public void setTestDB() {
 		User u = UserDAO.create("test", "test");
-		ShoppingList sl = u.getShoppingList();
+		u.addShoppingList(new ShoppingList());
+		ShoppingList sl = u.getShoppingLists().get(0);
 		Product p1 = ProductDAO.create("#test testingProduct1", 1, "unit");
 		Product p2 = ProductDAO.create("#test testingProduct2", 1, "unit");
 		sl.setProduct(p1, 1);
 		sl.setProduct(p2, 2);
 		Database.close();
-		sl = UserDAO.getByUsername("test").getShoppingList();
+		sl = UserDAO.getByUsername("test").getShoppingLists().get(0);
 		p1 = ProductDAO.getByName("#test testingProduct1");
 		p2 = ProductDAO.getByName("#test testingProduct2");
 		Assert.assertEquals(1, sl.getQuantity(p1));
@@ -113,13 +114,14 @@ public class TestUserDAO extends AbstractTestDatabase {
 	@Test
 	public void addTestDB() {
 		User u = UserDAO.create("test", "test");
-		ShoppingList sl = u.getShoppingList();
+		u.addShoppingList(new ShoppingList());
+		ShoppingList sl = u.getShoppingLists().get(0);
 		Product p1 = ProductDAO.create("#test testingProduct1", 1, "unit");
 		sl.addProduct(p1, 1);
 		sl.addProduct(p1, 1);
 		sl.addProduct(p1, 1);
 		Database.close();
-		sl = UserDAO.getByUsername("test").getShoppingList();
+		sl = UserDAO.getByUsername("test").getShoppingLists().get(0);
 		p1 = ProductDAO.getByName("#test testingProduct1");
 		Assert.assertEquals(3, sl.getQuantity(p1));
 		Assert.assertEquals(1, sl.size());
@@ -128,14 +130,15 @@ public class TestUserDAO extends AbstractTestDatabase {
 	@Test
 	public void removeTestDB() {
 		User u = UserDAO.create("test", "test");
-		ShoppingList sl = u.getShoppingList();
+		u.addShoppingList(new ShoppingList());
+		ShoppingList sl = u.getShoppingLists().get(0);
 		Product p1 = ProductDAO.create("#test testingProduct1", 1, "unit");
 		Product p2 = ProductDAO.create("#test testingProduct2", 1, "unit");
 		sl.setProduct(p1, 1);
 		sl.setProduct(p2, 2);
 		sl.removeProduct(p1);
 		Database.close();
-		sl = UserDAO.getByUsername("test").getShoppingList();
+		sl = UserDAO.getByUsername("test").getShoppingLists().get(0);
 		p1 = ProductDAO.getByName("#test testingProduct1");
 		p2 = ProductDAO.getByName("#test testingProduct2");
 		Assert.assertEquals(0, sl.getQuantity(p1));
