@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
 @Entity
-public class Recipe extends ModelObject {
+public class Recipe extends AbstractModelObject {
 
 	private static final long serialVersionUID = -0L;
 
