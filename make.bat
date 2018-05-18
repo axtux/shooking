@@ -1,9 +1,9 @@
 @echo off
 
-if "%~1"=="test"		goto :test
-if "%~1"=="doc"			goto :doc
-if "%~1"=="jar"			goto :jar
-if "%~1"=="run"			goto :run
+if "%~1"=="test"	goto :test
+if "%~1"=="doc"		goto :doc
+if "%~1"=="jar"		goto :jar
+if "%~1"=="run"		goto :run
 if "%~1"=="preview"	goto :preview
 if "%~1"=="release"	goto :release
 
