@@ -48,6 +48,6 @@
             <Font name="System Bold" size="15.0" fx:id="x421" />
          </font>
       </Label>
-      <ComboBox fx:id="shoppingListCombo" layoutX="12.0" layoutY="446.0" prefHeight="27.0" prefWidth="234.0" />
+      <ComboBox fx:id="shoppingListsCombo" layoutX="12.0" layoutY="446.0" prefHeight="27.0" prefWidth="234.0" />
     </AnchorPane>
 </SplitPane>
