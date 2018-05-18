@@ -64,9 +64,7 @@ public class ShoppingListController extends AbstractProductController {
 	 * Update the state
 	 */
 	private void changed() {
-		updateTable();
-		updateShoppingLists();
-	}
+		updateTable();}
 
 	/**
 	 * Change the current shopping list
@@ -74,7 +72,6 @@ public class ShoppingListController extends AbstractProductController {
 	 */
 	private void shoppingListComboSelect(ShoppingList newValue) {
 		currentList = newValue;
-		System.out.println(currentList.getName());
 		updateTable();
 	}
 
@@ -97,8 +94,8 @@ public class ShoppingListController extends AbstractProductController {
 	private void productsAdd() {
 		Product p = productsCombo.getValue();
 		currentList.addProduct(p, productsAmountField.getInt());
-		changed();
 		productsTable.getSelectionModel().select(p);
+		changed();
 	}
 
 	@FXML
