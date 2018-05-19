@@ -10,7 +10,7 @@ import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.dao.UserDAO;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 
-public class TestGenericDatabase extends AbstractTestDatabase {
+public class TestDatabase extends AbstractTestDatabase {
 
 	public static Product initProduct() {
 		Product p = new Product("Pasta", 500, "g");
