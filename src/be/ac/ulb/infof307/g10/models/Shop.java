@@ -75,6 +75,8 @@ public class Shop extends AbstractObject {
 		this.longitude = longitude;
 		setSchedule(schedule);
 		this.stock = new Stock();
+		Shop self = this;
+		this.stock.addObserver((observable, arg) -> self.changed());
 	}
 
 	public String getName() {

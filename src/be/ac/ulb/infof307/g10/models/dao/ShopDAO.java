@@ -40,14 +40,22 @@ public class ShopDAO {
 
 	public static Shop getByName(String name) throws NonExistingException {
 		try{
-			return Database.getOne(Shop.class, "SELECT b FROM Shop b WHERE b.name LIKE ?1", name);
+			Shop shop = Database.getOne(Shop.class, "SELECT b FROM Shop b WHERE b.name LIKE ?1", name);
+			AutoSaver.autosave(shop);
+			AutoSaver.autosave(shop.getStock());
+			return shop;
 		} catch (NoResultException e) {
 			throw new NonExistingException(e);
 		}
 	}
 
 	public static List<Shop> getAll() throws NonExistingException {
-		return Database.getAll(Shop.class);
+		List<Shop> shops = Database.getAll(Shop.class);
+		for (Shop s : shops){
+			AutoSaver.autosave(s);
+			AutoSaver.autosave(s.getStock());
+		}
+		return shops;
 	}
 	
 }
