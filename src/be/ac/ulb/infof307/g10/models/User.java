@@ -31,7 +31,8 @@ public class User extends AbstractObject {
 	private Set<ShoppingList> shoppingLists;
 
 	/**
-	 * The salt added to the password so that two user with 2 same password have not the same hashed password
+	 * The salt added to the password so that two user with 2 same password have
+	 * not the same hashed password
 	 */
 	private String salt;
 
@@ -63,7 +64,9 @@ public class User extends AbstractObject {
 
 	/**
 	 * Add an observer to a specific shopping list
-	 * @param list the shopping list that has to be observed
+	 * 
+	 * @param list
+	 *            the shopping list that has to be observed
 	 */
 	private void changedWhenListChanged(ShoppingList list) {
 		User self = this;
