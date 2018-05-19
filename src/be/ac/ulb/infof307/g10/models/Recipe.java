@@ -185,7 +185,7 @@ public class Recipe extends ProductsQuantity {
 	 */
 	public boolean isLast(String step) {
 		int index = steps.lastIndexOf(step);
-		return index == steps.size() - 1;
+		return index >= 0 && index == steps.size() - 1;
 	}
 
 	public void clearProducts() {
