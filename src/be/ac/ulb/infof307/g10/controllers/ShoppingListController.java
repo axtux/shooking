@@ -88,16 +88,15 @@ public class ShoppingListController extends AbstractProductController {
 	private void productsClear() {
 		currentList.clear();
 		changed();
-		user.changed(); //TODO pas sur de l'emplacement
 	}
 
 	@FXML
 	private void productsAdd() {
 		Product p = productsCombo.getValue();
 		currentList.addProduct(p, productsAmountField.getInt());
+		System.out.println("Product added");
 		productsTable.getSelectionModel().select(p);
 		changed();
-		user.changed(); //TODO pas sur de l'emplacement
 	}
 
 	@FXML
@@ -116,7 +115,6 @@ public class ShoppingListController extends AbstractProductController {
 		}
 		currentList.removeProduct(productsTableSelected);
 		changed();
-		user.changed(); //TODO pas sur de l'emplacement
 	}
 
 	@Override

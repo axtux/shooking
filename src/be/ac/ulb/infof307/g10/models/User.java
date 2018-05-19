@@ -1,6 +1,9 @@
 package be.ac.ulb.infof307.g10.models;
 
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,7 +17,7 @@ import be.ac.ulb.infof307.g10.utils.Crypto;
  * Manage user, password and shopping list. Use static methods to get instance.
  */
 @Entity
-public class User extends AbstractObject {
+public class User extends AbstractObject implements Observer{
 
 	private static final long serialVersionUID = -0L;
 
@@ -46,6 +49,11 @@ public class User extends AbstractObject {
 			list.addObserver((observable, arg) -> self.changed());
 		}
 		
+	}
+	@Override
+	public void update(Observable o, Object o1){
+		this.changed();
+		System.out.println("User saved");
 	}
 
 	public String getUsername() {
@@ -84,6 +92,7 @@ public class User extends AbstractObject {
 	 */
 	public void addShoppingList(ShoppingList shoppingList) {
 		shoppingList.addObserver((observable, arg) -> this.changed());
+		shoppingList.addObserver(this);
 		shoppingLists.add(shoppingList);
 		this.changed();
 	}
