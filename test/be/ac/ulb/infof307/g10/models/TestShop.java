@@ -1,40 +1,70 @@
 package be.ac.ulb.infof307.g10.models;
 
-import static org.junit.Assert.assertEquals;
-
 import java.time.DayOfWeek;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
-import be.ac.ulb.infof307.g10.models.dao.ShopDAO;
-import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
-import be.ac.ulb.infof307.g10.models.database.Database;
-
-public class TestShop extends AbstractTestDatabase {
+public class TestShop {
 
 	private Map<DayOfWeek, String> schedule = new HashMap<>();
-	
-	public static void createTestingShop() {
-		Shop shop = ShopDAO.create("#test testingShop", 0., 0., null);
-		Product product = ProductDAO.create("#test testingProduct", 12, "g");
-		shop.getStock().addProduct(product, 1);
-		Database.save(shop);
-		Database.close();
+
+	@Test(expected = IllegalArgumentException.class)
+	public void nullName() {
+		new Shop(null, 0., 0.);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void emptyName() {
+		new Shop("", 0., 0.);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void spaceName() {
+		new Shop("  ", 0., 0.);
+	}
+
+	@Test
+	public void unknownSchedule() {
+		Shop s = new Shop("name", 0., 0.);
+		for (DayOfWeek day : DayOfWeek.values()) {
+			Assert.assertEquals("Unknown", s.getSchedule(day));
+		}
+	}
+
+	@Test
+	public void emptySchedule() {
+		schedule.put(DayOfWeek.WEDNESDAY, "");
+		Shop s = new Shop("name", 0., 0., schedule);
+		Assert.assertEquals("Unknown", s.getSchedule(DayOfWeek.WEDNESDAY));
+	}
+
+	@Test
+	public void spaceSchedule() {
+		schedule.put(DayOfWeek.WEDNESDAY, "  ");
+		Shop s = new Shop("name", 0., 0., schedule);
+		Assert.assertEquals("Unknown", s.getSchedule(DayOfWeek.WEDNESDAY));
+	}
+
+	@Test
+	public void schedule() {
+		schedule.put(DayOfWeek.WEDNESDAY, "daySchedule");
+		Shop s = new Shop("name", 0., 0., schedule);
+		Assert.assertEquals("daySchedule", s.getSchedule(DayOfWeek.WEDNESDAY));
+	}
+
+	@Test
+	public void stockNotNull() {
+		Shop shop = new Shop("name", 0., 0.);
+		Assert.assertNotNull(shop.getStock());
 	}
 	
 	@Test
-	public void getSchedule() {
-		Shop shop = new Shop("#test getSchedule", 0., 0., schedule);
-		assertEquals(shop.getSchedule(DayOfWeek.MONDAY), "Unknown");
-	}
-	
-	@Test
-	public void stockAddProduct() {
-		Shop shop = new Shop("#test setStock", 0., 0., schedule);
-		shop.getStock().addProduct(new Product("#test testingProduct", 12, "g"), 1);
-		assertEquals(shop.getStock().size(), 1);
+	public void position() {
+		Shop shop = new Shop("name", 13., 42.);
+		Assert.assertEquals(13., shop.getLatitude(), 0);
+		Assert.assertEquals(42., shop.getLongitude(), 0);
 	}
 }
