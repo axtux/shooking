@@ -1,7 +1,9 @@
 package be.ac.ulb.infof307.g10;
 
 import be.ac.ulb.infof307.g10.models.User;
+import be.ac.ulb.infof307.g10.models.dao.UserDAO;
 import be.ac.ulb.infof307.g10.models.database.Database;
+import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.views.MainView;
 import be.ac.ulb.infof307.g10.views.View;
 import javafx.application.Application;
@@ -23,7 +25,15 @@ public class Main extends Application {
 	@Override
 	public void start(final Stage stage) {
 		// show login view
-		logout();
+		//* auto login TODO remove for release
+		User user;
+		try {
+			user = UserDAO.getByUsername("test");
+		} catch (NonExistingException e) {
+			user = UserDAO.create("test", "test");
+		}
+		login(user);
+		//*/logout();
 	}
 
 	public static void main(final String[] args) {
