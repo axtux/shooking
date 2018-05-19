@@ -1,9 +1,11 @@
 package be.ac.ulb.infof307.g10.models;
 
 import java.util.ArrayList;
+
 import java.util.Objects;
 import java.util.Observable;
 import java.util.Observer;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -48,7 +50,7 @@ public class User extends AbstractObject implements Observer{
 		for(ShoppingList list:shoppingLists){
 			list.addObserver((observable, arg) -> self.changed());
 		}
-		
+
 	}
 	@Override
 	public void update(Observable o, Object o1){
