@@ -25,7 +25,7 @@ public class ShopDAO {
 	 * @param longitude
 	 *            Position longitude
 	 * @param schedule
-	 *            Weekly schedule. Length must be 7. 0 for Monday, 1 for Tuesday, ..., and 6 for Sunday
+	 *            Schedule. May not contain all days. May be null.
 	 * @return Created shop
 	 */
 	public static Shop create(String name, double latitude, double longitude, Map<DayOfWeek, String> schedule) throws ExistingException{
@@ -42,7 +42,6 @@ public class ShopDAO {
 		try{
 			Shop shop = Database.getOne(Shop.class, "SELECT b FROM Shop b WHERE b.name LIKE ?1", name);
 			AutoSaver.autosave(shop);
-			AutoSaver.autosave(shop.getStock());
 			return shop;
 		} catch (NoResultException e) {
 			throw new NonExistingException(e);
@@ -51,10 +50,7 @@ public class ShopDAO {
 
 	public static List<Shop> getAll() throws NonExistingException {
 		List<Shop> shops = Database.getAll(Shop.class);
-		for (Shop s : shops){
-			AutoSaver.autosave(s);
-			AutoSaver.autosave(s.getStock());
-		}
+		AutoSaver.autosave(shops);
 		return shops;
 	}
 	
