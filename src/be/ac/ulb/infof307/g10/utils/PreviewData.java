@@ -3,6 +3,8 @@ package be.ac.ulb.infof307.g10.utils;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.Shop;
+import be.ac.ulb.infof307.g10.models.ShoppingList;
+import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.database.Database;
 import javafx.application.Platform;
 
@@ -54,6 +56,7 @@ public class PreviewData {
 
 		// save recipes
 		Database.save(getRecipes());
+		Database.save(getUser());
 	}
 
 	public static List<Shop> getShops() {
@@ -101,5 +104,14 @@ public class PreviewData {
 		list.add(new Product("Tomato", 1, "unit"));
 
 		return list;
+	}
+
+	public static User getUser() {
+		User user = new User("test", "test");
+	
+		user.addShoppingList(new ShoppingList("Week"));
+		user.addShoppingList(new ShoppingList("Weekend"));
+
+		return user;
 	}
 }
