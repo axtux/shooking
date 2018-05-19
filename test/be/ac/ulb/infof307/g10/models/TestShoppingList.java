@@ -45,34 +45,34 @@ public class TestShoppingList {
 
 	@Test
 	public void setProduct() {
-		sl.setProduct(p, 13);
-		sl.setProduct(p, 42);
+		sl.setQuantity(p, 13);
+		sl.setQuantity(p, 42);
 		Assert.assertEquals(42, sl.getQuantity(p));
 	}
 
 	@Test
 	public void addProduct() {
-		sl.addProduct(p, 13);
-		sl.addProduct(p, 42);
+		sl.addQuantity(p, 13);
+		sl.addQuantity(p, 42);
 		Assert.assertEquals(55, sl.getQuantity(p));
 	}
 
 	@Test
 	public void removeProduct() {
-		sl.setProduct(p, 42);
+		sl.setQuantity(p, 42);
 		sl.removeProduct(p);
 		Assert.assertEquals(0, sl.getQuantity(p));
 	}
 
 	@Test
 	public void size() {
-		sl.setProduct(p, 42);
+		sl.setQuantity(p, 42);
 		Assert.assertEquals(1, sl.size());
 	}
 
 	@Test
 	public void clear() {
-		sl.setProduct(p, 42);
+		sl.setQuantity(p, 42);
 		sl.clear();
 		Assert.assertEquals(0, sl.size());
 	}
@@ -84,7 +84,7 @@ public class TestShoppingList {
 
 	@Test
 	public void getProducts() {
-		sl.setProduct(p, 42);
+		sl.setQuantity(p, 42);
 		Set<Product> products = sl.getProducts();
 		Assert.assertTrue(products.contains(p));
 		Assert.assertEquals(1, products.size());

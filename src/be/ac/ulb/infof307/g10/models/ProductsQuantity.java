@@ -21,22 +21,22 @@ public class ProductsQuantity extends AbstractObject {
 		productsQuantity = new HashMap<>();
 	}
 
-	public void setProduct(Product p, int quantity) {
+	public int getQuantity(Product p) {
+		return productsQuantity.getOrDefault(p, 0);
+	}
+
+	public void setQuantity(Product p, int quantity) {
 		productsQuantity.put(p, quantity);
 		changed();
 	}
 
-	public void addProduct(Product p, int quantity) {
-		setProduct(p, quantity + getQuantity(p));
+	public void addQuantity(Product p, int quantity) {
+		setQuantity(p, quantity + getQuantity(p));
 	}
 
 	public void removeProduct(Product p) {
 		productsQuantity.remove(p);
 		changed();
-	}
-
-	public int getQuantity(Product p) {
-		return productsQuantity.getOrDefault(p, 0);
 	}
 
 	public int size() {

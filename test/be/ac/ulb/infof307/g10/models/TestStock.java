@@ -42,14 +42,14 @@ public class TestStock {
 	@Test
 	public void shoppingListPrice() {
 		ShoppingList sl = new ShoppingList();
-		sl.addProduct(p, 2);
+		sl.addQuantity(p, 2);
 		Assert.assertEquals(2 * 199, stock.getPrice(sl));
 	}
 
 	@Test(expected = NonExistingException.class)
 	public void shoppingListNotEnoughPrice() {
 		ShoppingList sl = new ShoppingList();
-		sl.addProduct(p, 50);
+		sl.addQuantity(p, 50);
 		stock.getPrice(sl);
 	}
 
@@ -62,7 +62,7 @@ public class TestStock {
 
 	@Test
 	public void setProductQuantity() {
-		stock.setProduct(p, 15);
+		stock.setQuantity(p, 15);
 		Assert.assertEquals(199, stock.getPrice(p));
 		Assert.assertEquals(15, stock.getQuantity(p));
 	}
@@ -76,7 +76,7 @@ public class TestStock {
 	
 	@Test
 	public void addProduct() {
-		stock.addProduct(p, 2);
+		stock.addQuantity(p, 2);
 		Assert.assertEquals(199, stock.getPrice(p));
 		Assert.assertEquals(15, stock.getQuantity(p));
 	}

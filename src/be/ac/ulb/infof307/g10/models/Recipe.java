@@ -270,7 +270,7 @@ public class Recipe extends AbstractObject {
 			while (p.getSize() * q < quantityToHave) {
 				q++;
 			}
-			retShoppingList.addProduct(p, q);
+			retShoppingList.addQuantity(p, q);
 		}
 		return retShoppingList;
 	}

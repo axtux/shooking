@@ -92,7 +92,7 @@ public class ShoppingListController extends AbstractProductController {
 	@FXML
 	private void productsAdd() {
 		Product p = productsCombo.getValue();
-		currentList.addProduct(p, productsAmountField.getInt());
+		currentList.addQuantity(p, productsAmountField.getInt());
 		productsTable.getSelectionModel().select(p);
 		changed();
 	}
