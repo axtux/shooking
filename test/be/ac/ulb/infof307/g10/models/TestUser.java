@@ -95,7 +95,7 @@ public class TestUser {
 	public void addShoppingList() {
 		User user = new User("username", "password");
 		Assert.assertEquals(user.getShoppingLists().size(),0);
-		user.addShoppingList(new ShoppingList());
+		user.addShoppingList(new ShoppingList("test"));
 		Assert.assertEquals(user.getShoppingLists().size(),1);
 	}
 
