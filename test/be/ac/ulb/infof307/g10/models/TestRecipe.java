@@ -144,7 +144,7 @@ public class TestRecipe {
 	}
 
 	@Test
-	public void RecipeToShoppingList(){
+	public void toShoppingList(){
 
 		Recipe r2 = new Recipe("Testing recipe", 1);
 		r2.addStep("testing step 1");
