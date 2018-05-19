@@ -93,11 +93,15 @@ public class TestUserDAO extends AbstractTestDatabase {
 		assertNull(u);
 	}
 
+	public static ShoppingList shoppingListFromUser() {
+		ShoppingList sl = new ShoppingList("test");
+		UserDAO.create("test", "test").addShoppingList(sl);
+		return sl;
+	}
+
 	@Test
 	public void setTestDB() {
-		User u = UserDAO.create("test", "test");
-		u.addShoppingList(new ShoppingList("test"));
-		ShoppingList sl = u.getShoppingLists().iterator().next();
+		ShoppingList sl = shoppingListFromUser();
 		Product p1 = ProductDAO.create("#test testingProduct1", 1, "unit");
 		Product p2 = ProductDAO.create("#test testingProduct2", 1, "unit");
 		sl.setQuantity(p1, 1);
@@ -113,9 +117,7 @@ public class TestUserDAO extends AbstractTestDatabase {
 
 	@Test
 	public void addTestDB() {
-		User u = UserDAO.create("test", "test");
-		u.addShoppingList(new ShoppingList("test"));
-		ShoppingList sl = u.getShoppingLists().iterator().next();
+		ShoppingList sl = shoppingListFromUser();
 		Product p1 = ProductDAO.create("#test testingProduct1", 1, "unit");
 		sl.addQuantity(p1, 1);
 		sl.addQuantity(p1, 1);
@@ -129,9 +131,7 @@ public class TestUserDAO extends AbstractTestDatabase {
 
 	@Test
 	public void removeTestDB() {
-		User u = UserDAO.create("test", "test");
-		u.addShoppingList(new ShoppingList("test"));
-		ShoppingList sl = u.getShoppingLists().iterator().next();
+		ShoppingList sl = shoppingListFromUser();
 		Product p1 = ProductDAO.create("#test testingProduct1", 1, "unit");
 		Product p2 = ProductDAO.create("#test testingProduct2", 1, "unit");
 		sl.setQuantity(p1, 1);
