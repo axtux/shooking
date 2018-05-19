@@ -14,6 +14,8 @@ import javafx.scene.layout.HBox;
 public class MainView {
 
 	private static final String APP_NAME = "Shooking (shopping and cooking)";
+	private static final double DEFAULT_HEIGTH = 800.0;
+	private static final double DEFAULT_WIDTH = 1000.0;
 	private static MyStage stage;
 	private static BorderPane container;
 	private static HBox menu;
@@ -46,8 +48,12 @@ public class MainView {
 		Point2D center = stage.getCenter();
 
 		if (view.hasMenu()) {
-			container.setTop(menu);
+			container.setTop(menu);			
 			disableMenuButton(view.toCamelCase());
+
+			container.setPrefHeight(DEFAULT_HEIGTH);
+			container.setPrefWidth(DEFAULT_WIDTH);
+			
 		} else {
 			container.setTop(null);
 		}
@@ -56,6 +62,7 @@ public class MainView {
 		stage.sizeToScene();
 		// center back to saved center
 		stage.setCenter(center);
+		
 	}
 
 	/**
