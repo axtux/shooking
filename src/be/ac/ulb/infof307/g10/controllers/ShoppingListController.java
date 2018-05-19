@@ -149,8 +149,8 @@ public class ShoppingListController extends AbstractProductController {
 		productsTable.getItems().clear();
 		if(currentList != null){
 			productsTable.getItems().addAll(currentList.getProducts());
-			updateTotal();
 		}
+		updateTotal();
 	}
 
 	@FXML
@@ -163,7 +163,7 @@ public class ShoppingListController extends AbstractProductController {
 	 * Update the total amount to buy the list
 	 */
 	private void updateTotal() {
-		if (selectedShop == null) {
+		if (selectedShop == null || currentList==null) {
 			totalLabel.setText("-");
 			return;
 		}
