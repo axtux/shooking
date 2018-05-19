@@ -1,10 +1,10 @@
 package be.ac.ulb.infof307.g10.models;
 
-import be.ac.ulb.infof307.g10.models.exceptions.EmptyPasswordException;
-import be.ac.ulb.infof307.g10.models.exceptions.EmptyUsernameException;
 import org.junit.Assert;
 import org.junit.Test;
 
+import be.ac.ulb.infof307.g10.models.exceptions.EmptyPasswordException;
+import be.ac.ulb.infof307.g10.models.exceptions.EmptyUsernameException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 
 public class TestUser {
@@ -86,9 +86,9 @@ public class TestUser {
 	}
 
 	@Test
-	public void shoppingListNotNull() {
+	public void shoppingListsNotNull() {
 		User user = new User("username", "password");
-		Assert.assertNotNull(user.getShoppingList());
+		Assert.assertNotNull(user.getShoppingLists());
 	}
 
 }

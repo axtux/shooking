@@ -4,12 +4,14 @@ import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Price;
 import be.ac.ulb.infof307.g10.models.Product;
 import be.ac.ulb.infof307.g10.models.Shop;
+import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.dao.ShopDAO;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.utils.ToStringConverter;
 import be.ac.ulb.infof307.g10.views.DialogView;
 import be.ac.ulb.infof307.g10.views.View;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -44,26 +46,56 @@ public class ShoppingListController extends AbstractProductController {
 	@FXML
 	private TableColumn<Product, String> productsPriceColumn;
 
+	@FXML
+	private ComboBox<ShoppingList> shoppingListsCombo;
+
 	private Shop selectedShop;
 
-	private ShoppingList sl;
+	private User user;
 
+	/**
+	 * The current shopping list
+	 */
+	private ShoppingList currentList;
+
+
+	/**
+	 * Update the state
+	 */
 	private void changed() {
+		updateTable();}
+
+	/**
+	 * Change the current shopping list
+	 * @param newValue the new current shopping list
+	 */
+	private void shoppingListComboSelect(ShoppingList newValue) {
+		currentList = newValue;
 		updateTable();
+	}
+
+
+	/**
+	 * Update the available shopping lists
+	 */
+	private void updateShoppingLists() {
+		shoppingListsCombo.getItems().clear();
+		shoppingListsCombo.getItems().addAll(user.getShoppingLists());
 	}
 
 	@FXML
 	private void productsClear() {
-		sl.clear();
+		currentList.clear();
 		changed();
 	}
 
 	@FXML
 	private void productsAdd() {
 		Product p = productsCombo.getValue();
-		sl.addProduct(p, productsAmountField.getInt());
-		changed();
+		currentList.addProduct(p, productsAmountField.getInt());
+		System.out.println("ShoppingListController.productsAdd");
 		productsTable.getSelectionModel().select(p);
+		changed();
 	}
 
 	@FXML
@@ -71,7 +103,7 @@ public class ShoppingListController extends AbstractProductController {
 		if (productsTableSelected == null) {
 			return;
 		}
-		sl.removeProduct(productsTableSelected);
+		currentList.removeProduct(productsTableSelected);
 		productsAdd();
 	}
 
@@ -80,7 +112,7 @@ public class ShoppingListController extends AbstractProductController {
 		if (productsTableSelected == null) {
 			return;
 		}
-		sl.removeProduct(productsTableSelected);
+		currentList.removeProduct(productsTableSelected);
 		changed();
 	}
 
@@ -88,7 +120,7 @@ public class ShoppingListController extends AbstractProductController {
 	protected void productsTableSelect(Product newValue) {
 		super.productsTableSelect(newValue);
 		if (productsTableSelected != null) {
-			productsAmountField.setInt(sl.getQuantity(productsTableSelected));
+			productsAmountField.setInt(currentList.getQuantity(productsTableSelected));
 		}
 	}
 
@@ -101,31 +133,42 @@ public class ShoppingListController extends AbstractProductController {
 		updateTable();
 	}
 
+	/**
+	 * Update the combo box of shop
+	 */
 	private void updateShops() {
 		shopsCombo.getItems().clear();
 		shopsCombo.getItems().addAll(ShopDAO.getAll());
 	}
 
+	/**
+	 * Update the table of products
+	 */
 	private void updateTable() {
 		productsTable.getItems().clear();
-		productsTable.getItems().addAll(sl.getProducts());
+		if(currentList != null){
+			productsTable.getItems().addAll(currentList.getProducts());
+		}
 		updateTotal();
 	}
 
 	@FXML
 	private void researchShop() {
-		ResearchShopController.setShoppingList(sl);
+		ResearchShopController.setShoppingList(currentList);
 		DialogView.show(View.RESEARCH_SHOP);
 	}
 
+	/**
+	 * Update the total amount to buy the list
+	 */
 	private void updateTotal() {
-		if (selectedShop == null) {
+		if (selectedShop == null || currentList==null) {
 			totalLabel.setText("-");
 			return;
 		}
 
 		try {
-			int total = selectedShop.getStock().getPrice(sl);
+			int total = selectedShop.getStock().getPrice(currentList);
 			totalLabel.setText(Price.toString(total));
 		} catch (NonExistingException e) {
 			totalLabel.setText("unavailable");
@@ -136,16 +179,22 @@ public class ShoppingListController extends AbstractProductController {
 	private void productsNew() {
 		DialogView.show(View.CREATE_PRODUCT, (event) -> updateProducts());
 	}
+	
+	@FXML
+	private void createShoppingList(){
+		DialogView.show(View.CREATE_SHOPPING_LIST, (event)-> updateShoppingLists());
+	}
 
 	@Override
 	public void initialize() {
 		super.initialize();
-		sl = Main.getUser().getShoppingList();
+
+		user = Main.getUser();
 
 		productsNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
 
 		productsAmountColumn.setCellValueFactory(cell -> {
-			int quantity = sl.getQuantity(cell.getValue());
+			int quantity = currentList.getQuantity(cell.getValue());
 			return new SimpleStringProperty(Integer.toString(quantity));
 		});
 
@@ -155,13 +204,20 @@ public class ShoppingListController extends AbstractProductController {
 			}
 			try {
 				Product p = cell.getValue();
-				int price = selectedShop.getStock().getPrice(p, sl.getQuantity(p));
+				int price = selectedShop.getStock().getPrice(p, currentList.getQuantity(p));
 				return new SimpleStringProperty(Price.toString(price));
 			} catch (NonExistingException e) {
 				return new SimpleStringProperty("unavailable");
 			}
 			
 		});
+
+		shoppingListsCombo.setConverter(new ToStringConverter<>(ShoppingList::getName));
+
+		shoppingListsCombo.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> shoppingListComboSelect(newValue));
+
+		BooleanBinding notSelected = shoppingListsCombo.getSelectionModel().selectedItemProperty().isNull();
 
 		// convert Product to string
 		productsCombo.setConverter(new ToStringConverter<>(Product::getFullName));
@@ -174,7 +230,10 @@ public class ShoppingListController extends AbstractProductController {
 		productsNewButton.setDisable(false);
 		researchShopsButton.setDisable(false);
 		updateProducts();
+		updateShoppingLists();
 		updateShops();
 		updateTable();
 	}
+	
+	
 }

@@ -51,6 +51,8 @@ public class ShoppingList extends AbstractObject {
 
 	public void addProduct(Product p, int quantity) {
 		setProduct(p, quantity + getQuantity(p));
+		System.out.println("ShoppingList.addProducts");
+		this.changed();
 	}
 
 	public void removeProduct(Product p) {

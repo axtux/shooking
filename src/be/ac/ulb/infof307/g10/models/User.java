@@ -1,9 +1,13 @@
 package be.ac.ulb.infof307.g10.models;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
+import javax.persistence.PostLoad;
 
 import be.ac.ulb.infof307.g10.models.exceptions.EmptyPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.EmptyUsernameException;
@@ -24,7 +28,7 @@ public class User extends AbstractObject {
 	private String hashedPassword;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	private ShoppingList shoppingList;
+	private Set<ShoppingList> shoppingLists;
 
 	private String salt;
 
@@ -40,9 +44,25 @@ public class User extends AbstractObject {
 		}
 		this.username = username;
 		setPassword(password);
-		shoppingList = new ShoppingList();
+		shoppingLists = new HashSet<ShoppingList>();
+		changedWhenListsChanged();
+	}
+	/**@Override
+	public void update(Observable o, Object o1){
+		this.changed();
+		System.out.println("User saved");
+	}**/
+
+	@PostLoad
+	private void changedWhenListsChanged() {
+		for(ShoppingList shopList: getShoppingLists()){
+			changedWhenListChanged(shopList);
+		}
+	}
+	
+	private void changedWhenListChanged(ShoppingList list) {
 		User self = this;
-		shoppingList.addObserver((observable, arg) -> self.changed());
+		list.addObserver((observable, arg) -> self.changed());
 	}
 
 	public String getUsername() {
@@ -62,6 +82,7 @@ public class User extends AbstractObject {
 		this.changed();
 	}
 
+
 	/**
 	 * Check password. Check is case sensitive.
 	 * @param password Password to check
@@ -73,14 +94,17 @@ public class User extends AbstractObject {
 		}
 	}
 
-	public ShoppingList getShoppingList() {
-		return shoppingList;
+	public Set<ShoppingList> getShoppingLists() {
+		return shoppingLists;
 	}
 
-	//FIXME - for the moment, this mothods replace the actual ShoppingList,
-	//FIXME - but must add it when the multi list will be supported
+	/**
+	 * Add a shopping list
+	 * @param shoppingList the shopping list to add
+	 */
 	public void addShoppingList(ShoppingList shoppingList) {
-		this.shoppingList = shoppingList;
+		shoppingLists.add(shoppingList);
+		changedWhenListChanged(shoppingList);
 		this.changed();
 	}
 }
