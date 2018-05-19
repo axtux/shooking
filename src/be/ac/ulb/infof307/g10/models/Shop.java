@@ -11,6 +11,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
+import javax.persistence.PostLoad;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -75,6 +76,13 @@ public class Shop extends AbstractObject {
 		this.longitude = longitude;
 		setSchedule(schedule);
 		this.stock = new Stock();
+		changedWhenStockChanged();
+	}
+
+	@PostLoad
+	private void changedWhenStockChanged() {
+		Shop self = this;
+		this.stock.addObserver((observable, arg) -> self.changed());
 	}
 
 	public String getName() {

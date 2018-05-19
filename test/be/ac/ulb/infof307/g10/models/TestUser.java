@@ -1,66 +1,94 @@
 package be.ac.ulb.infof307.g10.models;
 
-import java.util.Set;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
-import be.ac.ulb.infof307.g10.models.dao.UserDAO;
-import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
-import be.ac.ulb.infof307.g10.models.database.Database;
+import be.ac.ulb.infof307.g10.models.exceptions.EmptyPasswordException;
+import be.ac.ulb.infof307.g10.models.exceptions.EmptyUsernameException;
+import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 
-public class TestUser extends AbstractTestDatabase {
-/* TODO
-	public static ShoppingList userWithShoppingList() {
-		User u = UserDAO.create("test", "test");
-		u.addShoppingList(new ShoppingList());
-		Set<ShoppingList> shoppingLists = u.getShoppingLists();
-		ShoppingList sl = shoppingLists.iterator().next();
-
-		Product p1 = ProductDAO.create("test1", 1, "unit");
-		Product p2 = ProductDAO.create("test2", 2, "unit");
-
-		sl.setProduct(p1, 42);
-		sl.setProduct(p2, 13);
-
-		return sl;
-	}
-	@Test
-	public void shoppingListTest() {
-		ShoppingList sl = userWithShoppingList();
-		Assert.assertEquals(2, sl.size());
-	}
+public class TestUser {
 
 	@Test
-	public void userShoppingListPersistenceTest() {
-		userWithShoppingList();
-		Database.close();
-
-		User u = UserDAO.getByUsername("test");
-		Set<ShoppingList> shoppingLists = u.getShoppingLists();
-		ShoppingList sl = shoppingLists.iterator().next();
-		Assert.assertEquals(2, sl.size());
+	public void username() {
+		User user = new User("username", "password");
+		Assert.assertEquals("username", user.getUsername());
 	}
 
-	@Test
-	public void shoppingListPersistenceTest() {
-		userWithShoppingList();
-		Database.close();
+	@Test(expected = EmptyUsernameException.class)
+	public void nullUsername() {
+		new User(null, "password");
+	}
 
-		User u = UserDAO.getByUsername("test");
-		Set<ShoppingList> shoppingLists = u.getShoppingLists();
-		ShoppingList sl = shoppingLists.iterator().next();
-		Assert.assertEquals(2, sl.size());
+	@Test(expected = EmptyUsernameException.class)
+	public void emptyUsername() {
+		new User("", "password");
+	}
+
+	@Test(expected = EmptyUsernameException.class)
+	public void spaceUsername() {
+		new User("  ", "password");
+	}
+
+	@Test(expected = EmptyPasswordException.class)
+	public void nullPassword() {
+		new User("username", null);
+	}
+
+	@Test(expected = EmptyPasswordException.class)
+	public void emptyPassword() {
+		new User("username", "");
+	}
+
+	@Test(expected = EmptyPasswordException.class)
+	public void spacePassword() {
+		new User("username", "  ");
 	}
 
 	@Test
-	public void addShoppingList() {
-		User u = UserDAO.create("test", "test");
-		Assert.assertEquals(0,u.getShoppingLists().size());
-		u.addShoppingList(new ShoppingList());
-		Assert.assertEquals(u.getShoppingLists().size(),1);
+	public void checkPassword() {
+		User user = new User("username", "password");
+		// generate exception if incorrect password
+		user.checkPassword("password");
 	}
 
-//*/
+	@Test(expected = IncorrectPasswordException.class)
+	public void checkPasswordException() {
+		User user = new User("username", "password");
+		// generate exception if incorrect password
+		user.checkPassword("wrong");
+	}
+
+	@Test
+	public void setPassword() {
+		User user = new User("username", "password");
+		user.setPassword("newPassword");
+		// generate exception if incorrect password
+		user.checkPassword("newPassword");
+	}
+
+	@Test(expected = EmptyPasswordException.class)
+	public void setNullPassword() {
+		User user = new User("username", "password");
+		user.setPassword(null);
+	}
+
+	@Test(expected = EmptyPasswordException.class)
+	public void setEmptyPassword() {
+		User user = new User("username", "password");
+		user.setPassword("");
+	}
+
+	@Test(expected = EmptyPasswordException.class)
+	public void setSpacePassword() {
+		User user = new User("username", "password");
+		user.setPassword("  ");
+	}
+
+	@Test
+	public void shoppingListsNotNull() {
+		User user = new User("username", "password");
+		Assert.assertNotNull(user.getShoppingLists());
+	}
+
 }

@@ -17,7 +17,7 @@ public class TestProductDAO extends AbstractTestDatabase {
 		assertNotNull(p);
 	}
 	
-	@Test(expected=NullPointerException.class)
+	@Test(expected=IllegalArgumentException.class)
 	public void test_002_createProductException() {
 		Product p = ProductDAO.create(null, 12, null);
 		assertNull(p);

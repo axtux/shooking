@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.73" focusTraversable="true" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.ac.ulb.infof307.g10.controllers.ShoppingListController">
+<SplitPane dividerPositions="0.73" focusTraversable="true" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.ac.ulb.infof307.g10.controllers.ShoppingListController">
     <TableView fx:id="productsTable">
         <columns>
             <TableColumn fx:id="productsNameColumn" prefWidth="181.44444274902344" text="Product" />

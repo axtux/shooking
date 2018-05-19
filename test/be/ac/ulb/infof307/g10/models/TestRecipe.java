@@ -11,12 +11,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
-import be.ac.ulb.infof307.g10.models.dao.RecipeDAO;
-import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
-import be.ac.ulb.infof307.g10.models.database.Database;
-
-public class TestRecipe extends AbstractTestDatabase {
+public class TestRecipe {
 
 	private Recipe r;
 	private Product p1;
@@ -24,7 +19,6 @@ public class TestRecipe extends AbstractTestDatabase {
 
 	@Before
 	public void before() {
-		super.before();
 		r = new Recipe("Testing recipe", 1);
 		r.addStep("testing step 1");
 		r.addStep("testing step 2");
@@ -35,23 +29,24 @@ public class TestRecipe extends AbstractTestDatabase {
 		r.addIngredient(p2, (float) 1.);
 	}
 
-	@Test
-	public void test_001_addStep() {
-		r.addStep("testing step 4");
-		assertEquals(4, r.getAllSteps().size());
+	@Test(expected = IllegalArgumentException.class)
+	public void createRecipeExceptionName() {
+		new Recipe("", 1);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void createRecipeExceptionServing() {
+		new Recipe("correct name", 0);
 	}
 	
 	@Test
-	public void test_001_addStepDB() {
-		Recipe re = RecipeDAO.create("#test addStepDB", 1);
-		re.addStep("new Step");
-		Database.close();
-		re = RecipeDAO.getByName("#test addStepDB");
-		assertEquals(re.getAllSteps().size(), 1);
+	public void addStep() {
+		r.addStep("testing step 4");
+		assertEquals(4, r.getAllSteps().size());
 	}
 
 	@Test
-	public void test_002_getAllSteps() {
+	public void getAllSteps() {
 		List<String> steps = r.getAllSteps();
 		assertEquals(steps.get(0), "testing step 1");
 		assertEquals(steps.get(1), "testing step 2");
@@ -59,85 +54,27 @@ public class TestRecipe extends AbstractTestDatabase {
 	}
 
 	@Test
-	public void test_003_moveStep() {
-		r.moveStep(0, 1);
-		assertEquals(r.getStep(0), "testing step 2");
-		assertEquals(r.getStep(1), "testing step 1");
-	}
-	
-	@Test
-	public void test_003_moveStepDB() {
-		Recipe re = RecipeDAO.create("#test moveStepDB", 1);
-		re.addStep("step1");
-		re.addStep("step2");
-		re.moveStep(0, 1);
-		Database.close();
-		re = RecipeDAO.getByName("#test moveStepDB");
-		assertEquals(re.getStep(0), "step2");
-		assertEquals(re.getStep(1), "step1");
-	}
-
-	@Test(expected = IndexOutOfBoundsException.class)
-	public void test_004_moveStepException() {
-		r.moveStep(0, 5);
-	}
-
-	@Test
-	public void test_005_moveUpStep() {
+	public void moveUpStep() {
 		r.moveUpStep("testing step 2");
 		assertEquals(r.getStep(0), "testing step 2");
 		assertEquals(r.getStep(1), "testing step 1");
 	}
 
 	@Test
-	public void test_006_moveDownStep() {
+	public void moveDownStep() {
 		r.moveDownStep("testing step 2");
 		assertEquals(r.getStep(1), "testing step 3");
 		assertEquals(r.getStep(2), "testing step 2");
 	}
-
-	@Test
-	public void test_007_setStep() {
-		r.setStep(0, "set step");
-		assertEquals(r.getStep(0), "set step");
-	}
-
-	@Test
-	public void test_007_setStepDB() {
-		Recipe re = RecipeDAO.create("#test setStepDB", 1);
-		re.addStep("step");
-		re.setStep(0, "changed step");
-		Database.close();
-		re = RecipeDAO.getByName("#test setStepDB");
-		assertEquals(re.getStep(0), "changed step");
-	}
 	
 	@Test
-	public void test_008_setStep() {
+	public void setStep() {
 		r.setStep("testing step 1", "set step");
 		assertEquals(r.getStep(0), "set step");
 	}
-
-	@Test
-	public void test_009_removeStep() {
-		r.removeStep(0);
-		r.removeStep(0);
-		r.removeStep(0);
-		assertTrue(r.getAllSteps().isEmpty());
-	}
 	
 	@Test
-	public void test_009_removeStepDB() {
-		Recipe re = RecipeDAO.create("#test removeStepDB", 1);
-		re.addStep("step"); //save in DB by test_001_addStepDB
-		re.removeStep(0);
-		Database.close();
-		re = RecipeDAO.getByName("#test removeStepDB");
-		assertTrue(re.getAllSteps().isEmpty());
-	}
-
-	@Test
-	public void test_010_removeStep() {
+	public void removeStep() {
 		r.removeStep("testing step 1");
 		r.removeStep("testing step 2");
 		r.removeStep("testing step 3");
@@ -145,43 +82,33 @@ public class TestRecipe extends AbstractTestDatabase {
 	}
 
 	@Test
-	public void test_011_clearSteps() {
+	public void clearSteps() {
 		r.clearSteps();
 		assertTrue(r.getAllSteps().isEmpty());
 	}
 
 	@Test
-	public void test_012_isFirst() {
+	public void isFirst() {
 		assertTrue(r.isFirst("testing step 1"));
 		assertFalse(r.isFirst("testing step 2"));
 		assertFalse(r.isFirst("testing step 3"));
 	}
 
 	@Test
-	public void test_013_isLast() {
+	public void isLast() {
 		assertFalse(r.isLast("testing step 1"));
 		assertFalse(r.isLast("testing step 2"));
 		assertTrue(r.isLast("testing step 3"));
 	}
 
 	@Test
-	public void test_014_addIngredient() {
+	public void addIngredient() {
 		r.addIngredient(new Product("testing product 3", 1, "g"), 2);
 		assertEquals(3, r.getAllIngredients().size());
 	}
 	
 	@Test
-	public void test_014_addIngredientDB() {
-		Recipe re = RecipeDAO.create("#test addIngredientDB", 1);
-		Product p = ProductDAO.create("#test product", 12, "g");
-		re.addIngredient(p, 1);
-		Database.close();
-		re = RecipeDAO.getByName("#test addIngredientDB");
-		assertEquals(re.getAllIngredients().size(), 1);
-	}
-
-	@Test
-	public void test_015_getAllIngredients() {
+	public void getAllIngredients() {
 		Map<Product, Float> map = r.getAllIngredients();
 		// Normal behavior
 		assertEquals(2, map.size());
@@ -191,7 +118,7 @@ public class TestRecipe extends AbstractTestDatabase {
 	}
 
 	@Test
-	public void test_016_removeIngredient() {
+	public void removeIngredient() {
 		assertFalse(r.getAllIngredients().isEmpty());
 		r.removeIngredient(p1);
 		r.removeIngredient(p2);
@@ -199,58 +126,25 @@ public class TestRecipe extends AbstractTestDatabase {
 	}
 	
 	@Test
-	public void test_016_removeIngredientDB() {
-		Recipe re = RecipeDAO.create("#test removeIngredientDB", 1);
-		Product p = ProductDAO.create("#test product", 12, "g");
-		re.addIngredient(p, 1); // save in DB by test_014_addIngredientDB
-		re.removeIngredient(p);
-		Database.close();
-		re = RecipeDAO.getByName("#test removeIngredientDB");
-		assertEquals(re.getAllIngredients().size(), 0);
-	}
-	
-	@Test
-	public void test_017_setIngredientQuantity() {
+	public void setIngredientQuantity() {
 		r.setIngredientQuantity(p1, (float) 2.);
 		assertEquals(r.getQuantity(p1), (float) 2., 0.1);
 	}
-	
-	@Test
-	public void test_017_setIngredientQuantityDB() {
-		Recipe re = RecipeDAO.create("#test setIngredientQuantityDB", 1);
-		Product p = ProductDAO.create("#test product", 12, "g");
-		re.addIngredient(p, (float)1.); // save in DB by test_014_addIngredientDB
-		re.setIngredientQuantity(p, (float)2.);
-		Database.close();
-		re = RecipeDAO.getByName("#test setIngredientQuantityDB");
-		p = ProductDAO.getByName("#test product");
-		assertEquals(re.getQuantity(p), (float)2., 0.1);
-	}
 
 	@Test
-	public void test_018_getQuantity() {
+	public void getQuantity() {
 		int quantity = r.getQuantity(p2);
 		assertEquals(quantity, (float) 1., 0.1);
 	}
 
 	@Test
-	public void test_019_clearIngredients() {
+	public void clearIngredients() {
 		r.clearIngredients();
 		assertTrue(r.getAllIngredients().isEmpty());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void test_020_createRecipeException() {
-		new Recipe("", 1);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void test_021_createRecipeException() {
-		new Recipe("correct name", 0);
-	}
-
 	@Test
-	public void test_023_RecipeToShoppingList(){
+	public void toShoppingList(){
 
 		Recipe r2 = new Recipe("Testing recipe", 1);
 		r2.addStep("testing step 1");
@@ -265,15 +159,5 @@ public class TestRecipe extends AbstractTestDatabase {
 
 		assertEquals(slTemp.getQuantity(p1), 2);
 		assertEquals(slTemp.getQuantity(p2), 3);
-	}
-
-	@Test
-	public void test_0023_persistenceDB() {
-		Recipe re = RecipeDAO.create("#test persistenceDB", 1);
-		Database.close();
-		re = RecipeDAO.getByName("#test persistenceDB");
-		re.setName("#test persistenceDB Rename");
-		Database.close();
-		re = RecipeDAO.getByName("#test persistenceDB Rename");
 	}
 }

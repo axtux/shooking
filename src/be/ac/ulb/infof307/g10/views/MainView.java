@@ -4,6 +4,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 
 /**
  * This class is used to create different views with the same template (border
@@ -14,6 +15,8 @@ import javafx.scene.layout.HBox;
 public class MainView {
 
 	private static final String APP_NAME = "Shooking (shopping and cooking)";
+	private static final double DEFAULT_HEIGTH = 800.0;
+	private static final double DEFAULT_WIDTH = 1000.0;
 	private static MyStage stage;
 	private static BorderPane container;
 	private static HBox menu;
@@ -44,18 +47,23 @@ public class MainView {
 		init();
 		// save center
 		Point2D center = stage.getCenter();
+		Region viewParent = view.getParent();
 
 		if (view.hasMenu()) {
 			container.setTop(menu);
 			disableMenuButton(view.toCamelCase());
+			// keep consistent size between views under menu
+			viewParent.setPrefHeight(DEFAULT_HEIGTH);
+			viewParent.setPrefWidth(DEFAULT_WIDTH);
 		} else {
 			container.setTop(null);
 		}
 
-		container.setCenter(view.getParent());
+		container.setCenter(viewParent);
 		stage.sizeToScene();
 		// center back to saved center
 		stage.setCenter(center);
+
 	}
 
 	/**

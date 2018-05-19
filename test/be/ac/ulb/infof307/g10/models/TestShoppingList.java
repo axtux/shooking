@@ -6,80 +6,88 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
-import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
+public class TestShoppingList {
 
-public class TestShoppingList extends AbstractTestDatabase {
-	
 	private ShoppingList sl;
+	private Product p;
 
 	@Before
-	public void create() {
-		super.before();
-		sl = new ShoppingList();
+	public void before() {
+		sl = new ShoppingList("name");
+		p = new Product("productName", 1, "unit");
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void nullNameException() {
+		new ShoppingList(null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void emptyNameException() {
+		new ShoppingList("");
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void spaceNameException() {
+		new ShoppingList("  ");
+	}
+
+	@Test
+	public void name() {
+		Assert.assertEquals("name", sl.getName());
+	}
+
+	@Test
+	public void setName() {
+		sl.setName("lastname");
+		Assert.assertEquals("lastname", sl.getName());
+	}
+
+	@Test
+	public void setProduct() {
+		sl.setProduct(p, 13);
+		sl.setProduct(p, 42);
+		Assert.assertEquals(42, sl.getQuantity(p));
+	}
+
+	@Test
+	public void addProduct() {
+		sl.addProduct(p, 13);
+		sl.addProduct(p, 42);
+		Assert.assertEquals(55, sl.getQuantity(p));
+	}
+
+	@Test
+	public void removeProduct() {
+		sl.setProduct(p, 42);
+		sl.removeProduct(p);
+		Assert.assertEquals(0, sl.getQuantity(p));
+	}
+
+	@Test
+	public void size() {
+		sl.setProduct(p, 42);
+		Assert.assertEquals(1, sl.size());
+	}
+
+	@Test
+	public void clear() {
+		sl.setProduct(p, 42);
+		sl.clear();
+		Assert.assertEquals(0, sl.size());
 	}
 
 	@Test
 	public void emptyTest() {
-		Assert.assertTrue(sl.getProducts().isEmpty());
+		Assert.assertTrue(sl.isEmpty());
 	}
 
 	@Test
-	public void setTest() {
-		Product p1 = ProductDAO.create("#test testingProduct1", 1, "unit");
-		Product p2 = ProductDAO.create("#test testingProduct2", 1, "unit");
-		sl.setProduct(p1, 1);
-		sl.setProduct(p2, 2);
-		Assert.assertEquals(1, sl.getQuantity(p1));
-		Assert.assertEquals(2, sl.getQuantity(p2));
-		Assert.assertEquals(2, sl.size());
-	}
-	
-	@Test
-	public void addTest() {
-		Product p1 = ProductDAO.create("#test testingProduct1", 1, "unit");
-		sl.addProduct(p1, 1);
-		sl.addProduct(p1, 1);
-		sl.addProduct(p1, 1);
-		Assert.assertEquals(3, sl.getQuantity(p1));
-		Assert.assertEquals(1, sl.size());
-	}
-	
-	@Test
-	public void removeTest() {
-		Product p1 = ProductDAO.create("#test testingProduct1", 1, "unit");
-		Product p2 = ProductDAO.create("#test testingProduct2", 1, "unit");
-		sl.setProduct(p1, 1);
-		sl.setProduct(p2, 2);
-		sl.removeProduct(p1);
-		Assert.assertEquals(0, sl.getQuantity(p1));
-		Assert.assertEquals(2, sl.getQuantity(p2));
-		Assert.assertEquals(1, sl.size());
-	}
-	
-	@Test
-	public void getProductsTest() {
-		Product p1 = ProductDAO.create("#test testingProduct1", 1, "unit");
-		Product p2 = ProductDAO.create("#test testingProduct2", 1, "unit");
-		sl.setProduct(p1, 1);
-		sl.setProduct(p2, 2);
-		Set<Product> set = sl.getProducts();
-		Assert.assertTrue(set.contains(p1));
-		Assert.assertTrue(set.contains(p2));
-		Assert.assertEquals(2, set.size());
-	}
-
-	@Test
-	public void copyTest() {
-		Product p1 = ProductDAO.create("#test testingProduct1", 1, "unit");
-		Product p2 = ProductDAO.create("#test testingProduct2", 1, "unit");
-		sl.setProduct(p1, 1);
-		sl.setProduct(p2, 2);
-
-		ShoppingList copy = new ShoppingList(sl);
-		sl.removeProduct(p1);
-		sl.removeProduct(p2);
-		Assert.assertEquals(2, copy.size());
+	public void getProducts() {
+		sl.setProduct(p, 42);
+		Set<Product> products = sl.getProducts();
+		Assert.assertTrue(products.contains(p));
+		Assert.assertEquals(1, products.size());
 	}
 
 }

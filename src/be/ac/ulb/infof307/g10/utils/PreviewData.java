@@ -69,7 +69,7 @@ public class PreviewData {
 		for (Shop s : list) {
 			for (Product p : products) {
 				// random stock, random price depending on i (low cost first)
-				s.getStock().addProduct(p, random(100), 10 * i + random(200, 300));
+				s.getStock().setProduct(p, random(100), 10 * i + random(200, 300));
 			}
 			i++;
 		}

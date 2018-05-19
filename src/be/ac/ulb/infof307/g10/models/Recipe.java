@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.OrderColumn;
 
 @Entity
 public class Recipe extends AbstractObject {
@@ -36,6 +37,7 @@ public class Recipe extends AbstractObject {
 	 * List of different steps of the recipe
 	 */
 	@ElementCollection(fetch = FetchType.EAGER)
+	@OrderColumn
 	private List<String> steps;
 
 	/**
@@ -53,13 +55,10 @@ public class Recipe extends AbstractObject {
 	 *            Number of people for the recipe
 	 */
 	public Recipe(String name, int servings) {
-		if (name == null || name.trim().equals("")) {
-			throw new IllegalArgumentException("name must not be empty");
-		}
+		setName(name);
 		if (servings <= 0) {
-			throw new IllegalArgumentException("The servings must be > 0");
+			throw new IllegalArgumentException("servings must be > 0");
 		}
-		this.name = name;
 		this.servings = servings;
 		ingredients = new HashMap<>();
 		steps = new ArrayList<>();
@@ -70,6 +69,9 @@ public class Recipe extends AbstractObject {
 	}
 
 	public void setName(String name) {
+		if (name == null || name.trim().isEmpty()) {
+			throw new IllegalArgumentException("name must not be empty");
+		}
 		this.name = name;
 		this.changed();
 	}
@@ -99,19 +101,6 @@ public class Recipe extends AbstractObject {
 	}
 
 	/**
-	 * Replace the i th step by s
-	 * 
-	 * @param index
-	 *            index of the step
-	 * @param s
-	 *            the new i th step
-	 */
-	public void setStep(int index, String s) throws IndexOutOfBoundsException {
-		steps.set(index, s);
-		this.changed();
-	}
-
-	/**
 	 * Replace the oldStep by newStep
 	 * 
 	 * @param oldStep
@@ -121,7 +110,7 @@ public class Recipe extends AbstractObject {
 	 */
 	public void setStep(String oldStep, String newStep) {
 		int index = steps.indexOf(oldStep);
-		setStep(index, newStep);
+		steps.set(index, newStep);
 		this.changed();
 	}
 
@@ -137,61 +126,45 @@ public class Recipe extends AbstractObject {
 	}
 
 	/**
-	 * Takes the indexInit th step and move it to the indexFinal th place . All
-	 * the concerned steps are swapped to the left or the right if necessary
+	 * Swap steps at index1 and index2.
 	 * 
-	 * @param indexInit
-	 *            The initial index of the step to move
-	 * @param indexFinal
-	 *            The new index of the step to move
+	 * @param index1
+	 *            Step index to swap.
+	 * @param index2
+	 *            Step index to swap.
 	 */
-	public void moveStep(int indexInit, int indexFinal) throws IndexOutOfBoundsException {
-		if (indexInit >= 0 && indexInit < steps.size() && indexFinal >= 0 && indexFinal < steps.size()) {
-			String step = steps.remove(indexInit);
-			this.changed();	//If we dont use this.changed() here, the save function does't working
-			steps.add(indexFinal, step);
-			this.changed();
-		} else {
-			throw new IndexOutOfBoundsException();
-		}
+	private void swapStep(int index1, int index2) throws IndexOutOfBoundsException {
+		String tmp = steps.get(index1);
+		steps.set(index1, steps.get(index2));
+		steps.set(index2, tmp);
+		this.changed();
 	}
 
 	/**
-	 * Move up the index th step
+	 * Move up the step. Index of step is decreased.
 	 * 
 	 * @param step
 	 *            Initial step to move up
 	 */
 	public void moveUpStep(String step) throws IndexOutOfBoundsException {
 		int index = steps.indexOf(step);
-		moveStep(index, index - 1);
+		swapStep(index, index - 1);
 	}
 
 	/**
-	 * Move down the index th step
+	 * Move down the step. Index of step is increased.
 	 * 
 	 * @param step
 	 *            Initial step to move up
 	 */
 	public void moveDownStep(String step) throws IndexOutOfBoundsException {
 		int index = steps.indexOf(step);
-		moveStep(index, index + 1);
-	}
-
-	/**
-	 * Remove a step from the step list
-	 * 
-	 * @param index
-	 *            The index of the step
-	 */
-	public void removeStep(int index) throws IndexOutOfBoundsException {
-		steps.remove(index);
-		this.changed();
+		swapStep(index, index + 1);
 	}
 
 	public void removeStep(String step) {
 		int index = steps.indexOf(step);
-		removeStep(index);
+		steps.remove(index);
 		this.changed();
 	}
 
@@ -289,14 +262,13 @@ public class Recipe extends AbstractObject {
 		return this.servings;
 	}
 
-
-	public ShoppingList toShoppingList(){
+	public ShoppingList toShoppingList() {
 		ShoppingList retShoppingList = new ShoppingList("Recipe " + this.name);
 		for (Product p : ingredients.keySet()) {
 			int quantityToHave = getQuantity(p);
 			int q = 0;
-			while (p.getSize()*q < quantityToHave ){
-				q ++;
+			while (p.getSize() * q < quantityToHave) {
+				q++;
 			}
 			retShoppingList.addProduct(p, q);
 		}
