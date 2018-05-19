@@ -30,6 +30,9 @@ public class User extends AbstractObject {
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<ShoppingList> shoppingLists;
 
+	/**
+	 * The salt added to the password so that two user with 2 same password have not the same hashed password
+	 */
 	private String salt;
 
 	/**
@@ -48,6 +51,9 @@ public class User extends AbstractObject {
 		changedWhenListsChanged();
 	}
 
+	/**
+	 * Add an observer to all the shopping list to notify a change to the User
+	 */
 	@PostLoad
 	private void changedWhenListsChanged() {
 		for (ShoppingList shopList : getShoppingLists()) {
@@ -55,6 +61,10 @@ public class User extends AbstractObject {
 		}
 	}
 
+	/**
+	 * Add an observer to a specific shopping list
+	 * @param list the shopping list that has to be observed
+	 */
 	private void changedWhenListChanged(ShoppingList list) {
 		User self = this;
 		list.addObserver((observable, arg) -> self.changed());
