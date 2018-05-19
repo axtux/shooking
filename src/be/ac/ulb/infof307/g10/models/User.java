@@ -5,6 +5,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
+import be.ac.ulb.infof307.g10.models.exceptions.EmptyPasswordException;
+import be.ac.ulb.infof307.g10.models.exceptions.EmptyUsernameException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.utils.Crypto;
 
@@ -34,7 +36,7 @@ public class User extends AbstractObject {
 
 	public User(String username, String password) {
 		if (username == null || username.trim().isEmpty()) {
-			throw new IllegalArgumentException("username must not be empty");
+			throw new EmptyUsernameException("username must not be empty");
 		}
 		this.username = username;
 		setPassword(password);
@@ -53,7 +55,7 @@ public class User extends AbstractObject {
 
 	public void setPassword(String password) {
 		if (password == null || password.trim().isEmpty()) {
-			throw new IllegalArgumentException("password must not be empty");
+			throw new EmptyPasswordException("password must not be empty");
 		}
 		this.salt = Crypto.generateSalt();
 		this.hashedPassword = hash(password);
