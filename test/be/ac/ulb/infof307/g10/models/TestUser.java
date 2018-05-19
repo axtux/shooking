@@ -3,47 +3,90 @@ package be.ac.ulb.infof307.g10.models;
 import org.junit.Assert;
 import org.junit.Test;
 
-import be.ac.ulb.infof307.g10.models.dao.ProductDAO;
-import be.ac.ulb.infof307.g10.models.dao.UserDAO;
-import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
-import be.ac.ulb.infof307.g10.models.database.Database;
+import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 
-public class TestUser extends AbstractTestDatabase {
+public class TestUser {
 
-	public static User userWithShoppingList() {
-		User u = UserDAO.create("test", "test");
-		ShoppingList sl = u.getShoppingList();
+	@Test
+	public void username() {
+		User user = new User("username", "password");
+		Assert.assertEquals("username", user.getUsername());
+	}
 
-		Product p1 = ProductDAO.create("test1", 1, "unit");
-		Product p2 = ProductDAO.create("test2", 2, "unit");
+	@Test(expected = IllegalArgumentException.class)
+	public void nullUsername() {
+		new User(null, "password");
+	}
 
-		sl.setProduct(p1, 42);
-		sl.setProduct(p2, 13);
+	@Test(expected = IllegalArgumentException.class)
+	public void emptyUsername() {
+		new User("", "password");
+	}
 
-		return u;
+	@Test(expected = IllegalArgumentException.class)
+	public void spaceUsername() {
+		new User("  ", "password");
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void nullPassword() {
+		new User("username", null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void emptyPassword() {
+		new User("username", "");
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void spacePassword() {
+		new User("username", "  ");
 	}
 
 	@Test
-	public void shoppingListTest() {
-		User u = userWithShoppingList();
-		Assert.assertEquals(2, u.getShoppingList().size());
+	public void checkPassword() {
+		User user = new User("username", "password");
+		// generate exception if incorrect password
+		user.checkPassword("password");
+	}
+
+	@Test(expected = IncorrectPasswordException.class)
+	public void checkPasswordException() {
+		User user = new User("username", "password");
+		// generate exception if incorrect password
+		user.checkPassword("wrong");
 	}
 
 	@Test
-	public void userShoppingListPersistenceTest() {
-		userWithShoppingList();
-		Database.close();
+	public void setPassword() {
+		User user = new User("username", "password");
+		user.setPassword("newPassword");
+		// generate exception if incorrect password
+		user.checkPassword("newPassword");
+	}
 
-		User o = UserDAO.getByUsername("test");
-		Assert.assertEquals(2, o.getShoppingList().size());
+	@Test(expected = IllegalArgumentException.class)
+	public void setNullPassword() {
+		User user = new User("username", "password");
+		user.setPassword(null);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void setEmptyPassword() {
+		User user = new User("username", "password");
+		user.setPassword("");
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void setSpacePassword() {
+		User user = new User("username", "password");
+		user.setPassword("  ");
 	}
 
 	@Test
-	public void shoppingListPersistenceTest() {
-		userWithShoppingList();
-		Database.close();
-
-		User o = UserDAO.getByUsername("test");
-		Assert.assertEquals(2, o.getShoppingList().size());
+	public void shoppingListNotNull() {
+		User user = new User("username", "password");
+		Assert.assertNotNull(user.getShoppingList());
 	}
+
 }

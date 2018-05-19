@@ -33,8 +33,8 @@ public class User extends AbstractObject {
 	}
 
 	public User(String username, String password) {
-		if (username == null || password == null) {
-			throw new NullPointerException();
+		if (username == null || username.trim().isEmpty()) {
+			throw new IllegalArgumentException("username must not be empty");
 		}
 		this.username = username;
 		setPassword(password);
@@ -47,13 +47,16 @@ public class User extends AbstractObject {
 		return username;
 	}
 
-	public String getHashedPassword() {
-		return hashedPassword;
+	private String hash(String password) {
+		return Crypto.sha256(password + this.salt);
 	}
 
 	public void setPassword(String password) {
+		if (password == null || password.trim().isEmpty()) {
+			throw new IllegalArgumentException("password must not be empty");
+		}
 		this.salt = Crypto.generateSalt();
-		this.hashedPassword = Crypto.sha256(password + this.salt);
+		this.hashedPassword = hash(password);
 		this.changed();
 	}
 
@@ -63,10 +66,9 @@ public class User extends AbstractObject {
 	 * @throws IncorrectPasswordException If password does not match.
 	 */
 	public void checkPassword(String password) throws IncorrectPasswordException {
-		if(Crypto.sha256(password + this.salt).equals(hashedPassword)) {
-			return;
+		if(!hash(password).equals(hashedPassword)) {
+			throw new IncorrectPasswordException();
 		}
-		throw new IncorrectPasswordException();
 	}
 
 	public ShoppingList getShoppingList() {
