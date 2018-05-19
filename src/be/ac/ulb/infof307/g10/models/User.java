@@ -7,10 +7,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.utils.Crypto;
@@ -71,6 +68,7 @@ public class User extends AbstractObject implements Observer{
 		this.hashedPassword = Crypto.sha256(password + this.salt);
 		this.changed();
 	}
+
 
 	/**
 	 * Check password. Check is case sensitive.
