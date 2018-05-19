@@ -7,7 +7,6 @@ import be.ac.ulb.infof307.g10.models.Shop;
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.ShoppingList;
 import be.ac.ulb.infof307.g10.models.dao.ShopDAO;
-import be.ac.ulb.infof307.g10.models.dao.UserDAO;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.utils.ToStringConverter;
 import be.ac.ulb.infof307.g10.views.DialogView;
@@ -81,7 +80,7 @@ public class ShoppingListController extends AbstractProductController {
 	 */
 	private void updateShoppingLists() {
 		shoppingListsCombo.getItems().clear();
-		shoppingListsCombo.getItems().addAll(UserDAO.getShoppingLists(user.getUsername()));
+		shoppingListsCombo.getItems().addAll(user.getShoppingLists());
 	}
 
 	@FXML

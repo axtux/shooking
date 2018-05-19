@@ -1,13 +1,13 @@
 package be.ac.ulb.infof307.g10.models;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
-import java.util.Objects;
-import java.util.Observable;
-import java.util.Observer;
-
-
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.PostLoad;
 
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.utils.Crypto;
@@ -26,7 +26,7 @@ public class User extends AbstractObject {
 	private String hashedPassword;
 
 	@OneToOne(cascade = CascadeType.ALL)
-	private ArrayList<ShoppingList> shoppingLists;
+	private Set<ShoppingList> shoppingLists;
 
 	private String salt;
 
@@ -42,8 +42,7 @@ public class User extends AbstractObject {
 		}
 		this.username = username;
 		setPassword(password);
-		shoppingLists = new ArrayList<ShoppingList>();
-		User self = this;
+		shoppingLists = new HashSet<ShoppingList>();
 		changedWhenListsChanged();
 	}
 	/**@Override
@@ -54,10 +53,14 @@ public class User extends AbstractObject {
 
 	@PostLoad
 	private void changedWhenListsChanged() {
-		User self = this;
-		for(ShoppingList shopList: this.getShoppingLists()){
-			shopList.addObserver((observable, arg) -> self.changed());
+		for(ShoppingList shopList: getShoppingLists()){
+			changedWhenListChanged(shopList);
 		}
+	}
+	
+	private void changedWhenListChanged(ShoppingList list) {
+		User self = this;
+		list.addObserver((observable, arg) -> self.changed());
 	}
 
 	public String getUsername() {
@@ -87,7 +90,7 @@ public class User extends AbstractObject {
 		throw new IncorrectPasswordException();
 	}
 
-	public ArrayList<ShoppingList> getShoppingLists() {
+	public Set<ShoppingList> getShoppingLists() {
 		return shoppingLists;
 	}
 
@@ -96,9 +99,8 @@ public class User extends AbstractObject {
 	 * @param shoppingList the shopping list to add
 	 */
 	public void addShoppingList(ShoppingList shoppingList) {
-		shoppingList.addObserver((observable, arg) -> this.changed());
-		//shoppingList.addObserver(this);
 		shoppingLists.add(shoppingList);
+		changedWhenListChanged(shoppingList);
 		this.changed();
 	}
 }
