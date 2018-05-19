@@ -16,7 +16,7 @@ import be.ac.ulb.infof307.g10.utils.Crypto;
  * Manage user, password and shopping list. Use static methods to get instance.
  */
 @Entity
-public class User extends AbstractObject implements Observer{
+public class User extends AbstractObject {
 
 	private static final long serialVersionUID = -0L;
 
@@ -46,11 +46,11 @@ public class User extends AbstractObject implements Observer{
 		User self = this;
 		changedWhenListsChanged();
 	}
-	@Override
+	/**@Override
 	public void update(Observable o, Object o1){
 		this.changed();
 		System.out.println("User saved");
-	}
+	}**/
 
 	@PostLoad
 	private void changedWhenListsChanged() {
@@ -97,7 +97,7 @@ public class User extends AbstractObject implements Observer{
 	 */
 	public void addShoppingList(ShoppingList shoppingList) {
 		shoppingList.addObserver((observable, arg) -> this.changed());
-		shoppingList.addObserver(this);
+		//shoppingList.addObserver(this);
 		shoppingLists.add(shoppingList);
 		this.changed();
 	}
