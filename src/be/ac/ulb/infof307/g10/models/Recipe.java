@@ -12,7 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OrderColumn;
 
 @Entity
-public class Recipe extends AbstractObject {
+public class Recipe extends ProductsQuantity {
 
 	private static final long serialVersionUID = -0L;
 
