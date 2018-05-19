@@ -1,9 +1,7 @@
 package be.ac.ulb.infof307.g10.models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -28,12 +26,6 @@ public class Recipe extends ProductsQuantity {
 	private int servings;
 
 	/**
-	 * Mapping between products and quantities of it
-	 */
-	@ElementCollection(fetch = FetchType.EAGER)
-	private Map<Product, Float> ingredients;
-
-	/**
 	 * List of different steps of the recipe
 	 */
 	@ElementCollection(fetch = FetchType.EAGER)
@@ -55,12 +47,12 @@ public class Recipe extends ProductsQuantity {
 	 *            Number of people for the recipe
 	 */
 	public Recipe(String name, int servings) {
+		super();
 		setName(name);
 		if (servings <= 0) {
 			throw new IllegalArgumentException("servings must be > 0");
 		}
 		this.servings = servings;
-		ingredients = new HashMap<>();
 		steps = new ArrayList<>();
 	}
 
@@ -74,10 +66,6 @@ public class Recipe extends ProductsQuantity {
 		}
 		this.name = name;
 		this.changed();
-	}
-
-	public int getQuantity(Product ingredient) {
-		return Math.round(ingredients.getOrDefault(ingredient, (float) 0));
 	}
 
 	/**
@@ -200,62 +188,26 @@ public class Recipe extends ProductsQuantity {
 		return index == steps.size() - 1;
 	}
 
-	/**
-	 * Add an ingredient in the ingredients list. If the product is already
-	 * present, the older quantity is erased by the new one
-	 * 
-	 * @param product
-	 *            The new product
-	 * @param quantity
-	 *            The quantity of the product needed in the recipe
-	 */
-	public void addIngredient(Product product, float quantity) {
-		float before = ingredients.getOrDefault(product, (float) 0);
-		ingredients.put(product, before + quantity);
-		this.changed();
+	public void clearProducts() {
+		super.clear();
 	}
 
-	/**
-	 * Modify the quantity of the selected product
-	 * 
-	 * @param product
-	 *            The product already in the ingredients list
-	 * @param quantity
-	 *            The new quantity of the product
-	 */
-	public void setIngredientQuantity(Product product, float quantity) {
-		if (ingredients.containsKey(product)) {
-			ingredients.put(product, quantity);
-		}
-		this.changed();
+	@Override
+	public int size() {
+		/* TODO change or document well
+		return super.size() + steps.size();
+		//*/return super.size();
 	}
 
-	/**
-	 * Remove the ingredient p if present
-	 * 
-	 * @param p
-	 *            the ingredient to remove
-	 */
-	public void removeIngredient(Product p) {
-		ingredients.remove(p);
-		this.changed();
+	@Override
+	public void clear() {
+		clearSteps();
+		clearProducts();
 	}
 
-	/**
-	 * Get ingredients
-	 * 
-	 * @return Map of each ingredients to its quantity
-	 */
-	public Map<Product, Float> getAllIngredients() {
-		return new HashMap<>(ingredients);
-	}
-
-	/**
-	 * Delete all ingredients
-	 */
-	public void clearIngredients() {
-		this.ingredients.clear();
-		this.changed();
+	@Override
+	public boolean isEmpty() {
+		return super.isEmpty() && steps.isEmpty();
 	}
 
 	public int getServings() {
@@ -264,7 +216,7 @@ public class Recipe extends ProductsQuantity {
 
 	public ShoppingList toShoppingList() {
 		ShoppingList retShoppingList = new ShoppingList("Recipe " + this.name);
-		for (Product p : ingredients.keySet()) {
+		for (Product p : getProducts()) {
 			int quantityToHave = getQuantity(p);
 			int q = 0;
 			while (p.getSize() * q < quantityToHave) {
