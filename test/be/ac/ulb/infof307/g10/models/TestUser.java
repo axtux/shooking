@@ -1,5 +1,7 @@
 package be.ac.ulb.infof307.g10.models;
 
+import be.ac.ulb.infof307.g10.models.exceptions.EmptyPasswordException;
+import be.ac.ulb.infof307.g10.models.exceptions.EmptyUsernameException;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,32 +15,32 @@ public class TestUser {
 		Assert.assertEquals("username", user.getUsername());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = EmptyUsernameException.class)
 	public void nullUsername() {
 		new User(null, "password");
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = EmptyUsernameException.class)
 	public void emptyUsername() {
 		new User("", "password");
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = EmptyUsernameException.class)
 	public void spaceUsername() {
 		new User("  ", "password");
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = EmptyPasswordException.class)
 	public void nullPassword() {
 		new User("username", null);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = EmptyPasswordException.class)
 	public void emptyPassword() {
 		new User("username", "");
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = EmptyPasswordException.class)
 	public void spacePassword() {
 		new User("username", "  ");
 	}
@@ -65,19 +67,19 @@ public class TestUser {
 		user.checkPassword("newPassword");
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = EmptyPasswordException.class)
 	public void setNullPassword() {
 		User user = new User("username", "password");
 		user.setPassword(null);
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = EmptyPasswordException.class)
 	public void setEmptyPassword() {
 		User user = new User("username", "password");
 		user.setPassword("");
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test(expected = EmptyPasswordException.class)
 	public void setSpacePassword() {
 		User user = new User("username", "password");
 		user.setPassword("  ");
