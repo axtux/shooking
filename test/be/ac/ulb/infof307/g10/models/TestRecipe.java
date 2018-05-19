@@ -108,7 +108,7 @@ public class TestRecipe {
 	@Test
 	public void addIngredient() {
 		r.addQuantity(new Product("testing product 3", 1, "g"), 2);
-		assertEquals(3, r.size());
+		assertEquals(3, r.getProducts().size());
 	}
 
 	@Test

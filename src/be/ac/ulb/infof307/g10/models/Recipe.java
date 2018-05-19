@@ -194,9 +194,7 @@ public class Recipe extends ProductsQuantity {
 
 	@Override
 	public int size() {
-		/* TODO change or document well
 		return super.size() + steps.size();
-		//*/return super.size();
 	}
 
 	@Override
