@@ -92,11 +92,6 @@ public class Stock extends ShoppingList {
 		this.changed();
 	}
 
-	public void addProduct(Product p, int quantity, int price) {
-		setProduct(p, quantity + getQuantity(p), price);
-		this.changed();
-	}
-
 	@Override
 	public void removeProduct(Product p) {
 		super.removeProduct(p);
