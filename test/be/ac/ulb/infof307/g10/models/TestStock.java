@@ -1,67 +1,98 @@
 package be.ac.ulb.infof307.g10.models;
 
-import static org.junit.Assert.*;
-
+import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 public class TestStock {
 
-	static private Stock stock;
-	static private Product p;
-
-	@BeforeClass
-	public static void beforeClass() {
-		stock = new Stock();
-		p = new Product("#test Product test", 1, "g");
-		stock.addProduct(p, 5, 10);
-	}
+	private Stock stock;
+	private Product p;
 
 	@Before
 	public void before() {
-		stock.setProduct(p, 5, 10);
+		stock = new Stock();
+		p = new Product("productName", 42, "g");
+		stock.setProduct(p, 13, 199);
 	}
 
 	@Test
-	public void test_000_getPrice() {
-		assertEquals(stock.getPrice(p), 10);
-		assertEquals(stock.getPrice(p, 5), 50);
+	public void noPrice() {
+		p = new Product("non exsitent", 42, "g");
+		Assert.assertEquals(0, stock.getPrice(p));
 	}
 
 	@Test
-	public void test_000_getShoppingListPrice() {
+	public void price() {
+		Assert.assertEquals(199, stock.getPrice(p));
+	}
+
+	@Test
+	public void multiplePrice() {
+		Assert.assertEquals(2 * 199, stock.getPrice(p, 2));
+	}
+
+	@Test(expected = NonExistingException.class)
+	public void notEnoughPrice() {
+		stock.getPrice(p, 50);
+	}
+
+	@Test
+	public void shoppingListPrice() {
 		ShoppingList sl = new ShoppingList();
 		sl.addProduct(p, 2);
-		assertEquals(stock.getPrice(sl), 20);
+		Assert.assertEquals(2 * 199, stock.getPrice(sl));
 	}
 
 	@Test(expected = NonExistingException.class)
-	public void test_001_getPriceNonExisting() {
-		stock.getPrice(p, 9);
-	}
-
-	@Test(expected = NonExistingException.class)
-	public void test_001_getShoppingListPriceNonExisting() {
+	public void shoppingListNotEnoughPrice() {
 		ShoppingList sl = new ShoppingList();
-		sl.addProduct(p, 9);
+		sl.addProduct(p, 50);
 		stock.getPrice(sl);
 	}
 
 	@Test
-	public void test_002_setPrice() {
-		stock.setPrice(p, 12);
-		assertEquals(stock.getPrice(p), 12);
+	public void setPrice() {
+		stock.setPrice(p, 299);
+		Assert.assertEquals(299, stock.getPrice(p));
+		Assert.assertEquals(13, stock.getQuantity(p));
 	}
 
 	@Test
-	public void test_003_setProduct() {
-		stock.setProduct(p, 12);
-		stock.setProduct(p, 12, 25);
-		assertEquals(stock.getQuantity(p), 12);
-		assertEquals(stock.getPrice(p), 25);
+	public void setProductQuantity() {
+		stock.setProduct(p, 15);
+		Assert.assertEquals(199, stock.getPrice(p));
+		Assert.assertEquals(15, stock.getQuantity(p));
+	}
+	
+	@Test
+	public void setProductQuantityAndPrice() {
+		stock.setProduct(p, 15, 299);
+		Assert.assertEquals(299, stock.getPrice(p));
+		Assert.assertEquals(15, stock.getQuantity(p));
+	}
+	
+	@Test
+	public void addProduct() {
+		stock.addProduct(p, 2);
+		Assert.assertEquals(199, stock.getPrice(p));
+		Assert.assertEquals(15, stock.getQuantity(p));
+	}
+	
+	@Test
+	public void removeProduct() {
+		stock.removeProduct(p);
+		Assert.assertEquals(0, stock.getPrice(p));
+		Assert.assertEquals(0, stock.getQuantity(p));
+	}
+	
+	@Test
+	public void clear() {
+		stock.clear();
+		Assert.assertEquals(0, stock.getPrice(p));
+		Assert.assertEquals(0, stock.getQuantity(p));
 	}
 
 }

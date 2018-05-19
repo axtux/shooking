@@ -143,4 +143,13 @@ public class TestUserDAO extends AbstractTestDatabase {
 		Assert.assertEquals(1, sl.size());
 	}
 
+	@Test
+	public void testPersistenceDB() {
+		User o = UserDAO.create("#test testingUser", "badPassword");
+		Database.close();
+		o = UserDAO.login("#test testingUser", "badPassword");
+		o.setPassword("newPassword");
+		Database.close();
+		o = UserDAO.login("#test testingUser", "newPassword");
+	}
 }

@@ -25,12 +25,14 @@ public class Product extends AbstractObject {
 
 	public Product(String name, int size, String sizeUnit) {
 
-		if (name == null || sizeUnit == null) {
-			throw new NullPointerException("The name and the size unit must not be null");
-		} else if (name.trim().equals("") || sizeUnit.trim().equals("")) {
-			throw new IllegalArgumentException("The name and the size unit must not be empty");
-		} else if (size <= 0) {
+		if (name == null || name.trim().isEmpty()) {
+			throw new IllegalArgumentException("name must not be empty");
+		}
+		if (size <= 0) {
 			throw new IllegalArgumentException("size must be > 0");
+		}
+		if (sizeUnit == null || sizeUnit.trim().isEmpty()) {
+			throw new IllegalArgumentException("size unit must not be empty");
 		}
 
 		this.name = name;
@@ -42,7 +44,7 @@ public class Product extends AbstractObject {
 		return name;
 	}
 
-	public Integer getSize() {
+	public int getSize() {
 		return size;
 	}
 
@@ -55,7 +57,7 @@ public class Product extends AbstractObject {
 	}
 
 	public String getFullName() {
-		return name + " (" + size + sizeUnit + ")";
+		return name + " (" + getStringSize() + ")";
 	}
 
 	public String getIngredientName() {
