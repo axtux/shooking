@@ -28,7 +28,6 @@ public class ProductsQuantity extends AbstractObject {
 
 	public void addProduct(Product p, int quantity) {
 		setProduct(p, quantity + getQuantity(p));
-		this.changed();
 	}
 
 	public void removeProduct(Product p) {
