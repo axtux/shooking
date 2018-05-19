@@ -5,27 +5,24 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 
 @Entity
 public class ProductsQuantity extends AbstractObject {
 
 	private static final long serialVersionUID = 1L;
 
-	//@ElementCollection(fetch = FetchType.EAGER)
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
-	private Map<Product, Integer> productsAndQuantity;
+	@ElementCollection(fetch = FetchType.EAGER)
+	private Map<Product, Integer> productsQuantity;
 
 	protected ProductsQuantity() {
-		productsAndQuantity = new HashMap<>();
+		productsQuantity = new HashMap<>();
 	}
 
 	public void setProduct(Product p, int quantity) {
-		productsAndQuantity.put(p, quantity);
+		productsQuantity.put(p, quantity);
 		changed();
 	}
 
@@ -35,30 +32,30 @@ public class ProductsQuantity extends AbstractObject {
 	}
 
 	public void removeProduct(Product p) {
-		productsAndQuantity.remove(p);
+		productsQuantity.remove(p);
 		changed();
 	}
 
 	public int getQuantity(Product p) {
-		return productsAndQuantity.getOrDefault(p, 0);
+		return productsQuantity.getOrDefault(p, 0);
 	}
 
 	public int size() {
-		return productsAndQuantity.size();
+		return productsQuantity.size();
 	}
 
 	public void clear() {
-		productsAndQuantity.clear();
+		productsQuantity.clear();
 		changed();
 	}
 
 	public boolean isEmpty() {
-		return productsAndQuantity.isEmpty();
+		return productsQuantity.isEmpty();
 	}
 
 	public Set<Product> getProducts() {
 		// return copy of set
-		return new HashSet<>(productsAndQuantity.keySet());
+		return new HashSet<>(productsQuantity.keySet());
 	}
 
 }
