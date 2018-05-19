@@ -6,7 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PostLoad;
 
 import be.ac.ulb.infof307.g10.models.exceptions.EmptyPasswordException;
@@ -27,7 +27,7 @@ public class User extends AbstractObject {
 
 	private String hashedPassword;
 
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<ShoppingList> shoppingLists;
 
 	private String salt;
@@ -48,14 +48,13 @@ public class User extends AbstractObject {
 		changedWhenListsChanged();
 	}
 
-
 	@PostLoad
 	private void changedWhenListsChanged() {
-		for(ShoppingList shopList: getShoppingLists()){
+		for (ShoppingList shopList : getShoppingLists()) {
 			changedWhenListChanged(shopList);
 		}
 	}
-	
+
 	private void changedWhenListChanged(ShoppingList list) {
 		User self = this;
 		list.addObserver((observable, arg) -> self.changed());
@@ -78,14 +77,16 @@ public class User extends AbstractObject {
 		this.changed();
 	}
 
-
 	/**
 	 * Check password. Check is case sensitive.
-	 * @param password Password to check
-	 * @throws IncorrectPasswordException If password does not match.
+	 * 
+	 * @param password
+	 *            Password to check
+	 * @throws IncorrectPasswordException
+	 *             If password does not match.
 	 */
 	public void checkPassword(String password) throws IncorrectPasswordException {
-		if(!hash(password).equals(hashedPassword)) {
+		if (!hash(password).equals(hashedPassword)) {
 			throw new IncorrectPasswordException();
 		}
 	}
@@ -96,7 +97,9 @@ public class User extends AbstractObject {
 
 	/**
 	 * Add a shopping list
-	 * @param shoppingList the shopping list to add
+	 * 
+	 * @param shoppingList
+	 *            the shopping list to add
 	 */
 	public void addShoppingList(ShoppingList shoppingList) {
 		shoppingLists.add(shoppingList);
