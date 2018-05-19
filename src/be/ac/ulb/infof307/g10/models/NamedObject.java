@@ -1,10 +1,19 @@
 package be.ac.ulb.infof307.g10.models;
 
+import javax.persistence.Entity;
+
+@Entity
 public class NamedObject extends AbstractObject {
 
 	private static final long serialVersionUID = 1L;
 
 	private String name;
+
+	/**
+	 * Needed by JPA
+	 */
+	protected NamedObject() {
+	}
 
 	public NamedObject(String name) {
 		setName(name);

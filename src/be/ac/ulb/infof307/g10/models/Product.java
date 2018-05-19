@@ -1,6 +1,5 @@
 package be.ac.ulb.infof307.g10.models;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
@@ -8,12 +7,10 @@ import javax.persistence.Entity;
  * (positive integer) and a unit (string) related to the size.
  */
 @Entity
-public class Product extends AbstractObject {
+public class Product extends NamedObject {
 
-	private static final long serialVersionUID = -0L;
+	private static final long serialVersionUID = 1L;
 
-	@Column(unique = true)
-	private String name;
 	private int size;
 	private String sizeUnit;
 
@@ -24,10 +21,8 @@ public class Product extends AbstractObject {
 	}
 
 	public Product(String name, int size, String sizeUnit) {
+		super(name);
 
-		if (name == null || name.trim().isEmpty()) {
-			throw new IllegalArgumentException("name must not be empty");
-		}
 		if (size <= 0) {
 			throw new IllegalArgumentException("size must be > 0");
 		}
@@ -35,13 +30,8 @@ public class Product extends AbstractObject {
 			throw new IllegalArgumentException("size unit must not be empty");
 		}
 
-		this.name = name;
 		this.size = size;
 		this.sizeUnit = sizeUnit;
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	public int getSize() {
@@ -57,11 +47,11 @@ public class Product extends AbstractObject {
 	}
 
 	public String getFullName() {
-		return name + " (" + getStringSize() + ")";
+		return getName() + " (" + getStringSize() + ")";
 	}
 
 	public String getIngredientName() {
-		return name + " (" + sizeUnit + ")";
+		return getName() + " (" + sizeUnit + ")";
 	}
 
 }
