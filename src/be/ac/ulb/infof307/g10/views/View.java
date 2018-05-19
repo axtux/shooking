@@ -3,7 +3,7 @@ package be.ac.ulb.infof307.g10.views;
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.scene.layout.Region;
 
 /**
  * Enumeration of views available within application. Each entry contains an
@@ -70,7 +70,7 @@ public enum View {
 	 * 
 	 * @return Parent of view.
 	 */
-	public Parent getParent() {
+	public Region getParent() {
 		try {
 			return FXMLLoader.load(View.class.getResource("/FXML/" + toCamelCase() + ".fxml"));
 		} catch (IOException e) {
