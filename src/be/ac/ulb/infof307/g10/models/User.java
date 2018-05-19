@@ -47,11 +47,7 @@ public class User extends AbstractObject {
 		shoppingLists = new HashSet<ShoppingList>();
 		changedWhenListsChanged();
 	}
-	/**@Override
-	public void update(Observable o, Object o1){
-		this.changed();
-		System.out.println("User saved");
-	}**/
+
 
 	@PostLoad
 	private void changedWhenListsChanged() {

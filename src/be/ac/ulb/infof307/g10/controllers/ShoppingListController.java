@@ -93,7 +93,6 @@ public class ShoppingListController extends AbstractProductController {
 	private void productsAdd() {
 		Product p = productsCombo.getValue();
 		currentList.addProduct(p, productsAmountField.getInt());
-		System.out.println("ShoppingListController.productsAdd");
 		productsTable.getSelectionModel().select(p);
 		changed();
 	}
