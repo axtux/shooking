@@ -215,8 +215,11 @@ public class ShoppingListController extends AbstractProductController {
 
 		shoppingListsCombo.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> shoppingListComboSelect(newValue));
-
+		//Button unavailable if no list selected
 		BooleanBinding notSelected = shoppingListsCombo.getSelectionModel().selectedItemProperty().isNull();
+		productsCombo.disableProperty().bind(notSelected);
+		shopsCombo.disableProperty().bind(notSelected);
+		researchShopsButton.disableProperty().bind(notSelected);
 
 		// convert Product to string
 		productsCombo.setConverter(new ToStringConverter<>(Product::getFullName));
@@ -227,7 +230,7 @@ public class ShoppingListController extends AbstractProductController {
 
 		// TODO change this when multiple shopping lists
 		productsNewButton.setDisable(false);
-		researchShopsButton.setDisable(false);
+		//researchShopsButton.setDisable(false);
 		updateProducts();
 		updateShoppingLists();
 		updateShops();
