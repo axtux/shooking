@@ -44,15 +44,20 @@ public class User extends AbstractObject implements Observer{
 		setPassword(password);
 		shoppingLists = new ArrayList<ShoppingList>();
 		User self = this;
-		for(ShoppingList list:shoppingLists){
-			list.addObserver((observable, arg) -> self.changed());
-		}
-
+		changedWhenListsChanged();
 	}
 	@Override
 	public void update(Observable o, Object o1){
 		this.changed();
 		System.out.println("User saved");
+	}
+
+	@PostLoad
+	private void changedWhenListsChanged() {
+		User self = this;
+		for(ShoppingList shopList: this.getShoppingLists()){
+			shopList.addObserver((observable, arg) -> self.changed());
+		}
 	}
 
 	public String getUsername() {
