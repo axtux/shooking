@@ -36,7 +36,7 @@ public class TestRecipe {
 	public void createRecipeExceptionServing() {
 		new Recipe("correct name", 0);
 	}
-	
+
 	@Test
 	public void addStep() {
 		r.addStep("testing step 4");
@@ -64,13 +64,13 @@ public class TestRecipe {
 		assertEquals(r.getStep(1), "testing step 3");
 		assertEquals(r.getStep(2), "testing step 2");
 	}
-	
+
 	@Test
 	public void setStep() {
 		r.setStep("testing step 1", "set step");
 		assertEquals(r.getStep(0), "set step");
 	}
-	
+
 	@Test
 	public void removeStep() {
 		r.removeStep("testing step 1");
@@ -100,6 +100,12 @@ public class TestRecipe {
 	}
 
 	@Test
+	public void isNotLast() {
+		r.clear();
+		assertFalse(r.isLast("testing step 1"));
+	}
+
+	@Test
 	public void addIngredient() {
 		r.addQuantity(new Product("testing product 3", 1, "g"), 2);
 		assertEquals(3, r.size());
@@ -112,7 +118,7 @@ public class TestRecipe {
 		r.removeProduct(p2);
 		assertTrue(r.getProducts().isEmpty());
 	}
-	
+
 	@Test
 	public void setIngredientQuantity() {
 		r.setQuantity(p1, 2);
@@ -132,7 +138,7 @@ public class TestRecipe {
 	}
 
 	@Test
-	public void toShoppingList(){
+	public void toShoppingList() {
 
 		Recipe r2 = new Recipe("Testing recipe", 1);
 		r2.addStep("testing step 1");
