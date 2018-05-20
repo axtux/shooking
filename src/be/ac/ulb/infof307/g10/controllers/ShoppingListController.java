@@ -51,15 +51,16 @@ public class ShoppingListController extends AbstractProductController {
 
 	@FXML
 	private void editShoppingListName(String newValue) {
-		if ("".equals(newValue) || currentList.getName().equals(newValue)) {
-			// no change or cleared
-			return;
+		try{
+			ShoppingList shoppingList = currentList;
+			shoppingList.setName(newValue);
+			updateTable();
+			updateShoppingLists();
+			shoppingListsCombo.getSelectionModel().select(shoppingList);
 		}
-		ShoppingList shoppingList = currentList;
-		shoppingList.setName(newValue);
-		updateTable();
-		updateShoppingLists();
-		shoppingListsCombo.getSelectionModel().select(shoppingList);
+		catch (IllegalArgumentException e){
+			return ;
+		}
 	}
 
 	private Shop selectedShop;
