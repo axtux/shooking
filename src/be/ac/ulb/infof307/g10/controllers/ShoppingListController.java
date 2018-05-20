@@ -14,10 +14,7 @@ import be.ac.ulb.infof307.g10.views.View;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
+import javafx.scene.control.*;
 
 /**
  * Controller Class of the shopping list (ShoppingList) It is used to update the
@@ -49,6 +46,22 @@ public class ShoppingListController extends AbstractProductController {
 	@FXML
 	private ComboBox<ShoppingList> shoppingListsCombo;
 
+	@FXML
+	private TextField shoppingListNames;
+
+	@FXML
+	private void editShoppingListName(String newValue) {
+		try{
+			ShoppingList shoppingList = currentList;
+			shoppingList.setName(newValue);
+			updateShoppingLists();
+			shoppingListsCombo.getSelectionModel().select(shoppingList);
+		}
+		catch (IllegalArgumentException e){
+			return ;
+		}
+	}
+
 	private Shop selectedShop;
 
 	private User user;
@@ -71,6 +84,9 @@ public class ShoppingListController extends AbstractProductController {
 	 */
 	private void shoppingListComboSelect(ShoppingList newValue) {
 		currentList = newValue;
+		if(newValue != null) {
+			shoppingListNames.setText(currentList.getName());
+		}
 		updateTable();
 	}
 
@@ -81,6 +97,9 @@ public class ShoppingListController extends AbstractProductController {
 	private void updateShoppingLists() {
 		shoppingListsCombo.getItems().clear();
 		shoppingListsCombo.getItems().addAll(user.getShoppingLists());
+		if (currentList != null){
+			shoppingListNames.setText(currentList.getName());
+		}
 	}
 
 	@FXML
@@ -215,8 +234,13 @@ public class ShoppingListController extends AbstractProductController {
 
 		shoppingListsCombo.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> shoppingListComboSelect(newValue));
-
+		//Button unavailable if no list selected
 		BooleanBinding notSelected = shoppingListsCombo.getSelectionModel().selectedItemProperty().isNull();
+		productsCombo.disableProperty().bind(notSelected);
+		shopsCombo.disableProperty().bind(notSelected);
+		researchShopsButton.disableProperty().bind(notSelected);
+		shoppingListNames.disableProperty().bind(notSelected);
+		productsClearButton.disableProperty().bind(notSelected);
 
 		// convert Product to string
 		productsCombo.setConverter(new ToStringConverter<>(Product::getFullName));
@@ -227,7 +251,7 @@ public class ShoppingListController extends AbstractProductController {
 
 		// TODO change this when multiple shopping lists
 		productsNewButton.setDisable(false);
-		researchShopsButton.setDisable(false);
+		shoppingListNames.textProperty().addListener((observable, oldValue, newValue) -> editShoppingListName(newValue));
 		updateProducts();
 		updateShoppingLists();
 		updateShops();
