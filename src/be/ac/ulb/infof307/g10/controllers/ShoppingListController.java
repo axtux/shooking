@@ -85,7 +85,9 @@ public class ShoppingListController extends AbstractProductController {
 	 */
 	private void shoppingListComboSelect(ShoppingList newValue) {
 		currentList = newValue;
-		shoppingListNames.setText(currentList.getName());
+		if(newValue != null) {
+			shoppingListNames.setText(currentList.getName());
+		}
 		updateTable();
 	}
 
