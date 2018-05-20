@@ -21,7 +21,7 @@ public class TestUserDAO extends AbstractTestDatabase {
 	@Test
 	public void signupTest() {
 		User u = UserDAO.create("test", "test");
-		Assert.assertEquals("test", u.getUsername());
+		Assert.assertEquals("test", u.getName());
 	}
 
 	@Test
@@ -42,7 +42,7 @@ public class TestUserDAO extends AbstractTestDatabase {
 	public void loginTest() {
 		UserDAO.create("test", "test");
 		User u = UserDAO.login("test", "test");
-		Assert.assertEquals("test", u.getUsername());
+		Assert.assertEquals("test", u.getName());
 	}
 
 	@Test(expected = IncorrectPasswordException.class)

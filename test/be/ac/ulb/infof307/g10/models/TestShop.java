@@ -12,18 +12,8 @@ public class TestShop {
 	private Map<DayOfWeek, String> schedule = new HashMap<>();
 
 	@Test(expected = IllegalArgumentException.class)
-	public void nullName() {
+	public void nameException() {
 		new Shop(null, 0., 0.);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void emptyName() {
-		new Shop("", 0., 0.);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void spaceName() {
-		new Shop("  ", 0., 0.);
 	}
 
 	@Test

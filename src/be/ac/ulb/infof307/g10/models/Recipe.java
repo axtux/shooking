@@ -3,7 +3,6 @@ package be.ac.ulb.infof307.g10.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,12 +12,6 @@ import javax.persistence.OrderColumn;
 public class Recipe extends ProductsQuantity {
 
 	private static final long serialVersionUID = -0L;
-
-	/**
-	 * Name of the recipe
-	 */
-	@Column(unique = true)
-	private String name;
 
 	/**
 	 * Number of people for the recipe
@@ -47,25 +40,12 @@ public class Recipe extends ProductsQuantity {
 	 *            Number of people for the recipe
 	 */
 	public Recipe(String name, int servings) {
-		super();
-		setName(name);
+		super(name);
 		if (servings <= 0) {
 			throw new IllegalArgumentException("servings must be > 0");
 		}
 		this.servings = servings;
 		steps = new ArrayList<>();
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		if (name == null || name.trim().isEmpty()) {
-			throw new IllegalArgumentException("name must not be empty");
-		}
-		this.name = name;
-		this.changed();
 	}
 
 	/**
@@ -213,7 +193,7 @@ public class Recipe extends ProductsQuantity {
 	}
 
 	public ShoppingList toShoppingList() {
-		ShoppingList retShoppingList = new ShoppingList("Recipe " + this.name);
+		ShoppingList retShoppingList = new ShoppingList("Recipe " + getName());
 		for (Product p : getProducts()) {
 			int quantityToHave = getQuantity(p);
 			int q = 0;

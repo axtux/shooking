@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.models.exceptions.EmptyPasswordException;
-import be.ac.ulb.infof307.g10.models.exceptions.EmptyUsernameException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 
 public class TestUser {
@@ -12,22 +11,12 @@ public class TestUser {
 	@Test
 	public void username() {
 		User user = new User("username", "password");
-		Assert.assertEquals("username", user.getUsername());
+		Assert.assertEquals("username", user.getName());
 	}
 
-	@Test(expected = EmptyUsernameException.class)
-	public void nullUsername() {
+	@Test(expected = IllegalArgumentException.class)
+	public void nameException() {
 		new User(null, "password");
-	}
-
-	@Test(expected = EmptyUsernameException.class)
-	public void emptyUsername() {
-		new User("", "password");
-	}
-
-	@Test(expected = EmptyUsernameException.class)
-	public void spaceUsername() {
-		new User("  ", "password");
 	}
 
 	@Test(expected = EmptyPasswordException.class)

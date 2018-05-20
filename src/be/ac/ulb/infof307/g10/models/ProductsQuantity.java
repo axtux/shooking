@@ -10,14 +10,21 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
 @Entity
-public class ProductsQuantity extends AbstractObject {
+public class ProductsQuantity extends NamedObject {
 
 	private static final long serialVersionUID = 1L;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	private Map<Product, Integer> productsQuantity;
 
+	/**
+	 * Needed by JPA
+	 */
 	protected ProductsQuantity() {
+	}
+
+	public ProductsQuantity(String name) {
+		super(name);
 		productsQuantity = new HashMap<>();
 	}
 

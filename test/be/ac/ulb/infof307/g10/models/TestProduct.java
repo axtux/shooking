@@ -6,23 +6,8 @@ import org.junit.Test;
 public class TestProduct {
 
 	@Test(expected = IllegalArgumentException.class)
-	public void nullNameException() {
+	public void nameException() {
 		new Product(null, 1, "unit");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void emptyNameException() {
-		new Product("", 1, "unit");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void spaceNameException() {
-		new Product(" ", 1, "unit");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void spacesNameException() {
-		new Product("   ", 1, "unit");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -53,12 +38,6 @@ public class TestProduct {
 	@Test(expected = IllegalArgumentException.class)
 	public void spacesSizeUnitException() {
 		new Product("name", 1, "   ");
-	}
-
-	@Test
-	public void name() {
-		Product p = new Product("name", 1, "unit");
-		Assert.assertEquals("name", p.getName());
 	}
 
 	@Test

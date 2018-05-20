@@ -22,11 +22,10 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = { "longitude", "latitude" }) })
-public class Shop extends AbstractObject {
+public class Shop extends NamedObject {
 
 	private static final long serialVersionUID = -0L;
 
-	private String name;
 	private double latitude;
 	private double longitude;
 	@ElementCollection(fetch = FetchType.EAGER)
@@ -68,14 +67,11 @@ public class Shop extends AbstractObject {
 	 *            Weekly schedule.
 	 */
 	public Shop(String name, double latitude, double longitude, Map<DayOfWeek, String> schedule) {
-		if (name == null || name.trim().isEmpty()) {
-			throw new IllegalArgumentException("name must not be empty");
-		}
-		this.name = name;
+		super(name);
 		this.latitude = latitude;
 		this.longitude = longitude;
 		setSchedule(schedule);
-		this.stock = new Stock();
+		this.stock = new Stock("Stock of " + getName());
 		changedWhenStockChanged();
 	}
 
@@ -83,10 +79,6 @@ public class Shop extends AbstractObject {
 	private void changedWhenStockChanged() {
 		Shop self = this;
 		this.stock.addObserver((observable, arg) -> self.changed());
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	private void setSchedule(Map<DayOfWeek, String> schedule) {

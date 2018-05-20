@@ -4,13 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.PostLoad;
 
 import be.ac.ulb.infof307.g10.models.exceptions.EmptyPasswordException;
-import be.ac.ulb.infof307.g10.models.exceptions.EmptyUsernameException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.utils.Crypto;
 
@@ -18,12 +16,9 @@ import be.ac.ulb.infof307.g10.utils.Crypto;
  * Manage user, password and shopping list. Use static methods to get instance.
  */
 @Entity
-public class User extends AbstractObject {
+public class User extends NamedObject {
 
 	private static final long serialVersionUID = -0L;
-
-	@Column(unique = true)
-	private String username;
 
 	private String hashedPassword;
 
@@ -42,11 +37,8 @@ public class User extends AbstractObject {
 	protected User() {
 	}
 
-	public User(String username, String password) {
-		if (username == null || username.trim().isEmpty()) {
-			throw new EmptyUsernameException("username must not be empty");
-		}
-		this.username = username;
+	public User(String name, String password) {
+		super(name);
 		setPassword(password);
 		shoppingLists = new HashSet<ShoppingList>();
 		changedWhenListsChanged();
@@ -71,10 +63,6 @@ public class User extends AbstractObject {
 	private void changedWhenListChanged(ShoppingList list) {
 		User self = this;
 		list.addObserver((observable, arg) -> self.changed());
-	}
-
-	public String getUsername() {
-		return username;
 	}
 
 	private String hash(String password) {
