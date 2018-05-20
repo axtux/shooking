@@ -15,18 +15,8 @@ public class TestUser {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void nullUsername() {
+	public void nameException() {
 		new User(null, "password");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void emptyUsername() {
-		new User("", "password");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void spaceUsername() {
-		new User("  ", "password");
 	}
 
 	@Test(expected = EmptyPasswordException.class)

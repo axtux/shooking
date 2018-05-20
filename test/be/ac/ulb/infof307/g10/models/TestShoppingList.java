@@ -18,29 +18,8 @@ public class TestShoppingList {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void nullNameException() {
+	public void nameException() {
 		new ShoppingList(null);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void emptyNameException() {
-		new ShoppingList("");
-	}
-
-	@Test(expected = IllegalArgumentException.class)
-	public void spaceNameException() {
-		new ShoppingList("  ");
-	}
-
-	@Test
-	public void name() {
-		Assert.assertEquals("name", sl.getName());
-	}
-
-	@Test
-	public void setName() {
-		sl.setName("lastname");
-		Assert.assertEquals("lastname", sl.getName());
 	}
 
 	@Test
