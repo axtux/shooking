@@ -84,8 +84,8 @@ public class ShoppingListController extends AbstractProductController {
 	 */
 	private void shoppingListComboSelect(ShoppingList newValue) {
 		currentList = newValue;
+		shoppingListNames.setText(currentList.getName());
 		updateTable();
-		shoppingListNames.setText(newValue.getName());
 	}
 
 
@@ -237,6 +237,8 @@ public class ShoppingListController extends AbstractProductController {
 		productsCombo.disableProperty().bind(notSelected);
 		shopsCombo.disableProperty().bind(notSelected);
 		researchShopsButton.disableProperty().bind(notSelected);
+		shoppingListNames.disableProperty().bind(notSelected);
+		productsClearButton.disableProperty().bind(notSelected);
 
 		// convert Product to string
 		productsCombo.setConverter(new ToStringConverter<>(Product::getFullName));
