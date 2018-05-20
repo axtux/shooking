@@ -74,27 +74,23 @@ public class Stock extends ProductsQuantity {
 
 	public void setPrice(Product p, int price) {
 		setProduct(p, getQuantity(p), price);
-		this.changed();
 	}
 
 	public void setProduct(Product p, int quantity, int price) {
-		super.setQuantity(p, quantity);
 		productsAndPrice.put(p, price);
-		this.changed();
+		super.setQuantity(p, quantity);
 	}
 
 	@Override
 	public void removeProduct(Product p) {
-		super.removeProduct(p);
 		productsAndPrice.remove(p);
-		this.changed();
+		super.removeProduct(p);
 	}
 
 	@Override
 	public void clear() {
-		super.clear();
 		productsAndPrice.clear();
-		this.changed();
+		super.clear();
 	}
 
 }
