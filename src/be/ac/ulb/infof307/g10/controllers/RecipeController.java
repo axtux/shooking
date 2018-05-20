@@ -102,10 +102,10 @@ public class RecipeController extends AbstractProductController {
 		if (step.isEmpty()) {
 			return;
 		}
-		stepTF.clear();
 		actualRecipe.addStep(step);
 		updateTable();
 		stepsTable.getSelectionModel().select(step);
+		stepTF.clear();
 	}
 
 	@FXML
