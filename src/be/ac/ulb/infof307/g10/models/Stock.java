@@ -21,7 +21,8 @@ public class Stock extends ProductsQuantity {
 	 * Needed by JPA
 	 */
 	public Stock() {
-		super();
+		// TODO chenge to named stock
+		super("STOCK");
 		productsAndPrice = new HashMap<>();
 	}
 

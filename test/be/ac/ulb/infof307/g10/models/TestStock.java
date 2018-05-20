@@ -41,14 +41,14 @@ public class TestStock {
 
 	@Test
 	public void shoppingListPrice() {
-		ShoppingList sl = new ShoppingList();
+		ShoppingList sl = new ShoppingList("test");
 		sl.addQuantity(p, 2);
 		Assert.assertEquals(2 * 199, stock.getPrice(sl));
 	}
 
 	@Test(expected = NonExistingException.class)
 	public void shoppingListNotEnoughPrice() {
-		ShoppingList sl = new ShoppingList();
+		ShoppingList sl = new ShoppingList("test");
 		sl.addQuantity(p, 50);
 		stock.getPrice(sl);
 	}
