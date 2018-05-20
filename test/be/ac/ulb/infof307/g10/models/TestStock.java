@@ -13,7 +13,7 @@ public class TestStock {
 
 	@Before
 	public void before() {
-		stock = new Stock();
+		stock = new Stock("test");
 		p = new Product("productName", 42, "g");
 		stock.setProduct(p, 13, 199);
 	}

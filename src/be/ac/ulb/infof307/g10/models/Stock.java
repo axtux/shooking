@@ -15,14 +15,16 @@ public class Stock extends ProductsQuantity {
 	private static final long serialVersionUID = -0L;
 
 	@ElementCollection(fetch = FetchType.EAGER)
-	private final Map<Product, Integer> productsAndPrice;
+	private Map<Product, Integer> productsAndPrice;
 
 	/**
 	 * Needed by JPA
 	 */
-	public Stock() {
-		// TODO chenge to named stock
-		super("STOCK");
+	protected Stock() {
+	}
+
+	public Stock(String name) {
+		super(name);
 		productsAndPrice = new HashMap<>();
 	}
 

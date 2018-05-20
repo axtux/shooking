@@ -71,7 +71,7 @@ public class Shop extends NamedObject {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		setSchedule(schedule);
-		this.stock = new Stock();
+		this.stock = new Stock("Stock of " + getName());
 		changedWhenStockChanged();
 	}
 
