@@ -54,7 +54,6 @@ public class ShoppingListController extends AbstractProductController {
 		try{
 			ShoppingList shoppingList = currentList;
 			shoppingList.setName(newValue);
-			//updateTable();
 			updateShoppingLists();
 			shoppingListsCombo.getSelectionModel().select(shoppingList);
 		}
