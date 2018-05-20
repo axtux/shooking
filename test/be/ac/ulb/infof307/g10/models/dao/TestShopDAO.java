@@ -47,7 +47,7 @@ public class TestShopDAO extends AbstractTestDatabase {
 	public void autoSaveShopStock() {
 		createTestingShop();
 		Shop s = ShopDAO.getByName("#test testingShop");
-		s.getStock().addProduct(ProductDAO.create("#test testingProduct", 12, "g"), 1);
+		s.getStock().addQuantity(ProductDAO.create("#test testingProduct", 12, "g"), 1);
 		Database.close();
 		s = ShopDAO.getByName("#test testingShop");
 		assertEquals(s.getStock().size(), 1);

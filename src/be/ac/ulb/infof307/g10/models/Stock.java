@@ -10,7 +10,7 @@ import javax.persistence.FetchType;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 @Entity
-public class Stock extends ShoppingList {
+public class Stock extends ProductsQuantity {
 
 	private static final long serialVersionUID = -0L;
 
@@ -75,7 +75,7 @@ public class Stock extends ShoppingList {
 	}
 
 	public void setProduct(Product p, int quantity, int price) {
-		super.setProduct(p, quantity);
+		super.setQuantity(p, quantity);
 		productsAndPrice.put(p, price);
 		this.changed();
 	}

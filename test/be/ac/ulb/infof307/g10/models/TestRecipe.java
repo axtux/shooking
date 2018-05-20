@@ -2,11 +2,9 @@ package be.ac.ulb.infof307.g10.models;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
-import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,8 +23,8 @@ public class TestRecipe {
 		r.addStep("testing step 3");
 		p1 = new Product("testing product 1", 1, "g");
 		p2 = new Product("testing product 2", 1, "g");
-		r.addIngredient(p1, (float) 1.);
-		r.addIngredient(p2, (float) 1.);
+		r.addQuantity(p1, 1);
+		r.addQuantity(p2, 1);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -38,7 +36,7 @@ public class TestRecipe {
 	public void createRecipeExceptionServing() {
 		new Recipe("correct name", 0);
 	}
-	
+
 	@Test
 	public void addStep() {
 		r.addStep("testing step 4");
@@ -66,13 +64,13 @@ public class TestRecipe {
 		assertEquals(r.getStep(1), "testing step 3");
 		assertEquals(r.getStep(2), "testing step 2");
 	}
-	
+
 	@Test
 	public void setStep() {
 		r.setStep("testing step 1", "set step");
 		assertEquals(r.getStep(0), "set step");
 	}
-	
+
 	@Test
 	public void removeStep() {
 		r.removeStep("testing step 1");
@@ -102,32 +100,28 @@ public class TestRecipe {
 	}
 
 	@Test
-	public void addIngredient() {
-		r.addIngredient(new Product("testing product 3", 1, "g"), 2);
-		assertEquals(3, r.getAllIngredients().size());
+	public void isNotLast() {
+		r.clear();
+		assertFalse(r.isLast("testing step 1"));
 	}
-	
+
 	@Test
-	public void getAllIngredients() {
-		Map<Product, Float> map = r.getAllIngredients();
-		// Normal behavior
-		assertEquals(2, map.size());
-		// Cloning Test
-		map.put(new Product("bad product", 1, "g"), (float) 3.);
-		assertNotEquals(map, r.getAllIngredients());
+	public void addIngredient() {
+		r.addQuantity(new Product("testing product 3", 1, "g"), 2);
+		assertEquals(3, r.getProducts().size());
 	}
 
 	@Test
 	public void removeIngredient() {
-		assertFalse(r.getAllIngredients().isEmpty());
-		r.removeIngredient(p1);
-		r.removeIngredient(p2);
-		assertTrue(r.getAllIngredients().isEmpty());
+		assertFalse(r.isEmpty());
+		r.removeProduct(p1);
+		r.removeProduct(p2);
+		assertTrue(r.getProducts().isEmpty());
 	}
-	
+
 	@Test
 	public void setIngredientQuantity() {
-		r.setIngredientQuantity(p1, (float) 2.);
+		r.setQuantity(p1, 2);
 		assertEquals(r.getQuantity(p1), (float) 2., 0.1);
 	}
 
@@ -139,12 +133,12 @@ public class TestRecipe {
 
 	@Test
 	public void clearIngredients() {
-		r.clearIngredients();
-		assertTrue(r.getAllIngredients().isEmpty());
+		r.clearProducts();
+		assertTrue(r.getProducts().isEmpty());
 	}
 
 	@Test
-	public void toShoppingList(){
+	public void toShoppingList() {
 
 		Recipe r2 = new Recipe("Testing recipe", 1);
 		r2.addStep("testing step 1");
@@ -152,8 +146,8 @@ public class TestRecipe {
 		r2.addStep("testing step 3");
 		p1 = new Product("testing pastas", 500, "g");
 		p2 = new Product("testing tomatoes", 1, "pc");
-		r2.addIngredient(p1, (float) 600.);
-		r2.addIngredient(p2, (float) 3.);
+		r2.addQuantity(p1, 600);
+		r2.addQuantity(p2, 3);
 
 		ShoppingList slTemp = r2.toShoppingList();
 

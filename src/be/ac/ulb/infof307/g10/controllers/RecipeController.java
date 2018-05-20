@@ -66,7 +66,7 @@ public class RecipeController extends AbstractProductController {
 	private void productsAdd() {
 		Product p = productsCombo.getSelectionModel().getSelectedItem();
 		int quantity = productsAmountField.getInt();
-		actualRecipe.addIngredient(p, quantity);
+		actualRecipe.addQuantity(p, quantity);
 		updateTable();
 		productsTable.getSelectionModel().select(p);
 	}
@@ -76,7 +76,7 @@ public class RecipeController extends AbstractProductController {
 		if (productsTableSelected == null) {
 			return;
 		}
-		actualRecipe.removeIngredient(productsTableSelected);
+		actualRecipe.removeProduct(productsTableSelected);
 		productsAdd();
 	}
 
@@ -85,14 +85,14 @@ public class RecipeController extends AbstractProductController {
 		if (productsTableSelected == null) {
 			return;
 		}
-		actualRecipe.removeIngredient(productsTableSelected);
+		actualRecipe.removeProduct(productsTableSelected);
 		updateTable();
 
 	}
 
 	@FXML
 	private void productsClear() {
-		actualRecipe.clearIngredients();
+		actualRecipe.clearProducts();
 		updateTable();
 	}
 
@@ -216,7 +216,7 @@ public class RecipeController extends AbstractProductController {
 		stepsTable.getItems().clear();
 		if (actualRecipe != null) {
 			recipeNameTF.setText(actualRecipe.getName());
-			productsTable.getItems().addAll(actualRecipe.getAllIngredients().keySet());
+			productsTable.getItems().addAll(actualRecipe.getProducts());
 			stepsTable.getItems().addAll(actualRecipe.getAllSteps());
 		}
 	}

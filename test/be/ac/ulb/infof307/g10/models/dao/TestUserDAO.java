@@ -93,15 +93,19 @@ public class TestUserDAO extends AbstractTestDatabase {
 		assertNull(u);
 	}
 
+	public static ShoppingList shoppingListFromUser() {
+		ShoppingList sl = new ShoppingList("test");
+		UserDAO.create("test", "test").addShoppingList(sl);
+		return sl;
+	}
+
 	@Test
 	public void setTestDB() {
-		User u = UserDAO.create("test", "test");
-		u.addShoppingList(new ShoppingList("test"));
-		ShoppingList sl = u.getShoppingLists().iterator().next();
+		ShoppingList sl = shoppingListFromUser();
 		Product p1 = ProductDAO.create("#test testingProduct1", 1, "unit");
 		Product p2 = ProductDAO.create("#test testingProduct2", 1, "unit");
-		sl.setProduct(p1, 1);
-		sl.setProduct(p2, 2);
+		sl.setQuantity(p1, 1);
+		sl.setQuantity(p2, 2);
 		Database.close();
 		sl = UserDAO.getByUsername("test").getShoppingLists().iterator().next();
 		p1 = ProductDAO.getByName("#test testingProduct1");
@@ -113,13 +117,11 @@ public class TestUserDAO extends AbstractTestDatabase {
 
 	@Test
 	public void addTestDB() {
-		User u = UserDAO.create("test", "test");
-		u.addShoppingList(new ShoppingList("test"));
-		ShoppingList sl = u.getShoppingLists().iterator().next();
+		ShoppingList sl = shoppingListFromUser();
 		Product p1 = ProductDAO.create("#test testingProduct1", 1, "unit");
-		sl.addProduct(p1, 1);
-		sl.addProduct(p1, 1);
-		sl.addProduct(p1, 1);
+		sl.addQuantity(p1, 1);
+		sl.addQuantity(p1, 1);
+		sl.addQuantity(p1, 1);
 		Database.close();
 		sl = UserDAO.getByUsername("test").getShoppingLists().iterator().next();
 		p1 = ProductDAO.getByName("#test testingProduct1");
@@ -129,13 +131,11 @@ public class TestUserDAO extends AbstractTestDatabase {
 
 	@Test
 	public void removeTestDB() {
-		User u = UserDAO.create("test", "test");
-		u.addShoppingList(new ShoppingList("test"));
-		ShoppingList sl = u.getShoppingLists().iterator().next();
+		ShoppingList sl = shoppingListFromUser();
 		Product p1 = ProductDAO.create("#test testingProduct1", 1, "unit");
 		Product p2 = ProductDAO.create("#test testingProduct2", 1, "unit");
-		sl.setProduct(p1, 1);
-		sl.setProduct(p2, 2);
+		sl.setQuantity(p1, 1);
+		sl.setQuantity(p2, 2);
 		sl.removeProduct(p1);
 		Database.close();
 		sl = UserDAO.getByUsername("test").getShoppingLists().iterator().next();
