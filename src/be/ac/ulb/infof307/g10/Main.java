@@ -21,6 +21,8 @@ public class Main extends Application {
 	public void init() {
 		// set JPA persistence unit
 		Database.setProp("name", "GL10PU");
+		// turn off logging
+		Database.setProp("eclipselink.logging.level", "OFF");
 	}
 
 	@Override
