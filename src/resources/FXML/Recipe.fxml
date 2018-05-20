@@ -17,7 +17,7 @@
         <TableView id="table" fx:id="productsTable" prefHeight="50.0" prefWidth="50.0">
             <columns>
                 <TableColumn fx:id="productsNameColumn" prefWidth="250.0" text="Ingredient" />
-                <TableColumn fx:id="productsAmountColumn" prefWidth="250.0" text="Quantity" />
+                <TableColumn fx:id="productsQuantityColumn" prefWidth="250.0" text="Quantity" />
             </columns>
         </TableView>
         <TableView id="stateTable" fx:id="stepsTable" prefHeight="50.0" prefWidth="50.0">
@@ -35,7 +35,7 @@
         <Label font="$x42" layoutX="8.0" layoutY="233.0" text="Amount:" />
         <IntField fx:id="productsAmountField" layoutX="45.0" layoutY="253.0" prefHeight="16.0" prefWidth="87.0" />
         <Label font="$x42" layoutX="7.0" layoutY="105.0" text="Servings:" />
-        <IntField fx:id="peopleTF" layoutX="17.0" layoutY="124.0" prefHeight="26.0" prefWidth="108.0" />
+        <IntField fx:id="servingsField" layoutX="17.0" layoutY="124.0" prefHeight="26.0" prefWidth="108.0" />
         <Button fx:id="productsClearButton" font="$x42" layoutX="144.0" layoutY="330.0" mnemonicParsing="false" onAction="#productsClear" prefHeight="31.0" prefWidth="108.0" text="Clear" />
         <Button id="addIngredientT" fx:id="productsAddButton" font="$x42" layoutX="19.0" layoutY="289.0" mnemonicParsing="false" onAction="#productsAdd" prefHeight="31.0" prefWidth="108.0" text="Add" />
         <Button fx:id="productsEditButton" font="$x42" layoutX="144.0" layoutY="289.0" mnemonicParsing="false" onAction="#productsEdit" prefHeight="31.0" prefWidth="108.0" text="Edit" />
@@ -48,14 +48,14 @@
         <Button id="clearBT1" fx:id="clearStepBT" font="$x42" layoutX="140.0" layoutY="530.0" mnemonicParsing="false" onAction="#clearStep" prefHeight="31.0" prefWidth="108.0" text="Clear" />
         <Label font="$x42" layoutX="6.0" layoutY="399.0" text="Step:" />
         <TextField fx:id="stepTF" layoutX="20.0" layoutY="422.0" prefHeight="26.0" prefWidth="230.0" />
-        <ComboBox id="recipeListCombo" fx:id="recipesListCombo" layoutX="16.0" layoutY="32.0" prefHeight="26.0" prefWidth="230.0" />
+        <ComboBox id="recipeListCombo" fx:id="productsQuantityCombo" layoutX="16.0" layoutY="32.0" prefHeight="26.0" prefWidth="230.0" />
         <Label font="$x42" layoutX="7.0" layoutY="11.0" text="Recipe:" />
         <ComboBox id="recipeListCombo" fx:id="productsCombo" layoutX="19.0" layoutY="205.0" prefHeight="26.0" prefWidth="230.0" />
         <Button id="upStep" fx:id="moveUpStepBT" font="$x42" layoutX="142.0" layoutY="455.0" mnemonicParsing="false" onAction="#moveUpStep" prefHeight="29.0" prefWidth="108.0" text="Up" textAlignment="RIGHT" />
         <Button id="moveDownStep" fx:id="moveDownStepBT" font="$x42" layoutX="20.0" layoutY="455.0" mnemonicParsing="false" onAction="#moveDownStep" prefHeight="29.0" prefWidth="108.0" text="Down" textAlignment="CENTER" />
         <Label font="$x42" layoutX="7.0" layoutY="59.0" text="Name:">
         </Label>
-        <TextField fx:id="recipeNameTF" layoutX="17.0" layoutY="77.0" prefHeight="26.0" prefWidth="230.0" />
+        <TextField fx:id="productsQuantityNameField" layoutX="17.0" layoutY="77.0" prefHeight="26.0" prefWidth="230.0" />
         <Button id="createRecipeBT" font="$x42" layoutX="138.0" layoutY="123.0" mnemonicParsing="false" onAction="#createRecipe" prefWidth="108.0" text="New" />
         <Separator layoutY="376.0" prefHeight="13.0" prefWidth="266.0" />
         <Separator layoutY="160.0" prefHeight="13.0" prefWidth="266.0" />

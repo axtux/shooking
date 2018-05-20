@@ -16,7 +16,7 @@
     <TableView fx:id="productsTable">
         <columns>
             <TableColumn fx:id="productsNameColumn" prefWidth="181.44444274902344" text="Product" />
-            <TableColumn fx:id="productsAmountColumn" prefWidth="172.55557250976562" text="Quantity" />
+            <TableColumn fx:id="productsQuantityColumn" prefWidth="172.55557250976562" text="Quantity" />
             <TableColumn fx:id="productsPriceColumn" prefWidth="172.55557250976562" text="Price" />
         </columns>
     </TableView>
@@ -49,13 +49,13 @@
             <Font name="System Bold" size="15.0" fx:id="x421" />
          </font>
       </Label>
-      <ComboBox fx:id="shoppingListsCombo" layoutX="12.0" layoutY="446.0" prefHeight="27.0" prefWidth="234.0" />
+      <ComboBox fx:id="productsQuantityCombo" layoutX="12.0" layoutY="446.0" prefHeight="27.0" prefWidth="234.0" />
       <Label layoutX="16.0" layoutY="487.0" text="Name:">
          <font>
             <Font name="System Bold" size="15.0" fx:id="x4211" />
          </font>
       </Label>
-      <TextField fx:id="shoppingListNames" layoutX="14.0" layoutY="521.0" prefHeight="26.0" prefWidth="230.0" />
+      <TextField fx:id="productsQuantityNameField" layoutX="14.0" layoutY="521.0" prefHeight="26.0" prefWidth="230.0" />
       <Button id="createRecipeBT" layoutX="15.0" layoutY="572.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createShoppingList" prefHeight="29.0" prefWidth="230.0" text="New">
          <font>
             <Font name="System Bold" size="15.0" fx:id="x4211" />

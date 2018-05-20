@@ -1,7 +1,10 @@
 package be.ac.ulb.infof307.g10.controllers;
 
+import java.util.Collection;
+
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.Product;
+import be.ac.ulb.infof307.g10.models.ProductsQuantity;
 import be.ac.ulb.infof307.g10.models.Recipe;
 import be.ac.ulb.infof307.g10.models.dao.RecipeDAO;
 import be.ac.ulb.infof307.g10.utils.ToStringConverter;
@@ -13,7 +16,6 @@ import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -25,13 +27,9 @@ import javafx.scene.control.TextField;
 public class RecipeController extends AbstractProductController {
 
 	@FXML
-	private ComboBox<Recipe> recipesListCombo;
-	@FXML
-	private IntField peopleTF;
+	private IntField servingsField;
 	@FXML
 	private TextField stepTF;
-	@FXML
-	private TextField recipeNameTF;
 	@FXML
 	private Button addStepBT;
 	@FXML
@@ -47,8 +45,6 @@ public class RecipeController extends AbstractProductController {
 	@FXML
 	private Button exportAsShoppingListBT;
 	@FXML
-	private TableColumn<Product, String> productsAmountColumn;
-	@FXML
 	private TableView<String> stepsTable;
 	@FXML
 	private TableColumn<String, String> recipeStepCL;
@@ -57,45 +53,6 @@ public class RecipeController extends AbstractProductController {
 
 	private Recipe actualRecipe;
 
-	private void recipesComboSelect(Recipe newValue) {
-		actualRecipe = newValue;
-		updateSelectedRecipe();
-	}
-
-	@FXML
-	private void productsAdd() {
-		Product p = productsCombo.getSelectionModel().getSelectedItem();
-		int quantity = productsAmountField.getInt();
-		actualRecipe.addQuantity(p, quantity);
-		updateTable();
-		productsTable.getSelectionModel().select(p);
-	}
-
-	@FXML
-	private void productsEdit() {
-		if (productsTableSelected == null) {
-			return;
-		}
-		actualRecipe.removeProduct(productsTableSelected);
-		productsAdd();
-	}
-
-	@FXML
-	private void productsRemove() {
-		if (productsTableSelected == null) {
-			return;
-		}
-		actualRecipe.removeProduct(productsTableSelected);
-		updateTable();
-
-	}
-
-	@FXML
-	private void productsClear() {
-		actualRecipe.clearProducts();
-		updateTable();
-	}
-
 	@FXML
 	private void addStep() {
 		String step = stepTF.getText().trim();
@@ -103,7 +60,7 @@ public class RecipeController extends AbstractProductController {
 			return;
 		}
 		actualRecipe.addStep(step);
-		updateTable();
+		updateStepsTable(actualRecipe);
 		stepsTable.getSelectionModel().select(step);
 		stepTF.clear();
 	}
@@ -115,7 +72,7 @@ public class RecipeController extends AbstractProductController {
 		}
 		String step = stepTF.getText();
 		actualRecipe.setStep(selectedStep, step);
-		updateTable();
+		updateStepsTable(actualRecipe);
 		stepsTable.getSelectionModel().select(step);
 	}
 
@@ -125,7 +82,7 @@ public class RecipeController extends AbstractProductController {
 			return;
 		}
 		actualRecipe.removeStep(selectedStep);
-		updateTable();
+		updateStepsTable(actualRecipe);
 	}
 
 	@FXML
@@ -133,14 +90,14 @@ public class RecipeController extends AbstractProductController {
 		stepsTable.getSelectionModel().clearSelection();
 		stepTF.clear();
 		actualRecipe.clearSteps();
-		updateTable();
+		updateStepsTable(actualRecipe);
 	}
 
 	@FXML
 	private void moveUpStep() {
 		String s = selectedStep;
 		actualRecipe.moveUpStep(s);
-		updateTable();
+		updateStepsTable(actualRecipe);
 		stepsTable.getSelectionModel().select(s);
 	}
 
@@ -148,34 +105,18 @@ public class RecipeController extends AbstractProductController {
 	private void moveDownStep() {
 		String s = selectedStep;
 		actualRecipe.moveDownStep(s);
-		updateTable();
+		updateStepsTable(actualRecipe);
 		stepsTable.getSelectionModel().select(s);
 	}
 
 	@FXML
 	private void createRecipe() {
-		DialogView.show(View.CREATE_RECIPE, (event) -> updateRecipes());
+		DialogView.show(View.CREATE_RECIPE, (event) -> updateAllProductsQuantity());
 	}
 
-	@FXML
-	private void editRecipeName(String newValue) {
-		if ("".equals(newValue) || actualRecipe.getName().equals(newValue)) {
-			// no change or cleared
-			return;
-		}
-		Recipe r = actualRecipe;
-		actualRecipe.setName(newValue);
-		updateTable();
-		updateRecipes();
-		recipesListCombo.getSelectionModel().select(r);
-	}
-
-	@Override
-	protected void productsTableSelect(Product newValue) {
-		super.productsTableSelect(newValue);
-		if (productsTableSelected != null) {
-			productsAmountField.setInt(actualRecipe.getQuantity(productsTableSelected));
-		}
+	private void updateStepsTable(Recipe actual) {
+		stepsTable.getItems().clear();
+		stepsTable.getItems().addAll(actual.getAllSteps());
 	}
 
 	/**
@@ -200,43 +141,28 @@ public class RecipeController extends AbstractProductController {
 	 * Select a recipe, update the corresponding fields, and enable/disable some
 	 * buttons on the view
 	 */
-	private void updateSelectedRecipe() {
-		productsCombo.getSelectionModel().clearSelection();
-		if (actualRecipe == null) {
-			peopleTF.clear();
+	@Override
+	protected void selectProductsQuantity(ProductsQuantity newValue) {
+		super.selectProductsQuantity(newValue);
+		if (newValue == null) {
+			servingsField.clear();
 		} else {
-			peopleTF.setInt(actualRecipe.getServings());
-		}
-		updateTable();
-	}
-
-	private void updateTable() {
-		recipeNameTF.clear();
-		productsTable.getItems().clear();
-		stepsTable.getItems().clear();
-		if (actualRecipe != null) {
-			recipeNameTF.setText(actualRecipe.getName());
-			productsTable.getItems().addAll(actualRecipe.getProducts());
-			stepsTable.getItems().addAll(actualRecipe.getAllSteps());
+			actualRecipe = (Recipe) newValue;
+			servingsField.setInt(actualRecipe.getServings());
+			updateStepsTable(actualRecipe);
 		}
 	}
 
-	private void updateRecipes() {
-		recipesListCombo.getItems().clear();
-		recipesListCombo.getItems().addAll(RecipeDAO.getAll());
+	@Override
+	protected Collection<? extends ProductsQuantity> getAllProductsQuantity() {
+		return RecipeDAO.getAll();
 	}
 
 	@Override
 	public void initialize() {
 		super.initialize();
-		updateRecipes();
 
-		recipeNameTF.textProperty().addListener((observable, oldValue, newValue) -> editRecipeName(newValue));
-
-		productsAmountColumn.setCellValueFactory(cell -> {
-			int amount = actualRecipe.getQuantity(cell.getValue());
-			return new SimpleStringProperty(Integer.toString(amount));
-		});
+		productsNameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getIngredientName()));
 
 		// use Product full name
 		productsCombo.setConverter(new ToStringConverter<>(Product::getIngredientName));
@@ -246,16 +172,7 @@ public class RecipeController extends AbstractProductController {
 		stepsTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> updateSelectedStep(newValue));
 
-		// use Recipe name
-		recipesListCombo.setConverter(new ToStringConverter<>(Recipe::getName));
-
-		recipesListCombo.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> recipesComboSelect(newValue));
-
-		BooleanBinding notSelected = recipesListCombo.getSelectionModel().selectedItemProperty().isNull();
-		recipeNameTF.disableProperty().bind(notSelected);
-		productsCombo.disableProperty().bind(notSelected);
-		productsClearButton.disableProperty().bind(notSelected);
+		BooleanBinding notSelected = productsQuantityCombo.getSelectionModel().selectedItemProperty().isNull();
 		stepTF.disableProperty().bind(notSelected);
 		addStepBT.disableProperty().bind(notSelected);
 		clearStepBT.disableProperty().bind(notSelected);
@@ -266,10 +183,8 @@ public class RecipeController extends AbstractProductController {
 		removeStepBT.disableProperty().bind(notSelected);
 
 		// load data and disable unavailable inputs
-		peopleTF.setDisable(true);
+		servingsField.setDisable(true);
 		updateSelectedStep(null);
-		updateSelectedRecipe();
-
 	}
 
 	/**
@@ -280,4 +195,5 @@ public class RecipeController extends AbstractProductController {
 		Main.getUser().addShoppingList(actualRecipe.toShoppingList());
 		MainView.show(View.SHOPPING_LIST);
 	}
+
 }
