@@ -34,9 +34,6 @@ public class ShoppingListController extends AbstractProductController {
 	private Button researchShopsButton;
 
 	@FXML
-	private Label status;
-
-	@FXML
 	private Label totalLabel;
 
 	@FXML

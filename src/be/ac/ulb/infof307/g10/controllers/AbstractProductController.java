@@ -54,11 +54,8 @@ abstract public class AbstractProductController {
 	@FXML
 	private TableColumn<Product, String> productsQuantityColumn;
 
-	protected Product productsTableSelected;
-	protected ProductsQuantity products;
-
 	/*
-	 * Products managment
+	 * Products management
 	 */
 
 	/**

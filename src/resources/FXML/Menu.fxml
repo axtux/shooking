@@ -5,9 +5,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 
-<HBox fx:id="hbox1" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+<HBox xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="be.ac.ulb.infof307.g10.controllers.MenuController">
-    <Button fx:id="shoppingList" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#showShoppingList"
+    <Button id="shoppingList" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#showShoppingList"
             text="Shopping List">
         <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -15,14 +15,14 @@
             </ImageView>
         </graphic>
     </Button>
-    <Button fx:id="map" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#showMap" text="Shop Map">
+    <Button id="map" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#showMap" text="Shop Map">
         <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                 <Image url="@../images/map.png"/>
             </ImageView>
         </graphic>
     </Button>
-    <Button fx:id="recipe" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#showRecipe"
+    <Button id="recipe" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#showRecipe"
             text="Recipe">
         <graphic>
             <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">

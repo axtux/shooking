@@ -22,7 +22,7 @@ import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 /**
  * Object to manage {@link AbstractObject} persistence. This database is working
  * only with {@link AbstractObject}s because save method needs an auto generated
- * id. General way to access this class is using a DAO. For more informations
+ * id. General way to access this class is using a DAO. For more information
  * about internal behavior, please see official JPA documentation.
  */
 final public class Database {
@@ -138,7 +138,7 @@ final public class Database {
 	 * @param type
 	 *            Return Object type
 	 * @param query
-	 *            JPQL Query
+	 *            Query in Java Persistence Query Language
 	 * @param params
 	 *            Optional positional parameters starting at 1 ("?1" for first
 	 *            parameter)
@@ -160,7 +160,7 @@ final public class Database {
 	 * @param type
 	 *            Return Object type
 	 * @param query
-	 *            JPQL Query
+	 *            Query in Java Persistence Query Language
 	 * @param params
 	 *            Optional positional parameters starting at 1 ("?1" for first
 	 *            parameter)

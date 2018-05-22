@@ -131,8 +131,7 @@ public class Recipe extends ProductsQuantity {
 	}
 
 	public void removeStep(String step) {
-		int index = steps.indexOf(step);
-		steps.remove(index);
+		steps.remove(step);
 		this.changed();
 	}
 

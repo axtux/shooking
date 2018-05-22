@@ -132,7 +132,7 @@ public class Shop extends NamedObject {
 	}
 
 	/**
-	 * Get shop informations.
+	 * Get shop information.
 	 * 
 	 * @return Format is "Name\n\nWholeSchedule"
 	 */
