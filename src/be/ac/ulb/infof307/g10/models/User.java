@@ -43,7 +43,7 @@ public class User extends NamedObject {
 	public User(String name, String password) {
 		super(name);
 		setPassword(password);
-		shoppingLists = new HashSet<ShoppingList>();
+		shoppingLists = new HashSet<>();
 		changedWhenListsChanged();
 	}
 
