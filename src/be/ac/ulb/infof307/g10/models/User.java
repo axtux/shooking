@@ -91,7 +91,7 @@ public class User extends NamedObject {
 		return Crypto.sha256(password + this.salt);
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(String password) throws EmptyPasswordException {
 		if (password == null || password.trim().isEmpty()) {
 			throw new EmptyPasswordException("password must not be empty");
 		}

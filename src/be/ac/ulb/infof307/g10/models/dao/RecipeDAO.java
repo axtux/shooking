@@ -41,7 +41,8 @@ final public class RecipeDAO {
 	/**
 	 * Research a recipe with a certain name inside the database.
 	 * @param name the name of the recipe
-	 * @return The recipe if a recipe with that name does exist. A NoResultException if not
+	 * @return The recipe with that name
+	 * @throws NonExistingException If {@link Recipe} does not exists.
 	 */
 	public static Recipe getByName(String name) throws NonExistingException {
 		try{

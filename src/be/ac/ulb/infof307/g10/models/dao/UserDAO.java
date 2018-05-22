@@ -22,10 +22,11 @@ final public class UserDAO {
 
 	/**
 	 * Log a user in
-	 * @param username the username
-	 * @param password the password
-	 * @return the user if it does exist a user with that username and password.
-	 * 			Throws an exception if not
+	 * @param username User name
+	 * @param password User password
+	 * @return User with that name and password.
+	 * @throws IncorrectPasswordException If password is not correct
+	 * @throws NonExistingException If {@link User} does not exists
 	 */
 	public static User login(String username, String password) throws IncorrectPasswordException, NonExistingException {
 		User u = UserDAO.getByUsername(username);
@@ -39,8 +40,8 @@ final public class UserDAO {
 	 * @param username the username
 	 * @param password the password
 	 * @param password2 the confirmation of the password
-	 * @return the created user if no user with that username already exists.
-	 * 			An exception if it does.
+	 * @return Created user with that name
+	 * @throws ExistingException If a User already exists with that name
 	 */
 	public static User create(String username, String password, String password2) throws ExistingException {
 		try {
@@ -54,9 +55,10 @@ final public class UserDAO {
 	}
 
 	/**
-	 * Research a user with a certain username
-	 * @param username the username
-	 * @return the user if it does exist. An exception if not.
+	 * Get {@link User} by name
+	 * @param username User name
+	 * @return the user with that name
+	 * @throws NonExistingException If {@link User} does not exists.
 	 */
 	public static User getByUsername(String username) throws NonExistingException {
 		try {
