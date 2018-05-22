@@ -10,6 +10,7 @@ import javax.persistence.PostLoad;
 
 import be.ac.ulb.infof307.g10.models.exceptions.EmptyPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
+import be.ac.ulb.infof307.g10.models.exceptions.PasswordsDoNotMatchException;
 import be.ac.ulb.infof307.g10.utils.Crypto;
 
 /**
@@ -44,6 +45,25 @@ public class User extends NamedObject {
 		setPassword(password);
 		shoppingLists = new HashSet<ShoppingList>();
 		changedWhenListsChanged();
+	}
+
+	/**
+	 * Create user and check that passwords match.
+	 * 
+	 * @param name
+	 *            User name
+	 * @param password
+	 *            One password
+	 * @param password2
+	 *            The other password
+	 * @throws PasswordsDoNotMatchException
+	 *             If passwords do not match
+	 */
+	public User(String name, String password, String password2) throws PasswordsDoNotMatchException {
+		this(name, password);
+		if (!password.equals(password2)) {
+			throw new PasswordsDoNotMatchException("Passwords do not match");
+		}
 	}
 
 	/**

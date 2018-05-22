@@ -27,12 +27,12 @@ final public class UserDAO {
 		return u;
 	}
 
-	public static User create(String username, String password) throws ExistingException {
+	public static User create(String username, String password, String password2) throws ExistingException {
 		try {
 			UserDAO.getByUsername(username);
 			throw new ExistingException("A user already exists with this name");
 		} catch (NonExistingException e) {
-			User u = new User(username, password);
+			User u = new User(username, password, password2);
 			AutoSaver.autosave(u);
 			return u;
 		}

@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import be.ac.ulb.infof307.g10.models.exceptions.EmptyPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
+import be.ac.ulb.infof307.g10.models.exceptions.PasswordsDoNotMatchException;
 
 public class TestUser {
 
@@ -32,6 +33,11 @@ public class TestUser {
 	@Test(expected = EmptyPasswordException.class)
 	public void spacePassword() {
 		new User("username", "  ");
+	}
+
+	@Test(expected = PasswordsDoNotMatchException.class)
+	public void noMatchPassword() {
+		new User("username", "one_pwd", "other_pwd");
 	}
 
 	@Test

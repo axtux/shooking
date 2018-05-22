@@ -5,6 +5,7 @@ import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.dao.UserDAO;
 import be.ac.ulb.infof307.g10.models.exceptions.EmptyPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
+import be.ac.ulb.infof307.g10.models.exceptions.PasswordsDoNotMatchException;
 import be.ac.ulb.infof307.g10.views.MainView;
 import be.ac.ulb.infof307.g10.views.View;
 import javafx.fxml.FXML;
@@ -34,6 +35,7 @@ public class CreateUserController {
 	private void showLogin() {
 		MainView.show(View.LOGIN);
 	}
+
 	/**
 	 * This method is used to check the information entered in the view to
 	 * create the new user Some error could be shown to the user in the
@@ -43,19 +45,10 @@ public class CreateUserController {
 	private void signup() {
 
 		try {
-			String log = textFieldLog.getText();
-			String pwd = pwdField.getText();
-			String pwd2 = pwdField2.getText();
-
-			if (pwd.equals(pwd2)) {
-					errorLabel.setText("User creation...");
-					User user = UserDAO.create(log, pwd);
-					Main.login(user);
-
-			} else {
-				errorLabel.setText("Passwords do not match");
-			}
-		} catch (ExistingException | EmptyPasswordException | IllegalArgumentException e) {
+			User user = UserDAO.create(textFieldLog.getText(), pwdField.getText(), pwdField2.getText());
+			Main.login(user);
+		} catch (ExistingException | EmptyPasswordException | IllegalArgumentException
+				| PasswordsDoNotMatchException e) {
 			errorLabel.setText(e.getMessage());
 		}
 
