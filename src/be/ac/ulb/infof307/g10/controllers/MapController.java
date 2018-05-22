@@ -59,6 +59,7 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 		try {
 			// Set the initial properties of the map.
 			MapOptions mapOptions = new MapOptions();
+			//Centering the map on Brussels
 			LatLong latLong = new LatLong(50.8504500, 4.3487800);
 			mapOptions.center(latLong);
 			mapOptions.mapType(MapTypeIdEnum.ROADMAP);
