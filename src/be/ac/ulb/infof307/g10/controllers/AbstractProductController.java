@@ -84,6 +84,8 @@ abstract public class AbstractProductController {
 
 	/**
 	 * Update the table of product
+	 * 
+	 * @param actual Products to display.
 	 */
 	protected void updateProductsTable(ProductsQuantity actual) {
 		productsTable.getItems().clear();
@@ -107,10 +109,14 @@ abstract public class AbstractProductController {
 		}
 	}
 
-	/**
+	/*
 	 * ProductsQuantity combo management
 	 */
 
+	/**
+	 * Method to override.
+	 * @return All products quantity which will be available in drop down menu.
+	 */
 	abstract protected Collection<? extends ProductsQuantity> getAllProductsQuantity();
 
 	/**
