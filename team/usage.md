@@ -18,8 +18,12 @@
 - [x] Le logiciel doit supporter la création d'une recette. Une recette contient un nom, le nombre de personnes pour laquelle cette dernière est conçue, une liste d'ingrédients (avec la quantité pour chaque ingrédient) ainsi que la séquence d'opérations nécessaires à la réalisation de ladite recette. 
 ![Alt text](Screenshots/3-1.png)
 
-- [ ] <del> Étant donné une recette, l'utilisateur doit pouvoir générer de manière automatique la liste de courses associée. </del>
+- [x] Étant donné une recette, l'utilisateur doit pouvoir générer de manière automatique la liste de courses associée.
+![Alt text](Screenshots/3-2.png)
+![Alt text](Screenshots/3-3.png)
 
+- [x] A cet effet, l'utilisateur doit pouvoir disposer de plusieurs Shopping Lists. 
+![Alt text](Screenshots/3-4.png)
 
 - [ ] <del> De plus, le logiciel doit permettre d'adapter la recette pour un nombre de personne différent de celui indiqué dans la recette originale. </del>
 
