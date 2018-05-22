@@ -14,10 +14,6 @@ import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
 public class TestRecipeDAO extends AbstractTestDatabase {
 
-	public static void createTestingRecipe() {
-		RecipeDAO.create("#test testingRecipe", 12);
-	}
-	
 	@Test
 	public void createRecipe() {
 		Recipe r = RecipeDAO.create("#test createRecipe", 12);
