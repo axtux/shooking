@@ -1,8 +1,5 @@
 package be.ac.ulb.infof307.g10.models.dao;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,6 +12,7 @@ import be.ac.ulb.infof307.g10.models.database.Database;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
+import be.ac.ulb.infof307.g10.models.exceptions.PasswordsDoNotMatchException;
 
 public class TestUserDAO extends AbstractTestDatabase {
 
@@ -45,6 +43,11 @@ public class TestUserDAO extends AbstractTestDatabase {
 		Assert.assertEquals("test", u.getName());
 	}
 
+	@Test(expected = PasswordsDoNotMatchException.class)
+	public void createPasswordDoNotMatchExceptionTest() {
+		UserDAO.create("test", "test", "test2");
+	}
+
 	@Test(expected = IncorrectPasswordException.class)
 	public void loginIncorrectPasswordExceptionTest() {
 		UserDAO.create("test", "test", "test");
@@ -60,39 +63,6 @@ public class TestUserDAO extends AbstractTestDatabase {
 		UserDAO.create("#test testingUser", "very good password", "very good password");
 	}
 	
-	@Test
-	public void test_001_userLogin() {
-		createTestingUser();
-		User u = UserDAO.login("#test testingUser", "very good password");
-		assertNotNull(u);
-	}
-	
-	@Test(expected=NonExistingException.class)
-	public void test_002_userLoginException() {
-		User u = UserDAO.login("#test userLoginException", "very good password");
-		assertNull(u);
-	}
-	
-	@Test(expected=IncorrectPasswordException.class)
-	public void test_003_userLoginException() {
-		createTestingUser();
-		User u = UserDAO.login("#test testingUser", "bad password");
-		assertNull(u);
-	}
-	
-	@Test
-	public void test_004_userSignup() {
-		User u = UserDAO.create("#test userSignup", "very good password", "very good password");
-		assertNotNull(u);
-	}
-	
-	@Test(expected=ExistingException.class)
-	public void test_005_userSignupException() {
-		createTestingUser();
-		User u = UserDAO.create("#test testingUser", "very good password", "very good password");
-		assertNull(u);
-	}
-
 	public static ShoppingList shoppingListFromUser() {
 		ShoppingList sl = new ShoppingList("test");
 		UserDAO.create("test", "test", "test").addShoppingList(sl);
