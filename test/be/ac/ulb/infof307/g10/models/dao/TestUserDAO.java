@@ -113,7 +113,7 @@ public class TestUserDAO extends AbstractTestDatabase {
 	}
 
 	@Test
-	public void testPersistenceDB() {
+	public void persistenceDB() {
 		User o = UserDAO.create("#test testingUser", "badPassword", "badPassword");
 		Database.close();
 		o = UserDAO.login("#test testingUser", "badPassword");
