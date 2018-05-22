@@ -88,7 +88,7 @@ public class User extends NamedObject {
 	 */
 	public void checkPassword(String password) throws IncorrectPasswordException {
 		if (!hash(password).equals(hashedPassword)) {
-			throw new IncorrectPasswordException();
+			throw new IncorrectPasswordException("Password is not correct");
 		}
 	}
 

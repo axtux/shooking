@@ -30,7 +30,7 @@ final public class UserDAO {
 	public static User create(String username, String password) throws ExistingException {
 		try {
 			UserDAO.getByUsername(username);
-			throw new ExistingException();
+			throw new ExistingException("A user already exists with this name");
 		} catch (NonExistingException e) {
 			User u = new User(username, password);
 			AutoSaver.autosave(u);
@@ -44,7 +44,7 @@ final public class UserDAO {
 			AutoSaver.autosave(u);
 			return u;
 		} catch (NoResultException e) {
-			throw new NonExistingException(e);
+			throw new NonExistingException("no user with that name");
 		}
 	}
 

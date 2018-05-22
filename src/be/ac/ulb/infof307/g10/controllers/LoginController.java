@@ -43,10 +43,8 @@ public class LoginController {
 			printLabel.setText("Connection ...");
 			User user = UserDAO.login(log, pwd);
 			Main.login(user);
-		} catch (IncorrectPasswordException e) {
-			printLabel.setText("Incorrect Password");
-		} catch (NonExistingException e) {
-			printLabel.setText("This user does not exist");
+		} catch (IncorrectPasswordException | NonExistingException e) {
+			printLabel.setText(e.getMessage());
 		}
 	}
 

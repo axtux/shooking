@@ -24,7 +24,7 @@ final public class RecipeDAO {
 	public static Recipe create(String name, int servings) {
 		try {
 			getByName(name);
-			throw new ExistingException();
+			throw new ExistingException("A recipe with same name already exists");
 		} catch (NonExistingException e) {
 			Recipe r = new Recipe(name, servings);
 			AutoSaver.autosave(r);

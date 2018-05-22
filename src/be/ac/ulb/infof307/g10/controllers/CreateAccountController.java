@@ -4,7 +4,6 @@ import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.dao.UserDAO;
 import be.ac.ulb.infof307.g10.models.exceptions.EmptyPasswordException;
-import be.ac.ulb.infof307.g10.models.exceptions.EmptyUsernameException;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.views.MainView;
 import be.ac.ulb.infof307.g10.views.View;
@@ -56,12 +55,8 @@ public class CreateAccountController {
 			} else {
 				errorLabel.setText("Passwords do not match");
 			}
-		} catch (ExistingException e) {
-			errorLabel.setText("This user name already exists");
-		} catch (EmptyPasswordException e) {
-			errorLabel.setText("Password must not be empty");
-		} catch (EmptyUsernameException e) {
-			errorLabel.setText("Username must not be empty");
+		} catch (ExistingException | EmptyPasswordException | IllegalArgumentException e) {
+			errorLabel.setText(e.getMessage());
 		}
 
 	}

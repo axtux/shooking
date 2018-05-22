@@ -37,10 +37,8 @@ public class CreateRecipeController {
 		try {
 			RecipeDAO.create(name.getText(), serving.getInt());
 			DialogView.hide();
-		} catch (NullPointerException | IllegalArgumentException e) {
+		} catch (NullPointerException | IllegalArgumentException | DatabaseException e) {
 			printLabel.setText(e.getMessage());
-		} catch (DatabaseException e) {
-			printLabel.setText("Error in Database - you should not create the same recipe");
 		}
 		button.setDisable(false);
 	}

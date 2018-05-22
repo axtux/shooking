@@ -42,7 +42,8 @@ public class ShopDAO {
 			AutoSaver.autosave(s);
 			return s;
 		} catch (DatabaseException e) {
-			throw new ExistingException(e);
+			// TODO extrapolation, should check if duplicate shop exists
+			throw new ExistingException("A shop with same coordinates already exists");
 		}
 	}
 
