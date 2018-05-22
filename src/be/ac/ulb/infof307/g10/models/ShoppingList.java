@@ -3,7 +3,7 @@ package be.ac.ulb.infof307.g10.models;
 import javax.persistence.Entity;
 
 /**
- * Shopping list object
+ * Shopping list object, used to remove abstraction of ProductsQuantity
  */
 @Entity
 public class ShoppingList extends ProductsQuantity {
