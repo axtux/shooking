@@ -57,7 +57,7 @@ abstract public class AbstractProductController {
 	protected Product productsTableSelected;
 	protected ProductsQuantity products;
 
-	/**
+	/*
 	 * Products managment
 	 */
 
@@ -152,7 +152,7 @@ abstract public class AbstractProductController {
 		productsQuantityCombo.getSelectionModel().select(actual);
 	}
 
-	/**
+	/*
 	 * Products combo management
 	 */
 

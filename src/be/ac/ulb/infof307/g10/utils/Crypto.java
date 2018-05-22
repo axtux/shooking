@@ -29,7 +29,7 @@ final public class Crypto {
 			byte[] hash = digest.digest(str.getBytes(StandardCharsets.UTF_8));
 			return bytesToHex(hash);
 		} catch (NoSuchAlgorithmException e) {
-			/**
+			/*
 			 * This exception never happens because "SHA-256" is required by JVM
 			 * implementation see
 			 * https://docs.oracle.com/javase/8/docs/api/java/security/MessageDigest.html
