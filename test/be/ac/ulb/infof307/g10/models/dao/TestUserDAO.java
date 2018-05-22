@@ -58,10 +58,6 @@ public class TestUserDAO extends AbstractTestDatabase {
 	public void loginNonExistingUserExceptionTest() {
 		UserDAO.login("badUser", "anyPassword");
 	}
-
-	public static void createTestingUser() {
-		UserDAO.create("#test testingUser", "very good password", "very good password");
-	}
 	
 	public static ShoppingList shoppingListFromUser() {
 		ShoppingList sl = new ShoppingList("test");
