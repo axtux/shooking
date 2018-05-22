@@ -1,0 +1,8 @@
+be.ac.ulb.infof307.g10
+be.ac.ulb.infof307.g10.controllers
+be.ac.ulb.infof307.g10.models
+be.ac.ulb.infof307.g10.models.dao
+be.ac.ulb.infof307.g10.models.database
+be.ac.ulb.infof307.g10.models.exceptions
+be.ac.ulb.infof307.g10.utils
+be.ac.ulb.infof307.g10.views
