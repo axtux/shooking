@@ -20,14 +20,16 @@ public class User extends NamedObject {
 
 	private static final long serialVersionUID = -0L;
 
+	private static final int SALT_LENGTH = 15;
 	private String hashedPassword;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<ShoppingList> shoppingLists;
 
 	/**
-	 * The salt added to the password so that two user with 2 same password have
-	 * not the same hashed password
+	 * The salt added to the password before hash so that two user with same
+	 * password have not the same hashed password. Also precomputed tables will
+	 * not be usable with produced hash
 	 */
 	private String salt;
 
@@ -73,7 +75,7 @@ public class User extends NamedObject {
 		if (password == null || password.trim().isEmpty()) {
 			throw new EmptyPasswordException("password must not be empty");
 		}
-		this.salt = Crypto.generateSalt();
+		this.salt = Crypto.generateSalt(SALT_LENGTH);
 		this.hashedPassword = hash(password);
 		this.changed();
 	}
