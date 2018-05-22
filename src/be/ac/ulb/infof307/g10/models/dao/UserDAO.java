@@ -20,6 +20,13 @@ final public class UserDAO {
 	private UserDAO() {
 	}
 
+	/**
+	 * Log a user in
+	 * @param username the username
+	 * @param password the password
+	 * @return the user if it does exist a user with that username and password.
+	 * 			Throws an exception if not
+	 */
 	public static User login(String username, String password) throws IncorrectPasswordException, NonExistingException {
 		User u = UserDAO.getByUsername(username);
 		u.checkPassword(password);
@@ -27,6 +34,14 @@ final public class UserDAO {
 		return u;
 	}
 
+	/**
+	 * Create a user in the database
+	 * @param username the username
+	 * @param password the password
+	 * @param password2 the confirmation of the password
+	 * @return the created user if no user with that username already exists.
+	 * 			An exception if it does.
+	 */
 	public static User create(String username, String password, String password2) throws ExistingException {
 		try {
 			UserDAO.getByUsername(username);
@@ -38,6 +53,11 @@ final public class UserDAO {
 		}
 	}
 
+	/**
+	 * Research a user with a certain username
+	 * @param username the username
+	 * @return the user if it does exist. An exception if not.
+	 */
 	public static User getByUsername(String username) throws NonExistingException {
 		try {
 			User u = Database.getOne(User.class, "SELECT b from User b where b.name LIKE ?1", username);

@@ -47,6 +47,11 @@ public class ShopDAO {
 		}
 	}
 
+	/**
+	 * Research a shop with a certain name inside the database.
+	 * @param name the name of the shop
+	 * @return The shop if a shop with that name does exist. A NoResultException if not
+	 */
 	public static Shop getByName(String name) throws NonExistingException {
 		try{
 			Shop shop = Database.getOne(Shop.class, "SELECT b FROM Shop b WHERE b.name LIKE ?1", name);
@@ -57,6 +62,10 @@ public class ShopDAO {
 		}
 	}
 
+	/**
+	 * Return all the existing shops
+	 * @return a list containing all the existing shops
+	 */
 	public static List<Shop> getAll() throws NonExistingException {
 		List<Shop> shops = Database.getAll(Shop.class);
 		AutoSaver.autosave(shops);
