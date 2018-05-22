@@ -13,13 +13,13 @@ public class TestProductsQuantity {
 
 	@Before
 	public void before() {
-		pq = new ShoppingList("name");
+		pq = new ProductsQuantity("name");
 		p = new Product("productName", 1, "unit");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void nameException() {
-		new ShoppingList(null);
+		new ProductsQuantity(null);
 	}
 
 	@Test
