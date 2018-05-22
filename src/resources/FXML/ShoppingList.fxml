@@ -44,23 +44,11 @@
         <Label fx:id="totalLabel" layoutX="209.0" layoutY="288.0" text="0.00€" />
         <Separator layoutX="-1.0" layoutY="210.0" prefHeight="20.0" prefWidth="263.0" />
         <Button fx:id="researchShopsButton" font="$x42" layoutX="14.0" layoutY="322.0" mnemonicParsing="false" onAction="#researchShop" prefHeight="29.0" prefWidth="234.0" text="Research shops" />
-      <Label layoutX="15.0" layoutY="416.0" text="List :">
-         <font>
-            <Font name="System Bold" size="15.0" fx:id="x421" />
-         </font>
-      </Label>
+      <Label layoutX="15.0" layoutY="416.0" text="List :" font="$x42" />
       <ComboBox fx:id="productsQuantityCombo" layoutX="12.0" layoutY="446.0" prefHeight="27.0" prefWidth="234.0" />
-      <Label layoutX="16.0" layoutY="487.0" text="Name:">
-         <font>
-            <Font name="System Bold" size="15.0" fx:id="x4211" />
-         </font>
-      </Label>
+      <Label layoutX="16.0" layoutY="487.0" text="Name:" font="$x42" />
       <TextField fx:id="productsQuantityNameField" layoutX="14.0" layoutY="521.0" prefHeight="26.0" prefWidth="230.0" />
-      <Button id="createRecipeBT" layoutX="15.0" layoutY="572.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createShoppingList" prefHeight="29.0" prefWidth="230.0" text="New">
-         <font>
-            <Font name="System Bold" size="15.0" fx:id="x4211" />
-         </font>
-      </Button>
+      <Button id="createRecipeBT" layoutX="15.0" layoutY="572.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createShoppingList" prefHeight="29.0" prefWidth="230.0" text="New" font="$x42" />
       <Separator layoutX="-3.0" layoutY="386.0" prefHeight="13.0" prefWidth="266.0" />
     </AnchorPane>
 </SplitPane>
