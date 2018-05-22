@@ -41,14 +41,15 @@ final public class ProductDAO {
 	 * Return all the existing products
 	 * @return a list containing all the existing products
 	 */
-	public static List<Product> getAll() throws NonExistingException {
+	public static List<Product> getAll() {
 		return Database.getAll(Product.class);
 	}
 
 	/**
 	 * Research a product with a certain name inside the database.
 	 * @param name the name of the product
-	 * @return The product if a product with that name does exist. A NoResultException if not
+	 * @return The product with that name
+	 * @throws NonExistingException If {@link Product} does not exists.
 	 */
 	public static Product getByName(String name) throws NonExistingException {
 		try{
