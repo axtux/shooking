@@ -31,7 +31,7 @@ public class LoginController {
 	private Label printLabel;
 
 	/**
-	 * This method is used to check the informations of the user in the database
+	 * This method is used to check the information of the user in the database
 	 * and connect the user to the application. Some errors could be shown to the
 	 * user in the corresponding view
 	 */

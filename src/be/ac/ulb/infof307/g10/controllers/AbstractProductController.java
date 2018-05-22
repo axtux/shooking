@@ -54,11 +54,8 @@ abstract public class AbstractProductController {
 	@FXML
 	private TableColumn<Product, String> productsQuantityColumn;
 
-	protected Product productsTableSelected;
-	protected ProductsQuantity products;
-
-	/**
-	 * Products managment
+	/*
+	 * Products management
 	 */
 
 	/**
@@ -87,6 +84,8 @@ abstract public class AbstractProductController {
 
 	/**
 	 * Update the table of product
+	 * 
+	 * @param actual Products to display.
 	 */
 	protected void updateProductsTable(ProductsQuantity actual) {
 		productsTable.getItems().clear();
@@ -110,10 +109,14 @@ abstract public class AbstractProductController {
 		}
 	}
 
-	/**
+	/*
 	 * ProductsQuantity combo management
 	 */
 
+	/**
+	 * Method to override.
+	 * @return All products quantity which will be available in drop down menu.
+	 */
 	abstract protected Collection<? extends ProductsQuantity> getAllProductsQuantity();
 
 	/**
@@ -152,7 +155,7 @@ abstract public class AbstractProductController {
 		productsQuantityCombo.getSelectionModel().select(actual);
 	}
 
-	/**
+	/*
 	 * Products combo management
 	 */
 

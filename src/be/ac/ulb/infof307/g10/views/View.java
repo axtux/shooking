@@ -25,7 +25,7 @@ public enum View {
 	SHOPPING_LIST(true),
 	TERMS_OF_USE;
 
-	private boolean menu;
+	private final boolean menu;
 
 	/**
 	 * Constructor, set menu as false.
@@ -48,7 +48,9 @@ public enum View {
 	}
 
 	/**
-	 * Takes a String s and change the first letter in upper case
+	 * Change first letter to upper case.
+	 * @param s String to change.
+	 * @return String s with first letter upper cased.
 	 */
 	public static String firstUpper(String s) {
 		if (s.length() == 0) {

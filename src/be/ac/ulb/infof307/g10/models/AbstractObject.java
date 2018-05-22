@@ -35,7 +35,7 @@ abstract public class AbstractObject extends Observable implements Serializable 
 	@GeneratedValue
 	@EqualsExclude
 	@HashCodeExclude
-	public Long id;
+	private Long id;
 
 	/**
 	 * Needed by JPA

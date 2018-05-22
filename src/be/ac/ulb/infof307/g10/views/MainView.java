@@ -15,7 +15,7 @@ import javafx.scene.layout.Region;
 final public class MainView {
 
 	private static final String APP_NAME = "Shooking (shopping and cooking)";
-	private static final double DEFAULT_HEIGTH = 800.0;
+	private static final double DEFAULT_HEIGHT = 800.0;
 	private static final double DEFAULT_WIDTH = 1000.0;
 	private static MyStage stage;
 	private static BorderPane container;
@@ -58,7 +58,7 @@ final public class MainView {
 			container.setTop(menu);
 			disableMenuButton(view.toCamelCase());
 			// keep consistent size between views under menu
-			viewParent.setPrefHeight(DEFAULT_HEIGTH);
+			viewParent.setPrefHeight(DEFAULT_HEIGHT);
 			viewParent.setPrefWidth(DEFAULT_WIDTH);
 		} else {
 			container.setTop(null);
