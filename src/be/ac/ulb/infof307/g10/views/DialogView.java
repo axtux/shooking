@@ -7,13 +7,18 @@ import javafx.stage.WindowEvent;
 /**
  * Manage modal dialog.
  */
-public class DialogView {
+final public class DialogView {
 	private static MyStage stage;
 
 	/**
+	 * Avoid object creation
+	 */
+	private DialogView() {
+	}
+	/**
 	 * Create stage
 	 */
-	private static void init() {
+	private synchronized static void init() {
 		if (stage == null) {
 			stage = new MyStage();
 			stage.initModality(Modality.APPLICATION_MODAL);
