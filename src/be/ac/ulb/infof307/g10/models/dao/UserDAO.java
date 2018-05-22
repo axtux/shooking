@@ -9,7 +9,16 @@ import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
-public class UserDAO {
+/**
+ * Data access object for {@link User}
+ */
+final public class UserDAO {
+
+	/**
+	 * Avoid object creation
+	 */
+	private UserDAO() {
+	}
 
 	public static User login(String username, String password) throws IncorrectPasswordException, NonExistingException {
 		User u = UserDAO.getByUsername(username);

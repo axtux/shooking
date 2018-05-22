@@ -7,14 +7,22 @@ import java.util.Map;
 import javax.persistence.NoResultException;
 
 import be.ac.ulb.infof307.g10.models.Shop;
-import be.ac.ulb.infof307.g10.models.database.Database;
 import be.ac.ulb.infof307.g10.models.database.AutoSaver;
+import be.ac.ulb.infof307.g10.models.database.Database;
 import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
+/**
+ * Data access object for {@link Shop}
+ */
 public class ShopDAO {
 
+	/**
+	 * Avoid object creation
+	 */
+	private ShopDAO() {
+	}
 	/**
 	 * Create shop into database
 	 * 
