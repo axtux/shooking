@@ -43,7 +43,7 @@ public class ShoppingListController extends AbstractProductController {
 	private TableColumn<Product, String> productsPriceColumn;
 
 	/**
-	 * Update the combo box of shop
+	 * Update the combo box of shops
 	 */
 	private void updateShops() {
 		shopsCombo.getItems().clear();
@@ -58,6 +58,9 @@ public class ShoppingListController extends AbstractProductController {
 		updateTotal();
 	}
 
+	/**
+	 * Research a shop will all the products from the current shopping list in stock
+	 */
 	@FXML
 	private void researchShop() {
 		ShoppingList actual = (ShoppingList) productsQuantityCombo.getValue();
@@ -84,11 +87,17 @@ public class ShoppingListController extends AbstractProductController {
 		}
 	}
 
+	/**
+	 * Creation of a new product
+	 */
 	@FXML
 	private void productsNew() {
 		DialogView.show(View.CREATE_PRODUCT, (event) -> updateProducts());
 	}
-	
+
+	/**
+	 * Creation of a new shopping list
+	 */
 	@FXML
 	private void createShoppingList(){
 		DialogView.show(View.CREATE_SHOPPING_LIST, (event)-> updateAllProductsQuantity());
@@ -121,7 +130,7 @@ public class ShoppingListController extends AbstractProductController {
 			
 		});
 
-		//Button unavailable if no list selected
+		//Disable buttons/combo/fields unavailable without a product quantity combo
 		BooleanBinding notSelected = productsQuantityCombo.valueProperty().isNull();
 		shopsCombo.disableProperty().bind(notSelected);
 		researchShopsButton.disableProperty().bind(notSelected);

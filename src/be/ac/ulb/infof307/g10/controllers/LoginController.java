@@ -14,7 +14,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 /**
- * Controller of the Login view It is used to print the different type of error
+ * Controller of the Login view. It is used to print the different type of error
  * in the corresponding label during the connection
  */
 public class LoginController {
@@ -31,8 +31,8 @@ public class LoginController {
 	private Label printLabel;
 
 	/**
-	 * This method is used to check the information of the user in the database
-	 * and connect the user to the application Some error could be shown to the
+	 * This method is used to check the informations of the user in the database
+	 * and connect the user to the application. Some errors could be shown to the
 	 * user in the corresponding view
 	 */
 	@FXML
@@ -49,6 +49,9 @@ public class LoginController {
 		}
 	}
 
+	/**
+	 * Sign up button
+	 */
 	@FXML
 	private void showSignup() {
 		DialogView.show(View.TERMS_OF_USE);

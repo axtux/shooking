@@ -5,8 +5,15 @@ import be.ac.ulb.infof307.g10.views.MainView;
 import be.ac.ulb.infof307.g10.views.View;
 import javafx.fxml.FXML;
 
+/**
+ * Controller of the popup that occurs when a JavaScript exception is catched.
+ * For example : when there is no internet connection
+ */
 public class MapErrorController {
 
+	/**
+	 * Try again button
+	 */
 	@FXML
 	void tryAgain() {
 		DialogView.hide();

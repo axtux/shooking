@@ -53,6 +53,9 @@ public class RecipeController extends AbstractProductController {
 
 	private Recipe actualRecipe;
 
+	/**
+	 * Add a new step in the current recipe
+	 */
 	@FXML
 	private void addStep() {
 		String step = stepTF.getText().trim();
@@ -65,6 +68,9 @@ public class RecipeController extends AbstractProductController {
 		stepTF.clear();
 	}
 
+	/**
+	 * Edit the selected step inside the current recipe
+	 */
 	@FXML
 	private void editStep() {
 		if (selectedStep == null) {
@@ -76,6 +82,9 @@ public class RecipeController extends AbstractProductController {
 		stepsTable.getSelectionModel().select(step);
 	}
 
+	/**
+	 * Remove the selected step from the current recipe
+	 */
 	@FXML
 	private void removeStep() {
 		if (selectedStep == null) {
@@ -85,6 +94,9 @@ public class RecipeController extends AbstractProductController {
 		updateStepsTable(actualRecipe);
 	}
 
+	/**
+	 * Clear the steps inside the current recipe
+	 */
 	@FXML
 	private void clearStep() {
 		stepsTable.getSelectionModel().clearSelection();
@@ -93,6 +105,9 @@ public class RecipeController extends AbstractProductController {
 		updateStepsTable(actualRecipe);
 	}
 
+	/**
+	 * Place the selected step one place upper
+	 */
 	@FXML
 	private void moveUpStep() {
 		String s = selectedStep;
@@ -101,6 +116,9 @@ public class RecipeController extends AbstractProductController {
 		stepsTable.getSelectionModel().select(s);
 	}
 
+	/**
+	 * Place the selected step one place lower
+	 */
 	@FXML
 	private void moveDownStep() {
 		String s = selectedStep;
@@ -109,11 +127,18 @@ public class RecipeController extends AbstractProductController {
 		stepsTable.getSelectionModel().select(s);
 	}
 
+	/**
+	 * Creation of a new recipe
+	 */
 	@FXML
 	private void createRecipe() {
 		DialogView.show(View.CREATE_RECIPE, (event) -> updateAllProductsQuantity());
 	}
 
+	/**
+	 * Update the table of steps
+	 * @param actual The current step
+	 */
 	private void updateStepsTable(Recipe actual) {
 		stepsTable.getItems().clear();
 		stepsTable.getItems().addAll(actual.getAllSteps());
@@ -172,12 +197,13 @@ public class RecipeController extends AbstractProductController {
 		stepsTable.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> updateSelectedStep(newValue));
 
+		//Disable fields/buttons that should not be available without a product quantity combo
 		BooleanBinding notSelected = productsQuantityCombo.getSelectionModel().selectedItemProperty().isNull();
 		stepTF.disableProperty().bind(notSelected);
 		addStepBT.disableProperty().bind(notSelected);
 		clearStepBT.disableProperty().bind(notSelected);
 		exportAsShoppingListBT.disableProperty().bind(notSelected);
-
+		//Disable fields/buttons that should not be available without a selected step
 		notSelected = stepsTable.getSelectionModel().selectedItemProperty().isNull();
 		editStepBT.disableProperty().bind(notSelected);
 		removeStepBT.disableProperty().bind(notSelected);

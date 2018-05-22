@@ -22,7 +22,7 @@ import javafx.fxml.FXML;
 import netscape.javascript.JSObject;
 
 /**
- * Controller class of the Google Map view It configure the map and manage the
+ * Controller class of the Google Map view. It configures the map and manages the
  * markers on this map
  */
 @SuppressWarnings("restriction")
@@ -40,6 +40,9 @@ public class MapController implements MapComponentInitializedListener, UncaughtE
 		mapView.addMapInializedListener(this);
 	}
 
+	/**
+	 * Catching the JavaScript Exceptions
+	 */
 	@Override
 	public void uncaughtException(Thread t, Throwable e) {
 		if (e.getClass().getName().equals("netscape.javascript.JSException")) {

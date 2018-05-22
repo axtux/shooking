@@ -8,6 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+/**
+ * Controller for create shopping list view
+ */
 public class CreateShoppingListController {
 	
 	@FXML
@@ -20,7 +23,7 @@ public class CreateShoppingListController {
 	private Label printLabel;
 	
 	/**
-	 * Creation of the Product The button is disable during the creation
+	 * Creation of the shopping list The button is disable during the creation
 	 */
 	public void create() {
 		printLabel.setText("Creating...");
