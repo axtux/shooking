@@ -11,23 +11,28 @@ import javafx.scene.layout.Region;
  * name. Some methods let you deal with those views.
  */
 public enum View {
-	CREATE_ACCOUNT(false),
-	CREATE_PRODUCT(false),
-	CREATE_RECIPE(false),
-	CREATE_SHOP(false),
-	CREATE_SHOPPING_LIST(false),
-	LOGIN(false),
+	CREATE_USER,
+	CREATE_PRODUCT,
+	CREATE_RECIPE,
+	CREATE_SHOP,
+	CREATE_SHOPPING_LIST,
+	LOGIN,
 	MAP(true),
-	MAP_ERROR(false),
-	MENU(false),
+	MAP_ERROR,
+	MENU,
 	RECIPE(true),
-	RESEARCH_SHOP(false),
+	RESEARCH_SHOP,
 	SHOPPING_LIST(true),
-	TERMS_OF_USE(false);
-	
+	TERMS_OF_USE;
 
 	private boolean menu;
 
+	/**
+	 * Constructor, set menu as false.
+	 */
+	View() {
+		this(false);
+	}
 	/**
 	 * Constructor
 	 * 

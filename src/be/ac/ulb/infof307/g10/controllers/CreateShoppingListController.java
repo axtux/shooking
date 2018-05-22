@@ -25,7 +25,7 @@ public class CreateShoppingListController {
 	public void create() {
 		printLabel.setText("Creating...");
 		button.setDisable(true);
-		
+
 		try {
 			Main.getUser().addShoppingList(new ShoppingList(name.getText()));
 			DialogView.hide();

@@ -9,8 +9,16 @@ import be.ac.ulb.infof307.g10.models.database.Database;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
-public class ProductDAO {
+/**
+ * Data access object for {@link Product}
+ */
+final public class ProductDAO {
 
+	/**
+	 * Avoid object creation
+	 */
+	private ProductDAO() {
+	}
 	/**
 	 * Create a new Product and save it in the DB
 	 * @param name		Name of the Product

@@ -9,7 +9,16 @@ import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
-public class UserDAO {
+/**
+ * Data access object for {@link User}
+ */
+final public class UserDAO {
+
+	/**
+	 * Avoid object creation
+	 */
+	private UserDAO() {
+	}
 
 	public static User login(String username, String password) throws IncorrectPasswordException, NonExistingException {
 		User u = UserDAO.getByUsername(username);
@@ -18,12 +27,12 @@ public class UserDAO {
 		return u;
 	}
 
-	public static User create(String username, String password) throws ExistingException {
+	public static User create(String username, String password, String password2) throws ExistingException {
 		try {
 			UserDAO.getByUsername(username);
-			throw new ExistingException();
+			throw new ExistingException("A user already exists with this name");
 		} catch (NonExistingException e) {
-			User u = new User(username, password);
+			User u = new User(username, password, password2);
 			AutoSaver.autosave(u);
 			return u;
 		}
@@ -35,7 +44,7 @@ public class UserDAO {
 			AutoSaver.autosave(u);
 			return u;
 		} catch (NoResultException e) {
-			throw new NonExistingException(e);
+			throw new NonExistingException("no user with that name");
 		}
 	}
 

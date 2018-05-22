@@ -1,6 +1,6 @@
 package be.ac.ulb.infof307.g10.controllers;
 
-import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.views.DialogView;
 
 import java.time.DayOfWeek;
@@ -60,7 +60,7 @@ public class CreateShopController {
 	public CreateShopController() {
 		position = staticPosition;
 		if (position == null) {
-			throw new NullPointerException("position must be set before creation");
+			throw new IllegalArgumentException("position must be set before creation");
 		}
 		staticPosition = null;
 	}
@@ -92,9 +92,7 @@ public class CreateShopController {
 			ShopDAO.create(name.getText(), position.getLatitude(), position.getLongitude(), createSchedule());
 			DialogView.hide();
 			return;
-		} catch (DatabaseException e) {
-			printLabel.setText("Database error");
-		} catch (IllegalArgumentException e) {
+		} catch (ExistingException | IllegalArgumentException e) {
 			printLabel.setText(e.getMessage());
 		}
 		createButton.setDisable(false);

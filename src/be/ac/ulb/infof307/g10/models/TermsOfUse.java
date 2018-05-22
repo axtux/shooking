@@ -6,17 +6,23 @@ import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
 /**
- * Class to get terms of use of the app
+ * Manage terms of use of the application.
  */
-public class TermsOfUse {
+final public class TermsOfUse {
 
-    /**
-     *
-     * @return terms of use
-     */
-    public static String get(){
-        InputStream in = TermsOfUse.class.getResourceAsStream("/termsOfUse.txt");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        return reader.lines().collect(Collectors.joining("\n"));
-    }
+	/**
+	 * Avoid object creation
+	 */
+	private TermsOfUse() {
+	}
+
+	/**
+	 *
+	 * @return terms of use
+	 */
+	public static String get() {
+		InputStream in = TermsOfUse.class.getResourceAsStream("/termsOfUse.txt");
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		return reader.lines().collect(Collectors.joining("\n"));
+	}
 }

@@ -8,7 +8,7 @@ import be.ac.ulb.infof307.g10.models.AbstractObject;
 /**
  * Automatically save {@link AbstractObject}s into database after each change.
  */
-public class AutoSaver implements Observer {
+final public class AutoSaver implements Observer {
 
 	/**
 	 * Instance created at load time to avoid threads synchronization. Small
@@ -20,8 +20,12 @@ public class AutoSaver implements Observer {
 	}
 
 	/**
-	 * Automatically save {@link AbstractObject} into database after each change.
-	 * @param o Object to save automatically.
+	 * Automatically save {@link AbstractObject} into database after each
+	 * change. Singleton instance of this class is used to allow multiple call
+	 * to this function while keeping only one observer on object.
+	 * 
+	 * @param o
+	 *            Object to save automatically.
 	 */
 	public static void autosave(AbstractObject o) {
 		// save first
@@ -31,8 +35,10 @@ public class AutoSaver implements Observer {
 	}
 
 	/**
-	 * Automatically save {@link AbstractObject}s into database after each change.
-	 * @param ol Objects to save automatically.
+	 * Same as {@link #autosave(AbstractObject)} for multiple objects.
+	 * 
+	 * @param ol
+	 *            Objects to save automatically.
 	 */
 	public static void autosave(Iterable<? extends AbstractObject> ol) {
 		for (AbstractObject o : ol) {

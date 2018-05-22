@@ -12,7 +12,7 @@ import javafx.scene.layout.Region;
  * root element is expected to be an HBox. If modified, this class can provide
  * unexpected behavior.
  */
-public class MainView {
+final public class MainView {
 
 	private static final String APP_NAME = "Shooking (shopping and cooking)";
 	private static final double DEFAULT_HEIGTH = 800.0;
@@ -22,9 +22,14 @@ public class MainView {
 	private static HBox menu;
 
 	/**
+	 * Avoid object creation
+	 */
+	private MainView() {
+	}
+	/**
 	 * Create menu, container, stage and hide eventual dialog
 	 */
-	private static void init() {
+	private synchronized static void init() {
 		if (stage == null) {
 			stage = new MyStage();
 			container = new BorderPane();

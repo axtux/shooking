@@ -31,13 +31,19 @@ public class TestCrypto {
 	}
 
 	@Test
+	public void saltLength() {
+		String salt = Crypto.generateSalt(5);
+		Assert.assertEquals(5, salt.length());
+	}
+
+	@Test
 	public void saltNotNull() {
-		Assert.assertNotNull(Crypto.generateSalt());
+		Assert.assertNotNull(Crypto.generateSalt(5));
 	}
 
 	@Test
 	public void twoSaltsNotEquals() {
-		Assert.assertNotEquals(Crypto.generateSalt(), Crypto.generateSalt());
+		Assert.assertNotEquals(Crypto.generateSalt(5), Crypto.generateSalt(5));
 	}
 
 }

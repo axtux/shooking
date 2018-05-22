@@ -40,7 +40,7 @@ public class ResearchShopController {
 	public ResearchShopController() {
 		shoppingList = staticShoppingList;
 		if (shoppingList == null) {
-			throw new NullPointerException("shopping list must be set before creation");
+			throw new IllegalArgumentException("shopping list must be set before creation");
 		}
 		staticShoppingList = null;
 		shopsPrice = new HashMap<>();

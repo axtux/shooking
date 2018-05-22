@@ -10,6 +10,7 @@ import javax.persistence.PostLoad;
 
 import be.ac.ulb.infof307.g10.models.exceptions.EmptyPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
+import be.ac.ulb.infof307.g10.models.exceptions.PasswordsDoNotMatchException;
 import be.ac.ulb.infof307.g10.utils.Crypto;
 
 /**
@@ -20,14 +21,16 @@ public class User extends NamedObject {
 
 	private static final long serialVersionUID = -0L;
 
+	private static final int SALT_LENGTH = 15;
 	private String hashedPassword;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<ShoppingList> shoppingLists;
 
 	/**
-	 * The salt added to the password so that two user with 2 same password have
-	 * not the same hashed password
+	 * The salt added to the password before hash so that two user with same
+	 * password have not the same hashed password. Also precomputed tables will
+	 * not be usable with produced hash
 	 */
 	private String salt;
 
@@ -42,6 +45,25 @@ public class User extends NamedObject {
 		setPassword(password);
 		shoppingLists = new HashSet<ShoppingList>();
 		changedWhenListsChanged();
+	}
+
+	/**
+	 * Create user and check that passwords match.
+	 * 
+	 * @param name
+	 *            User name
+	 * @param password
+	 *            One password
+	 * @param password2
+	 *            The other password
+	 * @throws PasswordsDoNotMatchException
+	 *             If passwords do not match
+	 */
+	public User(String name, String password, String password2) throws PasswordsDoNotMatchException {
+		this(name, password);
+		if (!password.equals(password2)) {
+			throw new PasswordsDoNotMatchException("Passwords do not match");
+		}
 	}
 
 	/**
@@ -73,7 +95,7 @@ public class User extends NamedObject {
 		if (password == null || password.trim().isEmpty()) {
 			throw new EmptyPasswordException("password must not be empty");
 		}
-		this.salt = Crypto.generateSalt();
+		this.salt = Crypto.generateSalt(SALT_LENGTH);
 		this.hashedPassword = hash(password);
 		this.changed();
 	}
@@ -88,7 +110,7 @@ public class User extends NamedObject {
 	 */
 	public void checkPassword(String password) throws IncorrectPasswordException {
 		if (!hash(password).equals(hashedPassword)) {
-			throw new IncorrectPasswordException();
+			throw new IncorrectPasswordException("Password is not correct");
 		}
 	}
 

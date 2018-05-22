@@ -25,11 +25,16 @@ import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
  * id. General way to access this class is using a DAO. For more informations
  * about internal behavior, please see official JPA documentation.
  */
-public class Database {
+final public class Database {
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
 	private static Map<String, String> properties = new HashMap<>();
 
+	/**
+	 * Avoid object creation
+	 */
+	private Database() {
+	}
 	/**
 	 * Set property to overwrite any value from persistence.xml
 	 * 
@@ -49,9 +54,9 @@ public class Database {
 	 * 
 	 * @return EntityManager
 	 */
-	private static EntityManager getEM() {
-		if (properties.getOrDefault("name", null) == null) {
-			throw new RuntimeException("You must set name property before using Database");
+	private synchronized static EntityManager getEM() {
+		if (properties.get("name") == null) {
+			throw new DatabaseException("You must set name property before using Database");
 		}
 		if (emf == null || !emf.isOpen()) {
 			emf = Persistence.createEntityManagerFactory(properties.get("name"), properties);
@@ -252,7 +257,7 @@ public class Database {
 		}
 	}
 
-	public static void close() {
+	public synchronized static void close() {
 		if (emf != null && emf.isOpen()) {
 			emf.close();
 		}

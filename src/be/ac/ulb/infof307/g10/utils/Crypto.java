@@ -5,7 +5,17 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
-public class Crypto {
+/**
+ * Some cryptography utility functions.
+ */
+final public class Crypto {
+
+	/**
+	 * Avoid object creation
+	 */
+	private Crypto() {
+	}
+
 	/**
 	 * SHA-256
 	 * 
@@ -19,10 +29,11 @@ public class Crypto {
 			byte[] hash = digest.digest(str.getBytes(StandardCharsets.UTF_8));
 			return bytesToHex(hash);
 		} catch (NoSuchAlgorithmException e) {
-			// this exception never happens because "SHA-256" is required by
-			// implementation
-			// see
-			// https://docs.oracle.com/javase/8/docs/api/java/security/MessageDigest.html
+			/**
+			 * This exception never happens because "SHA-256" is required by JVM
+			 * implementation see
+			 * https://docs.oracle.com/javase/8/docs/api/java/security/MessageDigest.html
+			 */
 			throw new RuntimeException(e);
 		}
 	}
@@ -34,15 +45,21 @@ public class Crypto {
 		return builder.toString();
 	}
 
-
-	public static String generateSalt(){
+	/**
+	 * Generate random string.
+	 * 
+	 * @param length
+	 *            Length of string to generate.
+	 * @return Generated String
+	 */
+	public static String generateSalt(int length) {
 		Random rand = new Random();
 
-		String salt = "";
-		for (int i = 0 ; i < 15 ; i++){
+		StringBuilder salt = new StringBuilder(length);
+		for (int i = 0; i < length; i++) {
 			int n = rand.nextInt(256);
-			salt += (char)n;
+			salt.append((char) n);
 		}
-		return salt;
+		return salt.toString();
 	}
 }

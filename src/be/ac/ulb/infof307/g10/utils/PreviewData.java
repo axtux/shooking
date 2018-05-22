@@ -12,7 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class PreviewData {
+final public class PreviewData {
+
+	/**
+	 * Avoid object creation
+	 */
+	private PreviewData() {
+	}
 	/**
 	 * Random integer
 	 * 
@@ -44,7 +50,7 @@ public class PreviewData {
 		System.exit(0);
 	}
 
-	public static void setPreviewData() {
+	public synchronized static void setPreviewData() {
 		Database.setProp("name", "GL10PU");
 		Database.empty();
 

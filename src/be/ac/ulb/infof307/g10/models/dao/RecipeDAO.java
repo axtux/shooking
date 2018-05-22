@@ -10,12 +10,21 @@ import be.ac.ulb.infof307.g10.models.database.AutoSaver;
 import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
-public class RecipeDAO {
+/**
+ * Data access object for {@link Recipe}
+ */
+final public class RecipeDAO {
+
+	/**
+	 * Avoid object creation
+	 */
+	private RecipeDAO() {
+	}
 
 	public static Recipe create(String name, int servings) {
 		try {
 			getByName(name);
-			throw new ExistingException();
+			throw new ExistingException("A recipe with same name already exists");
 		} catch (NonExistingException e) {
 			Recipe r = new Recipe(name, servings);
 			AutoSaver.autosave(r);
