@@ -56,6 +56,11 @@ public class IntField extends TextField implements ChangeListener<String> {
 		return (signed && "-".equals(s)) || "".equals(s);
 	}
 
+	/**
+	 * Check the validity of the field
+	 * @param s the text inside the field
+	 * @return True if s can be parsed into a (Unsigned) Interger. False if not.
+	 */
 	private boolean valid(String s) {
 		if (s.startsWith("+")) {
 			return false;

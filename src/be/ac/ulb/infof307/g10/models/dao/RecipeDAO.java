@@ -21,6 +21,12 @@ final public class RecipeDAO {
 	private RecipeDAO() {
 	}
 
+	/**
+	 * Create a recipe in the database
+	 * @param name the name of the recipe
+	 * @param servings the serving number
+	 * @return the created recipe
+	 */
 	public static Recipe create(String name, int servings) {
 		try {
 			getByName(name);
@@ -32,6 +38,11 @@ final public class RecipeDAO {
 		}
 	}
 
+	/**
+	 * Research a recipe with a certain name inside the database.
+	 * @param name the name of the recipe
+	 * @return The recipe if a recipe with that name does exist. A NoResultException if not
+	 */
 	public static Recipe getByName(String name) throws NonExistingException {
 		try{
 			Recipe r = Database.getOne(Recipe.class, "SELECT b FROM Recipe b WHERE b.name LIKE ?1", name);
@@ -41,7 +52,10 @@ final public class RecipeDAO {
 			throw new NonExistingException(e);
 		}
 	}
-
+	/**
+	 * Return all the existing recipes
+	 * @return a list containing all the existing recipes
+	 */
 	public static List<Recipe> getAll() {
 		List<Recipe> lr = Database.getAll(Recipe.class);
 		for (Recipe r : lr){

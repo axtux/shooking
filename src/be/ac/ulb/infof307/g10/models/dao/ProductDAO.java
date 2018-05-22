@@ -37,10 +37,19 @@ final public class ProductDAO {
 		}
 	}
 
+	/**
+	 * Return all the existing products
+	 * @return a list containing all the existing products
+	 */
 	public static List<Product> getAll() throws NonExistingException {
 		return Database.getAll(Product.class);
 	}
 
+	/**
+	 * Research a product with a certain name inside the database.
+	 * @param name the name of the product
+	 * @return The product if a product with that name does exist. A NoResultException if not
+	 */
 	public static Product getByName(String name) throws NonExistingException {
 		try{
 			return Database.getOne(Product.class, "SELECT b FROM Product b WHERE b.name LIKE ?1", name);

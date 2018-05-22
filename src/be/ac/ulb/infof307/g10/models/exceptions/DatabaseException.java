@@ -1,5 +1,8 @@
 package be.ac.ulb.infof307.g10.models.exceptions;
 
+/**
+ * Exception raised by an error with the database
+ */
 public class DatabaseException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 

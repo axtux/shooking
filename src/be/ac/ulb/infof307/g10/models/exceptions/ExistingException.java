@@ -1,5 +1,8 @@
 package be.ac.ulb.infof307.g10.models.exceptions;
 
+/**
+ * Exception raised when an object already exists
+ */
 public class ExistingException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 

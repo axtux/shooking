@@ -9,6 +9,9 @@ import javax.persistence.FetchType;
 
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 
+/**
+ * Object representing the stock of a shop
+ */
 @Entity
 public class Stock extends ProductsQuantity {
 
