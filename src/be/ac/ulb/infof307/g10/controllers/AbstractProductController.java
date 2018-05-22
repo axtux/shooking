@@ -57,25 +57,37 @@ abstract public class AbstractProductController {
 	protected Product productsTableSelected;
 	protected ProductsQuantity products;
 
+	/**
+	 * Products managment
+	 */
+
+	/**
+	 * Raise by one the quantity inside the intField
+	 */
 	@FXML
 	private void productsAmountUp() {
 		productsAmountField.setInt(productsAmountField.getInt() + 1);
 	}
 
+	/**
+	 * Decrease by one the quantity inside the intField
+	 */
 	@FXML
 	private void productsAmountDown() {
 		productsAmountField.setInt(productsAmountField.getInt() - 1);
 	}
 
+	/**
+	 * Update the combo box of products
+	 */
 	protected void updateProducts() {
 		productsCombo.getItems().clear();
 		productsCombo.getItems().addAll(ProductDAO.getAll());
 	}
 
 	/**
-	 * Products table management
+	 * Update the table of product
 	 */
-
 	protected void updateProductsTable(ProductsQuantity actual) {
 		productsTable.getItems().clear();
 		if (actual != null) {
@@ -83,6 +95,10 @@ abstract public class AbstractProductController {
 		}
 	}
 
+	/**
+	 * Update the selected product
+	 * @param newValue the new selected product
+	 */
 	protected void productsTableSelect(Product newValue) {
 		if (newValue == null) {
 			productsCombo.getSelectionModel().clearSelection();
@@ -100,11 +116,18 @@ abstract public class AbstractProductController {
 
 	abstract protected Collection<? extends ProductsQuantity> getAllProductsQuantity();
 
+	/**
+	 * Update the products combo box
+	 */
 	protected void updateAllProductsQuantity() {
 		productsQuantityCombo.getItems().clear();
 		productsQuantityCombo.getItems().addAll(getAllProductsQuantity());
 	}
 
+	/**
+	 * Update the selected product inside the combo box
+	 * @param selected the new selected product
+	 */
 	protected void selectProductsQuantity(ProductsQuantity selected) {
 		productsQuantityNameField.clear();
 		productsCombo.getSelectionModel().clearSelection();
@@ -114,6 +137,10 @@ abstract public class AbstractProductController {
 		updateProductsTable(selected);
 	}
 
+	/**
+	 * Edit the name of the selected product
+	 * @param newValue the new name of the selected product
+	 */
 	private void changeName(String newValue) {
 		ProductsQuantity actual = productsQuantityCombo.getValue();
 		if ("".equals(newValue) || actual.getName().equals(newValue)) {
@@ -129,6 +156,10 @@ abstract public class AbstractProductController {
 	 * Products combo management
 	 */
 
+	/**
+	 * Add the selected product inside the product table with the quantity
+	 * of the intField
+	 */
 	@FXML
 	private void productsAdd() {
 		ProductsQuantity actual = productsQuantityCombo.getValue();
@@ -138,17 +169,28 @@ abstract public class AbstractProductController {
 		productsTable.getSelectionModel().select(p);
 	}
 
+	/**
+	 * Replace the selected product inside the product table by the
+	 * product inside the combo box with the quantity of the intField
+	 */
 	@FXML
 	private void productsEdit() {
 		productsRemove(false);
 		productsAdd();
 	}
 
+	/**
+	 * Remove the selected product from the product table
+	 */
 	@FXML
 	private void productsRemove() {
 		productsRemove(true);
 	}
 
+	/**
+	 * Remove the selected product from the product table
+	 * @param update if True : the product table is updated
+	 */
 	private void productsRemove(boolean update) {
 		ProductsQuantity actual = productsQuantityCombo.getValue();
 		actual.removeProduct(productsTable.getSelectionModel().getSelectedItem());
@@ -157,6 +199,9 @@ abstract public class AbstractProductController {
 		}
 	}
 
+	/**
+	 * Clear the products inside the product table
+	 */
 	@FXML
 	private void productsClear() {
 		ProductsQuantity actual = productsQuantityCombo.getValue();
@@ -187,17 +232,20 @@ abstract public class AbstractProductController {
 
 		productsQuantityNameField.textProperty().addListener((observable, oldValue, newValue) -> changeName(newValue));
 
+		//Disable the fields/buttons that should not be available without a product quantity combo
 		BooleanBinding notSelected = productsQuantityCombo.getSelectionModel().selectedItemProperty().isNull();
 		productsQuantityNameField.disableProperty().bind(notSelected);
 		productsCombo.disableProperty().bind(notSelected);
 		productsClearButton.disableProperty().bind(notSelected);
 
+		//Disable the fields/buttons that should not be available without a selected product
 		notSelected = productsCombo.getSelectionModel().selectedItemProperty().isNull();
 		productsAddButton.disableProperty().bind(notSelected);
 		productsAmountDownButton.disableProperty().bind(notSelected);
 		productsAmountUpButton.disableProperty().bind(notSelected);
 		productsAmountField.disableProperty().bind(notSelected);
 
+		//Disable the fields/buttons that should not be available without a product table
 		notSelected = productsTable.getSelectionModel().selectedItemProperty().isNull();
 		productsEditButton.disableProperty().bind(notSelected);
 		productsRemoveButton.disableProperty().bind(notSelected);

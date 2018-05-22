@@ -53,6 +53,7 @@ public class ResearchShopController {
 			return new SimpleStringProperty(Price.toString(price));
 		});
 
+		//Search shops with all products in stock
 		for (Shop s : ShopDAO.getAll()) {
 			try {
 				int total = s.getStock().getPrice(shoppingList);
