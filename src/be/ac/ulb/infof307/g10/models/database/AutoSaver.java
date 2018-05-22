@@ -14,7 +14,7 @@ final public class AutoSaver implements Observer {
 	 * Instance created at load time to avoid threads synchronization. Small
 	 * performance impact because empty constructor.
 	 */
-	private static AutoSaver instance = new AutoSaver();
+	private static final AutoSaver instance = new AutoSaver();
 
 	private AutoSaver() {
 	}

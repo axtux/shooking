@@ -28,7 +28,7 @@ import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
 final public class Database {
 	private static EntityManagerFactory emf;
 	private static EntityManager em;
-	private static Map<String, String> properties = new HashMap<>();
+	private static final Map<String, String> properties = new HashMap<>();
 
 	/**
 	 * Avoid object creation

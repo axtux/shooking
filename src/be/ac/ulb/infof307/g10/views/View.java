@@ -25,7 +25,7 @@ public enum View {
 	SHOPPING_LIST(true),
 	TERMS_OF_USE;
 
-	private boolean menu;
+	private final boolean menu;
 
 	/**
 	 * Constructor, set menu as false.
