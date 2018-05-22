@@ -60,7 +60,7 @@ public class CreateShopController {
 	public CreateShopController() {
 		position = staticPosition;
 		if (position == null) {
-			throw new NullPointerException("position must be set before creation");
+			throw new IllegalArgumentException("position must be set before creation");
 		}
 		staticPosition = null;
 	}

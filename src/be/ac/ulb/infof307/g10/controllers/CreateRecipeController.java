@@ -1,7 +1,7 @@
 package be.ac.ulb.infof307.g10.controllers;
 
 import be.ac.ulb.infof307.g10.models.dao.RecipeDAO;
-import be.ac.ulb.infof307.g10.models.exceptions.DatabaseException;
+import be.ac.ulb.infof307.g10.models.exceptions.ExistingException;
 import be.ac.ulb.infof307.g10.views.DialogView;
 import be.ac.ulb.infof307.g10.views.IntField;
 import javafx.fxml.FXML;
@@ -37,7 +37,7 @@ public class CreateRecipeController {
 		try {
 			RecipeDAO.create(name.getText(), serving.getInt());
 			DialogView.hide();
-		} catch (NullPointerException | IllegalArgumentException | DatabaseException e) {
+		} catch (IllegalArgumentException | ExistingException e) {
 			printLabel.setText(e.getMessage());
 		}
 		button.setDisable(false);

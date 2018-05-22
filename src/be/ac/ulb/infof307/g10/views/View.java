@@ -11,7 +11,7 @@ import javafx.scene.layout.Region;
  * name. Some methods let you deal with those views.
  */
 public enum View {
-	CREATE_ACCOUNT,
+	CREATE_USER,
 	CREATE_PRODUCT,
 	CREATE_RECIPE,
 	CREATE_SHOP,

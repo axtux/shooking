@@ -16,7 +16,7 @@ import javafx.scene.control.TextField;
  * Controller class for the create account page His aim is to detect some wrong
  * cases in the input password and update the errorLabel
  */
-public class CreateAccountController {
+public class CreateUserController {
 
 	@FXML
 	private TextField textFieldLog;

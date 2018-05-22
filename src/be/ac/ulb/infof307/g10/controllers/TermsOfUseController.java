@@ -20,7 +20,7 @@ public class TermsOfUseController {
 	@FXML
 	void agree() {
 		button.setDisable(true);
-		MainView.show(View.CREATE_ACCOUNT);
+		MainView.show(View.CREATE_USER);
 	}
 
 	public void initialize() {

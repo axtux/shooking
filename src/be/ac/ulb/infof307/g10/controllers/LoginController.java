@@ -3,6 +3,7 @@ package be.ac.ulb.infof307.g10.controllers;
 import be.ac.ulb.infof307.g10.Main;
 import be.ac.ulb.infof307.g10.models.User;
 import be.ac.ulb.infof307.g10.models.dao.UserDAO;
+import be.ac.ulb.infof307.g10.models.exceptions.EmptyPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.IncorrectPasswordException;
 import be.ac.ulb.infof307.g10.models.exceptions.NonExistingException;
 import be.ac.ulb.infof307.g10.views.DialogView;
@@ -43,7 +44,7 @@ public class LoginController {
 			printLabel.setText("Connection ...");
 			User user = UserDAO.login(log, pwd);
 			Main.login(user);
-		} catch (IncorrectPasswordException | NonExistingException e) {
+		} catch (IncorrectPasswordException | EmptyPasswordException | NonExistingException e) {
 			printLabel.setText(e.getMessage());
 		}
 	}
