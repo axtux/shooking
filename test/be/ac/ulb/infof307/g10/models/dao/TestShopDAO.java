@@ -12,10 +12,6 @@ import be.ac.ulb.infof307.g10.models.database.AbstractTestDatabase;
 import be.ac.ulb.infof307.g10.models.database.Database;
 
 public class TestShopDAO extends AbstractTestDatabase {
-
-	public static void createTestingShop() {
-		ShopDAO.create("#test testingShop", 0., 0., null);
-	}
 	
 	@Test
 	public void createShop() {
@@ -25,14 +21,14 @@ public class TestShopDAO extends AbstractTestDatabase {
 	
 	@Test(expected=ExistingException.class)
 	public void createShopException() {
-		createTestingShop();
+		ShopDAO.create("#test testingShop", 0., 0., null);
 		Shop s = ShopDAO.create("#test new shop in same position", 0., 0., null);
 		assertNull(s);
 	}
 	
 	@Test
 	public void getShop() {
-		createTestingShop();
+		ShopDAO.create("#test testingShop", 0., 0., null);
 		Shop s = ShopDAO.getByName("#test testingShop");
 		assertNotNull(s);
 	}
@@ -45,7 +41,7 @@ public class TestShopDAO extends AbstractTestDatabase {
 	
 	@Test
 	public void autoSaveShopStock() {
-		createTestingShop();
+		ShopDAO.create("#test testingShop", 0., 0., null);
 		Shop s = ShopDAO.getByName("#test testingShop");
 		s.getStock().addQuantity(ProductDAO.create("#test testingProduct", 12, "g"), 1);
 		Database.close();
