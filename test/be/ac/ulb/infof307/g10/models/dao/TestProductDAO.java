@@ -32,7 +32,7 @@ public class TestProductDAO extends AbstractTestDatabase {
 	@Test
 	public void getProduct() {
 		createProduct();
-		Product p = ProductDAO.getByName("#test testingProduct");
+		Product p = ProductDAO.getByName("#test createProduct");
 		assertNotNull(p);
 	}
 
