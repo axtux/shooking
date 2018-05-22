@@ -22,7 +22,7 @@
 ![Alt text](Screenshots/3-2.png)
 ![Alt text](Screenshots/3-3.png)
 
-- [x] A cet effet, l'utilisateur doit pouvoir disposer de plusieurs Shopping Lists. 
+- [x] A cet effet, l'utilisateur doit pouvoir disposer de plusieurs listes de courses. 
 ![Alt text](Screenshots/3-4.png)
 
 - [ ] <del> De plus, le logiciel doit permettre d'adapter la recette pour un nombre de personne différent de celui indiqué dans la recette originale. </del>
