@@ -2,6 +2,9 @@ package be.ac.ulb.infof307.g10.models;
 
 import javax.persistence.Entity;
 
+/**
+ * Shopping list object
+ */
 @Entity
 public class ShoppingList extends ProductsQuantity {
 

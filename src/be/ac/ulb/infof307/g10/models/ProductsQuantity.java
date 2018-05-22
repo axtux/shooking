@@ -9,6 +9,9 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 
+/**
+ * Object mapping a product with an integer
+ */
 @Entity
 public class ProductsQuantity extends NamedObject {
 
@@ -28,6 +31,11 @@ public class ProductsQuantity extends NamedObject {
 		productsQuantity = new HashMap<>();
 	}
 
+	/**
+	 * Return the quantity of the product p. It the map does not contain p, return 0
+	 * @param p the product
+	 * @return the quantity of the p if p is in the map , 0 if not.
+	 */
 	public int getQuantity(Product p) {
 		return productsQuantity.getOrDefault(p, 0);
 	}

@@ -75,12 +75,19 @@ public class Shop extends NamedObject {
 		changedWhenStockChanged();
 	}
 
+	/**
+	 * Update the shop when the stock change
+	 */
 	@PostLoad
 	private void changedWhenStockChanged() {
 		Shop self = this;
 		this.stock.addObserver((observable, arg) -> self.changed());
 	}
 
+	/**
+	 * Set the schedule of the shop. If a day is empty, set "unknown" to this day
+	 * @param schedule the schedule
+	 */
 	private void setSchedule(Map<DayOfWeek, String> schedule) {
 		if (schedule == null) {
 			this.schedule = new HashMap<>();
@@ -125,7 +132,7 @@ public class Shop extends NamedObject {
 	}
 
 	/**
-	 * Get shop information.
+	 * Get shop informations.
 	 * 
 	 * @return Format is "Name\n\nWholeSchedule"
 	 */

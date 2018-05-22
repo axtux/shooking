@@ -192,6 +192,10 @@ public class Recipe extends ProductsQuantity {
 		return this.servings;
 	}
 
+	/**
+	 * Create a shopping list from the product of the recipe
+	 * @return a shopping list containing all the products of the recipe
+	 */
 	public ShoppingList toShoppingList() {
 		ShoppingList retShoppingList = new ShoppingList("Recipe " + getName());
 		for (Product p : getProducts()) {

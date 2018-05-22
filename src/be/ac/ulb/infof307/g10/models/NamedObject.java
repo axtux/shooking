@@ -2,6 +2,9 @@ package be.ac.ulb.infof307.g10.models;
 
 import javax.persistence.Entity;
 
+/**
+ * Mother class that contains the methods for the objects that have a name
+ */
 @Entity
 public class NamedObject extends AbstractObject {
 
