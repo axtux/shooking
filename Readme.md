@@ -1,4 +1,4 @@
-# AutoChef : Projet de génie logiciel et gestion de projet (INFO-F-307)
+# Projet de génie logiciel et gestion de projet (INFO-F307)
 
 L'objectif principal du projet est de concevoir un environnement pour la création d'une carte partagée entre plusieurs utilisateurs du système. Ce logiciel permettra de créer
 une nouvelle carte en deux dimensions vide ou bien de se connecter à une carte existante.
@@ -61,21 +61,4 @@ make test
 make doc
 ```
 
-
-# Configuration :
-
-## Serveur 
-
-Pas de serveur
-
-## Client
-
-Pas de client
-
-# Misc
-
-## Développement
-
-## Screenshot
-
-## Licence
+La javadoc est disponible en ligne à cette adresse : https://axtux.github.io/shooking/
